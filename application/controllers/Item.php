@@ -1,0 +1,34 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Item extends CI_Controller {
+
+	public function __construct() {
+        parent::__construct();
+		$this->load->model('User_model');
+		$this->User_model->is_logged_in();
+    }
+	
+	public function view()
+	{		
+		$this->load->view('/system/template/header');
+		$this->load->view('/system/item/itemView');
+		$this->load->view('/system/template/footer');
+	}
+	
+	public function edit()
+	{		
+		$this->load->view('/system/template/header');		
+		$this->load->view('/system/item/itemEdit');
+		$this->load->view('/system/template/footer');
+	}
+	
+	public function create()
+	{		
+		$this->load->view('/system/template/header');		
+		$this->load->view('/system/item/itemCreate');
+		$this->load->view('/system/template/footer');
+	}
+		
+	
+}
