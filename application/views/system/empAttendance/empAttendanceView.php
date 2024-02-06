@@ -28,7 +28,7 @@
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'vehicle/create" class="btn text-dark btn-default btn-sm">
+							echo '<a type="button" href="'.base_url().'EmpAttendance/create" class="btn text-dark btn-default btn-sm">
 									<i class="nav-icon far fa-plus-square"></i> Upload Attendance
 								</a>';
 						}
@@ -44,10 +44,10 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
-								<th>Registered No.</th>
-								<th>YOM</th>
-								<th>Type</th>
-								<th>Category</th>
+								<th>Employee</th>
+								<th>Date</th>
+								<th>Time In</th>
+								<th>Time Out</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -78,7 +78,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_all_join/",
+		url: API+"EmpAttendance/fetch_all_join/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
