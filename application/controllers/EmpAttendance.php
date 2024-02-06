@@ -30,5 +30,10 @@ class EmpAttendance extends CI_Controller {
 		$this->load->view('/system/template/footer');
 	}
 		
-	
+	public function approve()
+	{		
+		$this->load->view('/system/template/header');		
+		$this->load->view('/system/empAttendance/empAttendanceApprove');
+		$this->load->view('/system/template/footer');
+	}
 }

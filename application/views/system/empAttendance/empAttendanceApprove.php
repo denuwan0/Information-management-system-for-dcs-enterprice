@@ -8,41 +8,27 @@
 				<div class="card-body ">
 					<form>
 						<div class="form-row">
-						<input type="hidden" class="form-control" id="attendance_id" required>							
 							<div class="col-md-3 mb-3">
-								<label for="branch_id">Employee Epf:</label>
-								<input type="text" class="form-control" id="emp_epf" readonly>
+								<label for="branch_id">Branch</label>
+								<select class="custom-select" id="branch_id" aria-describedby="" required>
+								</select>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="branch_id">Date:</label>
-								<input type="text" class="form-control" id="date" readonly>
+								<label for="day">Date</label>
+								<select class="custom-select" id="day" aria-describedby="" required>
+								</select>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="branch_id">Time In:</label>
-								<input type="text" class="form-control" id="time_in" required>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="branch_id">Time Out:</label>
-								<input type="text" class="form-control" id="time_out" required>
-							</div>				
-							
-						</div>
-						<div class="form-row">
-							<div class="col-md-3 mb-3">
-								<label for="branch_id">Upload By:</label>
-								<input type="text" class="form-control" id="uploaded_by" readonly>
-							</div>	
-							<div class="col-md-3 mb-3">
-								<label for="branch_id">Approved By:</label>
-								<input type="text" class="form-control" id="approved_by" readonly>
+								<label for="month">Month</label>
+								<select class="custom-select" id="month" aria-describedby="" required>
+								</select>
 							</div>
 						</div>
-					  
 					</form>
 				</div>			
 
 				<div class="card-footer text-center">
-					<button class="btn btn-primary" id="submit" type="submit">Submit</button>
+					<button class="btn btn-success" id="submit" type="submit">Approve</button>
 				</div>				
 			</form>
 		</div>
@@ -54,6 +40,81 @@ var pageUrl = $(location).attr('href');
 parts = pageUrl.split("/"),
 last_part = parts[parts.length-1];
 
+function loadBranch(){
+$.ajax({
+	type: "GET",
+	cache : false,
+	async: true,
+	dataType: "json",
+	url: API+"branch/fetch_all_active/",
+	success: function(data1, result){
+		var company_drp1 = '<option value="">Select Branch</option>';
+		$.each(data1, function(index, item1) {
+			//console.log(item);
+			company_drp1 += '<option value="'+item1.company_branch_id+'">'+item1.company_branch_name+'</option>';
+        });
+		$('#branch_id').append(company_drp1);
+	},
+	error: function(XMLHttpRequest, textStatus, errorThrown) {						
+		
+		//console.log(errorThrown);
+	}
+});
+}
+
+loadBranch();
+
+function loadAttendanceDays(branch_id){
+$.ajax({
+	type: "POST",
+	cache : false,
+	async: true,
+	dataType: "json",
+	url: API+"EmpAttendance/fetch_all_days/?branch_id="+branch_id,
+	success: function(data2, result){
+		var company_drp2 = '<option value="">Select Date</option>';
+		$.each(data2, function(index, item2) {
+			//console.log(item);
+			company_drp2 += '<option value="'+item2.date+'">'+item2.date+'</option>';
+        });
+		$('#day').append(company_drp2);
+	},
+	error: function(XMLHttpRequest, textStatus, errorThrown) {						
+		
+		//console.log(errorThrown);
+	}
+});
+}
+
+
+$(document).on('change', '#branch_id', function() {
+  loadAttendanceDays($(this).val());
+  loadAttendanceMonth($(this).val());
+});
+
+function loadAttendanceMonth(branch_id){
+$.ajax({
+	type: "GET",
+	cache : false,
+	async: true,
+	dataType: "json",
+	url: API+"EmpAttendance/fetch_all_months/?branch_id="+branch_id,
+	success: function(data3, result){
+		var company_drp3 = '<option value="">Select Month</option>';
+		$.each(data3, function(index, item3) {
+			//console.log(item);
+			company_drp3 += '<option value="'+item3.month+'">'+item3.month+'</option>';
+        });
+		$('#month').append(company_drp3);
+	},
+	error: function(XMLHttpRequest, textStatus, errorThrown) {						
+		
+		//console.log(errorThrown);
+	}
+});
+}
+
+loadAttendanceMonth();
 
 function loadData() {
 	

@@ -8,12 +8,10 @@
 				<div class="card-body ">
 					<form>
 						<div class="form-row">
-							<div class="col-md-2 mb-3">
-								<label for="date">Attendance Date</label>
-								<input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text" autocomplete="off"/>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
+							<div class="col-md-3 mb-3">
+								<label for="branch_id">Branch</label>
+								<select class="custom-select" id="branch_id" aria-describedby="" required>
+								</select>
 							</div>
 							<div class="col-md-9 mb-3">
 								<label for="formFile" class="form-label">Attendance file upload</label>
@@ -44,7 +42,29 @@ $(document).ready(function(){
 	date_input.datepicker(date);
 })
 
+function loadBranch(){
+$.ajax({
+	type: "POST",
+	cache : false,
+	async: true,
+	dataType: "json",
+	url: API+"branch/fetch_all_active/",
+	success: function(data, result){
+		var company_drp = '<option value="">Select Branch</option>';
+		$.each(data, function(index, item) {
+			//console.log(item);
+			company_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
+        });
+		$('#branch_id').append(company_drp);
+	},
+	error: function(XMLHttpRequest, textStatus, errorThrown) {						
+		
+		//console.log(errorThrown);
+	}
+});
+}
 
+loadBranch();
 
 $('#submit').click(function(e){
 	e.preventDefault();
@@ -52,16 +72,16 @@ $('#submit').click(function(e){
 	var date = 0;
 	var formFile = 0;
 	
-	date = $('#date').val();
+	branch_id = $('#branch_id').val();
 	formFile = $('#formFile').prop('files')[0];
 	
 		
-	if(typeof date !== 'undefined' && date !== '' 
+	if(typeof branch_id !== 'undefined' && branch_id !== '' 
 	&& typeof formFile !== 'undefined' && formFile !== '')
 	{
 		
 		var formData = new FormData();
-        formData.append('date',date);
+        formData.append('branch_id',branch_id);
 		formData.append('formFile',formFile);
 				
 		$.ajax({

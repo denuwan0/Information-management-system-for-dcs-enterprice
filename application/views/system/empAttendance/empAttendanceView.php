@@ -30,6 +30,9 @@
 							//var_dump($this->session->userdata('sys_user_group_name')); 
 							echo '<a type="button" href="'.base_url().'EmpAttendance/create" class="btn text-dark btn-default btn-sm">
 									<i class="nav-icon far fa-plus-square"></i> Upload Attendance
+								</a>
+								<a type="button" href="'.base_url().'EmpAttendance/approve" class="btn text-white btn-success btn-sm btn-outline-light">
+									<i class="nav-icon far fa-check-square"></i> Approve Attendance
 								</a>';
 						}
 						
@@ -44,6 +47,7 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
+								<th>Branch</th>
 								<th>Employee</th>
 								<th>Date</th>
 								<th>Time In</th>
@@ -95,6 +99,7 @@ function loadData() {
 					//console.log(item.attendance_id);
 									
 					table.row.add([item.attendance_id,
+					item.company_branch_name,
 					item.emp_epf,
 					item.date, 					
 					item.time_in,
