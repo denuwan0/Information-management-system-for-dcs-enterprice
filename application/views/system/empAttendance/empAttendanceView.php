@@ -48,7 +48,8 @@
 								<th>Date</th>
 								<th>Time In</th>
 								<th>Time Out</th>
-								<th>Status</th>
+								<th>Upload by</th>
+								<th>Approved by</th>
 								<th>Option</th>
 							</tr>
 						</thead>
@@ -91,22 +92,15 @@ function loadData() {
 							
 				
 				$.each(data, function (i, item) {
-					//console.log(item);
-					var is_active_vhcl_details  ='';
-					if(item.is_active_vhcl_details  == 1){
-						is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
-					}
-					else{
-						is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
-					}
-					
-					
-					table.row.add([item.vehicle_id,
-					item.license_plate_no,
-					item.vehicle_yom, 					
-					item.vehicle_type_name,
-					item.vehicle_category_name,
-					is_active_vhcl_details ,
+					//console.log(item.attendance_id);
+									
+					table.row.add([item.attendance_id,
+					item.emp_epf,
+					item.date, 					
+					item.time_in,
+					item.time_out,
+					item.uploaded_by,
+					item.approved_by ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -123,8 +117,8 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>vehicle/edit/'+item.vehicle_id);
-					$(".viewBtn").last().attr('value', item.vehicle_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpAttendance/edit/'+item.attendance_id);
+					$(".viewBtn").last().attr('value', item.attendance_id);
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							
@@ -145,12 +139,12 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var vehicleId = "";
+	var attendance_id = "";
 	var Header = "";
 	var HTML = "";
 	
-	vehicleId = $(this).attr('value');
-	console.log(vehicleId);
+	attendance_id = $(this).attr('value');
+	console.log(attendance_id);
 	
 	$.ajax({
 		type: "GET",
@@ -158,11 +152,11 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_single_join?id="+vehicleId,
+		url: API+"EmpAttendance/fetch_single_join?id="+attendance_id,
 		success: function(data, result){
 			console.log(data);
 			
-			Header = 'License Plate No: '+data[0].license_plate_no;
+			Header = 'Employee: '+data[0].emp_epf;
 			console.log(Header);
 			if(data[0].is_active_vhcl_details  == 1){
 				is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
@@ -174,34 +168,22 @@ $(document).on('click','.viewBtn', function(){
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<th><label for="license_plate_no">License Plate No: </label></th>'+
-						  '<td>'+data[0].license_plate_no+'</td>'+
-						  '<td><label for="branch_id">Branch: </label></td>'+
-						  '<td>'+data[0].company_branch_name+'</td>'+
+						  '<th><label for="license_plate_no">Epf: </label></th>'+
+						  '<td>'+data[0].emp_epf+'</td>'+
+						  '<td><label for="branch_id">Date: </label></td>'+
+						  '<td>'+data[0].date+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_yom">YOM: </label></th>'+
-						  '<td>'+data[0].vehicle_yom+'</td>'+
-						  '<td><label for="chasis_no">Chasis No: </label></td>'+
-						  '<td>'+data[0].chasis_no+'</td>'+
+						  '<th><label for="vehicle_yom">Time In: </label></th>'+
+						  '<td>'+data[0].time_in+'</td>'+
+						  '<td><label for="chasis_no">Time Out: </label></td>'+
+						  '<td>'+data[0].time_out+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_type_id">Vehicle Type: </label></th>'+
-						  '<td >'+data[0].vehicle_type_name+'</td>'+
-						  '<td><label for="vehicle_category_id">Vehicle Category: </label></td>'+
-						  '<td >'+data[0].vehicle_category_name+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<th><label for="engine_no">Engine No.: </label></th>'+
-						  '<td colspan="">'+data[0].engine_no+'</td>'+
-						  '<td><label for="number_of_passengers">No. of Passengers: </label></td>'+
-						  '<td colspan="">'+data[0].number_of_passengers+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<th><label for="max_load">Max Load (Kg): </label></th>'+
-						  '<td>'+data[0].max_load+'</td>'+
-						  '<td><label for="max_load">Status: </label></td>'+
-						  '<td>'+is_active_vhcl_details+'</td>'+
+						  '<th><label for="vehicle_type_id">Upload by: </label></th>'+
+						  '<td >'+data[0].uploaded_by+'</td>'+
+						  '<td><label for="vehicle_category_id">Approved by: </label></td>'+
+						  '<td >'+data[0].approved_by+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>';
