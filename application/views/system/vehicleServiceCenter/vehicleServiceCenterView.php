@@ -22,14 +22,14 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Leave Quota Details</h3>
+				<h3 class="card-title">Vehicle Service Center Details</h3>
 				<div style="text-align: right;">
 					<?php 
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'EmpLeaveQuota/create" class="btn text-dark btn-default btn-sm">
-									<i class="nav-icon far fa-plus-square"></i> Add Leave Quota
+							echo '<a type="button" href="'.base_url().'vehicleServiceCenter/create" class="btn text-dark btn-default btn-sm">
+									<i class="nav-icon far fa-plus-square"></i> Add Service Center
 								</a>';
 						}
 						
@@ -44,11 +44,9 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
-								<th>Year</th>
-								<th>Leave Type</th>
-								<th>Valid from</th>
-								<th>Valid to</th>
-								<th>Total</th>
+								<th>Name</th>
+								<th>Address</th>
+								<th>Contact</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -60,9 +58,6 @@
 					</table>					
 				</div>				
 			</form>
-			<div id="" class="" >
-				
-			</div>
 		</div>
 	</div>
 </section>
@@ -71,15 +66,13 @@
 
 var country_id = 0;
 function loadData() {
-	
-		
 	$.ajax({
 		type: "GET",
 		cache : false,
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpLeaveQuota/fetch_all_join",
+		url: API+"vehicleServiceCenter/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -92,30 +85,28 @@ function loadData() {
 							
 				
 				$.each(data, function (i, item) {
-					console.log(item);
-					var is_active_leave_quota  ='';
-					if(item.is_active_leave_quota  == 1){
-						is_active_leave_quota  = '<span class="right badge badge-success">Active</span>';
+					//console.log(item);
+					var is_active_vhcl_srv_cntr  ='';
+					if(item.is_active_vhcl_srv_cntr  == 1){
+						is_active_vhcl_srv_cntr  = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_leave_quota  = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_vhcl_srv_cntr  = '<span class="right badge badge-danger">Inactive</span>';
 					}
 					
 					
-					table.row.add([item.leave_quota_id,
-					item.year,
-					item.leave_type_name, 
-					item.valid_from_date,
-					item.valid_to_date,
-					item.amount,
-					is_active_leave_quota ,
+					table.row.add([item.service_center_id,
+					item.service_center_name,
+					item.service_center_contact, 					
+					item.service_center_address,
+					is_active_vhcl_srv_cntr ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
-							echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-							echo '<a type="button" id="editBtn" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
+							echo '<div class="btn-group margin"><a type="button" id="viewBtn" repair_loc_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+							echo '<a type="button" id="editBtn" repair_loc_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 						}
 						else{
-							echo '<a type="button" id="viewBtn" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							echo '<a type="button" id="viewBtn" repair_loc_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
 						}
 
 					?>'
@@ -125,15 +116,13 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpLeaveQuota/edit/'+item.leave_quota_id);
-					$(".viewBtn").last().attr('value', item.leave_quota_id);
-					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>vehicleServiceCenter/edit/'+item.service_center_id);
+					$(".viewBtn").last().attr('value',item.service_center_id);
 				});
 							
 			});
 			
 
-				
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {						
 			console.log(textStatus);					
@@ -147,12 +136,11 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var leave_quota_id = "";
+	var service_center_id = "";
 	var Header = "";
 	var HTML = "";
 	
-	leave_quota_id = $(this).attr('value');
-	console.log(leave_quota_id);
+	service_center_id = $(this).attr('value');
 	
 	$.ajax({
 		type: "GET",
@@ -160,34 +148,32 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpLeaveQuota/fetch_single_join?id="+leave_quota_id,
+		url: API+"vehicleServiceCenter/fetch_single/?id="+service_center_id,
 		success: function(data, result){
 			console.log(data);
 			
-			Header = 'Leave Quota Id: '+data[0].leave_quota_id;
+			Header = data[0].service_center_name;
 			console.log(Header);
-			if(data[0].is_active_leave_quota  == 1){
-				is_active_leave_quota  = '<span class="right badge badge-success">Active</span>';
+			if(data[0].is_active_vhcl_srv_cntr == 1){
+				is_active_vhcl_srv_cntr  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{
-				is_active_leave_quota  = '<span class="right badge badge-danger">Inactive</span>';
+				is_active_vhcl_srv_cntr  = '<span class="right badge badge-danger">Inactive</span>';
 			}
 			
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<th><label for="license_plate_no">Quota Id: </label></th>'+
-						  '<td>'+data[0].leave_quota_id+'</td>'+
-						  '<td><label for="branch_id">Year: </label></td>'+
-						  '<td>'+data[0].year+'</td>'+
+						  '<td><label for="repair_loc_name">Name: </label></td>'+
+						  '<td>'+data[0].service_center_name+'</td>'+
+						  '<th><label for="repair_loc_address">Address: </label></th>'+
+						  '<td>'+data[0].service_center_address+'</td>'+						 
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_yom">Leave Type: </label></th>'+
-						  '<td>'+data[0].leave_type_name+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<td><label for="max_load">Status: </label></td>'+
-						  '<td>'+is_active_leave_quota+'</td>'+
+						  '<th><label for="repair_loc_contact">Contact: </label></th>'+
+						  '<td colspan="">'+data[0].service_center_contact+'</td>'+
+						  '<td><label for="is_active_vhcl_repair_loc">Status: </label></td>'+
+						  '<td>'+is_active_vhcl_srv_cntr+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>';

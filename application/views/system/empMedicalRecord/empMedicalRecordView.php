@@ -22,14 +22,14 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Vehicle Details</h3>
+				<h3 class="card-title">Employee Medical Record Details</h3>
 				<div style="text-align: right;">
 					<?php 
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'vehicle/create" class="btn text-dark btn-default btn-sm">
-									<i class="nav-icon far fa-plus-square"></i> Add Vehicle
+							echo '<a type="button" href="'.base_url().'EmpMedicalRecord/create" class="btn text-dark btn-default btn-sm">
+									<i class="nav-icon far fa-plus-square"></i> Add Medical Record
 								</a>';
 						}
 						
@@ -44,10 +44,10 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
-								<th>Registered No.</th>
-								<th>YOM</th>
-								<th>Type</th>
-								<th>Category</th>
+								<th>Checkup date</th>
+								<th>Medical Center</th>
+								<th>Employee</th>
+								<th>Overall Health</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -78,7 +78,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_all_join/",
+		url: API+"EmpMedicalRecord/fetch_all_join/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -100,12 +100,23 @@ function loadData() {
 						is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
 					}
 					
+					var emp_med_status = "";
 					
-					table.row.add([item.vehicle_id,
-					item.license_plate_no,
-					item.vehicle_yom, 					
-					item.vehicle_type_name,
-					item.vehicle_category_name,
+					if(item.emp_med_status  == 'good'){
+						emp_med_status  = '<span class="right badge badge-success">Good</span>';
+					}
+					else if(item.emp_med_status  == 'moderate'){
+						emp_med_status  = '<span class="right badge badge-warning">Moderate</span>';
+					}
+					else if(item.emp_med_status  == 'critical'){
+						emp_med_status  = '<span class="right badge badge-danger">Critical</span>';
+					}
+					
+					table.row.add([item.med_record_id,
+					item.this_med_checkup_date,
+					item.emp_med_loc_name, 					
+					item.emp_epf+' - '+item.emp_first_name,
+					emp_med_status,
 					is_active_vhcl_details ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
@@ -123,8 +134,8 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>vehicle/edit/'+item.vehicle_id);
-					$(".viewBtn").last().attr('value', item.vehicle_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpMedicalRecord/edit/'+item.med_record_id);
+					$(".viewBtn").last().attr('value', item.med_record_id);
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							
@@ -145,12 +156,12 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var vehicleId = "";
+	var med_record_id = "";
 	var Header = "";
 	var HTML = "";
 	
-	vehicleId = $(this).attr('value');
-	console.log(vehicleId);
+	med_record_id = $(this).attr('value');
+	console.log(med_record_id);
 	
 	$.ajax({
 		type: "GET",
@@ -158,50 +169,56 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_single_join?id="+vehicleId,
+		url: API+"EmpMedicalRecord/fetch_single_join?id="+med_record_id,
 		success: function(data, result){
 			console.log(data);
 			
-			Header = 'License Plate No: '+data[0].license_plate_no;
+			Header = 'Employee Epf: '+data[0].emp_epf;
 			console.log(Header);
-			if(data[0].is_active_vhcl_details  == 1){
-				is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
+			if(data[0].is_active_medical_records  == 1){
+				is_active_medical_records  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{
-				is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
+				is_active_medical_records  = '<span class="right badge badge-danger">Inactive</span>';
+			}
+			
+			var emp_med_status = "";
+					
+			if(data[0].emp_med_status  == 'good'){
+				emp_med_status  = '<span class="right badge badge-success">Good</span>';
+			}
+			else if(data[0].emp_med_status  == 'moderate'){
+				emp_med_status  = '<span class="right badge badge-warning">Moderate</span>';
+			}
+			else if(data[0].emp_med_status  == 'critical'){
+				emp_med_status  = '<span class="right badge badge-danger">Critical</span>';
 			}
 			
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<th><label for="license_plate_no">License Plate No: </label></th>'+
-						  '<td>'+data[0].license_plate_no+'</td>'+
-						  '<td><label for="branch_id">Branch: </label></td>'+
-						  '<td>'+data[0].company_branch_name+'</td>'+
+						  '<th><label for="license_plate_no">Employee Epf: </label></th>'+
+						  '<td>'+data[0].emp_epf+'</td>'+
+						  '<td><label for="branch_id">Employee Name: </label></td>'+
+						  '<td>'+data[0].emp_first_name+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_yom">YOM: </label></th>'+
-						  '<td>'+data[0].vehicle_yom+'</td>'+
-						  '<td><label for="chasis_no">Chasis No: </label></td>'+
-						  '<td>'+data[0].chasis_no+'</td>'+
+						  '<th><label for="vehicle_yom">This Checkup Date: </label></th>'+
+						  '<td>'+data[0].this_med_checkup_date+'</td>'+
+						  '<td><label for="chasis_no">Next Checkup Date: </label></td>'+
+						  '<td>'+data[0].next_med_checkup_date+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_type_id">Vehicle Type: </label></th>'+
-						  '<td >'+data[0].vehicle_type_name+'</td>'+
-						  '<td><label for="vehicle_category_id">Vehicle Category: </label></td>'+
-						  '<td >'+data[0].vehicle_category_name+'</td>'+
+						  '<th><label for="vehicle_type_id">Medical Center: </label></th>'+
+						  '<td >'+data[0].emp_med_loc_name+'</td>'+
+						  '<td><label for="vehicle_category_id">Special Note: </label></td>'+
+						  '<td >'+data[0].special_note+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="engine_no">Engine No.: </label></th>'+
-						  '<td colspan="">'+data[0].engine_no+'</td>'+
-						  '<td><label for="number_of_passengers">No. of Passengers: </label></td>'+
-						  '<td colspan="">'+data[0].number_of_passengers+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<th><label for="max_load">Max Load (Kg): </label></th>'+
-						  '<td>'+data[0].max_load+'</td>'+
+						  '<th><label for="max_load">Overall Health: </label></th>'+
+						  '<td>'+emp_med_status+'</td>'+
 						  '<td><label for="max_load">Status: </label></td>'+
-						  '<td>'+is_active_vhcl_details+'</td>'+
+						  '<td>'+is_active_medical_records+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>';

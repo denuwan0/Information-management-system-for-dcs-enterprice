@@ -241,6 +241,12 @@
                       <p>Leave Quota</p>
                     </a>
                   </li>
+				   <li class="nav-item">
+                    <a href="<?php echo base_url() ?>EmpWiseLeaveQuota/view" class="nav-link">
+                      <i class="fas fa-toggle-on nav-icon text-red"></i>
+                      <p>Employee wise Leave Quota</p>
+                    </a>
+                  </li>
                   <li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpLeave/view" class="nav-link">
                       <i class="fas fa-bed nav-icon text-red"></i>
@@ -258,18 +264,18 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>EmpMedicalRecords/view" class="nav-link">
-                      <i class="fas fa-heartbeat nav-icon text-red"></i>
-                      <p>Medical Records</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
+				  <li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpMedicalLoc/view" class="nav-link">
                       <i class="fas fa-h-square nav-icon text-red"></i>
                       <p>Medical Center Location</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url() ?>EmpMedicalRecord/view" class="nav-link">
+                      <i class="fas fa-heartbeat nav-icon text-red"></i>
+                      <p>Medical Records</p>
+                    </a>
+                  </li>                  
                 </ul>
               </li>
 			   <li class="nav-item">
@@ -450,18 +456,19 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
+					<li class="nav-item">
+                    <a href="<?php echo base_url() ?>vehicleServiceCenter/view" class="nav-link">
+                      <i class="fas fa-air-freshener nav-icon text-warning"></i>
+                      <p>Service Center</p>
+                    </a>
+                  </li>
                   <li class="nav-item">
                     <a href="<?php echo base_url() ?>vehicleService/view" class="nav-link">
                       <i class="fas fa-oil-can nav-icon text-warning"></i>
                       <p>Service Details</p>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>vehicleServiceCenter/view" class="nav-link">
-                      <i class="fas fa-air-freshener nav-icon text-warning"></i>
-                      <p>Service Center</p>
-                    </a>
-                  </li>
+                  
                 </ul>
               </li>
             </ul>

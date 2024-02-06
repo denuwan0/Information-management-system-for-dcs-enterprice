@@ -22,14 +22,14 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Leave Quota Details</h3>
+				<h3 class="card-title">Emplyee wise Leave Quota Details</h3>
 				<div style="text-align: right;">
 					<?php 
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'EmpLeaveQuota/create" class="btn text-dark btn-default btn-sm">
-									<i class="nav-icon far fa-plus-square"></i> Add Leave Quota
+							echo '<a type="button" href="'.base_url().'EmpWiseLeaveQuota/create" class="btn text-dark btn-default btn-sm">
+									<i class="nav-icon far fa-plus-square"></i> Add Leave Quota to Employee/s
 								</a>';
 						}
 						
@@ -45,11 +45,13 @@
 							<tr>
 								<th>id</th>
 								<th>Year</th>
-								<th>Leave Type</th>
-								<th>Valid from</th>
-								<th>Valid to</th>
-								<th>Total</th>
-								<th>Status</th>
+								<th>Leave Quota</th>
+								<th>Employee</th>
+								<th>Total Leaves</th>
+								<th>Occupied Leaves</th>
+								<th>Balance Leaves</th>
+								<th>Hold</th>
+								<th>Active</th>
 								<th>Option</th>
 							</tr>
 						</thead>
@@ -79,7 +81,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpLeaveQuota/fetch_all_join",
+		url: API+"EmpWiseLeaveQuota/fetch_all_join",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -93,22 +95,32 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					console.log(item);
-					var is_active_leave_quota  ='';
-					if(item.is_active_leave_quota  == 1){
-						is_active_leave_quota  = '<span class="right badge badge-success">Active</span>';
+					var is_active_emp_wise_leave_quota  ='';
+					var is_hold_emp_wise_leave_quota = '';
+					if(item.is_active_emp_wise_leave_quota  == 1){
+						is_active_emp_wise_leave_quota  = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_leave_quota  = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_emp_wise_leave_quota  = '<span class="right badge badge-danger">Inactive</span>';
+					}
+					
+					if(item.is_hold_emp_wise_leave_quota  == 1){
+						is_hold_emp_wise_leave_quota  = '<span class="right badge badge-danger">Hold</span>';
+					}
+					else{
+						is_hold_emp_wise_leave_quota  = '<span class="right badge badge-success">Released</span>';
 					}
 					
 					
-					table.row.add([item.leave_quota_id,
+					table.row.add([item.emp_wise_leave_quota_id,
 					item.year,
-					item.leave_type_name, 
-					item.valid_from_date,
-					item.valid_to_date,
+					item.leave_type_name,
+					item.emp_epf+' - '+item.emp_first_name,
 					item.amount,
-					is_active_leave_quota ,
+					(item.amount - item.balance_leave_quota),
+					item.balance_leave_quota,
+					is_hold_emp_wise_leave_quota,
+					is_active_emp_wise_leave_quota ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -125,8 +137,8 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpLeaveQuota/edit/'+item.leave_quota_id);
-					$(".viewBtn").last().attr('value', item.leave_quota_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpWiseLeaveQuota/edit/'+item.emp_wise_leave_quota_id);
+					$(".viewBtn").last().attr('value', item.emp_wise_leave_quota_id);
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							
@@ -173,6 +185,13 @@ $(document).on('click','.viewBtn', function(){
 				is_active_leave_quota  = '<span class="right badge badge-danger">Inactive</span>';
 			}
 			
+			if(data[0].is_hold_emp_wise_leave_quota  == 1){
+				is_hold_emp_wise_leave_quota  = '<span class="right badge badge-success">Active</span>';
+			}
+			else{
+				is_hold_emp_wise_leave_quota  = '<span class="right badge badge-danger">Inactive</span>';
+			}
+			
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
@@ -186,7 +205,9 @@ $(document).on('click','.viewBtn', function(){
 						  '<td>'+data[0].leave_type_name+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<td><label for="max_load">Status: </label></td>'+
+						  '<td><label for="max_load">Hold: </label></td>'+
+						  '<td>'+is_hold_emp_wise_leave_quota+'</td>'+
+						   '<td><label for="max_load">Active: </label></td>'+
 						  '<td>'+is_active_leave_quota+'</td>'+
 						'</tr>'+
 					  '</tbody>'+

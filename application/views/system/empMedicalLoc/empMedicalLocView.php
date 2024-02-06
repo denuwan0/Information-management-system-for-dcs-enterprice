@@ -22,14 +22,14 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Vehicle Details</h3>
+				<h3 class="card-title">Medical Center Details</h3>
 				<div style="text-align: right;">
 					<?php 
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'vehicle/create" class="btn text-dark btn-default btn-sm">
-									<i class="nav-icon far fa-plus-square"></i> Add Vehicle
+							echo '<a type="button" href="'.base_url().'EmpMedicalLoc/create" class="btn text-dark btn-default btn-sm">
+									<i class="nav-icon far fa-plus-square"></i> Add Medical Center
 								</a>';
 						}
 						
@@ -44,10 +44,8 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
-								<th>Registered No.</th>
-								<th>YOM</th>
-								<th>Type</th>
-								<th>Category</th>
+								<th>Medical Center</th>
+								<th>Conact</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -78,7 +76,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_all_join/",
+		url: API+"EmpMedicalLoc/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -92,21 +90,19 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
-					var is_active_vhcl_details  ='';
-					if(item.is_active_vhcl_details  == 1){
-						is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
+					var is_active_medical_checkup  ='';
+					if(item.is_active_medical_checkup  == 1){
+						is_active_medical_checkup  = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_medical_checkup  = '<span class="right badge badge-danger">Inactive</span>';
 					}
 					
 					
-					table.row.add([item.vehicle_id,
-					item.license_plate_no,
-					item.vehicle_yom, 					
-					item.vehicle_type_name,
-					item.vehicle_category_name,
-					is_active_vhcl_details ,
+					table.row.add([item.emp_med_loc_id,
+					item.emp_med_loc_name,
+					item.emp_med_loc_contact, 
+					is_active_medical_checkup ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -123,8 +119,8 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>vehicle/edit/'+item.vehicle_id);
-					$(".viewBtn").last().attr('value', item.vehicle_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpMedicalLoc/edit/'+item.emp_med_loc_id);
+					$(".viewBtn").last().attr('value', item.emp_med_loc_id);
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							
@@ -145,12 +141,12 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var vehicleId = "";
+	var emp_med_loc_id = "";
 	var Header = "";
 	var HTML = "";
 	
-	vehicleId = $(this).attr('value');
-	console.log(vehicleId);
+	emp_med_loc_id = $(this).attr('value');
+	console.log(emp_med_loc_id);
 	
 	$.ajax({
 		type: "GET",
@@ -158,50 +154,32 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_single_join?id="+vehicleId,
+		url: API+"EmpMedicalLoc/fetch_single?id="+emp_med_loc_id,
 		success: function(data, result){
 			console.log(data);
 			
-			Header = 'License Plate No: '+data[0].license_plate_no;
+			Header = 'Medical Center: '+data[0].emp_med_loc_name;
 			console.log(Header);
-			if(data[0].is_active_vhcl_details  == 1){
-				is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
+			if(data[0].is_active_medical_checkup  == 1){
+				is_active_medical_checkup  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{
-				is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
+				is_active_medical_checkup  = '<span class="right badge badge-danger">Inactive</span>';
 			}
 			
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<th><label for="license_plate_no">License Plate No: </label></th>'+
-						  '<td>'+data[0].license_plate_no+'</td>'+
-						  '<td><label for="branch_id">Branch: </label></td>'+
-						  '<td>'+data[0].company_branch_name+'</td>'+
+						  '<th><label for="license_plate_no">Id: </label></th>'+
+						  '<td>'+data[0].emp_med_loc_id+'</td>'+
+						  '<td><label for="branch_id">Name: </label></td>'+
+						  '<td>'+data[0].emp_med_loc_name+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_yom">YOM: </label></th>'+
-						  '<td>'+data[0].vehicle_yom+'</td>'+
-						  '<td><label for="chasis_no">Chasis No: </label></td>'+
-						  '<td>'+data[0].chasis_no+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<th><label for="vehicle_type_id">Vehicle Type: </label></th>'+
-						  '<td >'+data[0].vehicle_type_name+'</td>'+
-						  '<td><label for="vehicle_category_id">Vehicle Category: </label></td>'+
-						  '<td >'+data[0].vehicle_category_name+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<th><label for="engine_no">Engine No.: </label></th>'+
-						  '<td colspan="">'+data[0].engine_no+'</td>'+
-						  '<td><label for="number_of_passengers">No. of Passengers: </label></td>'+
-						  '<td colspan="">'+data[0].number_of_passengers+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<th><label for="max_load">Max Load (Kg): </label></th>'+
-						  '<td>'+data[0].max_load+'</td>'+
+						  '<th><label for="vehicle_yom">Contact: </label></th>'+
+						  '<td>'+data[0].emp_med_loc_contact+'</td>'+
 						  '<td><label for="max_load">Status: </label></td>'+
-						  '<td>'+is_active_vhcl_details+'</td>'+
+						  '<td>'+is_active_medical_checkup+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>';
