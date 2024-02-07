@@ -41,6 +41,7 @@ parts = pageUrl.split("/"),
 last_part = parts[parts.length-1];
 
 function loadBranch(){
+	
 $.ajax({
 	type: "GET",
 	cache : false,
@@ -65,25 +66,26 @@ $.ajax({
 loadBranch();
 
 function loadAttendanceDays(branch_id){
-$.ajax({
-	type: "POST",
-	cache : false,
-	async: true,
-	dataType: "json",
-	url: API+"EmpAttendance/fetch_all_days/?branch_id="+branch_id,
-	success: function(data2, result){
-		var company_drp2 = '<option value="">Select Date</option>';
-		$.each(data2, function(index, item2) {
-			//console.log(item);
-			company_drp2 += '<option value="'+item2.date+'">'+item2.date+'</option>';
-        });
-		$('#day').append(company_drp2);
-	},
-	error: function(XMLHttpRequest, textStatus, errorThrown) {						
-		
-		//console.log(errorThrown);
-	}
-});
+	$('#day').html('');
+	$.ajax({
+		type: "POST",
+		cache : false,
+		async: true,
+		dataType: "json",
+		url: API+"EmpAttendance/fetch_all_days/?branch_id="+branch_id,
+		success: function(data2, result){
+			var company_drp2 = '<option value="">Select Date</option>';
+			$.each(data2, function(index, item2) {
+				//console.log(item);
+				company_drp2 += '<option value="'+item2.date+'">'+item2.date+'</option>';
+			});
+			$('#day').append(company_drp2);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			
+			//console.log(errorThrown);
+		}
+	});
 }
 
 
@@ -92,104 +94,71 @@ $(document).on('change', '#branch_id', function() {
   loadAttendanceMonth($(this).val());
 });
 
-function loadAttendanceMonth(branch_id){
-$.ajax({
-	type: "GET",
-	cache : false,
-	async: true,
-	dataType: "json",
-	url: API+"EmpAttendance/fetch_all_months/?branch_id="+branch_id,
-	success: function(data3, result){
-		var company_drp3 = '<option value="">Select Month</option>';
-		$.each(data3, function(index, item3) {
-			//console.log(item);
-			company_drp3 += '<option value="'+item3.month+'">'+item3.month+'</option>';
-        });
-		$('#month').append(company_drp3);
-	},
-	error: function(XMLHttpRequest, textStatus, errorThrown) {						
-		
-		//console.log(errorThrown);
+$(document).on('change', '#day', function() {
+	if($(this).val() != ''){
+		$('#month').prop('disabled', true);
 	}
-});
-}
-
-loadAttendanceMonth();
-
-function loadData() {
+	else{
+		$('#month').prop('disabled', false);
+	}
 	
-		
+});
+
+$(document).on('change', '#month', function() {
+	if($(this).val() != ''){
+		$('#day').prop('disabled', true);
+	}
+	else{
+		$('#day').prop('disabled', false);
+	}
+	
+});
+
+
+function loadAttendanceMonth(branch_id){
+	$('#month').html('');
 	$.ajax({
-		type: "POST",
+		type: "GET",
 		cache : false,
 		async: true,
 		dataType: "json",
-		contentType: 'application/json',
-		url: API+"EmpAttendance/fetch_single_join/?id="+last_part,
-		success: function(data, result){
-			//var parseData = JSON.stringify(data);
-			//var parseData1 = JSON.parse(parseData);	
-			console.log(data);			
-			//console.log(data[0].country_id);
-			
-			$('#attendance_id').val(data[0].attendance_id);
-			$('#emp_epf').val(data[0].emp_epf);
-			$('#date').val(data[0].date);
-			$('#time_in').val(data[0].time_in);
-			$('#time_out').val(data[0].time_out);
-			$('#uploaded_by').val(data[0].uploaded_by);
-			$('#approved_by').val(data[0].approved_by);
-						
-						
-			
+		url: API+"EmpAttendance/fetch_all_months/?branch_id="+branch_id,
+		success: function(data3, result){
+			console.log(data3);
+			var company_drp3 = '<option value="">Select Month</option>';
+			$.each(data3, function(index, item3) {
 				
+				company_drp3 += '<option value="'+item3.month+'">'+item3.month_name+'</option>';
+			});
+			$('#month').append(company_drp3);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {						
-			//console.log(errorThrown);					
+			
+			//console.log(errorThrown);
 		}
 	});
-};
+}
 
-$(document).ready(function() {
-	loadData();
-});
+
+
 
 $('#submit').click(function(e){
 	e.preventDefault();
 	
-	var attendance_id = 0;
-	var emp_epf = 0;
-	var date = "";
-	var time_in = 0;
-	var time_out = 0;
-	var uploaded_by = "";
-	var approved_by = "";
+	var branch_id = 0;
+	var day = 0;
+	var month = 0;
 	
-	attendance_id = $('#attendance_id').val();
-	emp_epf = $('#emp_epf').val();
-	date = $('#date').val();
-	time_in = $('#time_in').val();
-	time_out = $('#time_out').val();
-	uploaded_by = $('#uploaded_by').val();
-	approved_by = $('#approved_by').val();
+	branch_id = $('#branch_id').val();
+	day = $('#day').val();
+	month = $('#month').val();	
 	
-	
-	if(typeof attendance_id !== 'undefined' && attendance_id !== ''
-	&& typeof emp_epf !== 'undefined' && emp_epf !== ''	
-	&& typeof date !== 'undefined' && date !== '' 
-	&& typeof time_in !== 'undefined' && time_in !== '' 
-	&& typeof time_out !== 'undefined' && time_out !== '' 
-	&& typeof uploaded_by !== 'undefined' && uploaded_by !== '' 
-	&& typeof approved_by !== 'undefined' && approved_by !== '')
+	if(typeof branch_id !== 'undefined' && branch_id !== '')
 	{
 		var formData = new FormData();
-		formData.append('attendance_id',attendance_id);
-		formData.append('emp_epf',emp_epf);
-        formData.append('date',date);
-		formData.append('time_in',time_in);
-		formData.append('time_out',time_out);
-        formData.append('uploaded_by',uploaded_by);
-		formData.append('approved_by',approved_by);	
+		formData.append('branch_id',branch_id);
+		formData.append('day',day);
+        formData.append('month',month);
 				
 		$.ajax({
 			type: "POST",
@@ -199,7 +168,7 @@ $('#submit').click(function(e){
 			processData: false,
 			contentType: false,
 			data: formData,				
-			url: API+"EmpAttendance/update/",
+			url: API+"EmpAttendance/approve/",
 			success: function(data, result){
 
 				if(data.message == "Changes Updated!"){	

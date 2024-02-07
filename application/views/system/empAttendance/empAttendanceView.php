@@ -52,8 +52,7 @@
 								<th>Date</th>
 								<th>Time In</th>
 								<th>Time Out</th>
-								<th>Upload by</th>
-								<th>Approved by</th>
+								<th>Approved</th>
 								<th>Option</th>
 							</tr>
 						</thead>
@@ -97,6 +96,14 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item.attendance_id);
+					
+					var is_approved  ='';
+					if(item.is_approved  == 1){
+						is_approved  = '<span class="right badge badge-success">Approved</span>';
+					}
+					else{
+						is_approved  = '<span class="right badge badge-danger">Not Approved</span>';
+					}
 									
 					table.row.add([item.attendance_id,
 					item.company_branch_name,
@@ -104,8 +111,7 @@ function loadData() {
 					item.date, 					
 					item.time_in,
 					item.time_out,
-					item.uploaded_by,
-					item.approved_by ,
+					is_approved ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';

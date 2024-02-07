@@ -288,23 +288,23 @@
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon text-red"></i>
                   <p>
-                    Employee Overtime task
+                    Employee Overtime
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
-				<li class="nav-item">
-                    <a href="<?php echo base_url() ?>EmpOvertimeRate/view" class="nav-link">
-                      <i class="fas fa-chart-line nav-icon text-red"></i>
-                      <p>Overtime rate</p>
-                    </a>
-                  </li>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpOvertime/view" class="nav-link">
                       <i class="fas fa-business-time nav-icon text-red"></i>
                       <p>Overtime details</p>
                     </a>
-                  </li>                  
+                  </li>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url() ?>EmpOvertimeRate/view" class="nav-link">
+                      <i class="fas fa-chart-line nav-icon text-red"></i>
+                      <p>Overtime rate</p>
+                    </a>
+                  </li>
                 </ul>
               </li>
 			  <li class="nav-item">
