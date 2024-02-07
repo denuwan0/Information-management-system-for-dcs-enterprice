@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Branch extends CI_Controller {
+class EmpSpecialTask extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
@@ -12,21 +12,21 @@ class Branch extends CI_Controller {
 	public function view()
 	{		
 		$this->load->view('/system/template/header');
-		$this->load->view('/system/branch/branchView');
+		$this->load->view('/system/empSpecialTask/empSpecialTaskView');
 		$this->load->view('/system/template/footer');
 	}
 	
 	public function edit()
 	{		
 		$this->load->view('/system/template/header');		
-		$this->load->view('/system/branch/branchEdit');
+		$this->load->view('/system/empSpecialTask/empSpecialTaskEdit');
 		$this->load->view('/system/template/footer');
 	}
 	
 	public function create()
 	{		
 		$this->load->view('/system/template/header');		
-		$this->load->view('/system/branch/branchCreate');
+		$this->load->view('/system/empSpecialTask/empSpecialTaskCreate');
 		$this->load->view('/system/template/footer');
 	}
 		

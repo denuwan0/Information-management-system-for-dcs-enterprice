@@ -22,14 +22,14 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Vehicle Details</h3>
+				<h3 class="card-title">Special Task Details</h3>
 				<div style="text-align: right;">
 					<?php 
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'vehicle/create" class="btn text-dark btn-default btn-sm">
-									<i class="nav-icon far fa-plus-square"></i> Add Vehicle
+							echo '<a type="button" href="'.base_url().'EmpSpecialTask/create" class="btn text-dark btn-default btn-sm">
+									<i class="nav-icon far fa-plus-square"></i> Add Special Task
 								</a>';
 						}
 						
@@ -44,10 +44,12 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
-								<th>Registered No.</th>
-								<th>YOM</th>
+								<th>Name</th>
 								<th>Type</th>
-								<th>Category</th>
+								<th>Date</th>
+								<th>Start Time</th>
+								<th>End Time</th>
+								<th>Complete</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -78,7 +80,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_all_join/",
+		url: API+"EmpSpecialTask/fetch_all_join/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -92,21 +94,31 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
-					var is_active_vhcl_details  ='';
-					if(item.is_active_vhcl_details  == 1){
-						is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
+					var is_active_sp_task  ='';
+					if(item.is_active_sp_task  == 1){
+						is_active_sp_task  = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_sp_task  = '<span class="right badge badge-danger">Inactive</span>';
+					}
+					
+					var is_complete  ='';
+					if(item.is_complete  == 1){
+						is_complete  = '<span class="right badge badge-success">Complete</span>';
+					}
+					else{
+						is_complete  = '<span class="right badge badge-danger">Not Complete</span>';
 					}
 					
 					
-					table.row.add([item.vehicle_id,
-					item.license_plate_no,
-					item.vehicle_yom, 					
-					item.vehicle_type_name,
-					item.vehicle_category_name,
-					is_active_vhcl_details ,
+					table.row.add([item.special_task_id,
+					item.task_name,
+					item.invoice_id, 					
+					item.task_type,
+					item.task_date,
+					item.task_start_time,
+					is_complete,
+					is_active_sp_task ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -123,8 +135,8 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>vehicle/edit/'+item.vehicle_id);
-					$(".viewBtn").last().attr('value', item.vehicle_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpSpecialTask/edit/'+item.special_task_id);
+					$(".viewBtn").last().attr('value', item.special_task_id);
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							

@@ -2,82 +2,73 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Vehicle Details</h3>
+				<h3 class="card-title">Special Task Details</h3>
 			</div>
 			<form>
 				<div class="card-body ">
 					<form>
 						<div class="form-row">
 							<div class="col-md-6 mb-3">
-								<label for="license_plate_no">License Plate No.</label>
-								<input type="text" class="form-control" id="license_plate_no" required>
+								<label for="task_name">Task Name</label>
+								<input type="text" class="form-control" id="task_name" required>
 								<div class="valid-feedback">
 									Looks good!
 								</div>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="branch_id">Branch</label>
-								<select class="custom-select" id="branch_id" aria-describedby="" required>
-									<option value="">Select Branch</option>
+								<label for="invoice_id">Invoice Id</label>
+								<select class="custom-select" id="invoice_id" aria-describedby="" required>
 								</select>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="vehicle_yom">YOM</label>
-								<input type="text" class="form-control" id="vehicle_yom" aria-describedby="validationServer05Feedback" required>
+								<label for="task_type">Task Type</label>
+								<select class="custom-select" id="task_type" aria-describedby="" required>
+									<option value="">Select Task Type</option>
+									<option value="Scaffolding">Scaffolding</option>
+									<option value="Heavy Machine Operating">Heavy Machine Operating</option>
+								</select>
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="valid_from_date">Date from</label>
+								<input class="form-control" id="valid_from_date" name="valid_from_date" placeholder="YYYY-MM-DD" type="text" autocomplete="off"/>
 								<div id="validationServer05Feedback" class="invalid-feedback">
 									Please provide a valid zip.
 								</div>
 							</div>
-							<div class="col-md-6 mb-3">
-								<label for="chasis_no">Chasis No.</label>
-								<input type="text" class="form-control" id="chasis_no" required>
+							<div class="col-md-3 mb-3">
+								<label for="valid_to_date">Date to</label>
+								<input class="form-control" id="valid_to_date" name="valid_to_date" placeholder="YYYY-MM-DD" type="text" autocomplete="off"/>
 								<div class="valid-feedback">
 									Looks good!
 								</div>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="vehicle_type_id">Vehicle Type</label>
-								<select class="custom-select" id="vehicle_type_id" aria-describedby="" required>
-								</select>
-								<div id="validationServer04Feedback" class="invalid-feedback">
-									Please select a valid state.
+								<label for="task_start_time">Task Start Time</label>
+								<input type="text" class="form-control" id="task_start_time" placeholder="ex 10:00:00" required>
+								<div class="valid-feedback">
+									Looks good!
 								</div>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="vehicle_category_id">Vehicle Category</label>
-								<select class="custom-select" id="vehicle_category_id" aria-describedby="validationServer04Feedback" required>
-								</select>
-								<div id="validationServer04Feedback" class="invalid-feedback">
-									Please select a valid state.
+								<label for="task_end_time">Task End Time</label>
+								<input type="text" class="form-control" id="task_end_time" placeholder="ex 17:20:00" required>
+								<div class="valid-feedback">
+									Looks good!
 								</div>
-							</div>
-							
+							</div>							
 						</div>
 						<div class="form-row">
-							<div class="col-md-6 mb-3">
-								<label for="engine_no">Engine No.</label>
-								<input type="text" class="form-control" id="engine_no" aria-describedby="validationServer03Feedback" required>
-								<div id="validationServer03Feedback" class="invalid-feedback">
-									Please provide a valid city.
-								</div>
-							</div>	
-							<div class="col-md-3 mb-3">
-								<label for="number_of_passengers">No. of Passengers</label>
-								<input type="text" class="form-control" id="number_of_passengers" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">
-									Please provide a valid zip.
+							<div class="col-md-2 mb-3">
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" id="is_active_sp_task"  value="1">
+									<label for="is_active_sp_task" class="custom-control-label">is active</label>
 								</div>
 							</div>
-							<div class="col-md-3 mb-3">
-								<label for="max_load">Max Load (Kg)</label>
-								<input type="text" class="form-control" id="max_load" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">
-									Please provide a valid zip.
+							<div class="col-md-2 mb-3">
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" id="is_complete" value="1">
+									<label for="is_complete" class="custom-control-label">is complete</label>
 								</div>
-							</div>
-							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="is_active_vhcl_details" value="1">
-								<label for="is_active_vhcl_details" class="custom-control-label">is active</label>
 							</div>
 						</div>
 					  
@@ -92,7 +83,20 @@
 	</div>
 </section>
 <script>
-
+$(document).ready(function(){
+	var date_input=$('input[name="valid_from_date"]'); //our date input has the name "date"
+	var date_input1=$('input[name="valid_to_date"]'); //our date input has the name "date"
+	var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+	var options={
+		format: 'yyyy-mm-dd',
+		container: container,
+		todayHighlight: true,
+		autoclose: true,
+		orientation: 'bottom'
+	};
+	date_input.datepicker(options);
+	date_input1.datepicker(options);
+})
 
 function loadVhType(){
 $.ajax({
