@@ -98,50 +98,6 @@ $(document).ready(function(){
 	date_input1.datepicker(options);
 })
 
-function loadVhType(){
-$.ajax({
-	type: "POST",
-	cache : false,
-	async: true,
-	dataType: "json",
-	url: API+"vehicleType/fetch_all_active/",
-	success: function(data, result){
-		var location_drp = '<option value="">Select Type</option>';
-		$.each(data, function(index, item) {
-			//console.log(item);
-			location_drp += '<option value="'+item.vehicle_type_id+'">'+item.vehicle_type_name+'</option>';
-        });
-		$('#vehicle_type_id').append(location_drp);
-	},
-	error: function(XMLHttpRequest, textStatus, errorThrown) {						
-		
-		//console.log(errorThrown);
-	}
-});
-}
-
-function loadVhCat(){
-$.ajax({
-	type: "POST",
-	cache : false,
-	async: true,
-	dataType: "json",
-	url: API+"vehicleCategory/fetch_all_active/",
-	success: function(data, result){
-		var company_drp = '<option value="">Select Category</option>';
-		$.each(data, function(index, item) {
-			//console.log(item);
-			company_drp += '<option value="'+item.vehicle_category_id+'">'+item.vehicle_category_name+'</option>';
-        });
-		$('#vehicle_category_id').append(company_drp);
-	},
-	error: function(XMLHttpRequest, textStatus, errorThrown) {						
-		
-		//console.log(errorThrown);
-	}
-});
-}
-
 function loadBranch(){
 $.ajax({
 	type: "POST",
@@ -164,8 +120,6 @@ $.ajax({
 });
 }
 
-loadVhType();
-loadVhCat();
 loadBranch();
 
 $('#submit').click(function(e){
