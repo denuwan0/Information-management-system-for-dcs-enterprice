@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class StockRental extends CI_Controller {
+class StockRentalAllocate extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
@@ -12,21 +12,22 @@ class StockRental extends CI_Controller {
 	public function view()
 	{		
 		$this->load->view('/system/template/header');
-		$this->load->view('/system/stockRental/stockRentalView');
+		$this->load->view('/system/stockRentalAllocate/stockRentalAllocateView');
 		$this->load->view('/system/template/footer');
 	}
 	
 	public function edit()
 	{		
 		$this->load->view('/system/template/header');		
-		$this->load->view('/system/stockRental/stockRentalEdit');
+		$this->load->view('/system/stockRentalAllocate/stockRentalAllocateEdit');
 		$this->load->view('/system/template/footer');
 	}
 	
 	public function create()
 	{		
 		$this->load->view('/system/template/header');		
-		$this->load->view('/system/stockRental/stockRentalCreate');
+		$this->load->view('/system/stockRentalAllocate/stockRentalAllocateCreate');
 		$this->load->view('/system/template/footer');
 	}
+	
 }

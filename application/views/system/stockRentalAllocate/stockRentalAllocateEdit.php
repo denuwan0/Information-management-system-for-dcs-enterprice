@@ -1,15 +1,35 @@
+<div class="modal fade" id="modalInfo"  aria-hidden="true" style="">
+	<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="modalInfoHeader">confirmation</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modalInfoBody" >	
+					Do you confirm delete ?
+				</div>
+				<div class="modal-footer justify-content-right">
+					<button type="button" class="btn btn-danger confirmBtn" id="confirmBtn" data-dismiss="modal">Yes</button>
+					<button type="button" class="btn btn-default cancelBtn" id="cancelBtn" data-dismiss="modal">No</button>
+				</div>
+		</div>
+	</div>
+</div>
+
 <section class="content">
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Retail Stock Allocation</h3>
+				<h3 class="card-title">Rental Stock Allocation Details</h3>
 			</div>
 
 			<form>
 				<div class="card-body itemBody">
 					<div class="row">
 						<div class="col-lg-9 row">
-							<input class="form-control" id="retail_stock_header_id" name="retail_stock_header_id" type="hidden"/>
+							<input class="form-control" id="rental_stock_header_id" name="rental_stock_header_id" type="hidden"/>
 							<div class="col-lg-3 mb-3" >
 								<div class="form-group"> <!-- Date input 1-->
 									<label class="control-label" for="date">Date: </label>
@@ -27,14 +47,14 @@
 								if($this->session->userdata('sys_user_group_name') == 'Admin'){
 									echo '<div class="col-md-2 mb-3">
 										<div class="custom-control custom-checkbox">
-											<input class="custom-control-input" type="checkbox" id="is_active_inv_stock_retail" name="is_active_inv_stock_retail" value="1">
-											<label for="is_active_inv_stock_retail" class="custom-control-label">is active</label>
+											<input class="custom-control-input" type="checkbox" id="is_active_inv_stock_rental" name="is_active_inv_stock_rental" value="1">
+											<label for="is_active_inv_stock_rental" class="custom-control-label">is active</label>
 										</div>
 									</div>
 									<div class="col-md-2 mb-3">
 										<div class="custom-control custom-checkbox">
-											<input class="custom-control-input" type="checkbox" id="is_approved_inv_stock_retail" name="is_approved_inv_stock_retail" value="1">
-											<label for="is_approved_inv_stock_retail" class="custom-control-label">is approved</label>
+											<input class="custom-control-input" type="checkbox" id="is_approved_inv_stock_rental" name="is_approved_inv_stock_rental" value="1">
+											<label for="is_approved_inv_stock_rental" class="custom-control-label">is approved</label>
 										</div>
 									</div>';
 								}
@@ -64,8 +84,8 @@
 											<tr>
 											  <th style="width: 5%">#</th>
 											  <th style="width: 30%">Main Item Name</th>
-											  <th style="width: 15%">Max Price</th>
-											  <th style="width: 15%">Min Price</th>											  
+											  <th style="width: 15%">Max Rent Price</th>
+											  <th style="width: 15%">Min Rent Price</th>											  
 											  <th style="width: 15%">No.of Items</th>
 											  <th style="width: 15%">Re-order level</th>
 											</tr>
@@ -85,8 +105,8 @@
 											<tr>
 											  <th style="width: 5%">#</th>
 											  <th style="width: 30%">Sub Item Name</th>
-											  <th style="width: 15%">Max Price</th>
-											  <th style="width: 15%">Min Price</th>											  
+											  <th style="width: 15%">Max Rent Price</th>
+											  <th style="width: 15%">Min Rent Price</th>											  
 											  <th style="width: 15%">No.of Items</th>
 											  <th style="width: 15%">Re-order level</th>
 											</tr>
@@ -130,23 +150,23 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"StockRetail/fetch_single_join/?id="+last_part,
+		url: API+"StockRental/fetch_single_join/?id="+last_part,
 		success: function(data, result){
 			//var parseData = JSON.stringify(data);
 			//var parseData1 = JSON.parse(parseData);	
-			//console.log(data);
+			console.log(data);
 			
-			$('#stock_purchase_date').val(data.header[0].retail_stock_assigned_date);
+			$('#stock_purchase_date').val(data.header[0].rental_stock_assigned_date);
 			$('#stock_batch_id').val(data.header[0].stock_batch_id);
-			$('#retail_stock_header_id').val(data.header[0].retail_stock_header_id);		
+			$('#rental_stock_header_id').val(data.header[0].rental_stock_header_id);		
 			loadStockBatch(data.header[0].stock_batch_id);
 						
-			if(data.header[0].is_approved_inv_stock_retail == 1){
-				$('#is_approved_inv_stock_retail').prop('checked', true);
+			if(data.header[0].is_approved_inv_stock_rental == 1){
+				$('#is_approved_inv_stock_rental').prop('checked', true);
 			}
 						
-			if(data.header[0].is_active_inv_stock_retail == 1){
-				$('#is_active_inv_stock_retail').prop('checked', true);
+			if(data.header[0].is_active_inv_stock_rental == 1){
+				$('#is_active_inv_stock_rental').prop('checked', true);
 			}
 			
 			var count1 = 1;
@@ -155,6 +175,7 @@ function loadData() {
 			var subItemRowHtml="";
 			
 			$.each(data.detail, function (i, item) {
+				console.log(item);
 				
 				if(item.is_sub_item == 0){
 					var numItems = $('.mainItemSet').length;
@@ -164,16 +185,16 @@ function loadData() {
 					mainItemRowHtml += '<tr class="mainItemSet itemRow" id="'+(count1)+'">'+
 					  '<td class="mainRowId" value="'+(count1)+'">'+(count1)+'.</td>'+
 					  '<td>'+
-						'<input type="hidden" class="form-control retail_stock_detail_id" id="retail_stock_detail_id" name="retail_stock_detail_id" value="'+item.retail_stock_detail_id+'">'+
+						'<input type="hidden" class="form-control rental_stock_id" id="rental_stock_id" name="rental_stock_id" value="'+item.rental_stock_id+'">'+
 						'<input type="hidden" class="form-control item_id" id="item_id" name="item_id" value="'+item.item_id+'">'+
 						'<input type="hidden" class="form-control is_sub_item" id="is_sub_item" name="is_sub_item" value="'+item.is_sub_item+'">'+
 						'<input type="text" class="form-control sub_item_name" id="sub_item_name" name="sub_item_name" value="'+item.item_name+'" disabled>'+
 					  '</td>'+
 					   '<td>'+
-						'<input type="number" class="form-control max_sale_price" id="max_sale_price" name="max_sale_price" value="'+item.max_sale_price+'" required>'+
+						'<input type="number" class="form-control max_rent_price" id="max_rent_price" name="max_rent_price" value="'+item.max_rent_price+'" required>'+
 					  '</td>'+
 					   '<td>'+
-						'<input type="number" class="form-control min_sale_price" id="min_sale_price" name="min_sale_price" value="'+item.min_sale_price+'" required>'+
+						'<input type="number" class="form-control min_rent_price" id="min_rent_price" name="min_rent_price" value="'+item.min_rent_price+'" required>'+
 					  '</td>'+
 					  '<td>'+
 						'<input class="form-control full_stock_count" id="full_stock_count" name="full_stock_count" max="'+item.full_stock_count+'" value="'+item.full_stock_count+'" type="number" min="0" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
@@ -206,16 +227,16 @@ function loadData() {
 					subItemRowHtml += '<tr class="subItemSet itemRow" id="'+(numItems+1)+'">'+
 					  '<td class="subRowId" value="'+(numItems+1)+'">'+(numItems+1)+'.</td>'+
 					   '<td>'+
-					   '<input type="hidden" class="form-control retail_stock_detail_id" id="retail_stock_detail_id" name="retail_stock_detail_id" value="'+item.retail_stock_detail_id+'">'+
-						'<input type="hidden" class="form-control item_id" id="item_id" name="item_id" value="'+item.sub_item_id+'">'+
+					   '<input type="hidden" class="form-control rental_stock_id" id="rental_stock_id" name="rental_stock_id" value="'+item.rental_stock_id+'">'+
+						'<input type="hidden" class="form-control item_id" id="item_id" name="item_id" value="'+item.item_id+'">'+
 						'<input type="hidden" class="form-control is_sub_item" id="is_sub_item" name="is_sub_item" value="'+item.is_sub_item+'">'+
 						'<input type="text" class="form-control sub_item_name" id="sub_item_name" name="sub_item_name" value="'+item.item_name+'" disabled>'+
 					  '</td>'+
 					  '<td>'+
-						'<input type="number" class="form-control element max_sale_price" id="max_sale_price" name="max_sale_price" value="'+item.max_sale_price+'" required>'+
+						'<input type="number" class="form-control element max_rent_price" id="max_rent_price" name="max_rent_price" value="'+item.max_rent_price+'" required>'+
 					  '</td>'+
 					  '<td>'+
-						'<input type="number" class="form-control element min_sale_price" id="min_sale_price" name="min_sale_price" value="'+item.min_sale_price+'" required>'+
+						'<input type="number" class="form-control element min_rent_price" id="min_rent_price" name="min_rent_price" value="'+item.min_rent_price+'" required>'+
 					  '</td>'+
 					   '<td>'+
 						'<input class="form-control full_stock_count" id="full_stock_count" name="full_stock_count" max="'+item.full_stock_count+'" value="'+item.full_stock_count+'" type="number" min="0" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
@@ -452,20 +473,175 @@ $(document).on("click", ".addSubBtn", function () {
 })
 
 $(document).on("click", ".mainRemoveBtn", function () {
-	$(this).parent().parent().remove();
+	//$('#modalInfo').modal('show');
 	
-	$('.mainItemSet').each( function(i){		
-		$(this).find('.mainRowId').text((i+1)+'.');
-	})
+	var this_ = $(this);
+	var class_ ="mainRemoveBtn";
+	
+	var mainItems = $('.mainItemSet').length;
+	var line_id = $(this).parent().parent().find('#rental_stock_id').val();
+	
+	console.log($(this).parent().parent().find('#rental_stock_id').val());
+	if(mainItems>1){
+		
+		removeItem(this_, class_, line_id);
+		
+	}
+	else{
+		const notyf = new Notyf();
+				
+		notyf.error({
+		  message: 'Cannot remove last item!',
+		  duration: 3000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	}
+	
+	
+	
+	/* $(document).on("click", ".confirmBtn", function () {	
+		this_.parent().parent().remove();
+		$('.mainItemSet').each( function(i){		
+			$(this).find('.mainRowId').text((i+1)+'.');
+		})
+	}) */
+	
 })
 
 $(document).on("click", ".subRemoveBtn", function () {
-	$(this).parent().parent().remove();
 	
-	$('.subItemSet').each( function(i){		
-		$(this).find('.subRowId').text((i+1)+'.');
-	})
+	var this_ = $(this);
+	var class_ = "subRemoveBtn";
+	
+	var subItems = $('.subItemSet').length;
+	var line_id = $(this).parent().parent().find('#rental_stock_id').val();
+	
+	
+	if(subItems>1){
+		
+		removeItem(this_, class_, line_id);
+		
+	}
+	else{
+		const notyf = new Notyf();
+				
+		notyf.error({
+		  message: 'Cannot remove last item!',
+		  duration: 3000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	}
+	
+	
 })
+
+function removeItem(this_, class_, line_id){
+	var formData = new Object();
+		formData = {
+			rental_stock_id:line_id,
+			is_active_retail_stock_detail:0
+		};
+		
+		$.ajax({
+			type: "POST",
+			//enctype: 'multipart/form-data',
+			cache : false,
+			async: true,
+			contentType: 'application/json',
+			dataType: "json",
+			processData: false,
+			data: JSON.stringify(formData),	
+			url: API+"stockRetail/remove_detail_item_by_line_id/",
+			success: function(data, result){
+				console.log(data.message);	
+				const notyf = new Notyf();
+				if(data.message == 'Data Updated!'){
+					
+					if(class_ == "mainRemoveBtn"){
+						this_.parent().parent().remove();
+						$('.mainItemSet').each( function(i){		
+							$(this).find('.mainRowId').text((i+1)+'.');
+						})
+					}
+					if(class_ == "subRemoveBtn"){
+						this_.parent().parent().remove();
+						$('.subItemSet').each( function(i){		
+							$(this).find('.subRowId').text((i+1)+'.');
+						})
+					}
+					
+					const notyf = new Notyf();
+							
+					notyf.success({
+					  message: 'Item removed!',
+					  duration: 3000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					
+				}
+				else{
+					const notyf = new Notyf();
+			
+					notyf.error({
+					  message: 'Error!',
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+				}
+				
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(XMLHttpRequest);
+				console.log(textStatus);		
+				console.log(errorThrown);	
+				const notyf = new Notyf();
+			
+				notyf.error({
+				  message: 'Error!',
+				  duration: 5000,
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+				
+			}
+		});
+}
+
+
 /* 
 $(document).on("change", ".main_item_id", function () {
 	if($(this).val() == ''){
@@ -500,11 +676,11 @@ $(document).on("click", "#submit", function (e) {
 	var created_by = 0;
 	var branch_id = 0;
 	var approved_by = 0;
-	var is_approved_inv_stock_retail = 0;
-	var is_active_inv_stock_retail = 0;
-	var retail_stock_header_id = 0;
+	var is_approved_inv_stock_rental = 0;
+	var is_active_inv_stock_rental = 0;
+	var rental_stock_header_id = 0;
 	var is_sub_item = 0;
-	var retail_stock_detail_id = 0;
+	var rental_stock_id = 0;
 	
 			
 	/* if(typeof stock_purchase_date !== 'undefined' && stock_purchase_date !== ''
@@ -513,32 +689,32 @@ $(document).on("click", "#submit", function (e) {
 	{ */
 					
 		stock_purchase_date = $('#stock_purchase_date').val();
-		retail_stock_header_id = $('#retail_stock_header_id').val();
+		rental_stock_header_id = $('#rental_stock_header_id').val();
 		stock_batch_id = $('#stock_batch_id').val();
-		is_approved_inv_stock_retail = $("#is_approved_inv_stock_retail").is(':checked')? 1 : 0;
-		is_active_inv_stock_retail = $("#is_active_inv_stock_retail").is(':checked')? 1 : 0;
+		is_approved_inv_stock_rental = $("#is_approved_inv_stock_rental").is(':checked')? 1 : 0;
+		is_active_inv_stock_rental = $("#is_active_inv_stock_rental").is(':checked')? 1 : 0;
 		
 		var itemsArr = [];
 		var stockHeader = [];
 		
 		$('.itemRow').each(function(){
 			
-			retail_stock_detail_id = $(this).find('#retail_stock_detail_id').val();
+			rental_stock_id = $(this).find('#rental_stock_id').val();
 			item_id = $(this).find('.item_id').val();
-			max_sale_price = $(this).find('#max_sale_price').val();
-			min_sale_price = $(this).find('#min_sale_price').val();
+			max_rent_price = $(this).find('#max_rent_price').val();
+			min_rent_price = $(this).find('#min_rent_price').val();
 			full_stock_count = $(this).find('#full_stock_count').val();
 			stock_re_order_level = $(this).find('#stock_re_order_level').val();
 			is_sub_item = $(this).find('#is_sub_item').val();
 			
-			//console.log(retail_stock_detail_id);
+			console.log(rental_stock_id);
 			
 			if(item_id != ''){
 				itemsArr.push({
-					retail_stock_detail_id: retail_stock_detail_id,
+					rental_stock_id: rental_stock_id,
 					item_id: item_id,
-					max_sale_price: max_sale_price,
-					min_sale_price: min_sale_price,
+					max_rent_price: max_rent_price,
+					min_rent_price: min_rent_price,
 					full_stock_count: full_stock_count,
 					stock_re_order_level: stock_re_order_level,
 					is_sub_item: is_sub_item
@@ -553,16 +729,16 @@ $(document).on("click", "#submit", function (e) {
 		
 		stockHeader.push(
 			{
-				'retail_stock_header_id':retail_stock_header_id,
+				'rental_stock_header_id':rental_stock_header_id,
 				'stock_batch_id':stock_batch_id,
 				'stock_purchase_date':stock_purchase_date,
-				'is_approved_inv_stock_retail':is_approved_inv_stock_retail,
-				'is_active_inv_stock_retail':is_active_inv_stock_retail
+				'is_approved_inv_stock_rental':is_approved_inv_stock_rental,
+				'is_active_inv_stock_rental':is_active_inv_stock_rental
 			}
 		);
 		
 				
-		//console.log(itemsArr);
+		console.log(stockHeader);
 		
 		
 		var formData = new Object();
@@ -573,17 +749,18 @@ $(document).on("click", "#submit", function (e) {
 		
 		console.log(formData);
 				
-		/* $.ajax({
+		$.ajax({
 			type: "POST",
+			//enctype: 'multipart/form-data',
 			cache : false,
 			async: true,
 			contentType: 'application/json',
 			dataType: "json",
 			processData: false,
 			data: JSON.stringify(formData),	
-			url: API+"stockRetail/update/",
+			url: API+"stockRental/update/",
 			success: function(data, result){
-				console.log(data.message);	
+				console.log(data);	
 				const notyf = new Notyf();
 				if(data['message'] == 'Data Updated!'){
 					notyf.success({
@@ -599,11 +776,11 @@ $(document).on("click", "#submit", function (e) {
 					  
 					})
 					window.setTimeout(function() {
-						window.location = "<?php echo base_url() ?>stockRetail/view";
+						window.location = "<?php echo base_url() ?>stockRetailAllocate/view";
 					}, 3000);
 				}
 				if(data['message'] == "Cannont approve inactive document!"){
-					notyf.success({
+					notyf.error({
 					  message: data['message'],
 					  duration: 5000,
 					  icon: true,
@@ -614,11 +791,14 @@ $(document).on("click", "#submit", function (e) {
 						y: 'top',
 					  }
 					  
-					})					
-				}
+					})
+				}	
 				
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(XMLHttpRequest);
+				console.log(textStatus);		
+				console.log(errorThrown);	
 				const notyf = new Notyf();
 			
 				notyf.error({
@@ -635,7 +815,7 @@ $(document).on("click", "#submit", function (e) {
 				})
 				
 			}
-		}); */
+		});
 		
 	//}
 	/* else{

@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Retail Stock Allocation</h3>
+				<h3 class="card-title">Rental Stock Allocation Details</h3>
 			</div>
 
 			<form>
@@ -23,8 +23,8 @@
 							</div>
 							<div class="col-md-4 mb-3">
 								<div class="custom-control custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="is_active_inv_stock_retail" name="is_active_inv_stock_retail" value="1">
-									<label for="is_active_inv_stock_retail" class="custom-control-label">is active</label>
+									<input class="custom-control-input" type="checkbox" id="is_active_inv_stock_rental" name="is_active_inv_stock_rental" value="1">
+									<label for="is_active_inv_stock_rental" class="custom-control-label">is active</label>
 								</div>
 							</div>
 						</div>
@@ -54,8 +54,8 @@
 											<tr>
 											  <th style="width: 5%">#</th>
 											  <th style="width: 30%">Main Item Name</th>
-											  <th style="width: 15%">Max Price</th>
-											  <th style="width: 15%">Min Price</th>											  
+											  <th style="width: 15%">Max Rent Price</th>
+											  <th style="width: 15%">Min Rent Price</th>											  
 											  <th style="width: 15%">No.of Items</th>
 											  <th style="width: 15%">Re-order level</th>
 											  <th style=""></th>
@@ -76,8 +76,8 @@
 											<tr>
 											  <th style="width: 5%">#</th>
 											  <th style="width: 30%">Sub Item Name</th>
-											  <th style="width: 15%">Max Price</th>
-											  <th style="width: 15%">Min Price</th>											  
+											  <th style="width: 15%">Max Rent Price</th>
+											  <th style="width: 15%">Min Rent Price</th>											  
 											  <th style="width: 15%">No.of Items</th>
 											  <th style="width: 15%">Re-order level</th>
 											  <th style=""></th>
@@ -205,13 +205,13 @@ function loadStockBatchItems(id){
 						'<input type="text" class="form-control sub_item_name" id="sub_item_name" name="sub_item_name" value="'+item.item_name+'" disabled>'+
 					  '</td>'+
 					   '<td>'+
-						'<input type="number" class="form-control element max_sale_price" id="max_sale_price" name="max_sale_price" required>'+
+						'<input type="number" class="form-control element max_rent_price" id="max_rent_price" name="max_rent_price" min="'+(item.item_cost/10)+'" required>'+
 					  '</td>'+
 					   '<td>'+
-						'<input type="number" class="form-control element min_sale_price" id="min_sale_price" name="min_sale_price" value="'+item.item_cost+'" required>'+
+						'<input type="number" class="form-control element min_rent_price" id="min_rent_price" name="min_rent_price" value="'+(item.item_cost/10)+'" required readonly>'+
 					  '</td>'+
 					  '<td>'+
-						'<input class="form-control full_stock_count" id="full_stock_count" name="full_stock_count" max="'+item.no_of_items+'" value="'+item.no_of_items+'" type="number" min="0" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
+						'<input class="form-control full_stock_count" id="full_stock_count" name="full_stock_count" max="'+item.available_no_of_items+'" value="'+item.available_no_of_items+'" type="number" min="0" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
 					  '</td>'+
 						'<td>'+
 						'<input class="form-control element stock_re_order_level" id="stock_re_order_level" name="stock_re_order_level" type="number" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
@@ -236,13 +236,13 @@ function loadStockBatchItems(id){
 						'<input type="text" class="form-control sub_item_name" id="sub_item_name" name="sub_item_name" value="'+item.sub_item_name+'" disabled>'+
 					  '</td>'+
 					   '<td>'+
-						'<input type="number" class="form-control element max_sale_price" id="max_sale_price" name="max_sale_price" required>'+
+						'<input type="number" class="form-control element max_rent_price" id="max_rent_price" name="max_rent_price" min="'+item.item_cost+'" required>'+
 					  '</td>'+
 					   '<td>'+
-						'<input type="number" class="form-control element min_sale_price" id="min_sale_price" name="min_sale_price" value="'+item.item_cost+'" required>'+
+						'<input type="number" class="form-control element min_rent_price" id="min_rent_price" name="min_rent_price" value="'+item.item_cost+'" required readonly>'+
 					  '</td>'+
 					  '<td>'+
-						'<input class="form-control full_stock_count" id="full_stock_count" name="full_stock_count" max="'+item.no_of_items+'" value="'+item.no_of_items+'" type="number" min="0" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
+						'<input class="form-control full_stock_count" id="full_stock_count" name="full_stock_count" max="'+item.available_no_of_items+'" value="'+item.available_no_of_items+'" type="number" min="0" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
 					  '</td>'+
 						'<td>'+
 						'<input class="form-control element stock_re_order_level" id="stock_re_order_level" name="stock_re_order_level" type="number" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
@@ -331,7 +331,15 @@ $(document).on("change", ".full_stock_count", function () {
 $(document).on("change", ".element", function () {
 	if($(this).val() < 0){
 		$(this).val(0);		
-	}	
+	}
+	else{
+		var min = parseFloat($(this).attr('min'));
+		var val = parseFloat($(this).val());
+		
+		if(val<min){
+			$(this).val(min);
+		}
+	}
 })
 
 $(document).on("keypress", ".element", function () {
@@ -366,18 +374,18 @@ $('#submit').click(function(e){
 		
 		
 		var item_id = 0;
-		var max_sale_price = 0;
-		var min_sale_price = 0;
+		var max_rent_price = 0;
+		var min_rent_price = 0;
 		var full_stock_count = 0;
 		var stock_re_order_level = 0;
 		var is_sub_item = 0;
 		var stock_batch_id = 0;
-		var is_active_inv_stock_retail = 0;
+		var is_active_inv_stock_rental = 0;
 		var stock_purchase_date = "";
 			
 		stock_purchase_date = $('#stock_purchase_date').val();
 		stock_batch_id = $('#stock_batch_id').val();
-		is_active_inv_stock_retail = $("#is_active_inv_stock_retail").is(':checked')? 1 : 0;
+		is_active_inv_stock_rental = $("#is_active_inv_stock_rental").is(':checked')? 1 : 0;
 		
 		
 		//is_allocated_stock = $("#is_allocated_stock").is(':checked')? 1 : 0;
@@ -386,8 +394,8 @@ $('#submit').click(function(e){
 		var itemsArr = [];
 		
 		var item_id_ok = 0;
-		var max_sale_price_ok = 0;
-		var min_sale_price_ok = 0;
+		var max_rent_price_ok = 0;
+		var min_rent_price_ok = 0;
 		var full_stock_count_ok = 0;
 		var stock_re_order_level_ok = 0;
 		
@@ -397,15 +405,15 @@ $('#submit').click(function(e){
 			}
 		})
 		
-		$('.max_sale_price').each(function(){
+		$('.max_rent_price').each(function(){
 			if($(this).val() == ''){
-				max_sale_price_ok += 1;
+				max_rent_price_ok += 1;
 			}
 		})
 		
-		$('.min_sale_price').each(function(){
+		$('.min_rent_price').each(function(){
 			if($(this).val() == ''){
-				min_sale_price_ok += 1;
+				min_rent_price_ok += 1;
 			}
 		})
 		
@@ -424,21 +432,21 @@ $('#submit').click(function(e){
 		$('.itemRow').each(function(){
 			
 			item_id = $(this).find('.item_id').val();
-			max_sale_price = $(this).find('#max_sale_price').val();
-			min_sale_price = $(this).find('#min_sale_price').val();
+			max_rent_price = $(this).find('#max_rent_price').val();
+			min_rent_price = $(this).find('#min_rent_price').val();
 			full_stock_count = $(this).find('#full_stock_count').val();
 			stock_re_order_level = $(this).find('#stock_re_order_level').val();
 			is_sub_item = $(this).find('#is_sub_item').val();
 			
 			
-			console.log(item_id+"/ "+max_sale_price+"/ "+min_sale_price+"/ "+full_stock_count+"/ "+stock_re_order_level+"/ "+is_sub_item);
+			//console.log(item_id+"/ "+max_rent_price+"/ "+min_rent_price+"/ "+full_stock_count+"/ "+stock_re_order_level+"/ "+is_sub_item);
 			
-			if(item_id_ok == 0 && max_sale_price_ok == 0 && min_sale_price_ok == 0 && full_stock_count_ok == 0 && stock_re_order_level_ok == 0){
+			if(item_id_ok == 0 && max_rent_price_ok == 0 && min_rent_price_ok == 0 && full_stock_count_ok == 0 && stock_re_order_level_ok == 0){
 				itemsArr.push({
 					item_id: item_id,
 					stock_batch_id: stock_batch_id,
-					max_sale_price: max_sale_price,
-					min_sale_price: min_sale_price,
+					max_rent_price: max_rent_price,
+					min_rent_price: min_rent_price,
 					full_stock_count: full_stock_count,
 					stock_re_order_level: stock_re_order_level,
 					is_sub_item: is_sub_item
@@ -456,7 +464,7 @@ $('#submit').click(function(e){
 			stockHeader.push(
 				{	
 					'stock_batch_id':stock_batch_id,
-					'is_active_inv_stock_retail':is_active_inv_stock_retail
+					'is_active_inv_stock_rental':is_active_inv_stock_rental
 				}
 			);	
 		}
@@ -470,7 +478,7 @@ $('#submit').click(function(e){
 		
 		console.log(itemsArr.length);
 				
-		if(item_id_ok == 0 && max_sale_price_ok == 0 && min_sale_price_ok == 0 && min_sale_price_ok == 0 && min_sale_price_ok == 0 && stock_batch_id != 0 && itemsArr.length > 0){
+		if(item_id_ok == 0 && max_rent_price_ok == 0 && min_rent_price_ok == 0 && min_rent_price_ok == 0 && min_rent_price_ok == 0 && stock_batch_id != 0 && itemsArr.length > 0){
 			submitData();
 		}
 		else{
@@ -499,7 +507,7 @@ $('#submit').click(function(e){
 				dataType: "json",
 				processData: false,
 				data: JSON.stringify(formData),	
-				url: API+"stockRetail/insert/",
+				url: API+"stockRental/insert/",
 				success: function(data, result){
 					//console.log(data);	
 					const notyf = new Notyf();
@@ -517,7 +525,7 @@ $('#submit').click(function(e){
 						  
 						})
 						window.setTimeout(function() {
-							window.location = "<?php echo base_url() ?>stockRetail/view";
+							window.location = "<?php echo base_url() ?>stockRentalAllocate/view";
 						}, 3000);
 					}	
 					else{

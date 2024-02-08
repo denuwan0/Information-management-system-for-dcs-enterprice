@@ -546,7 +546,7 @@
                     </a>
 					<ul class="nav nav-treeview">
 					  <li class="nav-item">
-						<a href="<?php echo base_url() ?>stockRental/allocate" class="nav-link">
+						<a href="<?php echo base_url() ?>stockRentalAllocate/view" class="nav-link">
 						  <i class="fas fa-boxes nav-icon text-yellow"></i>
 						  <p>Stock Allocation</p>
 						</a>
@@ -581,7 +581,7 @@
 					</ul>
                   </li>
                   <li class="nav-item">
-                    <a href="<?php echo base_url() ?>stockRental/view" class="nav-link">
+                    <a href="<?php echo base_url() ?>stockTransfer/view" class="nav-link">
                       <i class="fas fa-people-carry nav-icon text-info"></i>
                       <p>Stock Transfer</p>
                     </a>
