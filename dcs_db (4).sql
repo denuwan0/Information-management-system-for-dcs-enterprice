@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2024 at 07:03 AM
+-- Generation Time: Feb 08, 2024 at 11:47 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -1518,9 +1518,9 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'f86d95692fa4b55755f0', '285681', '2024-02-08 04:26:31', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '9600826e149f89b535dd', '459016', '2024-02-08 10:11:43', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '09781b019c39f6965deb', '251600', '2024-01-25 06:02:35', 1, 1),
-(3, 7, 2, 'manager', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-06 16:20:05', 0, 1),
+(3, 7, 2, 'manager', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-08 10:11:29', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
 (53, 8, 1, 'ntharu1', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 15:31:56', 1, 1),
@@ -1868,6 +1868,7 @@ CREATE TABLE `vehicle_service_details` (
   `next_service_in_kms` int(10) NOT NULL,
   `next_service_in_months` int(10) NOT NULL,
   `service_date` varchar(10) NOT NULL,
+  `next_service_date` varchar(20) NOT NULL,
   `service_invoice_number` varchar(100) NOT NULL,
   `service_cost` decimal(10,2) NOT NULL,
   `description` varchar(500) NOT NULL,
@@ -1879,10 +1880,12 @@ CREATE TABLE `vehicle_service_details` (
 -- Dumping data for table `vehicle_service_details`
 --
 
-INSERT INTO `vehicle_service_details` (`service_detail_id`, `service_center_id`, `vehicle_id`, `next_service_in_kms`, `next_service_in_months`, `service_date`, `service_invoice_number`, `service_cost`, `description`, `is_complete`, `is_active_vhcl_srv_detail`) VALUES
-(1, 1, 1, 65000, 4, '2024-02-07', 'INV4562', '18000.00', 'Full Service', 1, 1),
-(2, 3, 2, 1000, 3, '2024-02-08', '12123', '5000.00', 'bike service', 1, 0),
-(3, 1, 1, 500001, 31, '2024-02-10', '215151111', '200001.00', 'full service111', 1, 1);
+INSERT INTO `vehicle_service_details` (`service_detail_id`, `service_center_id`, `vehicle_id`, `next_service_in_kms`, `next_service_in_months`, `service_date`, `next_service_date`, `service_invoice_number`, `service_cost`, `description`, `is_complete`, `is_active_vhcl_srv_detail`) VALUES
+(1, 1, 1, 65000, 4, '2024-02-07', '', 'INV4562', '18000.00', 'Full Service', 1, 1),
+(2, 3, 2, 1000, 3, '2024-02-08', '', '12123', '5000.00', 'bike service', 1, 0),
+(3, 1, 1, 500001, 31, '2024-02-10', '', '215151111', '200001.00', 'full service111', 1, 1),
+(4, 3, 3, 212, 4, '2024-02-08', '', '2121', '50000.00', 'Full', 1, 1),
+(5, 2, 2, 121, 6, '2024-02-10', '2024-08-10', '232', '12121.00', 'dff', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -2865,7 +2868,7 @@ ALTER TABLE `vehicle_service_center`
 -- AUTO_INCREMENT for table `vehicle_service_details`
 --
 ALTER TABLE `vehicle_service_details`
-  MODIFY `service_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `service_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `vehicle_type`

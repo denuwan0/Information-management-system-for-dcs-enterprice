@@ -16,6 +16,11 @@
 								</div>
 							</div>
 							<div class="col-md-3 mb-3">
+								<label for="branch_id">Branch Id</label>
+								<select class="custom-select" id="branch_id" aria-describedby="" required>
+								</select>
+							</div>
+							<div class="col-md-3 mb-3">
 								<label for="invoice_id">Invoice Id</label>
 								<select class="custom-select" id="invoice_id" aria-describedby="" required>
 								</select>
@@ -122,54 +127,80 @@ $.ajax({
 
 loadBranch();
 
+
+
+function loadRentInvoice(){
+$.ajax({
+	type: "POST",
+	cache : false,
+	async: true,
+	dataType: "json",
+	url: API+"InventoryRentalInvoice/fetch_all_active/",
+	success: function(data2, result){
+		console.log(data2);
+		var company_drp = '<option value="">Select Invoice</option>';
+		$.each(data2, function(index, item) {
+			
+			company_drp += '<option value="'+item.invoice_id+'">'+item.invoice_id+' - '+item.customer_old_nic_no+' - '+item.customer_name+'</option>';
+        });
+		$('#invoice_id').append(company_drp);
+	},
+	error: function(XMLHttpRequest, textStatus, errorThrown) {						
+		
+		//console.log(errorThrown);
+	}
+});
+}
+
+loadRentInvoice();
+
 $('#submit').click(function(e){
 	e.preventDefault();
 		
-	var license_plate_no = 0;
-	var vehicle_yom = "";
-	var vehicle_type_id = 0;
-	var vehicle_category_id = 0;
-	var chasis_no = "";
-	var engine_no = "";
-	var number_of_passengers = 0;
-	var max_load = 0;
 	var branch_id = 0;
-	var is_active_vhcl_details = 0;
+	var task_name = "";
+	var invoice_id = 0;
+	var task_type = 0;
+	var task_start_date = "";
+	var task_end_date = "";
+	var task_start_time = 0;
+	var task_end_time = 0;
+	var is_active_sp_task = 0;
+	var is_complete = 0;
 	
-	license_plate_no = $('#license_plate_no').val();
-	vehicle_yom = $('#vehicle_yom').val();
-	vehicle_type_id = $('#vehicle_type_id').val();
-	vehicle_category_id = $('#vehicle_category_id').val();
-	chasis_no = $('#chasis_no').val();
-	engine_no = $('#engine_no').val();
-	number_of_passengers = $('#number_of_passengers').val();
-	max_load = $('#max_load').val();
 	branch_id = $('#branch_id').val();
-	is_active_vhcl_details = $("#is_active_vhcl_details").is(':checked')? 1 : 0;
+	task_name = $('#task_name').val();
+	invoice_id = $('#invoice_id').val();
+	task_type = $('#task_type').val();
+	task_start_date = $('#task_start_date').val();
+	task_end_date = $('#task_end_date').val();
+	task_start_time = $('#task_start_time').val();
+	task_end_time = $('#task_end_time').val();
+	is_active_sp_task = $("#is_active_sp_task").is(':checked')? 1 : 0;
+	is_complete = $("#is_complete").is(':checked')? 1 : 0;
 	
 		
-	if(typeof license_plate_no !== 'undefined' && license_plate_no !== '' 
-	&& typeof vehicle_yom !== 'undefined' && vehicle_yom !== ''
-	&& typeof vehicle_type_id !== 'undefined' && vehicle_type_id !== '' 
-	&& typeof vehicle_category_id !== 'undefined' && vehicle_category_id !== ''
-	&& typeof chasis_no !== 'undefined' && chasis_no !== '' 
-	&& typeof engine_no !== 'undefined' && engine_no !== ''
-	&& typeof number_of_passengers !== 'undefined' && number_of_passengers !== '' 
-	&& typeof max_load !== 'undefined' && max_load !== ''
-	&& typeof branch_id !== 'undefined' && branch_id !== '')
+	if(typeof branch_id !== 'undefined' && branch_id !== '' 
+	&& typeof task_name !== 'undefined' && task_name !== ''
+	&& typeof invoice_id !== 'undefined' && invoice_id !== '' 
+	&& typeof task_type !== 'undefined' && task_type !== ''
+	&& typeof task_start_date !== 'undefined' && task_start_date !== '' 
+	&& typeof task_end_date !== 'undefined' && task_end_date !== ''
+	&& typeof task_start_time !== 'undefined' && task_start_time !== '' 
+	&& typeof task_end_time !== 'undefined' && task_end_time !== '')
 	{
 		
 		var formData = new FormData();
-        formData.append('license_plate_no',license_plate_no);
-		formData.append('vehicle_yom',vehicle_yom);
-		formData.append('vehicle_type_id',vehicle_type_id);
-		formData.append('vehicle_category_id',vehicle_category_id);
-		formData.append('chasis_no',chasis_no);
-		formData.append('engine_no',engine_no);
-		formData.append('number_of_passengers',number_of_passengers);
-		formData.append('max_load',max_load);
-		formData.append('branch_id',branch_id);
-		formData.append('is_active_vhcl_details',is_active_vhcl_details);
+        formData.append('branch_id',branch_id);
+		formData.append('task_name',task_name);
+		formData.append('invoice_id',invoice_id);
+		formData.append('task_type',task_type);
+		formData.append('task_start_date',task_start_date);
+		formData.append('task_end_date',task_end_date);
+		formData.append('task_start_time',task_start_time);
+		formData.append('task_end_time',task_end_time);
+		formData.append('is_active_sp_task',is_active_sp_task);
+		formData.append('is_complete',is_complete);
 				
 		$.ajax({
 			type: "POST",
@@ -180,7 +211,7 @@ $('#submit').click(function(e){
 			processData: false,
 			contentType: false,
 			data: formData,	
-			url: API+"vehicle/insert/",
+			url: API+"EmpSpecialTask/insert/",
 			success: function(data, result){
 				console.log(data);	
 				const notyf = new Notyf();
@@ -198,7 +229,7 @@ $('#submit').click(function(e){
 				  
 				})
 				window.setTimeout(function() {
-					window.location = "<?php echo base_url() ?>vehicle/view";
+					window.location = "<?php echo base_url() ?>EmpSpecialTask/view";
 				}, 3000);
 			}	
 				
