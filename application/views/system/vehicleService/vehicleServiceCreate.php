@@ -152,7 +152,7 @@ $('#submit').click(function(e){
 	service_invoice_number = $('#service_invoice_number').val();
 	service_cost = $('#service_cost').val();
 	description = $('#description').val();
-	is_complete = $('#is_complete').val();
+	is_complete = $("#is_complete").is(':checked')? 1 : 0;
 	is_active_vhcl_srv_detail = $("#is_active_vhcl_srv_detail").is(':checked')? 1 : 0;
 	
 		

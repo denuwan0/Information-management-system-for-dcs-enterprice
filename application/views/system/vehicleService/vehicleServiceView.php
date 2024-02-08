@@ -44,6 +44,7 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
+								<th>Vehicle</th>
 								<th>Service Center</th>
 								<th>Date</th>
 								<th>Service Invoice</th>
@@ -74,7 +75,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicleService/",
+		url: API+"vehicleService/fetch_all_join",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -88,20 +89,31 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
-					var is_active_vhcl_srv_cntr  ='';
-					if(item.is_active_vhcl_srv_cntr  == 1){
-						is_active_vhcl_srv_cntr  = '<span class="right badge badge-success">Active</span>';
+					var is_active_vhcl_srv_detail  ='';
+					if(item.is_active_vhcl_srv_detail  == 1){
+						is_active_vhcl_srv_detail  = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_vhcl_srv_cntr  = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_vhcl_srv_detail  = '<span class="right badge badge-danger">Inactive</span>';
+					}
+					
+					var is_complete  ='';
+					if(item.is_complete  == 1){
+						is_complete  = '<span class="right badge badge-success">Complete</span>';
+					}
+					else{
+						is_complete  = '<span class="right badge badge-danger">Not Complete</span>';
 					}
 					
 					
-					table.row.add([item.service_center_id,
+					table.row.add([item.service_detail_id,
+					item.license_plate_no,
 					item.service_center_name,
-					item.service_center_contact, 					
-					item.service_center_address,
-					is_active_vhcl_srv_cntr ,
+					item.service_date, 					
+					item.service_invoice_number,
+					item.service_cost,
+					is_complete,
+					is_active_vhcl_srv_detail ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn" repair_loc_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
@@ -118,8 +130,8 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>vehicleServiceCenter/edit/'+item.service_center_id);
-					$(".viewBtn").last().attr('value',item.service_center_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>VehicleService/edit/'+item.service_detail_id);
+					$(".viewBtn").last().attr('value',item.service_detail_id);
 				});
 							
 			});
@@ -138,11 +150,12 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var service_center_id = "";
+	var service_detail_id = "";
 	var Header = "";
 	var HTML = "";
 	
-	service_center_id = $(this).attr('value');
+	service_detail_id = $(this).attr('value');
+	console.log(service_detail_id);
 	
 	$.ajax({
 		type: "GET",
@@ -150,32 +163,57 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicleServiceCenter/fetch_single/?id="+service_center_id,
+		url: API+"VehicleService/fetch_single_all_join/?id="+service_detail_id,
 		success: function(data, result){
 			console.log(data);
 			
-			Header = data[0].service_center_name;
+			Header = data[0].license_plate_no;
 			console.log(Header);
-			if(data[0].is_active_vhcl_srv_cntr == 1){
-				is_active_vhcl_srv_cntr  = '<span class="right badge badge-success">Active</span>';
+			if(data[0].is_active_vhcl_srv_detail == 1){
+				is_active_vhcl_srv_detail  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{
-				is_active_vhcl_srv_cntr  = '<span class="right badge badge-danger">Inactive</span>';
+				is_active_vhcl_srv_detail  = '<span class="right badge badge-danger">Inactive</span>';
+			}
+			
+			if(data[0].is_complete == 1){
+				is_complete  = '<span class="right badge badge-success">Complete</span>';
+			}
+			else{
+				is_complete  = '<span class="right badge badge-danger">Not Complete</span>';
 			}
 			
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<td><label for="repair_loc_name">Name: </label></td>'+
-						  '<td>'+data[0].service_center_name+'</td>'+
-						  '<th><label for="repair_loc_address">Address: </label></th>'+
-						  '<td>'+data[0].service_center_address+'</td>'+						 
+						  '<td><label for="repair_loc_name">Vehicle: </label></td>'+
+						  '<td>'+data[0].license_plate_no+'</td>'+
+						  '<th><label for="repair_loc_address">Service Center: </label></th>'+
+						  '<td>'+data[0].service_center_name+'</td>'+						 
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="repair_loc_contact">Contact: </label></th>'+
-						  '<td colspan="">'+data[0].service_center_contact+'</td>'+
+						  '<td><label for="repair_loc_name">Service Invoice: </label></td>'+
+						  '<td>'+data[0].service_invoice_number+'</td>'+
+						  '<th><label for="repair_loc_address">Cost: </label></th>'+
+						  '<td>'+data[0].service_cost+'</td>'+						 
+						'</tr>'+
+						'<tr>'+
+						 '<th><label for="repair_loc_contact">Date: </label></th>'+
+						  '<td colspan="">'+data[0].service_date+'</td>'+
+						  '<th><label for="repair_loc_address">Description: </label></th>'+
+						  '<td>'+data[0].description+'</td>'+						 
+						'</tr>'+
+						'<tr>'+
+						 '<th><label for="repair_loc_contact">Next Service In Kms: </label></th>'+
+						  '<td colspan="">'+data[0].next_service_in_kms+'</td>'+
+						  '<th><label for="repair_loc_address">Next Service In Months: </label></th>'+
+						  '<td>'+data[0].next_service_in_months+'</td>'+						 
+						'</tr>'+
+						'<tr>'+
+						   '<td><label for="is_active_vhcl_repair_loc">Complete: </label></td>'+
+						  '<td>'+is_complete+'</td>'+
 						  '<td><label for="is_active_vhcl_repair_loc">Status: </label></td>'+
-						  '<td>'+is_active_vhcl_srv_cntr+'</td>'+
+						  '<td>'+is_active_vhcl_srv_detail+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>';
