@@ -100,11 +100,11 @@ function loadData() {
 						is_approved_inv_stock_rental = '<span class="right badge badge-success">Yes</span>';
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 							$this->session->userdata('sys_user_group_name') == "Manager"){
-								echo '<div class="btn-group margin"><a type="button" id="viewBtn" stock_rental_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+								echo '<div class="btn-group margin"><a type="button" id="viewBtn" rental_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
 								echo '</div>';
 							}
 							else{
-								echo '<a type="button" id="viewBtn" stock_rental_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+								echo '<a type="button" id="viewBtn" rental_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
 							}
 
 						?>';
@@ -113,19 +113,19 @@ function loadData() {
 						is_approved_inv_stock_rental = '<span class="right badge badge-danger">No</span>';
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 							$this->session->userdata('sys_user_group_name') == "Manager"){
-								echo '<div class="btn-group margin"><a type="button" id="viewBtn" stock_rental_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								echo '<a type="button" id="editBtn" stock_rental_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
+								echo '<div class="btn-group margin"><a type="button" id="viewBtn" rental_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+								echo '<a type="button" id="editBtn" rental_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}
 							else{
-								echo '<a type="button" id="viewBtn" stock_rental_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+								echo '<a type="button" id="viewBtn" rental_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
 							}
 
 						?>';
-						//'<a type="button" id="editBtn" href="<?php echo base_url() ?>stockRetail/edit/'+item.stock_rental_header_id+'" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a> ';
+						//'<a type="button" id="editBtn" href="<?php echo base_url() ?>stockRetail/edit/'+item.rental_stock_header_id+'" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a> ';
 					}
 					
 					
-					table.row.add([item.stock_rental_header_id,
+					table.row.add([item.rental_stock_header_id,
 					item.stock_batch_id,
 					item.rental_stock_assigned_date,
 					is_approved_inv_stock_rental,
@@ -133,8 +133,8 @@ function loadData() {
 					option_html,
 					]).draw();
 
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>stockRentalAllocate/edit/'+item.stock_rental_header_id);
-					$(".viewBtn").last().attr('value',item.stock_rental_header_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>stockRentalAllocate/edit/'+item.rental_stock_header_id);
+					$(".viewBtn").last().attr('value',item.rental_stock_header_id);
 				});
 							
 			});
@@ -152,12 +152,12 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var stock_rental_header_id = "";
+	var rental_stock_header_id = "";
 	var Header = "";
 	var HTML = "";
 	var HTML2 = "";
 	
-	stock_rental_header_id = $(this).attr('value');
+	rental_stock_header_id = $(this).attr('value');
 	
 	$.ajax({
 		type: "GET",
@@ -165,7 +165,7 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"StockRental/fetch_single_join/?id="+stock_rental_header_id,
+		url: API+"StockRental/fetch_single_join/?id="+rental_stock_header_id,
 		success: function(data, result){
 			console.log(data);
 			//console.log(data.header[0].retail_stock_assigned_date);
@@ -238,7 +238,7 @@ $(document).on('click','.viewBtn', function(){
 			
 					
 		
-		$('#modalInfoHeader').html('Rental Stock Assigned No: '+data.header[0].stock_rental_header_id);
+		$('#modalInfoHeader').html('Rental Stock Assigned No: '+data.header[0].rental_stock_header_id);
 		$('#modalInfoBody').html(HTML);
 		$('#modalInfo').modal('show');
 				

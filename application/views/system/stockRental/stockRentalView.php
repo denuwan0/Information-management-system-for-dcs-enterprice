@@ -21,7 +21,7 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Retail Stock Allocation Details</h3>
+				<h3 class="card-title">Rental Stock Details</h3>
 				<div style="text-align: right;">
 					<?php 
 						/* if($this->session->userdata('sys_user_group_name') == "Admin" || 
@@ -74,7 +74,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"StockRetail/fetch_all_join_active_by_item",
+		url: API+"StockRental/fetch_all_join_active_by_item",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -92,27 +92,43 @@ function loadData() {
 				{
 					dom: 'Bfrtip',
 					buttons: [
-						'copyHtml5',
-						'excelHtml5',
-						'csvHtml5',
-						'pdfHtml5'
+						{
+							extend: 'colvis',
+							text: 'Show/hide columns'
+						},
+						{
+							extend: 'excelHtml5',
+							title: $('.card-title').text()
+						},
+						{
+							extend: 'copyHtml5',
+							title: $('.card-title').text()
+						},
+						{
+							extend: 'csvHtml5',
+							title: $('.card-title').text()
+						},
+						{
+							extend: 'pdfHtml5',
+							title: $('.card-title').text()
+						}
 					]
 				} ); 
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
-					var is_active_retail_stock_detail ='';
-					if(item.is_active_retail_stock_detail == 1){
-						is_active_retail_stock_detail = '<span class="right badge badge-success">Active</span>';
+					var is_active_rental_stock_detail ='';
+					if(item.is_active_rental_stock_detail == 1){
+						is_active_rental_stock_detail = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_retail_stock_detail = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_rental_stock_detail = '<span class="right badge badge-danger">Inactive</span>';
 					}
 										
-					var is_approved_inv_stock_retail ='';
+					var is_approved_inv_stock_rental ='';
 					var option_html ='';
-					if(item.is_approved_inv_stock_retail == 1){
-						is_approved_inv_stock_retail = '<span class="right badge badge-success">Yes</span>';
+					if(item.is_approved_inv_stock_rental == 1){
+						is_approved_inv_stock_rental = '<span class="right badge badge-success">Yes</span>';
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 							$this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
@@ -125,7 +141,7 @@ function loadData() {
 						?>';
 					}
 					else{
-						is_approved_inv_stock_retail = '<span class="right badge badge-danger">No</span>';
+						is_approved_inv_stock_rental = '<span class="right badge badge-danger">No</span>';
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 							$this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
@@ -144,7 +160,7 @@ function loadData() {
 					item.item_name,
 					(item.is_sub_item == 1 ? "Main Item": "Sub Item"),
 					item.tot_available_stock_count,
-					is_active_retail_stock_detail,
+					is_active_rental_stock_detail,
 					]).draw();
 
 					$(".editBtn").last().attr('href', '<?php echo base_url() ?>stockRetail/edit/'+item.retail_stock_header_id);

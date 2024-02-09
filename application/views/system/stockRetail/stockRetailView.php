@@ -21,7 +21,7 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Retail Stock Allocation Details</h3>
+				<h3 class="card-title">Retail Stock Details</h3>
 				<div style="text-align: right;">
 					<?php 
 						/* if($this->session->userdata('sys_user_group_name') == "Admin" || 
@@ -92,10 +92,26 @@ function loadData() {
 				{
 					dom: 'Bfrtip',
 					buttons: [
-						'copyHtml5',
-						'excelHtml5',
-						'csvHtml5',
-						'pdfHtml5'
+						{
+							extend: 'colvis',
+							text: 'Show/hide columns'
+						},
+						{
+							extend: 'excelHtml5',
+							title: $('.card-title').text()
+						},
+						{
+							extend: 'copyHtml5',
+							title: $('.card-title').text()
+						},
+						{
+							extend: 'csvHtml5',
+							title: $('.card-title').text()
+						},
+						{
+							extend: 'pdfHtml5',
+							title: $('.card-title').text()
+						}
 					]
 				} ); 
 				

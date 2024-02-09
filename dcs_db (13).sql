@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2024 at 07:39 PM
+-- Generation Time: Feb 09, 2024 at 03:19 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -227,8 +227,8 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`customer_id`, `customer_name`, `customer_working_address`, `customer_shipping_address`, `customer_nic_address`, `customer_old_nic_no`, `customer_new_nic_no`, `customer_contact_no`, `customer_email`, `created_date`, `is_web`, `is_active_customer`) VALUES
 (1, 'Shanaka', 'Mahara, Kadawatha', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', '961330456V', '', '94757848081', 'nadeetharu1225@gmail.com', '', 1, 1),
-(2, 'Sanjaya Hettiarachchi', 'No.56, Dekatana, Dompe', 'No.56, Dekatana, Dompe', '', '901330456V', '', '01128689591', 'cykatm@gmail.com', '', 1, 1),
-(3, 'Pavithra Jayasundara', 'No.4, Makola', 'No.4, Makola', '', '902345654V', '', '071895456', 'may12contact@gmail.com', '', 1, 1);
+(2, 'Sanjaya Hettiarachchi', 'No.56, Dekatana, Dompe', 'No.56, Dekatana, Dompe', '', '901330456V', '', '9428689591', 'cykatm@gmail.com', '', 1, 1),
+(3, 'Pavithra Jayasundara', 'No.4, Makola', 'No.4, Makola', '', '902345654V', '', '9471895456', 'may12contact@gmail.com', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -348,7 +348,7 @@ INSERT INTO `emp_details` (`emp_id`, `emp_epf`, `emp_branch_id`, `emp_company_id
 (5, 21212, 2, 1, 'Tharaka', 'Nadeesha', 'R', '94131313V', '2023-12-01', '21, Polhena, Madapatha', 'sasas', '121212121', 'nadeetharu1225@gmail.com', '212121', 1),
 (6, 2542, 4, 1, 'Ravindu', 'Niduk', 'Porage', '424424', '2023-12-02', '21, Polhena, Madapatha', '43dffd', '234242', 'may12contact@gmail.com', '42424', 1),
 (7, 2542, 2, 1, 'Hashani', 'Dilrangi', 'Ruberu', '424424', '2023-12-22', '21, Polhena, Madapatha', 'sas2332', '234242', 'denuwan0@gmail.com', '42424', 1),
-(8, 2121, 2, 1, 'Nadeesha', 'Tharaka', 'Tharaka', '212121', '2023-12-02', 'Bandaragama1', 'Bandaragama', '3224242', 'nadeetharu1225@gmail.com', '323232', 1),
+(8, 2121, 1, 1, 'Nadeesha', 'Tharaka', 'Tharaka', '212121', '2023-12-02', 'Bandaragama1', 'Bandaragama', '3224242', 'nadeetharu1225@gmail.com', '323232', 1),
 (9, 3212, 2, 1, 'Madushanka', 'M', 'D', '991330762V', '1991-01-04', 'No.12, Illukumbura, Matale', 'Enderamulla', '0712917384', 'madushanka@gmail.com', '0759871123', 1);
 
 -- --------------------------------------------------------
@@ -1134,12 +1134,12 @@ INSERT INTO `inventory_stock_purchase_detail` (`purchase_detail_line_id`, `stock
 (19, 1, 1, '111.00', 11, 11, 0, 1),
 (20, 1, 2, '222.00', 22, 22, 0, 1),
 (22, 2, 6, '50.00', 100, 75, 0, 0),
-(29, 3, 1, '1500.00', 10, 0, 10, 0),
-(30, 3, 2, '2000.00', 20, 0, 20, 0),
-(31, 3, 1, '1000.00', 30, 0, 30, 1),
-(32, 3, 2, '800.00', 40, 0, 40, 1),
-(33, 3, 3, '500.00', 50, 0, 50, 1),
-(34, 3, 4, '400.00', 60, 0, 60, 1);
+(29, 3, 1, '1500.00', 10, 10, 0, 0),
+(30, 3, 2, '2000.00', 20, 20, 0, 0),
+(31, 3, 1, '1000.00', 30, 30, 0, 1),
+(32, 3, 2, '800.00', 40, 40, 0, 1),
+(33, 3, 3, '500.00', 50, 50, 0, 1),
+(34, 3, 4, '400.00', 60, 60, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1166,7 +1166,7 @@ CREATE TABLE `inventory_stock_purchase_header` (
 INSERT INTO `inventory_stock_purchase_header` (`stock_batch_id`, `stock_purchase_date`, `stock_purchase_time`, `created_by`, `branch_id`, `approved_by`, `is_allocated_stock`, `is_approved_stock`, `is_active_stock_purchase`) VALUES
 (1, '2024-01-15', '', 1, 1, 0, 1, 1, 1),
 (2, '2024-01-16', '', 1, 1, 0, 1, 1, 1),
-(3, '2024-02-04', '', 1, 1, 0, 0, 1, 1);
+(3, '2024-02-04', '', 1, 1, 0, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1195,12 +1195,17 @@ CREATE TABLE `inventory_stock_rental_detail` (
 --
 
 INSERT INTO `inventory_stock_rental_detail` (`rental_stock_id`, `rental_stock_header_id`, `item_id`, `max_rent_price`, `min_rent_price`, `full_stock_count`, `out_stock_count`, `in_stock_count`, `damage_stock_count`, `repair_stock_count`, `is_sub_item`, `stock_re_order_level`, `is_active_rental_stock_detail`) VALUES
-(1, 1, 1, '150.00', '150.00', 10, 0, 10, 0, 0, 0, 5, 1),
-(2, 1, 2, '200.00', '200.00', 10, 0, 10, 0, 0, 0, 5, 1),
+(1, 1, 4, '400.00', '400.00', 10, 0, 10, 0, 0, 1, 5, 1),
+(2, 2, 4, '400.00', '400.00', 50, 0, 10, 0, 0, 1, 5, 1),
 (3, 1, 1, '1000.00', '1000.00', 10, 0, 10, 0, 0, 1, 5, 1),
 (4, 1, 2, '800.00', '800.00', 10, 0, 10, 0, 0, 1, 5, 1),
 (5, 1, 3, '500.00', '500.00', 10, 0, 10, 0, 0, 1, 5, 1),
-(6, 1, 4, '400.00', '400.00', 10, 0, 10, 0, 0, 1, 5, 1);
+(6, 1, 4, '400.00', '400.00', 10, 0, 10, 0, 0, 1, 5, 1),
+(7, 2, 2, '200.00', '200.00', 10, 0, 10, 0, 0, 0, 0, 1),
+(8, 2, 1, '1000.00', '1000.00', 20, 0, 20, 0, 0, 1, 5, 1),
+(9, 2, 2, '800.00', '800.00', 30, 0, 30, 0, 0, 1, 5, 1),
+(10, 2, 3, '500.00', '500.00', 40, 0, 40, 0, 0, 1, 5, 1),
+(11, 2, 4, '400.00', '400.00', 50, 0, 50, 0, 0, 1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -1209,7 +1214,7 @@ INSERT INTO `inventory_stock_rental_detail` (`rental_stock_id`, `rental_stock_he
 --
 
 CREATE TABLE `inventory_stock_rental_header` (
-  `stock_rental_header_id` int(10) NOT NULL,
+  `rental_stock_header_id` int(10) NOT NULL,
   `branch_id` int(10) NOT NULL,
   `rental_stock_assigned_date` varchar(20) NOT NULL,
   `stock_batch_id` int(10) NOT NULL,
@@ -1223,8 +1228,9 @@ CREATE TABLE `inventory_stock_rental_header` (
 -- Dumping data for table `inventory_stock_rental_header`
 --
 
-INSERT INTO `inventory_stock_rental_header` (`stock_rental_header_id`, `branch_id`, `rental_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_rental`, `is_active_inv_stock_rental`) VALUES
-(1, 1, '2024-02-08', 3, 1, 0, 0, 1);
+INSERT INTO `inventory_stock_rental_header` (`rental_stock_header_id`, `branch_id`, `rental_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_rental`, `is_active_inv_stock_rental`) VALUES
+(1, 1, '2024-02-09', 3, 1, 1, 1, 1),
+(2, 1, '2024-02-09', 3, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1542,12 +1548,12 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'd87293a183ff9131ad31', '176430', '2024-02-08 14:15:13', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '5eb15af2b310fc5fd423', '918983', '2024-02-09 12:55:57', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '09781b019c39f6965deb', '251600', '2024-01-25 06:02:35', 1, 1),
-(3, 7, 2, 'manager', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-08 10:11:29', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-09 13:50:47', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
-(53, 8, 1, 'ntharu1', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 15:31:56', 1, 1),
+(53, 8, 1, 'manager2', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-02-09 13:51:16', 1, 1),
 (54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-04 17:26:13', 0, 1);
 
 -- --------------------------------------------------------
@@ -2240,7 +2246,7 @@ ALTER TABLE `inventory_stock_rental_detail`
 -- Indexes for table `inventory_stock_rental_header`
 --
 ALTER TABLE `inventory_stock_rental_header`
-  ADD PRIMARY KEY (`stock_rental_header_id`);
+  ADD PRIMARY KEY (`rental_stock_header_id`);
 
 --
 -- Indexes for table `inventory_stock_retail_detail`
@@ -2736,13 +2742,13 @@ ALTER TABLE `inventory_stock_purchase_header`
 -- AUTO_INCREMENT for table `inventory_stock_rental_detail`
 --
 ALTER TABLE `inventory_stock_rental_detail`
-  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_header`
 --
 ALTER TABLE `inventory_stock_rental_header`
-  MODIFY `stock_rental_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_retail_detail`

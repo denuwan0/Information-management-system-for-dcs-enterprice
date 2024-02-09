@@ -191,7 +191,7 @@ function loadData() {
 						'<input type="text" class="form-control sub_item_name" id="sub_item_name" name="sub_item_name" value="'+item.item_name+'" disabled>'+
 					  '</td>'+
 					   '<td>'+
-						'<input type="number" class="form-control max_rent_price" id="max_rent_price" name="max_rent_price" value="'+item.max_rent_price+'" required>'+
+						'<input type="number" class="form-control max_rent_price" id="max_rent_price" name="max_rent_price" min="'+(item.item_cost/10)+'" value="'+item.max_rent_price+'" required>'+
 					  '</td>'+
 					   '<td>'+
 						'<input type="number" class="form-control min_rent_price" id="min_rent_price" name="min_rent_price" value="'+item.min_rent_price+'" required>'+
@@ -233,7 +233,7 @@ function loadData() {
 						'<input type="text" class="form-control sub_item_name" id="sub_item_name" name="sub_item_name" value="'+item.item_name+'" disabled>'+
 					  '</td>'+
 					  '<td>'+
-						'<input type="number" class="form-control element max_rent_price" id="max_rent_price" name="max_rent_price" value="'+item.max_rent_price+'" required>'+
+						'<input type="number" class="form-control element max_rent_price" id="max_rent_price" name="max_rent_price" min="'+(item.item_cost/10)+'" value="'+item.max_rent_price+'" required>'+
 					  '</td>'+
 					  '<td>'+
 						'<input type="number" class="form-control element min_rent_price" id="min_rent_price" name="min_rent_price" value="'+item.min_rent_price+'" required>'+
@@ -553,7 +553,7 @@ function removeItem(this_, class_, line_id){
 	var formData = new Object();
 		formData = {
 			rental_stock_id:line_id,
-			is_active_retail_stock_detail:0
+			is_active_rental_stock_detail:0
 		};
 		
 		$.ajax({
@@ -565,7 +565,7 @@ function removeItem(this_, class_, line_id){
 			dataType: "json",
 			processData: false,
 			data: JSON.stringify(formData),	
-			url: API+"stockRetail/remove_detail_item_by_line_id/",
+			url: API+"stockRental/remove_detail_item_by_line_id/",
 			success: function(data, result){
 				console.log(data.message);	
 				const notyf = new Notyf();
@@ -776,7 +776,7 @@ $(document).on("click", "#submit", function (e) {
 					  
 					})
 					window.setTimeout(function() {
-						window.location = "<?php echo base_url() ?>stockRetailAllocate/view";
+						window.location = "<?php echo base_url() ?>stockRentalAllocate/view";
 					}, 3000);
 				}
 				if(data['message'] == "Cannont approve inactive document!"){
