@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2024 at 08:45 PM
+-- Generation Time: Feb 10, 2024 at 11:10 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -1144,7 +1144,10 @@ INSERT INTO `inventory_stock_purchase_detail` (`purchase_detail_line_id`, `stock
 (105, 4, 1, '121.00', 1, 0, 1, 0),
 (106, 4, 3, '11.00', 5, 0, 5, 0),
 (107, 4, 6, '131.00', 2, 0, 2, 1),
-(108, 4, 2, '1212.00', 22, 0, 22, 1);
+(108, 4, 2, '1212.00', 22, 0, 22, 1),
+(109, 5, 3, '21.00', 12, 0, 12, 0),
+(112, 6, 4, '22.00', 12, 0, 12, 0),
+(113, 6, 3, '21.00', 21, 0, 21, 1);
 
 -- --------------------------------------------------------
 
@@ -1172,7 +1175,9 @@ INSERT INTO `inventory_stock_purchase_header` (`stock_batch_id`, `stock_purchase
 (1, '2024-01-15', '', 1, 1, 0, 1, 1, 1),
 (2, '2024-01-16', '', 1, 1, 0, 1, 1, 1),
 (3, '2024-02-04', '', 1, 1, 0, 1, 1, 1),
-(4, '2024-02-10', '', 1, 1, 1, 0, 1, 1);
+(4, '2024-02-10', '', 1, 1, 1, 0, 1, 1),
+(5, '2024-02-07', '', 3, 2, 0, 0, 0, 1),
+(6, '2024-02-09', '', 3, 2, 3, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1322,7 +1327,13 @@ INSERT INTO `inventory_stock_transfer_detail` (`inventory_stock_transfer_detail_
 (13, 4, 1, 0, 2, 0),
 (14, 4, 2, 0, 3, 0),
 (15, 4, 1, 1, 3, 0),
-(16, 4, 2, 1, 4, 0);
+(16, 4, 2, 1, 4, 0),
+(17, 5, 1, 0, 21, 0),
+(18, 5, 6, 1, 11, 0),
+(19, 6, 6, 0, 12, 0),
+(20, 7, 2, 0, 32, 0),
+(21, 8, 2, 0, 5, 0),
+(22, 8, 6, 1, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -1339,6 +1350,7 @@ CREATE TABLE `inventory_stock_transfer_header` (
   `created_by` int(10) NOT NULL,
   `transfer_type` varchar(50) NOT NULL COMMENT 'IN, OUT',
   `stock_type` varchar(10) NOT NULL COMMENT 'Retail, Rental',
+  `inform_user_id` int(10) NOT NULL,
   `approved_by` int(10) NOT NULL,
   `is_approved` tinyint(1) NOT NULL,
   `is_accepted` tinyint(1) NOT NULL,
@@ -1350,9 +1362,13 @@ CREATE TABLE `inventory_stock_transfer_header` (
 -- Dumping data for table `inventory_stock_transfer_header`
 --
 
-INSERT INTO `inventory_stock_transfer_header` (`inventory_stock_transfer_header_id`, `branch_id_from`, `branch_id_to`, `create_date`, `create_time`, `created_by`, `transfer_type`, `stock_type`, `approved_by`, `is_approved`, `is_accepted`, `accepted_by`, `is_active_inv_stock_trans`) VALUES
-(1, 1, 2, '2024-02-10', '', 1, 'IN', 'Retail', 0, 0, 0, 0, 1),
-(4, 2, 4, '2024-02-10', '', 1, 'IN', 'Retail', 7, 0, 0, 0, 1);
+INSERT INTO `inventory_stock_transfer_header` (`inventory_stock_transfer_header_id`, `branch_id_from`, `branch_id_to`, `create_date`, `create_time`, `created_by`, `transfer_type`, `stock_type`, `inform_user_id`, `approved_by`, `is_approved`, `is_accepted`, `accepted_by`, `is_active_inv_stock_trans`) VALUES
+(1, 1, 2, '2024-02-10', '', 1, 'IN', 'Retail', 0, 8, 1, 0, 0, 1),
+(4, 2, 4, '2024-02-10', '', 1, 'IN', 'Retail', 0, 7, 1, 0, 0, 1),
+(5, 2, 4, '2024-02-11', '', 3, 'OUT', 'Rental', 0, 7, 1, 0, 0, 1),
+(6, 2, 3, '2024-02-08', '', 3, 'IN', 'Retail', 0, 0, 0, 0, 0, 1),
+(7, 2, 1, '2024-02-12', '', 3, 'OUT', 'Rental', 1, 7, 1, 0, 0, 1),
+(8, 3, 1, '2024-02-11', '', 1, 'IN', 'Rental', 0, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1590,12 +1606,12 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-10 19:33:27', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-10 21:56:55', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '09781b019c39f6965deb', '251600', '2024-01-25 06:02:35', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '7c6bc70387f8aebb1862', '950314', '2024-02-10 19:34:14', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '42576f320ae8bcce9e97', '577820', '2024-02-10 21:57:11', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
-(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-10 19:34:03', 0, 1),
+(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-10 20:55:31', 0, 1),
 (54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-04 17:26:13', 0, 1);
 
 -- --------------------------------------------------------
@@ -2778,13 +2794,13 @@ ALTER TABLE `inventory_retail_invoice_header`
 -- AUTO_INCREMENT for table `inventory_stock_purchase_detail`
 --
 ALTER TABLE `inventory_stock_purchase_detail`
-  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_header`
 --
 ALTER TABLE `inventory_stock_purchase_header`
-  MODIFY `stock_batch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `stock_batch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_detail`
@@ -2814,13 +2830,13 @@ ALTER TABLE `inventory_stock_retail_header`
 -- AUTO_INCREMENT for table `inventory_stock_transfer_detail`
 --
 ALTER TABLE `inventory_stock_transfer_detail`
-  MODIFY `inventory_stock_transfer_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `inventory_stock_transfer_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_transfer_header`
 --
 ALTER TABLE `inventory_stock_transfer_header`
-  MODIFY `inventory_stock_transfer_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `inventory_stock_transfer_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `inventory_sub_item`
