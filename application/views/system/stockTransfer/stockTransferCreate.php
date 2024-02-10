@@ -29,14 +29,19 @@
 									<option value="Rental">Rental</option>
 								</select>
 							</div>
-							<div class="col-md-3 mb-3">
+							<div class="col-md-2 mb-3">
 								<label for="company_country">Request From</label>
 								<select class="form-control" id="branch_id_from" name="branch_id_from">
 								</select>
 							</div>
-							<div class="col-md-3 mb-3">
+							<div class="col-md-2 mb-3">
 								<label for="company_country">Request To</label>
 								<select class="form-control" id="branch_id_to" name="branch_id_to">
+								</select>
+							</div>
+							<div class="col-md-2 mb-3">
+								<label for="company_country">Inform to</label>
+								<select class="form-control" id="inform_user_id" name="inform_user_id">
 								</select>
 							</div>
 						</div>
@@ -153,6 +158,31 @@
 	</div>
 </section>
 <script>
+function loadInformPerson(){
+	$.ajax({
+		type: "POST",
+		cache : false,
+		async: true,
+		dataType: "json",
+		url: API+"SysUser/fetch_all_active_join/",
+		success: function(data, result){
+			console.log(data);
+			var company_drp = '<option value="">Select User</option>';
+			$.each(data, function(index, item) {
+				//console.log(item);
+				company_drp += '<option value="'+item.user_id+'">'+item.company_branch_name+' - '+item.emp_first_name+'</option>';
+			});
+			$('#inform_user_id').append(company_drp);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			
+			//console.log(errorThrown);
+		}
+	});
+}
+
+loadInformPerson();
+
 function loadBranchFrom(){
 	$.ajax({
 		type: "POST",
@@ -428,6 +458,7 @@ $('#submit').click(function(e){
 	var branch_id_to = 0;
 	var transfer_type = 0;
 	var stock_type = 0;
+	var inform_user_id = 0;
 	
 	var item_id = 0;
 	var is_sub_item = 0;
@@ -438,6 +469,7 @@ $('#submit').click(function(e){
 	create_date = $('#create_date').val();
 	transfer_type = $('#transfer_type').val();
 	stock_type = $('#stock_type').val();
+	inform_user_id = $('#inform_user_id').val();
 	
 	var itemsArr = [];
 	var stockHeader = [];
@@ -481,7 +513,8 @@ $('#submit').click(function(e){
 			'branch_id_to':branch_id_to,
 			'create_date':create_date,
 			'transfer_type':transfer_type,
-			'stock_type':stock_type
+			'stock_type':stock_type,
+			'stock_type':inform_user_id
 		}
 	);
 	

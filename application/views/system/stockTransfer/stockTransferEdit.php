@@ -30,14 +30,19 @@
 									<option value="Rental">Rental</option>
 								</select>
 							</div>
-							<div class="col-md-3 mb-3">
+							<div class="col-md-2 mb-3">
 								<label for="company_country">Request From</label>
 								<select class="form-control" id="branch_id_from" name="branch_id_from">
 								</select>
 							</div>
-							<div class="col-md-3 mb-3">
+							<div class="col-md-2 mb-3">
 								<label for="company_country">Request To</label>
 								<select class="form-control" id="branch_id_to" name="branch_id_to">
+								</select>
+							</div>
+							<div class="col-md-2 mb-3">
+								<label for="company_country">Inform to</label>
+								<select class="form-control" id="inform_user_id" name="inform_user_id">
 								</select>
 							</div>
 						</div>
@@ -185,6 +190,36 @@ function loadData() {
 			if(data.header[0].is_active_inv_stock_trans == 1){
 				$('#is_active_inv_stock_trans').prop('checked', true);
 			}
+			
+			function loadInformPerson(){
+				$.ajax({
+					type: "POST",
+					cache : false,
+					async: true,
+					dataType: "json",
+					url: API+"SysUser/fetch_all_active_join/",
+					success: function(data6, result){
+						console.log(data.header[0].inform_user_id );
+						var company_drp = '<option value="">Select User</option>';
+						$.each(data6, function(index, item) {
+							if(data.header[0].inform_user_id == item.user_id){
+								company_drp += '<option value="'+item.user_id+'" selected>'+item.company_branch_name+' - '+item.emp_first_name+'</option>';
+							}
+							else{
+								company_drp += '<option value="'+item.user_id+'">'+item.company_branch_name+' - '+item.emp_first_name+'</option>';
+							}
+							
+						});
+						$('#inform_user_id').append(company_drp);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {						
+						
+						//console.log(errorThrown);
+					}
+				});
+			}
+
+			loadInformPerson();
 			
 			function loadBranchFrom(){
 				$.ajax({
