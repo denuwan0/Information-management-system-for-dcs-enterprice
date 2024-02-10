@@ -55,12 +55,10 @@
 								<label for="is_approved" class="custom-control-label">is approved</label>
 							</div>
 						</div>
-						<div class="col-md-2 mb-3">
-							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="is_accepted" value="1">
-								<label for="is_accepted" class="custom-control-label">is accept</label>
-							</div>
-						</div>						
+						<div class="col-md-6" id="acceptOption">
+							
+						</div>
+												
 					</div>
 						<div class="card card-primary card-tabs">
 						  <div class="card-header p-0 pt-1">
@@ -174,6 +172,45 @@ function loadData() {
 			if(data.header[0].is_approved == 1){
 				$('#is_approved').prop('checked', true);
 			}
+			
+			if(data.header[0].show_accept == 1){
+				
+				if(data.header[0].is_accepted == 1){
+					$('#acceptOption').html('<div class="col-md-2 mb-3">'+
+						'<div class="custom-control custom-checkbox">'+
+							'<input class="custom-control-input" type="checkbox" id="is_accepted" value="1" checked>'+
+							'<label for="is_accepted" class="custom-control-label">is accept</label>'+
+						'</div>'+
+					'</div>');
+				}
+				else{
+					$('#acceptOption').html('<div class="col-md-2 mb-3">'+
+						'<div class="custom-control custom-checkbox">'+
+							'<input class="custom-control-input" type="checkbox" id="is_accepted" value="1">'+
+							'<label for="is_accepted" class="custom-control-label">is accept</label>'+
+						'</div>'+
+					'</div>');
+				}
+				
+				
+				
+			}
+			else if(data.header[0].show_accept == 0){
+				
+				if(data.header[0].is_accepted == 1){
+					$('#acceptOption').html('<div class="col-md-2 mb-3">'+
+						'<span class="right badge badge-success">Accepted</span>'+
+					'</div>');
+				}
+				else{
+					$('#acceptOption').html('<div class="col-md-2 mb-3">'+
+						'<span class="right badge badge-danger">Not Accepted</span>'+
+					'</div>');
+				}
+				
+				
+			}
+			
 			
 			if(data.header[0].is_accepted == 1){
 				$('#is_accepted').prop('checked', true);
@@ -528,7 +565,6 @@ $(document).on("click", "#submit", function (e) {
 			
 			item_id = $(this).find('.item_id').val();
 			item_type = $(this).find('.item_id')[0].id;
-			item_cost = $(this).find('#item_cost').val();
 			no_of_items = $(this).find('#no_of_items').val();
 			
 			
@@ -536,7 +572,6 @@ $(document).on("click", "#submit", function (e) {
 				itemsArr.push({
 					item_id: item_id,
 					item_type: item_type,
-					item_cost: item_cost,
 					no_of_items: no_of_items
 				})
 			}
@@ -549,15 +584,19 @@ $(document).on("click", "#submit", function (e) {
 		
 		stockHeader.push(
 			{
-				'stock_batch_id':stock_batch_id,
-				'stock_purchase_date':stock_purchase_date,
-				//'is_allocated_stock':is_allocated_stock,
-				'is_approved_stock':is_approved_stock,
-				'is_active_stock_purchase':is_active_stock_purchase
+				'inventory_stock_transfer_header_id':inventory_stock_transfer_header_id,
+				'create_date':create_date,
+				'branch_id_from':branch_id_from,
+				'branch_id_to':branch_id_to,
+				'transfer_type':transfer_type,
+				'stock_type':stock_type,
+				'is_approved':is_approved,
+				'is_accepted':is_accepted,
+				'is_active_inv_stock_trans':is_active_inv_stock_trans
+				
 			}
 		);
-		
-				
+						
 		console.log(stockHeader);
 		
 		
@@ -571,7 +610,6 @@ $(document).on("click", "#submit", function (e) {
 		
 		var main_item_id_ok = 0;
 		var no_of_items_ok = 0;
-		var item_cost_ok = 0;
 		
 		$('.main_item_id').each(function(){
 			if($(this).val() == ''){
@@ -584,14 +622,9 @@ $(document).on("click", "#submit", function (e) {
 				no_of_items_ok += 1;
 			}
 		})
+	
 		
-		$('.item_cost').each(function(){
-			if($(this).val() == ''){
-				item_cost_ok += 1;
-			}
-		})
-		
-		if(main_item_id_ok == 0 && no_of_items_ok == 0 && item_cost_ok == 0){
+		if(main_item_id_ok == 0 && no_of_items_ok == 0){
 			submitData();
 		}
 		else{
@@ -620,7 +653,7 @@ $(document).on("click", "#submit", function (e) {
 				dataType: "json",
 				processData: false,
 				data: JSON.stringify(formData),	
-				url: API+"stock/update/",
+				url: API+"stockTransfer/update/",
 				success: function(data, result){
 					console.log(data);	
 					const notyf = new Notyf();

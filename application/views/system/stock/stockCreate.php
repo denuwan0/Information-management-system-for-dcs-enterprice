@@ -280,13 +280,11 @@ $(document).on("click", ".addMainBtn", function () {
 						var item_drp = '<option value="">Select Main Item</option>';
 						$.each(data, function(index, item) {
 							//console.log(item);
-							if(jQuery.inArray(item.item_id, selectedItemsArr) != -1) {
-								item_drp += '<option value="'+item.item_id+'">'+item.item_name+'</option>';
-							}
+							item_drp += '<option value="'+item.item_id+'">'+item.item_name+'</option>';
 							
 						});
 						
-						$('.table ').find('.main_item_id').last().append(item_drp);
+						$('.table').find('.main_item_id').last().append(item_drp);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {						
 						
