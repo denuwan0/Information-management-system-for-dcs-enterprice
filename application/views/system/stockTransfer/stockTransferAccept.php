@@ -11,6 +11,7 @@
 					
 				</div>
 				<div class="modal-footer justify-content-right">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 		</div>
@@ -20,18 +21,9 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Stock Transfer Create</h3>
+				<h3 class="card-title">Stock Transfer Accept</h3>
 				<div style="text-align: right;">
-					<?php 
-						if($this->session->userdata('sys_user_group_name') == "Admin" || 
-						$this->session->userdata('sys_user_group_name') == "Manager"){
-							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'stockTransfer/create" class="btn text-dark btn-default btn-sm">
-									<i class="nav-icon far fa-plus-square"></i> Add Stock Transfer
-								</a>';
-						}
-						
-					?>
+					
 				</div>
 			</div>
 			
@@ -76,7 +68,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"stockTransfer/fetch_all",
+		url: API+"stockTransfer/fetch_all_other",
 		success: function(data, result){
 			//console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -108,15 +100,11 @@ function loadData() {
 					
 					if(item.is_approved == 1){
 						is_approved = '<span class="right badge badge-success">Yes</span>';
-						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" ){
+						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
+							$this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
 								echo '</div>';
-								echo '<a type="button" id="editBtn" stock_batch_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
-							}
-							else if ($this->session->userdata('sys_user_group_name') == "Manager"){
-								echo '<div class="btn-group margin"><a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								echo '</div>';
-								
+								echo '<a style="display:none" type="button" id="editBtn" stock_batch_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}
 							else{
 								echo '<a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -260,7 +248,7 @@ $(document).on('click','.viewBtn', function(){
 						  '<th><label for="repair_loc_contact">Stock Type: </label></th>'+
 						  '<td colspan="">'+data.header[0].stock_type+'</td>'+
 						  '<td><label for="is_active_vhcl_repair_loc">Transfer Type: </label></td>'+
-						  '<td>'+data.header[0].transfer_type+'</td>'+
+						  '<td>'+(data.header[0].transfer_type == 'OUT' ?'IN':'OUT')+'</td>'+
 						'</tr>'+
 						'<tr>'+
 						  '<th><label for="repair_loc_contact">Accepted: </label></th>'+

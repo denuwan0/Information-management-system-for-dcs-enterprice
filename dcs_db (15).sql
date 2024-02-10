@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2024 at 03:19 PM
+-- Generation Time: Feb 10, 2024 at 08:45 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -1104,6 +1104,7 @@ CREATE TABLE `inventory_retail_invoice_header` (
   `created_date` varchar(10) NOT NULL,
   `create_time` varchar(10) NOT NULL,
   `total_discount` decimal(10,2) NOT NULL,
+  `is_pos` tinyint(1) NOT NULL,
   `is_active_inv_retail_invoice_hdr` tinyint(1) NOT NULL,
   `is_complete` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1139,7 +1140,11 @@ INSERT INTO `inventory_stock_purchase_detail` (`purchase_detail_line_id`, `stock
 (31, 3, 1, '1000.00', 30, 30, 0, 1),
 (32, 3, 2, '800.00', 40, 40, 0, 1),
 (33, 3, 3, '500.00', 50, 50, 0, 1),
-(34, 3, 4, '400.00', 60, 60, 0, 1);
+(34, 3, 4, '400.00', 60, 60, 0, 1),
+(105, 4, 1, '121.00', 1, 0, 1, 0),
+(106, 4, 3, '11.00', 5, 0, 5, 0),
+(107, 4, 6, '131.00', 2, 0, 2, 1),
+(108, 4, 2, '1212.00', 22, 0, 22, 1);
 
 -- --------------------------------------------------------
 
@@ -1166,7 +1171,8 @@ CREATE TABLE `inventory_stock_purchase_header` (
 INSERT INTO `inventory_stock_purchase_header` (`stock_batch_id`, `stock_purchase_date`, `stock_purchase_time`, `created_by`, `branch_id`, `approved_by`, `is_allocated_stock`, `is_approved_stock`, `is_active_stock_purchase`) VALUES
 (1, '2024-01-15', '', 1, 1, 0, 1, 1, 1),
 (2, '2024-01-16', '', 1, 1, 0, 1, 1, 1),
-(3, '2024-02-04', '', 1, 1, 0, 1, 1, 1);
+(3, '2024-02-04', '', 1, 1, 0, 1, 1, 1),
+(4, '2024-02-10', '', 1, 1, 1, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1292,25 +1298,61 @@ INSERT INTO `inventory_stock_retail_header` (`retail_stock_header_id`, `branch_i
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inventory_stock_transfer`
+-- Table structure for table `inventory_stock_transfer_detail`
 --
 
-CREATE TABLE `inventory_stock_transfer` (
-  `transfer_id` int(10) NOT NULL,
+CREATE TABLE `inventory_stock_transfer_detail` (
+  `inventory_stock_transfer_detail_id` int(10) NOT NULL,
+  `inventory_stock_transfer_header_id` int(10) NOT NULL,
+  `item_id` int(10) NOT NULL,
+  `is_sub_item` tinyint(1) NOT NULL,
+  `no_of_items` int(10) NOT NULL,
+  `is_active_stock_transfer_detail` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventory_stock_transfer_detail`
+--
+
+INSERT INTO `inventory_stock_transfer_detail` (`inventory_stock_transfer_detail_id`, `inventory_stock_transfer_header_id`, `item_id`, `is_sub_item`, `no_of_items`, `is_active_stock_transfer_detail`) VALUES
+(1, 1, 1, 0, 2, 0),
+(2, 1, 2, 0, 2, 0),
+(3, 1, 1, 1, 3, 0),
+(4, 1, 2, 1, 4, 0),
+(13, 4, 1, 0, 2, 0),
+(14, 4, 2, 0, 3, 0),
+(15, 4, 1, 1, 3, 0),
+(16, 4, 2, 1, 4, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_stock_transfer_header`
+--
+
+CREATE TABLE `inventory_stock_transfer_header` (
+  `inventory_stock_transfer_header_id` int(10) NOT NULL,
   `branch_id_from` int(10) NOT NULL,
   `branch_id_to` int(10) NOT NULL,
   `create_date` varchar(10) NOT NULL,
   `create_time` varchar(10) NOT NULL,
-  `sender_emp_id` int(10) NOT NULL,
-  `receiver_emp_id` int(10) NOT NULL,
-  `stock_id` int(10) NOT NULL,
-  `stock_amount` decimal(10,2) NOT NULL,
+  `created_by` int(10) NOT NULL,
   `transfer_type` varchar(50) NOT NULL COMMENT 'IN, OUT',
   `stock_type` varchar(10) NOT NULL COMMENT 'Retail, Rental',
-  `approved_emp_id` int(10) NOT NULL,
-  `is_complete` tinyint(1) NOT NULL,
+  `approved_by` int(10) NOT NULL,
+  `is_approved` tinyint(1) NOT NULL,
+  `is_accepted` tinyint(1) NOT NULL,
+  `accepted_by` int(10) NOT NULL,
   `is_active_inv_stock_trans` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventory_stock_transfer_header`
+--
+
+INSERT INTO `inventory_stock_transfer_header` (`inventory_stock_transfer_header_id`, `branch_id_from`, `branch_id_to`, `create_date`, `create_time`, `created_by`, `transfer_type`, `stock_type`, `approved_by`, `is_approved`, `is_accepted`, `accepted_by`, `is_active_inv_stock_trans`) VALUES
+(1, 1, 2, '2024-02-10', '', 1, 'IN', 'Retail', 0, 0, 0, 0, 1),
+(4, 2, 4, '2024-02-10', '', 1, 'IN', 'Retail', 7, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1548,12 +1590,12 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '5eb15af2b310fc5fd423', '918983', '2024-02-09 12:55:57', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-10 19:33:27', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '09781b019c39f6965deb', '251600', '2024-01-25 06:02:35', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-09 13:50:47', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '7c6bc70387f8aebb1862', '950314', '2024-02-10 19:34:14', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
-(53, 8, 1, 'manager2', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-02-09 13:51:16', 1, 1),
+(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-10 19:34:03', 0, 1),
 (54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-04 17:26:13', 0, 1);
 
 -- --------------------------------------------------------
@@ -2261,10 +2303,16 @@ ALTER TABLE `inventory_stock_retail_header`
   ADD PRIMARY KEY (`retail_stock_header_id`);
 
 --
--- Indexes for table `inventory_stock_transfer`
+-- Indexes for table `inventory_stock_transfer_detail`
 --
-ALTER TABLE `inventory_stock_transfer`
-  ADD PRIMARY KEY (`transfer_id`);
+ALTER TABLE `inventory_stock_transfer_detail`
+  ADD PRIMARY KEY (`inventory_stock_transfer_detail_id`);
+
+--
+-- Indexes for table `inventory_stock_transfer_header`
+--
+ALTER TABLE `inventory_stock_transfer_header`
+  ADD PRIMARY KEY (`inventory_stock_transfer_header_id`);
 
 --
 -- Indexes for table `inventory_sub_item`
@@ -2730,13 +2778,13 @@ ALTER TABLE `inventory_retail_invoice_header`
 -- AUTO_INCREMENT for table `inventory_stock_purchase_detail`
 --
 ALTER TABLE `inventory_stock_purchase_detail`
-  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_header`
 --
 ALTER TABLE `inventory_stock_purchase_header`
-  MODIFY `stock_batch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `stock_batch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_detail`
@@ -2763,10 +2811,16 @@ ALTER TABLE `inventory_stock_retail_header`
   MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `inventory_stock_transfer`
+-- AUTO_INCREMENT for table `inventory_stock_transfer_detail`
 --
-ALTER TABLE `inventory_stock_transfer`
-  MODIFY `transfer_id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `inventory_stock_transfer_detail`
+  MODIFY `inventory_stock_transfer_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `inventory_stock_transfer_header`
+--
+ALTER TABLE `inventory_stock_transfer_header`
+  MODIFY `inventory_stock_transfer_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `inventory_sub_item`

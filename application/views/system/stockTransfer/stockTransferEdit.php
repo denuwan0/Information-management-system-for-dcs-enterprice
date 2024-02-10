@@ -48,16 +48,25 @@
 								<input class="custom-control-input" type="checkbox" id="is_active_inv_stock_trans" value="1">
 								<label for="is_active_inv_stock_trans" class="custom-control-label">is active</label>
 							</div>
-						</div>
+						</div>	
 						<div class="col-md-2 mb-3">
 							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="is_approved" value="1">
-								<label for="is_approved" class="custom-control-label">is approved</label>
+								<input class="custom-control-input" type="checkbox" id="is_approved" value="1" >
+								<label for="is_approved" class="custom-control-label">is approve</label>
 							</div>
 						</div>
-						<div class="col-md-6" id="acceptOption">
-							
-						</div>
+						<?php 
+						if($this->session->userdata('sys_user_group_name') == "Admin" ){
+							echo '<div class="col-md-3 mb-3">
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" id="is_accepted" value="1">
+									<label for="is_accepted" class="custom-control-label">is accept</label>
+								</div>
+							</div>';
+						}
+						
+						?>
+						
 												
 					</div>
 						<div class="card card-primary card-tabs">
@@ -171,49 +180,6 @@ function loadData() {
 						
 			if(data.header[0].is_approved == 1){
 				$('#is_approved').prop('checked', true);
-			}
-			
-			if(data.header[0].show_accept == 1){
-				
-				if(data.header[0].is_accepted == 1){
-					$('#acceptOption').html('<div class="col-md-2 mb-3">'+
-						'<div class="custom-control custom-checkbox">'+
-							'<input class="custom-control-input" type="checkbox" id="is_accepted" value="1" checked>'+
-							'<label for="is_accepted" class="custom-control-label">is accept</label>'+
-						'</div>'+
-					'</div>');
-				}
-				else{
-					$('#acceptOption').html('<div class="col-md-2 mb-3">'+
-						'<div class="custom-control custom-checkbox">'+
-							'<input class="custom-control-input" type="checkbox" id="is_accepted" value="1">'+
-							'<label for="is_accepted" class="custom-control-label">is accept</label>'+
-						'</div>'+
-					'</div>');
-				}
-				
-				
-				
-			}
-			else if(data.header[0].show_accept == 0){
-				
-				if(data.header[0].is_accepted == 1){
-					$('#acceptOption').html('<div class="col-md-2 mb-3">'+
-						'<span class="right badge badge-success">Accepted</span>'+
-					'</div>');
-				}
-				else{
-					$('#acceptOption').html('<div class="col-md-2 mb-3">'+
-						'<span class="right badge badge-danger">Not Accepted</span>'+
-					'</div>');
-				}
-				
-				
-			}
-			
-			
-			if(data.header[0].is_accepted == 1){
-				$('#is_accepted').prop('checked', true);
 			}
 			
 			if(data.header[0].is_active_inv_stock_trans == 1){
@@ -671,7 +637,7 @@ $(document).on("click", "#submit", function (e) {
 						  
 						})
 						window.setTimeout(function() {
-							window.location = "<?php echo base_url() ?>stock/view";
+							window.location = "<?php echo base_url() ?>stockTransfer/view";
 						}, 3000);
 					}	
 					

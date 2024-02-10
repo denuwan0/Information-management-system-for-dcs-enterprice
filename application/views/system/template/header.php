@@ -580,11 +580,26 @@
 					  </li>
 					</ul>
                   </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>stockTransfer/view" class="nav-link">
-                      <i class="fas fa-people-carry nav-icon text-info"></i>
+				  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="fas fa-cube nav-icon text-info"></i>
                       <p>Stock Transfer</p>
+					  <i class="right fas fa-angle-left"></i>
                     </a>
+					<ul class="nav nav-treeview">
+					  <li class="nav-item">
+						<a href="<?php echo base_url() ?>stockTransfer/view" class="nav-link">
+						  <i class="fas fa-edit nav-icon text-white"></i>
+						  <p>Create</p>
+						</a>
+					  </li>
+					  <li class="nav-item">
+						<a href="<?php echo base_url() ?>stockTransfer/accept" class="nav-link">
+						  <i class="fas fa-handshake nav-icon text-white"></i>
+						  <p>Accept</p>
+						</a>
+					  </li>
+					</ul>
                   </li>
                 </ul>
               </li>

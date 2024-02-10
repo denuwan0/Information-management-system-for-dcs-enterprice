@@ -30,5 +30,10 @@ class StockTransfer extends CI_Controller {
 		$this->load->view('/system/template/footer');
 	}
 		
-	
+	public function accept()
+	{		
+		$this->load->view('/system/template/header');		
+		$this->load->view('/system/stockTransfer/stockTransferAccept');
+		$this->load->view('/system/template/footer');
+	}
 }
