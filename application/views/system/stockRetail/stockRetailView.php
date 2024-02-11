@@ -41,11 +41,16 @@
 					<table id="data" class="table table-bordered table-striped">
 						<thead id="thead">
 							<tr>
+								<th width="10%">Id</th>
 								<th width="10%">Branch</th>
 								<th width="10%">Item</th>
-								<th width="20%">Item type</th>
-								<th width="20%">Available stock</th>
-								<th width="20%">Active</th>
+								<th width="10%">Item type</th>
+								<th width="10%">Max Price</th>
+								<th width="10%">Min Price</th>
+								<th width="10%">Reorder Level</th>
+								<th width="10%">Available stock</th>
+								<th width="10%">Status</th>
+								<th width="10%">Option</th>
 							</tr>
 						</thead>
 						<tbody id="tbody">                
@@ -74,7 +79,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"StockRetail/fetch_all_join_active_by_item",
+		url: API+"StockRetail/fetch_all_total_stock_join",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -117,22 +122,16 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
-					var is_active_retail_stock_detail ='';
-					if(item.is_active_retail_stock_detail == 1){
-						is_active_retail_stock_detail = '<span class="right badge badge-success">Active</span>';
-					}
-					else{
-						is_active_retail_stock_detail = '<span class="right badge badge-danger">Inactive</span>';
-					}
-										
-					var is_approved_inv_stock_retail ='';
+					
+					var is_active_retail_stock ='';
 					var option_html ='';
-					if(item.is_approved_inv_stock_retail == 1){
-						is_approved_inv_stock_retail = '<span class="right badge badge-success">Yes</span>';
+					if(item.is_active_retail_stock == 1){
+						is_active_retail_stock = '<span class="right badge badge-success">Active</span>';
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 							$this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								echo '</div>';
+								
+								echo '<a style="display:block" type="button" id="editBtn" retail_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}
 							else{
 								echo '<a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -141,7 +140,7 @@ function loadData() {
 						?>';
 					}
 					else{
-						is_approved_inv_stock_retail = '<span class="right badge badge-danger">No</span>';
+						is_active_retail_stock = '<span class="right badge badge-danger">Inactive</span>';
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 							$this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
@@ -156,15 +155,20 @@ function loadData() {
 					}
 					
 					
-					table.row.add([item.company_branch_name,
+					table.row.add([item.retail_stock_id,
+					item.company_branch_name,
 					item.item_name,
 					(item.is_sub_item == 1 ? "Sub Item": "Main Item"),
-					item.tot_available_stock_count,
-					is_active_retail_stock_detail,
+					item.max_sale_price,
+					item.min_sale_price,
+					item.stock_re_order_level,
+					item.full_stock_count,
+					is_active_retail_stock,
+					option_html,
 					]).draw();
 
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>stockRetail/edit/'+item.retail_stock_header_id);
-					$(".viewBtn").last().attr('value',item.retail_stock_header_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>stockRetail/edit/'+item.retail_stock_id );
+					$(".viewBtn").last().attr('value',item.retail_stock_id );
 				});
 							
 			});
@@ -200,12 +204,13 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var retail_stock_header_id = "";
+	var retail_stock_id = "";
 	var Header = "";
 	var HTML = "";
 	var HTML2 = "";
 	
-	retail_stock_header_id = $(this).attr('value');
+	retail_stock_id = $(this).attr('value');
+	console.log(retail_stock_id);
 	
 	$.ajax({
 		type: "GET",
@@ -213,28 +218,21 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"StockRetail/fetch_single_join/?id="+retail_stock_header_id,
+		url: API+"StockRetail/fetch_all_total_stock_join_by_id/?id="+retail_stock_id,
 		success: function(data, result){
 			console.log(data);
 			//console.log(data.header[0].retail_stock_assigned_date);
-			var is_approved_inv_stock_retail='';
-			var is_active_inv_stock_retail='';
 			
-			if(data.header[0].is_approved_inv_stock_retail == 1){
-				is_approved_inv_stock_retail  = '<span class="right badge badge-success">Yes</span>';
+			var is_active_retail_stock='';
+			
+			if(data.is_active_retail_stock == 1){
+				is_active_retail_stock  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{
-				is_approved_inv_stock_retail  = '<span class="right badge badge-danger">No</span>';
+				is_active_retail_stock  = '<span class="right badge badge-danger">Inactive</span>';
 			}
 			
-			if(data.header[0].is_active_inv_stock_retail == 1){
-				is_active_inv_stock_retail  = '<span class="right badge badge-success">Active</span>';
-			}
-			else{
-				is_active_inv_stock_retail  = '<span class="right badge badge-danger">Inactive</span>';
-			}
-			
-			$.each(data.detail, function (i, item) {
+			$.each(data, function (i, item) {
 				console.log(item);
 				HTML2 ='<tr>'+
 						  '<td>'+(i+1)+'</td>'+
@@ -253,16 +251,14 @@ $(document).on('click','.viewBtn', function(){
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<th><label for="repair_loc_address">Stock Batch No: </label></th>'+
-						  '<td>'+data.header[0].stock_batch_id+'</td>'+
-						  '<td><label for="repair_loc_name">Stock Assigned Date: </label></td>'+
-						  '<td>'+data.header[0].retail_stock_assigned_date+'</td>'+						  						 
+						  '<th><label for="repair_loc_address">Stock Id: </label></th>'+
+						  '<td>'+data[0].retail_stock_id+'</td>'+
+						  '<td><label for="repair_loc_name">Branch: </label></td>'+
+						  '<td>'+data[0].company_branch_name+'</td>'+						  						 
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="repair_loc_contact">Approved: </label></th>'+
-						  '<td colspan="">'+is_approved_inv_stock_retail+'</td>'+
 						  '<td><label for="is_active_vhcl_repair_loc">Status: </label></td>'+
-						  '<td>'+is_active_inv_stock_retail+'</td>'+
+						  '<td>'+is_active_retail_stock+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>'+
@@ -286,7 +282,7 @@ $(document).on('click','.viewBtn', function(){
 			
 					
 		
-		$('#modalInfoHeader').html('Retail Stock Assigned No: '+data.header[0].retail_stock_header_id);
+		$('#modalInfoHeader').html('Retail Stock Assigned No: '+data[0].retail_stock_header_id);
 		$('#modalInfoBody').html(HTML+HTML2);
 		$('#modalInfo').modal('show');
 				
