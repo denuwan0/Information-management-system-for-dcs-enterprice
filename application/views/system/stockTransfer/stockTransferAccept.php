@@ -11,7 +11,8 @@
 					
 				</div>
 				<div class="modal-footer justify-content-right">
-					<button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
+					<button type="button" class="btn btn-success" id="acceptBtn">Accept</button>
+					<button type="button" class="btn btn-danger" id="rejectBtn">Reject</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 		</div>
@@ -21,7 +22,7 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Stock Transfer Accept</h3>
+				<h3 class="card-title">Stock Transfer Accept/ Reject</h3>
 				<div style="text-align: right;">
 					
 				</div>
@@ -175,9 +176,12 @@ function loadData() {
 
 loadData();
 
+var inventory_stock_transfer_header_id = "";
+var stock_type = 0;
+
 $(document).on('click','.viewBtn', function(){
 
-	var inventory_stock_transfer_header_id = "";
+	
 	var Header = "";
 	var HTML = "";
 	var HTML2 = "";
@@ -197,6 +201,7 @@ $(document).on('click','.viewBtn', function(){
 			var is_active_inv_stock_trans='';
 			var is_approved='';
 			var is_accepted='';
+			stock_type = data.header[0].stock_type;
 			
 			if(data.header[0].is_active_inv_stock_trans == 1){
 				is_active_inv_stock_trans  = '<span class="right badge badge-success">Active</span>';
@@ -222,7 +227,7 @@ $(document).on('click','.viewBtn', function(){
 			$.each(data.detail, function (i, item) {
 				HTML2 +='<tr>'+
 						  '<td>'+(i+1)+'</td>'+
-						  '<td>'+item.item_name+' ('+(item.is_sub_item == 0 ? 'Sub item' : 'Main item')+')</td>'+
+						  '<td>'+item.item_name+' ('+(item.is_sub_item == 0 ? 'Main item' : 'Sub item')+')</td>'+
 						  '<td>'+item.no_of_items+'</td>'+
 						'</tr>';
 				//console.log(HTML2);		
@@ -250,9 +255,11 @@ $(document).on('click','.viewBtn', function(){
 						  '<td><label for="is_active_vhcl_repair_loc">Transfer Type: </label></td>'+
 						  '<td>'+(data.header[0].transfer_type == 'OUT' ?'IN':'OUT')+'</td>'+
 						'</tr>'+
-						'<tr>'+
+						'<tr>'+						  
 						  '<th><label for="repair_loc_contact">Accepted: </label></th>'+
 						  '<td colspan="">'+is_accepted+'</td>'+
+						  '<th><label for="repair_loc_contact">Note: </label></th>'+
+						  '<td colspan=""><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></td>'+	
 						'</tr>'+
 					  '</tbody>'+
 					'</table>'+
@@ -280,6 +287,247 @@ $(document).on('click','.viewBtn', function(){
 				
 		}
 	});
+	
+	
+})
+
+$(document).on("click", "#acceptBtn", function (e) {
+	e.preventDefault();
+			
+		var stockHeader = [];
+			
+		
+		stockHeader.push(
+			{
+				'inventory_stock_transfer_header_id':inventory_stock_transfer_header_id,
+				'stock_type':stock_type				
+			}
+		);
+						
+		
+		
+		var formData = new Object();
+		formData = {
+			stockHeader:stockHeader
+		};
+		
+		
+		
+		if(stockHeader.length > 0){
+			submitData();
+		}
+		else{
+			const notyf = new Notyf();
+			notyf.error({
+			  message: 'Please fill all fields!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+		}
+				
+		function submitData(){
+			$.ajax({
+				type: "POST",
+				//enctype: 'multipart/form-data',
+				cache : false,
+				async: true,
+				contentType: 'application/json',
+				dataType: "json",
+				processData: false,
+				data: JSON.stringify(formData),	
+				url: API+"stockTransfer/accept/",
+				success: function(data, result){
+					console.log(data);	
+					const notyf = new Notyf();
+					if(data['message'] == 'Data Updated!'){
+						notyf.success({
+						  message: data['message'],
+						  duration: 5000,
+						  icon: true,
+						  ripple: true,
+						  dismissible: true,
+						  position: {
+							x: 'right',
+							y: 'top',
+						  }
+						  
+						})
+						window.setTimeout(function() {
+							window.location = "<?php echo base_url() ?>stockTransfer/accept";
+						}, 3000);
+					}	
+					
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(XMLHttpRequest);
+					console.log(textStatus);		
+					console.log(errorThrown);	
+					const notyf = new Notyf();
+				
+					notyf.error({
+					  message: 'Error!',
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					
+				}
+			});
+		}
+		
+		
+		
+	//}
+	/* else{
+		const notyf = new Notyf();
+			
+		notyf.error({
+		  message: 'Please Fill Required Fields!',
+		  duration: 5000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	} */
+	
+	
+})
+
+$(document).on("click", "#rejectBtn", function (e) {
+	e.preventDefault();
+	
+		
+		
+		var stockHeader = [];
+			
+		
+		stockHeader.push(
+			{
+				'inventory_stock_transfer_header_id':inventory_stock_transfer_header_id
+			}
+		);
+						
+		
+		
+		var formData = new Object();
+		formData = {
+			stockHeader:stockHeader
+		};
+		
+		
+		
+		if(stockHeader.length > 0){
+			submitData();
+		}
+		else{
+			const notyf = new Notyf();
+			notyf.error({
+			  message: 'Please fill all fields!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+		}
+				
+		function submitData(){
+			$.ajax({
+				type: "POST",
+				//enctype: 'multipart/form-data',
+				cache : false,
+				async: true,
+				contentType: 'application/json',
+				dataType: "json",
+				processData: false,
+				data: JSON.stringify(formData),	
+				url: API+"stockTransfer/reject/",
+				success: function(data, result){
+					console.log(data);	
+					const notyf = new Notyf();
+					if(data['message'] == 'Data Updated!'){
+						notyf.success({
+						  message: data['message'],
+						  duration: 5000,
+						  icon: true,
+						  ripple: true,
+						  dismissible: true,
+						  position: {
+							x: 'right',
+							y: 'top',
+						  }
+						  
+						})
+						window.setTimeout(function() {
+							window.location = "<?php echo base_url() ?>stockTransfer/accept";
+						}, 3000);
+					}	
+					
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(XMLHttpRequest);
+					console.log(textStatus);		
+					console.log(errorThrown);	
+					const notyf = new Notyf();
+				
+					notyf.error({
+					  message: 'Error!',
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					
+				}
+			});
+		}
+		
+		
+		
+	//}
+	/* else{
+		const notyf = new Notyf();
+			
+		notyf.error({
+		  message: 'Please Fill Required Fields!',
+		  duration: 5000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	} */
 	
 	
 })

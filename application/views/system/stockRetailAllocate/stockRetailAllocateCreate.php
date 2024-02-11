@@ -53,12 +53,9 @@
 										  <thead>
 											<tr>
 											  <th style="width: 5%">#</th>
-											  <th style="width: 30%">Main Item Name</th>
-											  <th style="width: 15%">Max Price</th>
-											  <th style="width: 15%">Min Price</th>											  
+											  <th style="width: 50%">Main Item Name</th>									  
 											  <th style="width: 15%">No.of Items</th>
-											  <th style="width: 15%">Re-order level</th>
-											  <th style=""></th>
+											  <th style="width: 10%"></th>
 											</tr>
 										  </thead>
 										  <tbody id="mainItemBody">
@@ -75,12 +72,9 @@
 										  <thead>
 											<tr>
 											  <th style="width: 5%">#</th>
-											  <th style="width: 30%">Sub Item Name</th>
-											  <th style="width: 15%">Max Price</th>
-											  <th style="width: 15%">Min Price</th>											  
+											  <th style="width: 50%">Sub Item Name</th>									  
 											  <th style="width: 15%">No.of Items</th>
-											  <th style="width: 15%">Re-order level</th>
-											  <th style=""></th>
+											  <th style="width: 10%"></th>
 											</tr>
 										  </thead>
 										  <tbody id="subItemBody">
@@ -204,17 +198,8 @@ function loadStockBatchItems(id){
 						'<input type="hidden" class="form-control is_sub_item" id="is_sub_item" name="is_sub_item" value="'+item.is_sub_item+'">'+
 						'<input type="text" class="form-control sub_item_name" id="sub_item_name" name="sub_item_name" value="'+item.item_name+'" disabled>'+
 					  '</td>'+
-					   '<td>'+
-						'<input type="number" class="form-control element max_sale_price" id="max_sale_price" name="max_sale_price" min="'+item.item_cost+'" required>'+
-					  '</td>'+
-					   '<td>'+
-						'<input type="number" class="form-control element min_sale_price" id="min_sale_price" name="min_sale_price" value="'+item.item_cost+'" required readonly>'+
-					  '</td>'+
 					  '<td>'+
 						'<input class="form-control full_stock_count" id="full_stock_count" name="full_stock_count" max="'+item.available_no_of_items+'" value="'+item.available_no_of_items+'" type="number" min="0" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
-					  '</td>'+
-						'<td>'+
-						'<input class="form-control element stock_re_order_level" id="stock_re_order_level" name="stock_re_order_level" type="number" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
 					  '</td>'+
 					'<td>'+
 						'<button type="button" class="btn btn-block btn-danger mainRemoveBtn"><i class="nav-icon far fa-minus-square"> </i> </button>'+
@@ -235,18 +220,9 @@ function loadStockBatchItems(id){
 						'<input type="hidden" class="form-control is_sub_item" id="is_sub_item" name="is_sub_item" value="'+item.is_sub_item+'">'+
 						'<input type="text" class="form-control sub_item_name" id="sub_item_name" name="sub_item_name" value="'+item.sub_item_name+'" disabled>'+
 					  '</td>'+
-					   '<td>'+
-						'<input type="number" class="form-control element max_sale_price" id="max_sale_price" name="max_sale_price" min="'+item.item_cost+'" required>'+
-					  '</td>'+
-					   '<td>'+
-						'<input type="number" class="form-control element min_sale_price" id="min_sale_price" name="min_sale_price" value="'+item.item_cost+'" required readonly>'+
-					  '</td>'+
 					  '<td>'+
 						'<input class="form-control full_stock_count" id="full_stock_count" name="full_stock_count" max="'+item.available_no_of_items+'" value="'+item.available_no_of_items+'" type="number" min="0" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
-					  '</td>'+
-						'<td>'+
-						'<input class="form-control element stock_re_order_level" id="stock_re_order_level" name="stock_re_order_level" type="number" autocomplete="off" oninput="this.value = Math.round(this.value);">'+
-					  '</td>'+					  
+					  '</td>'+				  
 					  '<td>'+
 						'<button type="button" class="btn btn-block btn-danger subRemoveBtn"><i class="nav-icon far fa-minus-square"> </i> </button>'+
 					 '</td>'+
@@ -374,10 +350,7 @@ $('#submit').click(function(e){
 		
 		
 		var item_id = 0;
-		var max_sale_price = 0;
-		var min_sale_price = 0;
 		var full_stock_count = 0;
-		var stock_re_order_level = 0;
 		var is_sub_item = 0;
 		var stock_batch_id = 0;
 		var is_active_inv_stock_retail = 0;
@@ -394,10 +367,7 @@ $('#submit').click(function(e){
 		var itemsArr = [];
 		
 		var item_id_ok = 0;
-		var max_sale_price_ok = 0;
-		var min_sale_price_ok = 0;
 		var full_stock_count_ok = 0;
-		var stock_re_order_level_ok = 0;
 		
 		$('.item_id').each(function(){
 			if($(this).val() == ''){
@@ -405,17 +375,6 @@ $('#submit').click(function(e){
 			}
 		})
 		
-		$('.max_sale_price').each(function(){
-			if($(this).val() == ''){
-				max_sale_price_ok += 1;
-			}
-		})
-		
-		$('.min_sale_price').each(function(){
-			if($(this).val() == ''){
-				min_sale_price_ok += 1;
-			}
-		})
 		
 		$('.full_stock_count').each(function(){
 			if($(this).val() == ''){
@@ -423,32 +382,18 @@ $('#submit').click(function(e){
 			}
 		})
 		
-		$('.stock_re_order_level').each(function(){
-			if($(this).val() == ''){
-				stock_re_order_level_ok += 1;
-			}
-		})
 		
 		$('.itemRow').each(function(){
 			
 			item_id = $(this).find('.item_id').val();
-			max_sale_price = $(this).find('#max_sale_price').val();
-			min_sale_price = $(this).find('#min_sale_price').val();
 			full_stock_count = $(this).find('#full_stock_count').val();
-			stock_re_order_level = $(this).find('#stock_re_order_level').val();
 			is_sub_item = $(this).find('#is_sub_item').val();
-			
-			
-			console.log(item_id+"/ "+max_sale_price+"/ "+min_sale_price+"/ "+full_stock_count+"/ "+stock_re_order_level+"/ "+is_sub_item);
-			
-			if(item_id_ok == 0 && max_sale_price_ok == 0 && min_sale_price_ok == 0 && full_stock_count_ok == 0 && stock_re_order_level_ok == 0){
+						
+			if(item_id_ok == 0 && full_stock_count_ok == 0){
 				itemsArr.push({
 					item_id: item_id,
 					stock_batch_id: stock_batch_id,
-					max_sale_price: max_sale_price,
-					min_sale_price: min_sale_price,
 					full_stock_count: full_stock_count,
-					stock_re_order_level: stock_re_order_level,
 					is_sub_item: is_sub_item
 				})
 			}
@@ -478,7 +423,7 @@ $('#submit').click(function(e){
 		
 		console.log(itemsArr.length);
 				
-		if(item_id_ok == 0 && max_sale_price_ok == 0 && min_sale_price_ok == 0 && min_sale_price_ok == 0 && min_sale_price_ok == 0 && stock_batch_id != 0 && itemsArr.length > 0){
+		if(item_id_ok == 0 && stock_batch_id != 0 && itemsArr.length > 0){
 			submitData();
 		}
 		else{

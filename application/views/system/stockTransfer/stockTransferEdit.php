@@ -546,6 +546,7 @@ $(document).on("click", "#submit", function (e) {
 	var stock_type = 0;
 	var is_approved = 0;
 	var is_accepted = 0;
+	var inform_user_id =0;
 	var is_active_inv_stock_trans = 0;
 	
 	
@@ -555,6 +556,7 @@ $(document).on("click", "#submit", function (e) {
 		branch_id_to = $('#branch_id_to').val();
 		transfer_type = $('#transfer_type').val();
 		stock_type = $('#stock_type').val();
+		inform_user_id = $('#inform_user_id').val();
 		is_approved = $("#is_approved").is(':checked')? 1 : 0;
 		is_accepted = $("#is_accepted").is(':checked')? 1 : 0;
 		is_active_inv_stock_trans = $("#is_active_inv_stock_trans").is(':checked')? 1 : 0;
@@ -591,6 +593,7 @@ $(document).on("click", "#submit", function (e) {
 				'branch_id_to':branch_id_to,
 				'transfer_type':transfer_type,
 				'stock_type':stock_type,
+				'inform_user_id':inform_user_id,
 				'is_approved':is_approved,
 				'is_accepted':is_accepted,
 				'is_active_inv_stock_trans':is_active_inv_stock_trans

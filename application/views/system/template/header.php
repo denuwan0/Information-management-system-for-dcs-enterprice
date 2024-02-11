@@ -596,7 +596,7 @@
 					  <li class="nav-item">
 						<a href="<?php echo base_url() ?>stockTransfer/accept" class="nav-link">
 						  <i class="fas fa-handshake nav-icon text-white"></i>
-						  <p>Accept</p>
+						  <p>Accept/ Reject</p>
 						</a>
 					  </li>
 					</ul>

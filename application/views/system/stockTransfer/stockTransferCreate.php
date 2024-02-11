@@ -514,7 +514,7 @@ $('#submit').click(function(e){
 			'create_date':create_date,
 			'transfer_type':transfer_type,
 			'stock_type':stock_type,
-			'stock_type':inform_user_id
+			'inform_user_id':inform_user_id
 		}
 	);
 	

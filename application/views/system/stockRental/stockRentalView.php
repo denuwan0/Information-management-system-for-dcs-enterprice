@@ -158,7 +158,7 @@ function loadData() {
 					
 					table.row.add([item.company_branch_name,
 					item.item_name,
-					(item.is_sub_item == 1 ? "Main Item": "Sub Item"),
+					(item.is_sub_item == 1 ? "Sub Item" : "Main Item"),
 					item.tot_available_stock_count,
 					is_active_rental_stock_detail,
 					]).draw();

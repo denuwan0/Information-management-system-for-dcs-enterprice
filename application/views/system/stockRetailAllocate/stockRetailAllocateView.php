@@ -139,25 +139,6 @@ function loadData() {
 							
 			});
 			
-
-			
-						
-			
-					
-			
-			
-			/* $('#name').autocomplete({
-				lookup: data,
-				onSelect: function (suggestion) {					  
-					country_id = suggestion.data;
-					$('#id').val(suggestion.data);
-					$('#name').val(suggestion.value);
-					$('#description').val(suggestion.country_desc);
-					if(suggestion.is_active == 1){
-						$('#is_active').prop('checked', true);
-					}
-				}
-			}); */
 				
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {						
@@ -209,10 +190,7 @@ $(document).on('click','.viewBtn', function(){
 				HTML2 +='<tr>'+
 						  '<td>'+(i+1)+'</td>'+
 						  '<td>'+item.item_name+' ('+(item.is_sub_item == 0 ? 'Sub item' : 'Main item')+')</td>'+
-						  '<td>'+item.max_sale_price+'</td>'+
-						  '<td>'+item.min_sale_price+'</td>'+
 						  '<td>'+item.full_stock_count+'</td>'+
-						  '<td>'+item.stock_re_order_level+'</td>'+
 						'</tr>';
 				//console.log(HTML2);		
 				//$('#detail_table').append(HTML2);
@@ -240,11 +218,8 @@ $(document).on('click','.viewBtn', function(){
 						'<thead id="thead">'+
 							'<tr>'+
 								'<th style="width: 5%">#</th>'+
-								'<th style="width: 30%">Item Name</th>'+
-								'<th style="width: 15%">Max Price</th>'+
-								'<th style="width: 15%">Min Price</th>	'+										  
+								'<th style="width: 30%">Item Name</th>'+									  
 								'<th style="width: 15%">No.of Items</th>'+
-								'<th style="width: 15%">Re-order level</th>'+
 							'</tr>'+
 						'</thead>'+
 					  '<tbody id="detail_table">'+
