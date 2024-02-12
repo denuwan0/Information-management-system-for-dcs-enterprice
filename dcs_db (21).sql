@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2024 at 06:07 PM
+-- Generation Time: Feb 12, 2024 at 07:48 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -1153,8 +1153,10 @@ CREATE TABLE `inventory_retail_total_stock` (
 --
 
 INSERT INTO `inventory_retail_total_stock` (`retail_stock_id`, `item_id`, `is_sub_item`, `max_sale_price`, `min_sale_price`, `full_stock_count`, `stock_re_order_level`, `branch_id`, `is_active_retail_stock`) VALUES
-(1, 4, 0, '0.00', '0.00', 12, 0, 1, 1),
-(2, 3, 1, '0.00', '0.00', 21, 0, 1, 1);
+(1, 1, 0, '0.00', '0.00', 20, 0, 1, 1),
+(2, 2, 0, '0.00', '0.00', 6, 0, 1, 1),
+(3, 6, 1, '0.00', '0.00', 6, 0, 1, 1),
+(4, 1, 1, '0.00', '0.00', 6, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1178,23 +1180,10 @@ CREATE TABLE `inventory_stock_purchase_detail` (
 --
 
 INSERT INTO `inventory_stock_purchase_detail` (`purchase_detail_line_id`, `stock_batch_id`, `item_id`, `item_cost`, `no_of_items`, `allocated_no_of_items`, `available_no_of_items`, `is_sub_item`) VALUES
-(18, 1, 1, '111.00', 11, 11, 0, 0),
-(19, 1, 1, '111.00', 11, 11, 0, 1),
-(20, 1, 2, '222.00', 22, 22, 0, 1),
-(22, 2, 6, '50.00', 100, 75, 0, 0),
-(29, 3, 1, '1500.00', 10, 10, 0, 0),
-(30, 3, 2, '2000.00', 20, 20, 0, 0),
-(31, 3, 1, '1000.00', 30, 30, 0, 1),
-(32, 3, 2, '800.00', 40, 40, 0, 1),
-(33, 3, 3, '500.00', 50, 50, 0, 1),
-(34, 3, 4, '400.00', 60, 60, 0, 1),
-(105, 4, 1, '121.00', 1, 1, 0, 0),
-(106, 4, 3, '11.00', 5, 0, 5, 0),
-(107, 4, 6, '131.00', 2, 0, 2, 1),
-(108, 4, 2, '1212.00', 22, 0, 22, 1),
-(109, 5, 3, '21.00', 12, 0, 12, 0),
-(116, 6, 4, '22.00', 12, 12, 0, 0),
-(117, 6, 3, '21.00', 21, 21, 0, 1);
+(5, 1, 1, '1200.00', 20, 20, 0, 0),
+(6, 1, 2, '1000.00', 30, 6, 24, 0),
+(7, 1, 6, '800.00', 500, 6, 494, 1),
+(8, 1, 1, '500.00', 200, 6, 194, 1);
 
 -- --------------------------------------------------------
 
@@ -1219,12 +1208,7 @@ CREATE TABLE `inventory_stock_purchase_header` (
 --
 
 INSERT INTO `inventory_stock_purchase_header` (`stock_batch_id`, `stock_purchase_date`, `stock_purchase_time`, `created_by`, `branch_id`, `approved_by`, `is_allocated_stock`, `is_approved_stock`, `is_active_stock_purchase`) VALUES
-(1, '2024-01-15', '', 1, 1, 0, 1, 1, 1),
-(2, '2024-01-16', '', 1, 1, 0, 1, 1, 1),
-(3, '2024-02-04', '', 1, 1, 0, 1, 1, 1),
-(4, '2024-02-10', '', 1, 1, 1, 0, 1, 1),
-(5, '2024-02-07', '', 3, 2, 0, 0, 0, 1),
-(6, '2024-02-09', '', 1, 1, 1, 1, 1, 1);
+(1, '2024-02-12', '', 1, 1, 1, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1246,17 +1230,10 @@ CREATE TABLE `inventory_stock_rental_detail` (
 --
 
 INSERT INTO `inventory_stock_rental_detail` (`rental_stock_id`, `rental_stock_header_id`, `item_id`, `full_stock_count`, `is_sub_item`, `is_active_rental_stock_detail`) VALUES
-(1, 1, 4, 0, 1, 1),
-(2, 2, 4, 0, 1, 1),
-(3, 1, 1, 0, 1, 1),
-(4, 1, 2, 0, 1, 1),
-(5, 1, 3, 0, 1, 1),
-(6, 1, 4, 0, 1, 1),
-(7, 2, 2, 0, 0, 1),
-(8, 2, 1, 0, 1, 1),
-(9, 2, 2, 0, 1, 1),
-(10, 2, 3, 0, 1, 1),
-(11, 2, 4, 0, 1, 1);
+(1, 1, 1, 2, 0, 1),
+(2, 1, 2, 2, 0, 1),
+(3, 1, 6, 2, 1, 1),
+(4, 1, 1, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1280,8 +1257,7 @@ CREATE TABLE `inventory_stock_rental_header` (
 --
 
 INSERT INTO `inventory_stock_rental_header` (`rental_stock_header_id`, `branch_id`, `rental_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_rental`, `is_active_inv_stock_rental`) VALUES
-(1, 1, '2024-02-09', 3, 1, 1, 1, 1),
-(2, 1, '2024-02-09', 3, 1, 1, 1, 1);
+(1, 1, '2024-02-12', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1303,18 +1279,18 @@ CREATE TABLE `inventory_stock_retail_detail` (
 --
 
 INSERT INTO `inventory_stock_retail_detail` (`retail_stock_detail_id`, `retail_stock_header_id`, `item_id`, `full_stock_count`, `is_sub_item`, `is_active_retail_stock_detail`) VALUES
-(1, 1, 6, 11, 0, 1),
-(2, 1, 6, 11, 1, 1),
-(3, 2, 2, 22, 1, 1),
-(4, 3, 5, 25, 0, 1),
-(5, 4, 6, 25, 0, 1),
-(6, 3, 5, 10, 0, 1),
-(7, 5, 1, 1, 0, 1),
-(8, 5, 3, 2, 0, 1),
-(9, 5, 6, 2, 1, 1),
-(10, 5, 2, 4, 1, 1),
-(11, 6, 4, 12, 0, 1),
-(12, 6, 3, 21, 1, 1);
+(1, 1, 1, 2, 0, 1),
+(2, 1, 2, 2, 0, 1),
+(3, 1, 6, 2, 1, 1),
+(4, 1, 1, 2, 1, 1),
+(5, 2, 1, 2, 0, 1),
+(6, 2, 2, 2, 0, 1),
+(7, 2, 6, 2, 1, 1),
+(8, 2, 1, 2, 1, 1),
+(9, 3, 1, 16, 0, 1),
+(10, 3, 2, 2, 0, 1),
+(11, 3, 6, 2, 1, 1),
+(12, 3, 1, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1338,12 +1314,9 @@ CREATE TABLE `inventory_stock_retail_header` (
 --
 
 INSERT INTO `inventory_stock_retail_header` (`retail_stock_header_id`, `branch_id`, `retail_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_retail`, `is_active_inv_stock_retail`) VALUES
-(1, 1, '2024-01-16', 1, 1, 1, 1, 1),
-(2, 1, '2024-01-16', 1, 1, 1, 1, 1),
-(3, 2, '2024-01-16', 2, 1, 1, 1, 1),
-(4, 2, '2024-01-16', 2, 1, 1, 1, 1),
-(5, 1, '2024-02-11', 4, 1, 1, 1, 1),
-(6, 1, '2024-02-11', 6, 1, 1, 1, 1);
+(1, 1, '2024-02-12', 1, 1, 1, 1, 1),
+(2, 1, '2024-02-12', 1, 1, 1, 1, 1),
+(3, 1, '2024-02-12', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1658,7 +1631,7 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'c725270500006a09fb94', '232233', '2024-02-11 12:45:13', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'bd64d64a37bab6fcdaf6', '674264', '2024-02-12 13:15:09', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '09781b019c39f6965deb', '251600', '2024-01-25 06:02:35', 1, 1),
 (3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-11 12:45:01', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
@@ -2864,31 +2837,31 @@ ALTER TABLE `inventory_retail_invoice_header`
 -- AUTO_INCREMENT for table `inventory_retail_total_stock`
 --
 ALTER TABLE `inventory_retail_total_stock`
-  MODIFY `retail_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `retail_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_detail`
 --
 ALTER TABLE `inventory_stock_purchase_detail`
-  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_header`
 --
 ALTER TABLE `inventory_stock_purchase_header`
-  MODIFY `stock_batch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `stock_batch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_detail`
 --
 ALTER TABLE `inventory_stock_rental_detail`
-  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_header`
 --
 ALTER TABLE `inventory_stock_rental_header`
-  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_retail_detail`
@@ -2900,7 +2873,7 @@ ALTER TABLE `inventory_stock_retail_detail`
 -- AUTO_INCREMENT for table `inventory_stock_retail_header`
 --
 ALTER TABLE `inventory_stock_retail_header`
-  MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_transfer_detail`

@@ -716,7 +716,7 @@ $(document).on("click", "#submit", function (e) {
 						window.location = "<?php echo base_url() ?>stockRetailAllocate/view";
 					}, 3000);
 				}
-				if(data['message'] == "Cannont approve inactive document!"){
+				if(data['message'] == "Cannot approve inactive document!"){
 					notyf.error({
 					  message: data['message'],
 					  duration: 5000,

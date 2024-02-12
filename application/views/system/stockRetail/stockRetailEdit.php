@@ -192,9 +192,9 @@ $(document).on("click", "#submit", function (e) {
 			success: function(data, result){
 				console.log(data.message);	
 				const notyf = new Notyf();
-				if(data['message'] == 'Data Updated!'){
+				if(data.message == 'Changes Updated!'){
 					notyf.success({
-					  message: data['message'],
+					  message: data.message,
 					  duration: 5000,
 					  icon: true,
 					  ripple: true,

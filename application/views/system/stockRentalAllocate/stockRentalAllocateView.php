@@ -101,7 +101,7 @@ function loadData() {
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 							$this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" rental_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								echo '</div>';
+								echo '<a style="display:none" type="button" id="editBtn" rental_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}
 							else{
 								echo '<a type="button" id="viewBtn" rental_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -121,7 +121,6 @@ function loadData() {
 							}
 
 						?>';
-						//'<a type="button" id="editBtn" href="<?php echo base_url() ?>stockRetail/edit/'+item.rental_stock_header_id+'" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a> ';
 					}
 					
 					
@@ -191,10 +190,7 @@ $(document).on('click','.viewBtn', function(){
 				HTML2 +='<tr>'+
 						  '<td>'+(i+1)+'</td>'+
 						  '<td>'+item.item_name+' ('+(item.is_sub_item == 0 ? 'Sub item' : 'Main item')+')</td>'+
-						  '<td>'+item.max_rent_price+'</td>'+
-						  '<td>'+item.min_rent_price+'</td>'+
 						  '<td>'+item.full_stock_count+'</td>'+
-						  '<td>'+item.stock_re_order_level+'</td>'+
 						'</tr>';
 				//console.log(HTML2);		
 				//$('#detail_table').append(HTML2);
@@ -222,11 +218,8 @@ $(document).on('click','.viewBtn', function(){
 						'<thead id="thead">'+
 							'<tr>'+
 								'<th style="width: 5%">#</th>'+
-								'<th style="width: 30%">Item Name</th>'+
-								'<th style="width: 15%">Max Price</th>'+
-								'<th style="width: 15%">Min Price</th>	'+										  
+								'<th style="width: 30%">Item Name</th>'+										  
 								'<th style="width: 15%">No.of Items</th>'+
-								'<th style="width: 15%">Re-order level</th>'+
 							'</tr>'+
 						'</thead>'+
 					  '<tbody id="detail_table">'+
