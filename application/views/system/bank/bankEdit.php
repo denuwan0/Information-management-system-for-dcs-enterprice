@@ -34,7 +34,7 @@
 </section>
 <script>
 
-$('#form')[0].reset(); 
+//$('#form')[0].reset(); 
 
 var pageUrl = $(location).attr('href');
 parts = pageUrl.split("/"),

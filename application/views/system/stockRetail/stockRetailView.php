@@ -225,7 +225,7 @@ $(document).on('click','.viewBtn', function(){
 			
 			var is_active_retail_stock='';
 			
-			if(data.is_active_retail_stock == 1){
+			if(data[0].is_active_retail_stock == 1){
 				is_active_retail_stock  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{

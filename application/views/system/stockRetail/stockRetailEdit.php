@@ -30,7 +30,7 @@
 								  <thead>
 									<tr>
 									  <th style="width: 5%">#</th>
-									  <th style="width: 30%">Sub Item Name</th>
+									  <th style="width: 30%">Item Name</th>
 									  <th style="width: 15%">Max Price</th>
 									  <th style="width: 15%">Min Price</th>											  
 									  <th style="width: 15%">No.of Items</th>
@@ -88,19 +88,21 @@ function loadData() {
 			mainItemRowHtml = '<tr class="mainItemSet itemRow">'+
 			  '<td class="mainRowId">'+data[0].retail_stock_id+'</td>'+
 			  '<td>'+
-				'<input type="text" class="form-control" id="item_id" name="item_id" value="'+data[0].item_id+'" disabled>'+
+				'<input type="hidden" class="form-control" id="retail_stock_id" name="retail_stock_id" value="'+data[0].retail_stock_id+'" disabled>'+
+				'<input type="hidden" class="form-control" id="item_id" name="item_id" value="'+data[0].item_id+'" disabled>'+
+				'<input type="text" class="form-control" id="item_name" name="item_name" value="'+data[0].item_name+'" disabled>'+
 			  '</td>'+
 			   '<td>'+
-				'<input type="text" class="form-control" id="item_id" name="item_id" value="'+data[0].item_id+'" disabled>'+
+				'<input type="number" class="form-control" id="max_sale_price" name="max_sale_price" value="'+data[0].max_sale_price+'" >'+
 			  '</td>'+
 			   '<td>'+
-				'<input type="text" class="form-control" id="item_id" name="item_id" value="'+data[0].item_id+'" disabled>'+
+				'<input type="number" class="form-control" id="min_sale_price" name="min_sale_price" value="'+data[0].min_sale_price+'" >'+
 			  '</td>'+
 			   '<td>'+
-				'<input type="text" class="form-control" id="item_id" name="item_id" value="'+data[0].item_id+'" disabled>'+
+				'<input type="text" class="form-control" id="full_stock_count" name="full_stock_count" value="'+data[0].full_stock_count+'" disabled>'+
 			  '</td>'+
 				 '<td>'+
-				'<input type="text" class="form-control" id="item_id" name="item_id" value="'+data[0].item_id+'" disabled>'+
+				'<input type="number" class="form-control" id="stock_re_order_level" name="stock_re_order_level" value="'+data[0].stock_re_order_level+'" >'+
 			  '</td>'+
 			'</tr>';
 			
@@ -149,94 +151,44 @@ $(document).on("click", "#submit", function (e) {
 	e.preventDefault();
 	
 	
-	var stock_batch_id = 0;
-	var stock_purchase_date = "";
-	var stock_purchase_time = 0;
-	var created_by = 0;
-	var branch_id = 0;
-	var approved_by = 0;
-	var is_approved_inv_stock_retail = 0;
-	var is_active_inv_stock_retail = 0;
-	var retail_stock_header_id = 0;
-	var is_sub_item = 0;
-	var retail_stock_detail_id = 0;
+	var retail_stock_id = 0;
+	var item_id = 0;
+	var max_sale_price = 0;
+	var min_sale_price = 0;
+	var stock_re_order_level = 0;
+	var is_active_retail_stock = 0;
+						
+	retail_stock_id = $('#retail_stock_id').val();
+	item_id = $('#item_id').val();
+	max_sale_price = $('#max_sale_price').val();
+	min_sale_price = $('#min_sale_price').val();
+	stock_re_order_level = $('#stock_re_order_level').val();
+	is_active_retail_stock = $("#is_active_retail_stock").is(':checked')? 1 : 0;
 	
-			
-	/* if(typeof stock_purchase_date !== 'undefined' && stock_purchase_date !== ''
-	&& typeof item_cost !== 'undefined' && item_cost !== ''
-	&& typeof no_of_items !== 'undefined' && no_of_items !== '')
-	{ */
-					
-		stock_purchase_date = $('#stock_purchase_date').val();
-		retail_stock_header_id = $('#retail_stock_header_id').val();
-		stock_batch_id = $('#stock_batch_id').val();
-		is_approved_inv_stock_retail = $("#is_approved_inv_stock_retail").is(':checked')? 1 : 0;
-		is_active_inv_stock_retail = $("#is_active_inv_stock_retail").is(':checked')? 1 : 0;
-		
-		var itemsArr = [];
-		var stockHeader = [];
-		
-		$('.itemRow').each(function(){
-			
-			retail_stock_detail_id = $(this).find('#retail_stock_detail_id').val();
-			item_id = $(this).find('.item_id').val();
-			max_sale_price = $(this).find('#max_sale_price').val();
-			min_sale_price = $(this).find('#min_sale_price').val();
-			full_stock_count = $(this).find('#full_stock_count').val();
-			stock_re_order_level = $(this).find('#stock_re_order_level').val();
-			is_sub_item = $(this).find('#is_sub_item').val();
-			
-			//console.log(retail_stock_detail_id);
-			
-			if(item_id != ''){
-				itemsArr.push({
-					retail_stock_detail_id: retail_stock_detail_id,
-					item_id: item_id,
-					max_sale_price: max_sale_price,
-					min_sale_price: min_sale_price,
-					full_stock_count: full_stock_count,
-					stock_re_order_level: stock_re_order_level,
-					is_sub_item: is_sub_item
-				})
-			}
-			
-			
-		})
-		
-		
-		//console.log(itemsArr);
-		
-		stockHeader.push(
-			{
-				'retail_stock_header_id':retail_stock_header_id,
-				'stock_batch_id':stock_batch_id,
-				'stock_purchase_date':stock_purchase_date,
-				'is_approved_inv_stock_retail':is_approved_inv_stock_retail,
-				'is_active_inv_stock_retail':is_active_inv_stock_retail
-			}
-		);
-		
-				
-		//console.log(itemsArr);
-		
-		
-		var formData = new Object();
-		formData = {
-			stockHeader:stockHeader,
-			itemsArr:itemsArr
-		};
+	
+	if(typeof retail_stock_id !== 'undefined' && retail_stock_id !== '' && typeof item_id !== 'undefined' && item_id !== ''
+	&& typeof max_sale_price !== 'undefined' && max_sale_price !== '' && typeof min_sale_price !== 'undefined' && min_sale_price !== ''
+	&& typeof stock_re_order_level !== 'undefined' && stock_re_order_level !== '')
+	{
+		var formData = new FormData();
+		formData.append('retail_stock_id',retail_stock_id);
+		formData.append('item_id',item_id);
+		formData.append('max_sale_price',max_sale_price);
+		formData.append('min_sale_price',min_sale_price);
+		formData.append('stock_re_order_level',stock_re_order_level);
+		formData.append('is_active_retail_stock',is_active_retail_stock);
 		
 		console.log(formData);
 				
-		/* $.ajax({
+		$.ajax({
 			type: "POST",
 			cache : false,
 			async: true,
-			contentType: 'application/json',
 			dataType: "json",
 			processData: false,
-			data: JSON.stringify(formData),	
-			url: API+"stockRetail/update/",
+			contentType: false,
+			data: formData,			
+			url: API+"stockRetail/update_item_details/",
 			success: function(data, result){
 				console.log(data.message);	
 				const notyf = new Notyf();
@@ -257,7 +209,7 @@ $(document).on("click", "#submit", function (e) {
 						window.location = "<?php echo base_url() ?>stockRetail/view";
 					}, 3000);
 				}
-				if(data['message'] == "Cannont approve inactive document!"){
+				if(data['message'] == "Retail Stock is being used by other modules at the moment!"){
 					notyf.success({
 					  message: data['message'],
 					  duration: 5000,
@@ -290,10 +242,9 @@ $(document).on("click", "#submit", function (e) {
 				})
 				
 			}
-		}); */
-		
-	//}
-	/* else{
+		});
+	}
+	else{
 		const notyf = new Notyf();
 			
 		notyf.error({
@@ -308,9 +259,7 @@ $(document).on("click", "#submit", function (e) {
 		  }
 		  
 		})
-	} */
-	
-	
+	}
 })
 
 
