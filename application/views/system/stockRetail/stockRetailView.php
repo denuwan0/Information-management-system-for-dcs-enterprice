@@ -283,7 +283,7 @@ $(document).on('click','.viewBtn', function(){
 					
 		
 		$('#modalInfoHeader').html('Retail Stock Assigned No: '+data[0].retail_stock_header_id);
-		$('#modalInfoBody').html(HTML+HTML2);
+		$('#modalInfoBody').html(HTML);
 		$('#modalInfo').modal('show');
 				
 		}
