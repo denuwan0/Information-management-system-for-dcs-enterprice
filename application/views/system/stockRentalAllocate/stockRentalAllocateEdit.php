@@ -44,7 +44,8 @@
 							</div>
 							<?php 
 								
-								if($this->session->userdata('sys_user_group_name') == 'Admin'){
+								if($this->session->userdata('sys_user_group_name') == 'Admin' ||
+								$this->session->userdata('sys_user_group_name') == 'Manager'){
 									echo '<div class="col-md-2 mb-3">
 										<div class="custom-control custom-checkbox">
 											<input class="custom-control-input" type="checkbox" id="is_active_inv_stock_rental" name="is_active_inv_stock_rental" value="1">
