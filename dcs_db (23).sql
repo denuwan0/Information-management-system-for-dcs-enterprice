@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2024 at 10:43 PM
+-- Generation Time: Feb 13, 2024 at 09:48 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -229,6 +229,27 @@ INSERT INTO `customer` (`customer_id`, `customer_name`, `customer_working_addres
 (1, 'Shanaka', 'Mahara, Kadawatha', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', '961330456V', '', '94757848081', 'nadeetharu1225@gmail.com', '', 1, 1),
 (2, 'Sanjaya Hettiarachchi', 'No.56, Dekatana, Dompe', 'No.56, Dekatana, Dompe', '', '901330456V', '', '9428689591', 'cykatm@gmail.com', '', 1, 1),
 (3, 'Pavithra Jayasundara', 'No.4, Makola', 'No.4, Makola', '', '902345654V', '', '9471895456', 'may12contact@gmail.com', '', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `emp_advance`
+--
+
+CREATE TABLE `emp_advance` (
+  `advance_id` int(10) NOT NULL,
+  `advance_name` varchar(100) NOT NULL,
+  `advance_desc` varchar(100) NOT NULL,
+  `is_active_advance` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `emp_advance`
+--
+
+INSERT INTO `emp_advance` (`advance_id`, `advance_name`, `advance_desc`, `is_active_advance`) VALUES
+(1, 'Monthly Advance', 'Monthly Advance ', 1),
+(2, 'Festival Advance', 'Festival Advance', 1);
 
 -- --------------------------------------------------------
 
@@ -636,15 +657,15 @@ CREATE TABLE `emp_over_time_hour_rate` (
 --
 
 CREATE TABLE `emp_salary_advance` (
-  `advance_id` int(10) NOT NULL,
+  `emp_salary_advance_id` int(10) NOT NULL,
   `emp_id` int(10) NOT NULL,
+  `advance_id` int(10) NOT NULL,
   `month` int(10) NOT NULL,
   `year` int(10) NOT NULL,
-  `create_date` varchar(10) NOT NULL,
-  `created_emp_id` int(10) NOT NULL,
-  `approved_emp_id` int(10) NOT NULL,
-  `amount` int(11) NOT NULL,
-  `percentage` int(11) NOT NULL,
+  `created_by` int(10) NOT NULL,
+  `approved_by` int(10) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `percentage` decimal(10,2) NOT NULL,
   `is_active_sal_advance` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1636,9 +1657,9 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-12 20:59:36', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-13 08:10:18', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '09781b019c39f6965deb', '251600', '2024-01-25 06:02:35', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '1b1271139a2bb0753799', '657037', '2024-02-12 21:10:28', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'b83d0e7fefbd50ffb7be', '715771', '2024-02-13 08:10:32', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
 (53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-12 21:10:14', 0, 1),
@@ -2079,6 +2100,12 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`customer_id`);
 
 --
+-- Indexes for table `emp_advance`
+--
+ALTER TABLE `emp_advance`
+  ADD PRIMARY KEY (`advance_id`);
+
+--
 -- Indexes for table `emp_allowance`
 --
 ALTER TABLE `emp_allowance`
@@ -2190,7 +2217,7 @@ ALTER TABLE `emp_over_time_hour_rate`
 -- Indexes for table `emp_salary_advance`
 --
 ALTER TABLE `emp_salary_advance`
-  ADD PRIMARY KEY (`advance_id`);
+  ADD PRIMARY KEY (`emp_salary_advance_id`);
 
 --
 -- Indexes for table `emp_salary_allowance`
@@ -2599,6 +2626,12 @@ ALTER TABLE `customer`
   MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `emp_advance`
+--
+ALTER TABLE `emp_advance`
+  MODIFY `advance_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `emp_allowance`
 --
 ALTER TABLE `emp_allowance`
@@ -2710,7 +2743,7 @@ ALTER TABLE `emp_over_time_hour_rate`
 -- AUTO_INCREMENT for table `emp_salary_advance`
 --
 ALTER TABLE `emp_salary_advance`
-  MODIFY `advance_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `emp_salary_advance_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `emp_salary_allowance`
