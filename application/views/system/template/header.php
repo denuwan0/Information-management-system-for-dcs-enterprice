@@ -176,6 +176,12 @@
                     </a>
                   </li>	
                   <li class="nav-item">
+					<a href="<?php echo base_url() ?>EmpAdvance/view" class="nav-link">
+					  <i class="fas fa fa-retweet nav-icon text-red"></i>
+					  <p>Advance</p>
+					</a>
+				  </li>
+				  <li class="nav-item">
 					<a href="<?php echo base_url() ?>EmpAllowance/view" class="nav-link">
 					  <i class="fas fa-money-check-alt nav-icon text-red"></i>
 					  <p>Allowance</p>
