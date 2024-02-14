@@ -1,3 +1,4 @@
+<?  $year  = date("Y"); ?>
 <section class="content">
 	<div class="container-fluid">
 		<div class="card card-primary">
@@ -7,29 +8,88 @@
 			<form>
 				<div class="card-body ">
 					<form>
-						<div class="form-row">
-							<input type="hidden" class="form-control" id="allowance_id" required>
-							<div class="col-md-4 mb-3">
-								<label for="allowance_name">Allowance Name</label>
-								<input type="text" class="form-control" id="allowance_name" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
-							</div>							
-							<div class="col-md-8 mb-3">
-								<label for="allowance_desc">Description</label>
-								<input type="text" class="form-control" id="allowance_desc" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
-							</div>							
-						</div>
-						<div class="form-row">							
-							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="is_active_emp_allow" value="1">
-								<label for="is_active_emp_allow" class="custom-control-label">is active</label>
+						<div class="form-row">	
+							<input type="hidden" class="form-control" id="emp_salary_advance_id" required>													
+							<div class="col-md-2 mb-3">
+								<label for="branch_id">Year</label>
+								<select class="custom-select" id="year" aria-describedby="" required>
+									<option value="<?php echo date("Y") ?>"><?php echo date("Y") ?></option>
+									<option value="<?php echo date("Y")+1 ?>"><?php echo date("Y")+1 ?></option>
+									<option value="<?php echo date("Y")+2 ?>"><?php echo date("Y")+2 ?></option>
+									<option value="<?php echo date("Y")+3 ?>"><?php echo date("Y")+3 ?></option>
+								</select>
 							</div>
-						</div>					  
+							<div class="col-md-3 mb-3">
+								<label for="month">Month</label>
+								<select class="custom-select" id="month" aria-describedby="" required>
+									<option value="1">January</option>
+									<option value="2">February</option>
+									<option value="3">March</option>
+									<option value="4">April</option>
+									<option value="5">May</option>
+									<option value="6">June</option>
+									<option value="7">July</option>
+									<option value="8">August</option>
+									<option value="9">September</option>
+									<option value="10">October</option>
+									<option value="11">November</option>
+									<option value="12">December</option>
+								</select>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="location">Employee</label>
+								<select class="custom-select" id="emp_id" name="emp_id" required>
+								</select>
+								<div id="locationError" class="invalid-feedback">
+									Please select a valid state.
+								</div>
+							</div>	
+							<div class="col-md-3 mb-3">
+								<label for="location">Branch</label>
+								<select class="custom-select" id="branch_id" name="branch_id" required>
+								</select>
+								<div id="locationError" class="invalid-feedback">
+									Please select a valid state.
+								</div>
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="location">Advance</label>
+								<select class="custom-select" id="advance_id" name="advance_id" required>
+								</select>
+								<div id="locationError" class="invalid-feedback">
+									Please select a valid state.
+								</div>
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="amount">Amount</label>
+								<input type="text" class="form-control" id="amount" required>
+								<div class="valid-feedback">
+									Looks good!
+								</div>
+							</div>
+							<!--div class="col-md-4 mb-3">
+								<label for="percentage">Percentage</label>
+								<input type="text" class="form-control" id="percentage" required>
+								<div class="valid-feedback">
+									Looks good!
+								</div>
+							</div-->
+						</div>
+						<div class="form-row">
+							<div class="col-md-2 mb-3">
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" id="is_active_sal_advance" value="1">
+									<label for="is_active_sal_advance" class="custom-control-label">is active</label>
+								</div>
+							</div>
+							<div class="col-md-2 mb-3">
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" id="is_approved_sal_advance" value="1">
+									<label for="is_approved_sal_advance" class="custom-control-label">is approve</label>
+								</div>
+							</div>
+						</div>
+					  
 					</form>
 				</div>			
 
@@ -59,20 +119,113 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpAllowance/fetch_single/?id="+last_part,
+		url: API+"EmpSalaryAdvance/fetch_single/?id="+last_part,
 		success: function(data, result){
 			//var parseData = JSON.stringify(data);
 			//var parseData1 = JSON.parse(parseData);	
-			console.log(data);			
-			//console.log(data[0].country_id);
+			//console.log(data[0].emp_id);			
+			console.log(data);
 			
-			$('#allowance_desc').val(data[0].allowance_desc);
-			$('#allowance_id').val(data[0].allowance_id);
-			$('#allowance_name').val(data[0].allowance_name);
+			$('#month').val(data[0].month);
+			$('#year').val(data[0].year);
+			$('#amount').val(data[0].amount);
+			$('#emp_salary_advance_id').val(data[0].emp_salary_advance_id);
+			
 						
-			if(data[0].is_active_emp_allow == 1){
-				$('#is_active_emp_allow').prop('checked', true);
+			if(data[0].is_approved_sal_advance == 1){
+				$('#is_approved_sal_advance').prop('checked', true);
 			}
+			if(data[0].is_active_sal_advance == 1){
+				$('#is_active_sal_advance').prop('checked', true);
+			}
+			
+			loadEmp();
+			function loadEmp(){
+			$.ajax({
+				type: "POST",
+				cache : false,
+				async: true,
+				dataType: "json",
+				url: API+"Employee/fetch_all_active/",
+				success: function(data1, result){
+					console.log(data[0].emp_id);
+					var location_drp = '<option value="">Select Employee</option>';
+					$.each(data1, function(index, item) {
+						if(data[0].emp_id == item.emp_id){
+							location_drp += '<option value="'+item.emp_id+'" selected>'+item.emp_epf+' - '+item.emp_first_name+'</option>';
+						}
+						else{
+							location_drp += '<option value="'+item.emp_id+'">'+item.emp_epf+' - '+item.emp_first_name+'</option>';
+						}
+						
+					});
+					$('#emp_id').append(location_drp);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {						
+					
+					//console.log(errorThrown);
+				}
+			});
+			}
+
+			loadBranch();
+			function loadBranch(){
+			$.ajax({
+				type: "POST",
+				cache : false,
+				async: true,
+				dataType: "json",
+				url: API+"Branch/fetch_all_active/",
+				success: function(data2, result){
+					//console.log(data);
+					var location_drp = '';
+					$.each(data2, function(index, item) {	
+						if(data[0].company_branch_id == item.company_branch_id){
+							location_drp += '<option value="'+item.company_branch_id+'" selected>'+item.company_branch_name+'</option>';
+						}
+						else{
+							location_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
+						}
+						
+					});
+					$('#branch_id').append(location_drp);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {						
+					
+					//console.log(errorThrown);
+				}
+			});
+			}
+
+			loadAdvance();
+			function loadAdvance(){
+			$.ajax({
+				type: "POST",
+				cache : false,
+				async: true,
+				dataType: "json",
+				url: API+"EmpAdvance/fetch_all_active/",
+				success: function(data3, result){
+					console.log(data[0].advance_id);
+					var location_drp = '<option value="">Select Advance</option>';
+					$.each(data3, function(index, item) {
+						if(data[0].advance_id == item.advance_id){
+							location_drp += '<option value="'+item.advance_id+'" selected>'+item.advance_name+'</option>';
+						}
+						else{
+							location_drp += '<option value="'+item.advance_id+'">'+item.advance_name+'</option>';
+						}
+						
+					});
+					$('#advance_id').append(location_drp);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {						
+					
+					//console.log(errorThrown);
+				}
+			});
+			}
+			
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {						
 			//console.log(errorThrown);					
@@ -87,27 +240,45 @@ $(document).ready(function() {
 $('#submit').click(function(e){
 	e.preventDefault();
 	
-	var allowance_id = 0;
-	var allowance_name = "";
-	var allowance_desc = "";
-	var is_active_emp_allow = 0;
+	var emp_salary_advance_id = 0;
+	var emp_id = "";
+	var branch_id = "";
+	var advance_id = "";
+	var month = "";
+	var amount = "";
+	var year = "";
+	var is_approved_sal_advance = 0;
+	var is_active_sal_advance = 0;
 	
-	allowance_id = $('#allowance_id').val();
-	allowance_name = $('#allowance_name').val();
-	allowance_desc = $('#allowance_desc').val();
-	is_active_emp_allow = $("#is_active_emp_allow").is(':checked')? 1 : 0;
+	emp_salary_advance_id = $('#emp_salary_advance_id').val();
+	emp_id = $('#emp_id').val();
+	branch_id = $('#branch_id').val();
+	advance_id = $('#advance_id').val();
+	month = $('#month').val();
+	amount = $('#amount').val();
+	year = $('#year').val();
+	is_approved_sal_advance = $("#is_approved_sal_advance").is(':checked')? 1 : 0;
+	is_active_sal_advance = $("#is_active_sal_advance").is(':checked')? 1 : 0;
 	
 				
-	if(typeof allowance_id !== 'undefined' && allowance_id !== ''
-	&& typeof allowance_name !== 'undefined' && allowance_name !== ''	
-	&& typeof allowance_desc !== 'undefined' && allowance_desc !== '' )
+	if(typeof emp_salary_advance_id !== 'undefined' && emp_salary_advance_id !== ''
+	&& typeof emp_id !== 'undefined' && emp_id !== ''	
+	&& typeof branch_id !== 'undefined' && branch_id !== '' 
+	&& typeof advance_id !== 'undefined' && advance_id !== '' 
+	&& typeof month !== 'undefined' && month !== '' 
+	&& typeof amount !== 'undefined' && amount !== '' 
+	&& typeof year !== 'undefined' && year !== '')
 	{
 		var formData = new FormData();
-		formData.append('allowance_id',allowance_id);
-		formData.append('allowance_name',allowance_name);
-        formData.append('allowance_desc',allowance_desc);
-		formData.append('is_active_emp_allow',is_active_emp_allow);
-		
+		formData.append('emp_salary_advance_id',emp_salary_advance_id);
+		formData.append('emp_id',emp_id);
+        formData.append('branch_id',branch_id);
+		formData.append('advance_id',advance_id);
+		formData.append('month',month);
+		formData.append('amount',amount);
+        formData.append('year',year);
+		formData.append('is_approved_sal_advance',is_approved_sal_advance);
+		formData.append('is_active_sal_advance',is_active_sal_advance);
 				
 		$.ajax({
 			type: "POST",
@@ -117,7 +288,7 @@ $('#submit').click(function(e){
 			processData: false,
 			contentType: false,
 			data: formData,				
-			url: API+"EmpAllowance/update/",
+			url: API+"EmpSalaryAdvance/update/",
 			success: function(data, result){
 
 				if(data.message == "Changes Updated!"){	
@@ -136,11 +307,11 @@ $('#submit').click(function(e){
 					  
 					})	
 					window.setTimeout(function() {
-						window.location = "<?php echo base_url() ?>EmpAllowance/view";
+						window.location = "<?php echo base_url() ?>EmpSalaryAdvance/view";
 					}, 3000);
 					
 				}
-				if(data.message == "Please Fill Required Fields!" || data.message == "Allowance is being used by other modules at the moment!"){
+				if(data.message == "Please Fill Required Fields!" || data.message == "Salary Advance is being used by other modules at the moment!"){
 					const notyf = new Notyf();
 					
 					notyf.error({
