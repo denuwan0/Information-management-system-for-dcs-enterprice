@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2024 at 09:48 AM
+-- Generation Time: Feb 14, 2024 at 05:21 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -409,8 +409,8 @@ CREATE TABLE `emp_final_salary` (
   `emp_id` int(10) NOT NULL,
   `month` int(10) NOT NULL,
   `year` int(10) NOT NULL,
-  `additions_amount` decimal(10,2) NOT NULL,
-  `deductions_amount` decimal(10,2) NOT NULL,
+  `allowance_amount` decimal(10,2) NOT NULL,
+  `advance_amount` decimal(10,2) NOT NULL,
   `created_by_emp_id` int(10) NOT NULL,
   `approved_by_emp_id` int(10) NOT NULL,
   `is_active_final_sal` tinyint(1) NOT NULL,
@@ -659,6 +659,7 @@ CREATE TABLE `emp_over_time_hour_rate` (
 CREATE TABLE `emp_salary_advance` (
   `emp_salary_advance_id` int(10) NOT NULL,
   `emp_id` int(10) NOT NULL,
+  `branch_id` int(10) NOT NULL,
   `advance_id` int(10) NOT NULL,
   `month` int(10) NOT NULL,
   `year` int(10) NOT NULL,
@@ -666,8 +667,17 @@ CREATE TABLE `emp_salary_advance` (
   `approved_by` int(10) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `percentage` decimal(10,2) NOT NULL,
+  `is_approved_sal_advance` tinyint(1) NOT NULL,
   `is_active_sal_advance` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `emp_salary_advance`
+--
+
+INSERT INTO `emp_salary_advance` (`emp_salary_advance_id`, `emp_id`, `branch_id`, `advance_id`, `month`, `year`, `created_by`, `approved_by`, `amount`, `percentage`, `is_approved_sal_advance`, `is_active_sal_advance`) VALUES
+(1, 5, 2, 2, 3, 2025, 15000, 3, '10000.00', '0.00', 1, 0),
+(2, 5, 2, 2, 7, 2024, 3, 3, '11111.00', '0.00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -676,17 +686,27 @@ CREATE TABLE `emp_salary_advance` (
 --
 
 CREATE TABLE `emp_salary_allowance` (
-  `addition_id` int(10) NOT NULL,
+  `emp_salary_allowance_id` int(10) NOT NULL,
   `allowance_id` int(10) NOT NULL,
+  `branch_id` int(10) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `percentage` decimal(10,2) NOT NULL COMMENT 'percentage from basic salary\r\n',
   `emp_id` int(10) NOT NULL,
-  `month` int(10) NOT NULL,
-  `year` int(10) NOT NULL,
-  `created_emp_id` int(10) NOT NULL,
-  `approved_emp_id` int(10) NOT NULL,
+  `valid_from_date` varchar(20) NOT NULL,
+  `valid_to_date` varchar(20) NOT NULL,
+  `created_by` int(10) NOT NULL,
+  `approved_by` int(10) NOT NULL,
+  `is_approve_sal_allow` tinyint(1) NOT NULL,
   `is_active_sal_allow` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `emp_salary_allowance`
+--
+
+INSERT INTO `emp_salary_allowance` (`emp_salary_allowance_id`, `allowance_id`, `branch_id`, `amount`, `percentage`, `emp_id`, `valid_from_date`, `valid_to_date`, `created_by`, `approved_by`, `is_approve_sal_allow`, `is_active_sal_allow`) VALUES
+(1, 3, 2, '20000.00', '0.00', 9, '2024-02-16', '2024-02-17', 0, 3, 1, 1),
+(2, 3, 2, '5000.00', '0.00', 9, '2024-02-15', '2024-02-24', 0, 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1657,9 +1677,9 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-13 08:10:18', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '611344', '2024-02-13 21:59:52', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '09781b019c39f6965deb', '251600', '2024-01-25 06:02:35', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'b83d0e7fefbd50ffb7be', '715771', '2024-02-13 08:10:32', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '3b507985b8473bfe28c8', '214962', '2024-02-14 12:37:31', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
 (53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-12 21:10:14', 0, 1),
@@ -2223,7 +2243,7 @@ ALTER TABLE `emp_salary_advance`
 -- Indexes for table `emp_salary_allowance`
 --
 ALTER TABLE `emp_salary_allowance`
-  ADD PRIMARY KEY (`addition_id`);
+  ADD PRIMARY KEY (`emp_salary_allowance_id`);
 
 --
 -- Indexes for table `emp_salary_bonus`
@@ -2743,13 +2763,13 @@ ALTER TABLE `emp_over_time_hour_rate`
 -- AUTO_INCREMENT for table `emp_salary_advance`
 --
 ALTER TABLE `emp_salary_advance`
-  MODIFY `emp_salary_advance_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `emp_salary_advance_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `emp_salary_allowance`
 --
 ALTER TABLE `emp_salary_allowance`
-  MODIFY `addition_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `emp_salary_allowance_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `emp_salary_bonus`
