@@ -92,14 +92,7 @@ function loadData() {
 							
 				
 				$.each(data, function (i, item) {
-					//console.log(item);
-					var is_approve_sal_allow  ='';
-					if(item.is_approve_sal_allow  == 1){
-						is_approve_sal_allow  = '<span class="right badge badge-success">Active</span>';
-					}
-					else{
-						is_approve_sal_allow  = '<span class="right badge badge-danger">Inactive</span>';
-					}
+					//console.log(item);				
 					
 					var is_active_sal_allow  ='';
 					if(item.is_active_sal_allow  == 1){
@@ -107,6 +100,38 @@ function loadData() {
 					}
 					else{
 						is_active_sal_allow  = '<span class="right badge badge-danger">No</span>';
+					}
+					
+					var is_approve_sal_allow  ='';										
+					var option_html ='';
+					
+					if(item.is_approve_sal_allow == 1){
+						is_approve_sal_allow = '<span class="right badge badge-success">Yes</span>';
+						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
+							$this->session->userdata('sys_user_group_name') == "Manager"){
+								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+								
+								echo '<a style="display:none" type="button" id="editBtn" retail_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
+							}
+							else{
+								echo '<a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							}
+
+						?>';
+					}
+					else{
+						is_approve_sal_allow = '<span class="right badge badge-danger">No</span>';
+						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
+							$this->session->userdata('sys_user_group_name') == "Manager"){
+								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+								echo '<a type="button" id="editBtn" retail_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
+							}
+							else{
+								echo '<a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							}
+
+						?>';
+						//'<a type="button" id="editBtn" href="<?php echo base_url() ?>stockRetail/edit/'+item.retail_stock_header_id+'" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a> ';
 					}
 					
 					
@@ -117,16 +142,7 @@ function loadData() {
 					item.valid_to_date,
 					is_approve_sal_allow,
 					is_active_sal_allow ,
-					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
-						$this->session->userdata('sys_user_group_name') == "Manager"){
-							echo '<div class="btn-group margin"><a type="button" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-							echo '<a type="button" id="editBtn"  href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
-						}
-						else{
-							echo '<a type="button" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-						}
-
-					?>'
+					option_html,
 					]).columns.adjust().draw();	
 					
 					//table.columns.adjust().draw();
@@ -203,9 +219,9 @@ $(document).on('click','.viewBtn', function(){
 						'</tr>'+
 						'<tr>'+
 						  '<th><label for="vehicle_yom">From Date: </label></th>'+
-						  '<td>'+data[0].year+'</td>'+	
+						  '<td>'+data[0].valid_from_date+'</td>'+	
 						   '<th><label for="vehicle_yom">To Date: </label></th>'+
-						  '<td>'+data[0].year+'</td>'+							  
+						  '<td>'+data[0].valid_to_date+'</td>'+							  
 						'</tr>'+
 						'<tr>'+
 						  '<th><label for="vehicle_yom">Approved: </label></th>'+

@@ -58,8 +58,8 @@
 						</div>
 						<div class="form-row">							
 							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="is_active_sal_advance" value="1">
-								<label for="is_active_sal_advance" class="custom-control-label">is active</label>
+								<input class="custom-control-input" type="checkbox" id="is_active_sal_allow" value="1">
+								<label for="is_active_sal_allow" class="custom-control-label">is active</label>
 							</div>
 						</div>
 					  

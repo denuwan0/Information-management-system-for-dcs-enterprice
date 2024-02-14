@@ -57,10 +57,18 @@
 								</div>
 							</div-->
 						</div>
-						<div class="form-row">							
-							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="is_active_sal_advance" value="1">
-								<label for="is_active_sal_advance" class="custom-control-label">is active</label>
+						<div class="form-row">
+							<div class="col-md-2 mb-3">
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" id="is_active_sal_allow" value="1">
+									<label for="is_active_sal_allow" class="custom-control-label">is active</label>
+								</div>
+							</div>
+							<div class="col-md-2 mb-3">						
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" id="is_approve_sal_allow" value="1">
+									<label for="is_approve_sal_allow" class="custom-control-label">is approve</label>
+								</div>
 							</div>
 						</div>
 					  
@@ -75,8 +83,20 @@
 	</div>
 </section>
 <script>
-
-//$('#form')[0].reset(); 
+$(document).ready(function(){
+	var date_input1=$('input[name="valid_from_date"]'); //our date input has the name "date"
+	var date_input2=$('input[name="valid_to_date"]'); //our date input has the name "date"
+	var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+	var options={
+		format: 'yyyy-mm-dd',
+		container: container,
+		todayHighlight: true,
+		autoclose: true,
+		orientation: 'bottom'
+	};
+	date_input1.datepicker(options);
+	date_input2.datepicker(options);
+})
 
 var pageUrl = $(location).attr('href');
 parts = pageUrl.split("/"),
@@ -107,8 +127,6 @@ function loadData() {
 			$('#valid_from_date').val(data[0].valid_from_date);
 			$('#valid_to_date').val(data[0].valid_to_date);
 			$('#emp_id').val(data[0].emp_id);
-			$('#created_by').val(data[0].created_by);
-			$('#approved_by').val(data[0].approved_by);
 						
 			if(data[0].is_approve_sal_allow == 1){
 				$('#is_approve_sal_allow').prop('checked', true);
@@ -218,45 +236,44 @@ $(document).ready(function() {
 $('#submit').click(function(e){
 	e.preventDefault();
 	
-	var emp_salary_advance_id = 0;
+	var emp_salary_allowance_id = 0;
 	var emp_id = "";
 	var branch_id = "";
-	var advance_id = "";
-	var month = "";
+	var allowance_id = "";
+	var valid_from_date = "";
 	var amount = "";
-	var year = "";
+	var valid_to_date = "";
 	var is_approved_sal_advance = 0;
 	var is_active_sal_advance = 0;
 	
-	emp_salary_advance_id = $('#emp_salary_advance_id').val();
+	emp_salary_allowance_id = $('#emp_salary_allowance_id').val();
 	emp_id = $('#emp_id').val();
 	branch_id = $('#branch_id').val();
-	advance_id = $('#advance_id').val();
-	month = $('#month').val();
+	allowance_id = $('#allowance_id').val();
+	valid_from_date = $('#valid_from_date').val();
 	amount = $('#amount').val();
-	year = $('#year').val();
-	is_approved_sal_advance = $("#is_approved_sal_advance").is(':checked')? 1 : 0;
-	is_active_sal_advance = $("#is_active_sal_advance").is(':checked')? 1 : 0;
-	
-				
-	if(typeof emp_salary_advance_id !== 'undefined' && emp_salary_advance_id !== ''
+	valid_to_date = $('#valid_to_date').val();
+	is_approve_sal_allow = $("#is_approve_sal_allow").is(':checked')? 1 : 0;
+	is_active_sal_allow = $("#is_active_sal_allow").is(':checked')? 1 : 0;
+					
+	if(typeof emp_salary_allowance_id !== 'undefined' && emp_salary_allowance_id !== ''
 	&& typeof emp_id !== 'undefined' && emp_id !== ''	
 	&& typeof branch_id !== 'undefined' && branch_id !== '' 
-	&& typeof advance_id !== 'undefined' && advance_id !== '' 
-	&& typeof month !== 'undefined' && month !== '' 
+	&& typeof allowance_id !== 'undefined' && allowance_id !== '' 
+	&& typeof valid_from_date !== 'undefined' && valid_from_date !== '' 
 	&& typeof amount !== 'undefined' && amount !== '' 
-	&& typeof year !== 'undefined' && year !== '')
+	&& typeof valid_to_date !== 'undefined' && valid_to_date !== '')
 	{
 		var formData = new FormData();
-		formData.append('emp_salary_advance_id',emp_salary_advance_id);
+		formData.append('emp_salary_allowance_id',emp_salary_allowance_id);
 		formData.append('emp_id',emp_id);
         formData.append('branch_id',branch_id);
-		formData.append('advance_id',advance_id);
-		formData.append('month',month);
+		formData.append('allowance_id',allowance_id);
+		formData.append('valid_from_date',valid_from_date);
 		formData.append('amount',amount);
-        formData.append('year',year);
-		formData.append('is_approved_sal_advance',is_approved_sal_advance);
-		formData.append('is_active_sal_advance',is_active_sal_advance);
+        formData.append('valid_to_date',valid_to_date);
+		formData.append('is_approve_sal_allow',is_approve_sal_allow);
+		formData.append('is_active_sal_allow',is_active_sal_allow);
 				
 		$.ajax({
 			type: "POST",
@@ -266,7 +283,7 @@ $('#submit').click(function(e){
 			processData: false,
 			contentType: false,
 			data: formData,				
-			url: API+"EmpSalaryAdvance/update/",
+			url: API+"EmpSalaryAllowance/update/",
 			success: function(data, result){
 
 				if(data.message == "Changes Updated!"){	
@@ -285,11 +302,11 @@ $('#submit').click(function(e){
 					  
 					})	
 					window.setTimeout(function() {
-						window.location = "<?php echo base_url() ?>EmpSalaryAdvance/view";
+						window.location = "<?php echo base_url() ?>EmpSalaryAllowance/view";
 					}, 3000);
 					
 				}
-				if(data.message == "Please Fill Required Fields!" || data.message == "Salary Advance is being used by other modules at the moment!"){
+				if(data.message == "Please Fill Required Fields!" || data.message == "Salary Allowance is being used by other modules at the moment!"){
 					const notyf = new Notyf();
 					
 					notyf.error({
