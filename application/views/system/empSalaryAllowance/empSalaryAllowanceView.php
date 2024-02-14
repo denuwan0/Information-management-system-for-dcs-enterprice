@@ -22,14 +22,14 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Employee Salary Advance</h3>
+				<h3 class="card-title">Employee Salary Allowance</h3>
 				<div style="text-align: right;">
 					<?php 
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'EmpSalaryAdvance/create" class="btn text-dark btn-default btn-sm">
-									<i class="nav-icon far fa-plus-square"></i> Assign Employee Advance
+							echo '<a type="button" href="'.base_url().'EmpSalaryAllowance/create" class="btn text-dark btn-default btn-sm">
+									<i class="nav-icon far fa-plus-square"></i> Assign Employee Allowance
 								</a>';
 						}
 						
@@ -44,10 +44,10 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
-								<th>Advance Name</th>
+								<th>Allowance Name</th>
 								<th>Employee</th>
-								<th>Month</th>
-								<th>Year</th>
+								<th>From Date</th>
+								<th>To Date</th>
 								<th>Approved</th>
 								<th>Status</th>
 								<th>Option</th>
@@ -79,7 +79,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpSalaryAdvance/fetch_all_join",
+		url: API+"EmpSalaryAllowance/fetch_all_join",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -93,30 +93,30 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
-					var is_active_sal_advance  ='';
-					if(item.is_active_sal_advance  == 1){
-						is_active_sal_advance  = '<span class="right badge badge-success">Active</span>';
+					var is_approve_sal_allow  ='';
+					if(item.is_approve_sal_allow  == 1){
+						is_approve_sal_allow  = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_sal_advance  = '<span class="right badge badge-danger">Inactive</span>';
+						is_approve_sal_allow  = '<span class="right badge badge-danger">Inactive</span>';
 					}
 					
-					var is_approved_sal_advance  ='';
-					if(item.is_approved_sal_advance  == 1){
-						is_approved_sal_advance  = '<span class="right badge badge-success">Yes</span>';
+					var is_active_sal_allow  ='';
+					if(item.is_active_sal_allow  == 1){
+						is_active_sal_allow  = '<span class="right badge badge-success">Yes</span>';
 					}
 					else{
-						is_approved_sal_advance  = '<span class="right badge badge-danger">No</span>';
+						is_active_sal_allow  = '<span class="right badge badge-danger">No</span>';
 					}
 					
 					
-					table.row.add([item.emp_salary_advance_id,
-					item.advance_name,
+					table.row.add([item.emp_salary_allowance_id,
+					item.allowance_name,
 					item.emp_first_name+' - '+item.emp_epf,
-					item.month,
-					item.year,
-					is_approved_sal_advance,
-					is_active_sal_advance ,
+					item.valid_from_date,
+					item.valid_to_date,
+					is_approve_sal_allow,
+					is_active_sal_allow ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -132,8 +132,8 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpSalaryAdvance/edit/'+item.emp_salary_advance_id);
-					$(".viewBtn").last().attr('value', item.emp_salary_advance_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpSalaryAllowance/edit/'+item.emp_salary_allowance_id);
+					$(".viewBtn").last().attr('value', item.emp_salary_allowance_id);
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							
@@ -154,12 +154,12 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var emp_salary_advance_id = "";
+	var emp_salary_allowance_id = "";
 	var Header = "";
 	var HTML = "";
 	
-	emp_salary_advance_id = $(this).attr('value');
-	console.log(emp_salary_advance_id);
+	emp_salary_allowance_id = $(this).attr('value');
+	console.log(emp_salary_allowance_id);
 	
 	$.ajax({
 		type: "GET",
@@ -167,47 +167,51 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpSalaryAdvance/fetch_single_join?id="+emp_salary_advance_id,
+		url: API+"EmpSalaryAllowance/fetch_single_join?id="+emp_salary_allowance_id,
 		success: function(data, result){
 			console.log(data);
 			
-			Header = 'Salary Advance Id: '+data[0].emp_salary_advance_id;
+			Header = 'Salary Allowance Id: '+data[0].emp_salary_allowance_id;
 			console.log(Header);
-			if(data[0].is_active_sal_advance  == 1){
-				is_active_sal_advance  = '<span class="right badge badge-success">Active</span>';
+			if(data[0].is_active_sal_allow  == 1){
+				is_active_sal_allow  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{
-				is_active_sal_advance  = '<span class="right badge badge-danger">Inactive</span>';
+				is_active_sal_allow  = '<span class="right badge badge-danger">Inactive</span>';
 			}
 			
-			if(data[0].is_approved_sal_advance  == 1){
-				is_approved_sal_advance  = '<span class="right badge badge-success">Yes</span>';
+			if(data[0].is_approve_sal_allow  == 1){
+				is_approve_sal_allow  = '<span class="right badge badge-success">Yes</span>';
 			}
 			else{
-				is_approved_sal_advance  = '<span class="right badge badge-danger">No</span>';
+				is_approve_sal_allow  = '<span class="right badge badge-danger">No</span>';
 			}
 			
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<th><label for="license_plate_no">Advance Id: </label></th>'+
-						  '<td>'+data[0].advance_id +'</td>'+
+						  '<th><label for="license_plate_no">Allowance Id: </label></th>'+
+						  '<td>'+data[0].emp_salary_allowance_id +'</td>'+
 						  '<td><label for="branch_id">Name: </label></td>'+
-						  '<td>'+data[0].advance_name+'</td>'+
+						  '<td>'+data[0].allowance_name+'</td>'+
 						'</tr>'+
 						'<tr>'+
 						  '<th><label for="license_plate_no">Employee: </label></th>'+
 						  '<td>'+data[0].emp_epf +' - '+data[0].emp_first_name +'</td>'+
-						  '<td><label for="branch_id">Month: </label></td>'+
-						  '<td>'+data[0].month+'</td>'+
+						  '<td><label for="branch_id">Amount: </label></td>'+
+						  '<td>'+data[0].amount+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_yom">Year: </label></th>'+
+						  '<th><label for="vehicle_yom">From Date: </label></th>'+
 						  '<td>'+data[0].year+'</td>'+	
-						  '<td>'+is_active_sal_advance+'</td>'+
+						   '<th><label for="vehicle_yom">To Date: </label></th>'+
+						  '<td>'+data[0].year+'</td>'+							  
 						'</tr>'+
 						'<tr>'+
-						  '<td>'+is_approved_sal_advance+'</td>'+
+						  '<th><label for="vehicle_yom">Approved: </label></th>'+
+						  '<td>'+is_approve_sal_allow+'</td>'+
+						  '<th><label for="vehicle_yom">Active: </label></th>'+
+						  '<td>'+is_active_sal_allow+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>';

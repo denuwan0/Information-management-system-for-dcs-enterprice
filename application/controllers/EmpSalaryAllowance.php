@@ -12,21 +12,21 @@ class EmpSalaryAllowance extends CI_Controller {
 	public function view()
 	{		
 		$this->load->view('/system/template/header');
-		$this->load->view('/system/branch/branchView');
+		$this->load->view('/system/empSalaryAllowance/empSalaryAllowanceView');
 		$this->load->view('/system/template/footer');
 	}
 	
 	public function edit()
 	{		
 		$this->load->view('/system/template/header');		
-		$this->load->view('/system/branch/branchEdit');
+		$this->load->view('/system/empSalaryAllowance/empSalaryAllowanceEdit');
 		$this->load->view('/system/template/footer');
 	}
 	
 	public function create()
 	{		
 		$this->load->view('/system/template/header');		
-		$this->load->view('/system/branch/branchCreate');
+		$this->load->view('/system/empSalaryAllowance/empSalaryAllowanceCreate');
 		$this->load->view('/system/template/footer');
 	}
 		

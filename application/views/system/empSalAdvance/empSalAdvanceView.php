@@ -78,7 +78,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_all_join/",
+		url: API+"EmpSalaryAdvance/fetch_all_join/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -92,12 +92,12 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
-					var is_active_vhcl_details  ='';
-					if(item.is_active_vhcl_details  == 1){
-						is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
+					var is_active_sal_advance  ='';
+					if(item.is_active_sal_advance  == 1){
+						is_active_sal_advance  = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_sal_advance  = '<span class="right badge badge-danger">Inactive</span>';
 					}
 					
 					
@@ -106,7 +106,7 @@ function loadData() {
 					item.vehicle_yom, 					
 					item.vehicle_type_name,
 					item.vehicle_category_name,
-					is_active_vhcl_details ,
+					is_active_sal_advance ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
