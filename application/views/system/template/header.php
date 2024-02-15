@@ -187,6 +187,12 @@
 					  <p>Allowance</p>
 					</a>
 				  </li>
+				  <li class="nav-item">
+					<a href="<?php echo base_url() ?>EmpBonus/view" class="nav-link">
+					  <i class="fas fa fa-bolt nav-icon text-red"></i>
+					  <p>Bonus</p>
+					</a>
+				  </li>
                   <li class="nav-item">
 					<a href="<?php echo base_url() ?>EmpDesignation/view" class="nav-link">
 					  <i class="fas fa-puzzle-piece nav-icon text-red"></i>

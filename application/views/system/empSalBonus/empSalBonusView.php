@@ -22,14 +22,14 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Vehicle Details</h3>
+				<h3 class="card-title">Employee Salary Bonus Details</h3>
 				<div style="text-align: right;">
 					<?php 
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
-							echo '<a type="button" href="'.base_url().'vehicle/create" class="btn text-dark btn-default btn-sm">
-									<i class="nav-icon far fa-plus-square"></i> Add Vehicle
+							echo '<a type="button" href="'.base_url().'EmpSalaryBonus/create" class="btn text-dark btn-default btn-sm">
+									<i class="nav-icon far fa-plus-square"></i> Assign Bonus
 								</a>';
 						}
 						
