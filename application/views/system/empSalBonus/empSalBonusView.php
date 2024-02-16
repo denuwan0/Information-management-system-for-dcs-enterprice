@@ -44,10 +44,11 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
-								<th>Registered No.</th>
-								<th>YOM</th>
-								<th>Type</th>
-								<th>Category</th>
+								<th>Bonus Name</th>
+								<th>Employee</th>
+								<th>Year</th>
+								<th>Month</th>
+								<th>Approved</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -78,7 +79,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_all_join/",
+		url: API+"EmpSalaryBonus/fetch_all_join/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -91,40 +92,62 @@ function loadData() {
 							
 				
 				$.each(data, function (i, item) {
-					//console.log(item);
-					var is_active_vhcl_details  ='';
-					if(item.is_active_vhcl_details  == 1){
-						is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
+					//console.log(item);				
+					
+					var is_active_sal_bonus  ='';
+					if(item.is_active_sal_bonus  == 1){
+						is_active_sal_bonus  = '<span class="right badge badge-success">Yes</span>';
 					}
 					else{
-						is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_sal_bonus  = '<span class="right badge badge-danger">No</span>';
+					}
+					
+					var is_approve_sal_bonus  ='';										
+					var option_html ='';
+					
+					if(item.is_approve_sal_bonus == 1){
+						is_approve_sal_bonus = '<span class="right badge badge-success">Yes</span>';
+						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
+							$this->session->userdata('sys_user_group_name') == "Manager"){
+								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+							}
+							else{
+								echo '<a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							}
+
+						?>';
+					}
+					else{
+						is_approve_sal_bonus = '<span class="right badge badge-danger">No</span>';
+						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
+							$this->session->userdata('sys_user_group_name') == "Manager"){
+								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+								echo '<a type="button" id="editBtn" retail_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
+							}
+							else{
+								echo '<a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							}
+
+						?>';
+						//'<a type="button" id="editBtn" href="<?php echo base_url() ?>stockRetail/edit/'+item.retail_stock_header_id+'" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a> ';
 					}
 					
 					
-					table.row.add([item.vehicle_id,
-					item.license_plate_no,
-					item.vehicle_yom, 					
-					item.vehicle_type_name,
-					item.vehicle_category_name,
-					is_active_vhcl_details ,
-					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
-						$this->session->userdata('sys_user_group_name') == "Manager"){
-							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-							echo '<a type="button" id="editBtn" vehicleId="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
-						}
-						else{
-							echo '<a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-						}
-
-					?>'
-					//'<a type="button" id="editBtn" href="<?php echo base_url() ?>branch/edit/'+item.company_branch_id+'" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a> '
+					table.row.add([item.emp_bonus_id,
+					item.bonus_name,
+					item.emp_first_name+' - '+item.emp_epf,
+					item.year,
+					item.month,
+					is_approve_sal_bonus,
+					is_active_sal_bonus ,
+					option_html,
 					]).columns.adjust().draw();	
 					
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>vehicle/edit/'+item.vehicle_id);
-					$(".viewBtn").last().attr('value', item.vehicle_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpSalaryBonus/edit/'+item.emp_bonus_id);
+					$(".viewBtn").last().attr('value', item.emp_bonus_id);
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							
@@ -145,12 +168,12 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var vehicleId = "";
+	var emp_bonus_id = "";
 	var Header = "";
 	var HTML = "";
 	
-	vehicleId = $(this).attr('value');
-	console.log(vehicleId);
+	emp_bonus_id = $(this).attr('value');
+	console.log(emp_bonus_id);
 	
 	$.ajax({
 		type: "GET",
@@ -158,50 +181,51 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_single_join?id="+vehicleId,
+		url: API+"EmpSalaryBonus/fetch_single_join?id="+emp_bonus_id,
 		success: function(data, result){
 			console.log(data);
 			
-			Header = 'License Plate No: '+data[0].license_plate_no;
+			Header = 'Salary Bonus Id: '+data[0].emp_bonus_id;
 			console.log(Header);
-			if(data[0].is_active_vhcl_details  == 1){
-				is_active_vhcl_details  = '<span class="right badge badge-success">Active</span>';
+			if(data[0].is_active_sal_bonus  == 1){
+				is_active_sal_bonus  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{
-				is_active_vhcl_details  = '<span class="right badge badge-danger">Inactive</span>';
+				is_active_sal_bonus  = '<span class="right badge badge-danger">Inactive</span>';
+			}
+			
+			if(data[0].is_approve_sal_bonus  == 1){
+				is_approve_sal_bonus  = '<span class="right badge badge-success">Yes</span>';
+			}
+			else{
+				is_approve_sal_bonus  = '<span class="right badge badge-danger">No</span>';
 			}
 			
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<th><label for="license_plate_no">License Plate No: </label></th>'+
-						  '<td>'+data[0].license_plate_no+'</td>'+
-						  '<td><label for="branch_id">Branch: </label></td>'+
-						  '<td>'+data[0].company_branch_name+'</td>'+
+						  '<th><label for="license_plate_no">Bonus Id: </label></th>'+
+						  '<td>'+data[0].emp_bonus_id +'</td>'+
+						  '<td><label for="branch_id">Name: </label></td>'+
+						  '<td>'+data[0].bonus_name+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_yom">YOM: </label></th>'+
-						  '<td>'+data[0].vehicle_yom+'</td>'+
-						  '<td><label for="chasis_no">Chasis No: </label></td>'+
-						  '<td>'+data[0].chasis_no+'</td>'+
+						  '<th><label for="license_plate_no">Employee: </label></th>'+
+						  '<td>'+data[0].emp_epf +' - '+data[0].emp_first_name +'</td>'+
+						  '<td><label for="branch_id">Amount: </label></td>'+
+						  '<td>'+data[0].amount+'</td>'+
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="vehicle_type_id">Vehicle Type: </label></th>'+
-						  '<td >'+data[0].vehicle_type_name+'</td>'+
-						  '<td><label for="vehicle_category_id">Vehicle Category: </label></td>'+
-						  '<td >'+data[0].vehicle_category_name+'</td>'+
+						  '<th><label for="vehicle_yom">Year: </label></th>'+
+						  '<td>'+data[0].year+'</td>'+	
+						   '<th><label for="vehicle_yom">Month: </label></th>'+
+						  '<td>'+data[0].month+'</td>'+							  
 						'</tr>'+
 						'<tr>'+
-						  '<th><label for="engine_no">Engine No.: </label></th>'+
-						  '<td colspan="">'+data[0].engine_no+'</td>'+
-						  '<td><label for="number_of_passengers">No. of Passengers: </label></td>'+
-						  '<td colspan="">'+data[0].number_of_passengers+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<th><label for="max_load">Max Load (Kg): </label></th>'+
-						  '<td>'+data[0].max_load+'</td>'+
-						  '<td><label for="max_load">Status: </label></td>'+
-						  '<td>'+is_active_vhcl_details+'</td>'+
+						  '<th><label for="vehicle_yom">Approved: </label></th>'+
+						  '<td>'+is_approve_sal_bonus+'</td>'+
+						  '<th><label for="vehicle_yom">Active: </label></th>'+
+						  '<td>'+is_active_sal_bonus+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>';

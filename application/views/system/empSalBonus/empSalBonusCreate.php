@@ -1,83 +1,83 @@
+<?  $year  = date("Y"); ?>
 <section class="content">
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Vehicle Details</h3>
+				<h3 class="card-title">Employee Salary Bonus</h3>
 			</div>
 			<form>
 				<div class="card-body ">
 					<form>
 						<div class="form-row">
-							<div class="col-md-6 mb-3">
-								<label for="license_plate_no">License Plate No.</label>
-								<input type="text" class="form-control" id="license_plate_no" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="branch_id">Branch</label>
-								<select class="custom-select" id="branch_id" aria-describedby="" required>
-									<option value="">Select Branch</option>
+							<div class="col-md-2 mb-3">
+								<label for="branch_id">Year</label>
+								<select class="custom-select" id="year" aria-describedby="" required>
+									<option value="<?php echo date("Y") ?>"><?php echo date("Y") ?></option>
+									<option value="<?php echo date("Y")+1 ?>"><?php echo date("Y")+1 ?></option>
+									<option value="<?php echo date("Y")+2 ?>"><?php echo date("Y")+2 ?></option>
+									<option value="<?php echo date("Y")+3 ?>"><?php echo date("Y")+3 ?></option>
 								</select>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="vehicle_yom">YOM</label>
-								<input type="text" class="form-control" id="vehicle_yom" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">
-									Please provide a valid zip.
-								</div>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="chasis_no">Chasis No.</label>
-								<input type="text" class="form-control" id="chasis_no" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="vehicle_type_id">Vehicle Type</label>
-								<select class="custom-select" id="vehicle_type_id" aria-describedby="" required>
+								<label for="month">Month</label>
+								<select class="custom-select" id="month" aria-describedby="" required>
+									<option value="1">January</option>
+									<option value="2">February</option>
+									<option value="3">March</option>
+									<option value="4">April</option>
+									<option value="5">May</option>
+									<option value="6">June</option>
+									<option value="7">July</option>
+									<option value="8">August</option>
+									<option value="9">September</option>
+									<option value="10">October</option>
+									<option value="11">November</option>
+									<option value="12">December</option>
 								</select>
-								<div id="validationServer04Feedback" class="invalid-feedback">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="location">Employee</label>
+								<select class="custom-select" id="emp_id" name="emp_id" required>
+								</select>
+								<div id="locationError" class="invalid-feedback">
 									Please select a valid state.
-								</div>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="vehicle_category_id">Vehicle Category</label>
-								<select class="custom-select" id="vehicle_category_id" aria-describedby="validationServer04Feedback" required>
-								</select>
-								<div id="validationServer04Feedback" class="invalid-feedback">
-									Please select a valid state.
-								</div>
-							</div>
-							
-						</div>
-						<div class="form-row">
-							<div class="col-md-6 mb-3">
-								<label for="engine_no">Engine No.</label>
-								<input type="text" class="form-control" id="engine_no" aria-describedby="validationServer03Feedback" required>
-								<div id="validationServer03Feedback" class="invalid-feedback">
-									Please provide a valid city.
 								</div>
 							</div>	
 							<div class="col-md-3 mb-3">
-								<label for="number_of_passengers">No. of Passengers</label>
-								<input type="text" class="form-control" id="number_of_passengers" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">
-									Please provide a valid zip.
+								<label for="location">Branch</label>
+								<select class="custom-select" id="branch_id" name="branch_id" required>
+								</select>
+								<div id="locationError" class="invalid-feedback">
+									Please select a valid state.
+								</div>
+							</div>	
+							<div class="col-md-3 mb-3">
+								<label for="location">Bonus</label>
+								<select class="custom-select" id="bonus_id" name="bonus_id" required>
+								</select>
+								<div id="locationError" class="invalid-feedback">
+									Please select a valid state.
 								</div>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="max_load">Max Load (Kg)</label>
-								<input type="text" class="form-control" id="max_load" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">
-									Please provide a valid zip.
+								<label for="amount">Amount</label>
+								<input type="text" class="form-control" id="amount" required>
+								<div class="valid-feedback">
+									Looks good!
 								</div>
 							</div>
+							<!--div class="col-md-4 mb-3">
+								<label for="percentage">Percentage</label>
+								<input type="text" class="form-control" id="percentage" required>
+								<div class="valid-feedback">
+									Looks good!
+								</div>
+							</div-->
+						</div>
+						<div class="form-row">							
 							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="is_active_vhcl_details" value="1">
-								<label for="is_active_vhcl_details" class="custom-control-label">is active</label>
+								<input class="custom-control-input" type="checkbox" id="is_active_sal_bonus" value="1">
+								<label for="is_active_sal_bonus" class="custom-control-label">is active</label>
 							</div>
 						</div>
 					  
@@ -92,22 +92,36 @@
 	</div>
 </section>
 <script>
+$(document).ready(function(){
+	var date_input1=$('input[name="valid_from_date"]'); //our date input has the name "date"
+	var date_input2=$('input[name="valid_to_date"]'); //our date input has the name "date"
+	var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+	var options={
+		format: 'yyyy-mm-dd',
+		container: container,
+		todayHighlight: true,
+		autoclose: true,
+		orientation: 'bottom'
+	};
+	date_input1.datepicker(options);
+	date_input2.datepicker(options);
+})
 
-
-function loadVhType(){
+loadEmp();
+function loadEmp(){
 $.ajax({
 	type: "POST",
 	cache : false,
 	async: true,
 	dataType: "json",
-	url: API+"vehicleType/fetch_all_active/",
+	url: API+"Employee/fetch_all_active/",
 	success: function(data, result){
-		var location_drp = '<option value="">Select Type</option>';
-		$.each(data, function(index, item) {
-			//console.log(item);
-			location_drp += '<option value="'+item.vehicle_type_id+'">'+item.vehicle_type_name+'</option>';
+		//console.log(data);
+		var location_drp = '<option value="">Select Employee</option>';
+		$.each(data, function(index, item) {			
+			location_drp += '<option value="'+item.emp_id+'">'+item.emp_epf+' - '+item.emp_first_name+'</option>';
         });
-		$('#vehicle_type_id').append(location_drp);
+		$('#emp_id').append(location_drp);
 	},
 	error: function(XMLHttpRequest, textStatus, errorThrown) {						
 		
@@ -116,42 +130,21 @@ $.ajax({
 });
 }
 
-function loadVhCat(){
-$.ajax({
-	type: "POST",
-	cache : false,
-	async: true,
-	dataType: "json",
-	url: API+"vehicleCategory/fetch_all_active/",
-	success: function(data, result){
-		var company_drp = '<option value="">Select Category</option>';
-		$.each(data, function(index, item) {
-			//console.log(item);
-			company_drp += '<option value="'+item.vehicle_category_id+'">'+item.vehicle_category_name+'</option>';
-        });
-		$('#vehicle_category_id').append(company_drp);
-	},
-	error: function(XMLHttpRequest, textStatus, errorThrown) {						
-		
-		//console.log(errorThrown);
-	}
-});
-}
-
+loadBranch();
 function loadBranch(){
 $.ajax({
 	type: "POST",
 	cache : false,
 	async: true,
 	dataType: "json",
-	url: API+"branch/fetch_all_active/",
+	url: API+"Branch/fetch_all_active/",
 	success: function(data, result){
-		var company_drp = '<option value="">Select Branch</option>';
-		$.each(data, function(index, item) {
-			//console.log(item);
-			company_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
+		//console.log(data);
+		var location_drp = '';
+		$.each(data, function(index, item) {			
+			location_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
         });
-		$('#branch_id').append(company_drp);
+		$('#branch_id').append(location_drp);
 	},
 	error: function(XMLHttpRequest, textStatus, errorThrown) {						
 		
@@ -160,58 +153,67 @@ $.ajax({
 });
 }
 
-loadVhType();
-loadVhCat();
-loadBranch();
+loadBonus();
+function loadBonus(){
+$.ajax({
+	type: "POST",
+	cache : false,
+	async: true,
+	dataType: "json",
+	url: API+"EmpBonus/fetch_all_active/",
+	success: function(data, result){
+		console.log(data);
+		var location_drp = '<option value="">Select Bonus</option>';
+		$.each(data, function(index, item) {			
+			location_drp += '<option value="'+item.bonus_id+'">'+item.bonus_name+'</option>';
+        });
+		$('#bonus_id').append(location_drp);
+	},
+	error: function(XMLHttpRequest, textStatus, errorThrown) {						
+		
+		//console.log(errorThrown);
+	}
+});
+}
 
 $('#submit').click(function(e){
 	e.preventDefault();
 		
-	var license_plate_no = 0;
-	var vehicle_yom = "";
-	var vehicle_type_id = 0;
-	var vehicle_category_id = 0;
-	var chasis_no = "";
-	var engine_no = "";
-	var number_of_passengers = 0;
-	var max_load = 0;
-	var branch_id = 0;
-	var is_active_vhcl_details = 0;
+	var bonus_id = "";
+	var branch_id = "";
+	var amount = "";
+	var year = "";
+	var month = "";
+	var emp_id = "";
+	var is_approve_sal_bonus = 0;
+	var is_active_sal_bonus = 0;
 	
-	license_plate_no = $('#license_plate_no').val();
-	vehicle_yom = $('#vehicle_yom').val();
-	vehicle_type_id = $('#vehicle_type_id').val();
-	vehicle_category_id = $('#vehicle_category_id').val();
-	chasis_no = $('#chasis_no').val();
-	engine_no = $('#engine_no').val();
-	number_of_passengers = $('#number_of_passengers').val();
-	max_load = $('#max_load').val();
+	bonus_id = $('#bonus_id').val();
 	branch_id = $('#branch_id').val();
-	is_active_vhcl_details = $("#is_active_vhcl_details").is(':checked')? 1 : 0;
-	
+	amount = $('#amount').val();
+	year = $('#year').val();
+	month = $('#month').val();
+	emp_id = $('#emp_id').val();
+	is_approve_sal_bonus = $("#is_approve_sal_bonus").is(':checked')? 1 : 0;
+	is_active_sal_bonus = $("#is_active_sal_bonus").is(':checked')? 1 : 0;
 		
-	if(typeof license_plate_no !== 'undefined' && license_plate_no !== '' 
-	&& typeof vehicle_yom !== 'undefined' && vehicle_yom !== ''
-	&& typeof vehicle_type_id !== 'undefined' && vehicle_type_id !== '' 
-	&& typeof vehicle_category_id !== 'undefined' && vehicle_category_id !== ''
-	&& typeof chasis_no !== 'undefined' && chasis_no !== '' 
-	&& typeof engine_no !== 'undefined' && engine_no !== ''
-	&& typeof number_of_passengers !== 'undefined' && number_of_passengers !== '' 
-	&& typeof max_load !== 'undefined' && max_load !== ''
-	&& typeof branch_id !== 'undefined' && branch_id !== '')
+	if(typeof bonus_id !== 'undefined' && bonus_id !== '' 
+	&& typeof branch_id !== 'undefined' && branch_id !== ''
+	&& typeof amount !== 'undefined' && amount !== ''
+	&& typeof year !== 'undefined' && year !== ''
+	&& typeof month !== 'undefined' && month !== ''
+	&& typeof emp_id !== 'undefined' && emp_id !== '')
 	{
 		
 		var formData = new FormData();
-        formData.append('license_plate_no',license_plate_no);
-		formData.append('vehicle_yom',vehicle_yom);
-		formData.append('vehicle_type_id',vehicle_type_id);
-		formData.append('vehicle_category_id',vehicle_category_id);
-		formData.append('chasis_no',chasis_no);
-		formData.append('engine_no',engine_no);
-		formData.append('number_of_passengers',number_of_passengers);
-		formData.append('max_load',max_load);
+        formData.append('bonus_id',bonus_id);
 		formData.append('branch_id',branch_id);
-		formData.append('is_active_vhcl_details',is_active_vhcl_details);
+		formData.append('amount',amount);
+		formData.append('year',year);
+		formData.append('month',month);
+		formData.append('emp_id',emp_id);
+		formData.append('is_approve_sal_bonus',is_approve_sal_bonus);
+		formData.append('is_active_sal_bonus',is_active_sal_bonus);
 				
 		$.ajax({
 			type: "POST",
@@ -222,7 +224,7 @@ $('#submit').click(function(e){
 			processData: false,
 			contentType: false,
 			data: formData,	
-			url: API+"vehicle/insert/",
+			url: API+"EmpSalaryBonus/insert/",
 			success: function(data, result){
 				console.log(data);	
 				const notyf = new Notyf();
@@ -240,7 +242,7 @@ $('#submit').click(function(e){
 				  
 				})
 				window.setTimeout(function() {
-					window.location = "<?php echo base_url() ?>vehicle/view";
+					window.location = "<?php echo base_url() ?>EmpSalaryBonus/view";
 				}, 3000);
 			}	
 				
