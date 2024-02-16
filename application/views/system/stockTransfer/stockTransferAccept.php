@@ -39,6 +39,7 @@
 								<th>Request To</th>
 								<th>Approved</th>
 								<th>Accepted</th>
+								<th>Rejected</th>
 								<th>Active</th>
 								<th>Option</th>
 							</tr>
@@ -90,10 +91,18 @@ function loadData() {
 										
 					var is_accepted ='';
 					if(item.is_accepted == 1){
-						is_accepted = '<span class="right badge badge-success">Accepted</span>';
+						is_accepted = '<span class="right badge badge-success">Yes</span>';
 					}
 					else{
-						is_accepted = '<span class="right badge badge-danger">Not Accepted</span>';
+						is_accepted = '<span class="right badge badge-danger">No</span>';
+					}
+					
+					var is_rejected ='';
+					if(item.is_rejected == 1){
+						is_rejected = '<span class="right badge badge-danger">Yes</span>';
+					}
+					else{
+						is_rejected = '<span class="right badge badge-success">No</span>';
 					}
 					
 					var is_approved ='';
@@ -118,7 +127,7 @@ function loadData() {
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 							$this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								echo '<a type="button" id="editBtn" stock_batch_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
+								echo '<a style="display:none" type="button" id="editBtn" stock_batch_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}
 							else{
 								echo '<a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -134,6 +143,7 @@ function loadData() {
 					item.to_branch,
 					is_approved,
 					is_accepted,
+					is_rejected,
 					is_active_inv_stock_trans,
 					option_html,
 					]).draw();
@@ -259,7 +269,7 @@ $(document).on('click','.viewBtn', function(){
 						  '<th><label for="repair_loc_contact">Accepted: </label></th>'+
 						  '<td colspan="">'+is_accepted+'</td>'+
 						  '<th><label for="repair_loc_contact">Note: </label></th>'+
-						  '<td colspan=""><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></td>'+	
+						  '<td colspan=""><textarea class="form-control" id="note" rows="3">'+data.header[0].note+'</textarea></td>'+	
 						'</tr>'+
 					  '</tbody>'+
 					'</table>'+
@@ -362,7 +372,21 @@ $(document).on("click", "#acceptBtn", function (e) {
 						window.setTimeout(function() {
 							window.location = "<?php echo base_url() ?>stockTransfer/accept";
 						}, 3000);
-					}	
+					}
+					else if(data['error'] == true){
+						notyf.error({
+						  message: data['message'],
+						  duration: 5000,
+						  icon: true,
+						  ripple: true,
+						  dismissible: true,
+						  position: {
+							x: 'right',
+							y: 'top',
+						  }
+						  
+						})
+					}		
 					
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -415,108 +439,37 @@ $(document).on("click", "#rejectBtn", function (e) {
 	e.preventDefault();
 	
 		
+	var note = "";
+	
+	note = $('#note').val();
+
+	var stockHeader = [];
 		
-		var stockHeader = [];
-			
-		
-		stockHeader.push(
-			{
-				'inventory_stock_transfer_header_id':inventory_stock_transfer_header_id
-			}
-		);
-						
-		
-		
-		var formData = new Object();
-		formData = {
-			stockHeader:stockHeader
-		};
-		
-		
-		
-		if(stockHeader.length > 0){
-			submitData();
+	
+	stockHeader.push(
+		{
+			'stock_type':stock_type,
+			'note':note,
+			'inventory_stock_transfer_header_id':inventory_stock_transfer_header_id
 		}
-		else{
-			const notyf = new Notyf();
-			notyf.error({
-			  message: 'Please fill all fields!',
-			  duration: 5000,
-			  icon: true,
-			  ripple: true,
-			  dismissible: true,
-			  position: {
-				x: 'right',
-				y: 'top',
-			  }
-			  
-			})
-		}
-				
-		function submitData(){
-			$.ajax({
-				type: "POST",
-				//enctype: 'multipart/form-data',
-				cache : false,
-				async: true,
-				contentType: 'application/json',
-				dataType: "json",
-				processData: false,
-				data: JSON.stringify(formData),	
-				url: API+"stockTransfer/reject/",
-				success: function(data, result){
-					console.log(data);	
-					const notyf = new Notyf();
-					if(data['message'] == 'Data Updated!'){
-						notyf.success({
-						  message: data['message'],
-						  duration: 5000,
-						  icon: true,
-						  ripple: true,
-						  dismissible: true,
-						  position: {
-							x: 'right',
-							y: 'top',
-						  }
-						  
-						})
-						window.setTimeout(function() {
-							window.location = "<?php echo base_url() ?>stockTransfer/accept";
-						}, 3000);
-					}	
+	);
 					
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					console.log(XMLHttpRequest);
-					console.log(textStatus);		
-					console.log(errorThrown);	
-					const notyf = new Notyf();
-				
-					notyf.error({
-					  message: 'Error!',
-					  duration: 5000,
-					  icon: true,
-					  ripple: true,
-					  dismissible: true,
-					  position: {
-						x: 'right',
-						y: 'top',
-					  }
-					  
-					})
-					
-				}
-			});
-		}
-		
-		
-		
-	//}
-	/* else{
+	console.log(stockHeader);
+	
+	var formData = new Object();
+	formData = {
+		stockHeader:stockHeader
+	};
+	
+	
+	
+	if(stockHeader.length > 0){
+		submitData();
+	}
+	else{
 		const notyf = new Notyf();
-			
 		notyf.error({
-		  message: 'Please Fill Required Fields!',
+		  message: 'Please fill all fields!',
 		  duration: 5000,
 		  icon: true,
 		  ripple: true,
@@ -527,8 +480,65 @@ $(document).on("click", "#rejectBtn", function (e) {
 		  }
 		  
 		})
-	} */
-	
+	}
+			
+	function submitData(){
+		$.ajax({
+			type: "POST",
+			//enctype: 'multipart/form-data',
+			cache : false,
+			async: true,
+			contentType: 'application/json',
+			dataType: "json",
+			processData: false,
+			data: JSON.stringify(formData),	
+			url: API+"stockTransfer/reject/",
+			success: function(data, result){
+				console.log(data);	
+				const notyf = new Notyf();
+				if(data['message'] == 'Data Updated!'){
+					notyf.success({
+					  message: data['message'],
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					window.setTimeout(function() {
+						window.location = "<?php echo base_url() ?>stockTransfer/accept";
+					}, 3000);
+				}	
+				
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(XMLHttpRequest);
+				console.log(textStatus);		
+				console.log(errorThrown);	
+				const notyf = new Notyf();
+			
+				notyf.error({
+				  message: 'Error!',
+				  duration: 5000,
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+				
+			}
+		});
+	}
+		
+		
 	
 })
 </script>

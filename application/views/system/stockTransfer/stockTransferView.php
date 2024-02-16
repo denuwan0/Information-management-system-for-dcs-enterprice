@@ -78,7 +78,7 @@ function loadData() {
 		contentType: 'application/json',
 		url: API+"stockTransfer/fetch_all",
 		success: function(data, result){
-			//console.log(data);
+			console.log(data);
 			//var parseData = JSON.stringify(data);
 			//var parseData1 = JSON.parse(parseData);
 			
@@ -97,10 +97,10 @@ function loadData() {
 										
 					var is_accepted ='';
 					if(item.is_accepted == 1){
-						is_accepted = '<span class="right badge badge-success">Accepted</span>';
+						is_accepted = '<span class="right badge badge-success">Yes</span>';
 					}
 					else{
-						is_accepted = '<span class="right badge badge-danger">Not Accepted</span>';
+						is_accepted = '<span class="right badge badge-danger">No</span>';
 					}
 					
 					var is_approved ='';
@@ -110,12 +110,12 @@ function loadData() {
 						is_approved = '<span class="right badge badge-success">Yes</span>';
 						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" ){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								echo '</div>';
+								
 								echo '<a type="button" id="editBtn" stock_batch_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}
 							else if ($this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								echo '</div>';
+								
 								echo '<a style="display:none" type="button" id="editBtn" stock_batch_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 								
 							}
@@ -132,8 +132,9 @@ function loadData() {
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
 								echo '<a type="button" id="editBtn" stock_batch_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}
-							else{
+							else if ($this->session->userdata('sys_user_group_name') == "Manager"){
 								echo '<a type="button" id="viewBtn" stock_batch_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+								echo '<a style="display:none" type="button" id="editBtn" stock_batch_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}
 
 						?>';

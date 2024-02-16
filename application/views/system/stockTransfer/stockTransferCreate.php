@@ -191,7 +191,7 @@ function loadBranchFrom(){
 		dataType: "json",
 		url: API+"branch/fetch_all_active/",
 		success: function(data, result){
-			var company_drp = '<option value="">Select Branch</option>';
+			var company_drp = '';
 			$.each(data, function(index, item) {
 				//console.log(item);
 				company_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
