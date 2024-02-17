@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2024 at 08:41 PM
+-- Generation Time: Feb 17, 2024 at 10:58 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -1055,9 +1055,9 @@ CREATE TABLE `inventory_item_sub_category` (
 
 INSERT INTO `inventory_item_sub_category` (`item_sub_cat_id`, `item_category_id`, `sub_cat_name`, `sub_cat_description`, `is_active_inv_item_sub_cat`) VALUES
 (1, 4, 'Scaffolding', 'Scaffolding', 1),
-(2, 1, 'Cement', 'Cement', 1),
-(3, 3, 'asad', 'wqwq', 1),
-(4, 2, 'Excavator', 'excavator vehicle', 1);
+(2, 1, 'Material', 'Material', 1),
+(3, 3, 'Power Tools', 'Power Tools', 1),
+(4, 2, 'Vehicles', 'Vehicles', 1);
 
 -- --------------------------------------------------------
 
@@ -1140,11 +1140,11 @@ INSERT INTO `inventory_rental_invoice_header` (`invoice_id`, `branch_id`, `emp_i
 
 CREATE TABLE `inventory_rental_total_stock` (
   `rental_stock_id` int(10) NOT NULL,
+  `branch_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
   `is_sub_item` tinyint(1) NOT NULL,
   `full_stock_count` int(10) NOT NULL,
   `out_stock_count` int(10) NOT NULL,
-  `branch_id` int(10) NOT NULL,
   `max_rent_price` decimal(10,2) NOT NULL,
   `min_rent_price` decimal(10,2) NOT NULL,
   `damage_stock_count` int(10) NOT NULL,
@@ -1157,16 +1157,28 @@ CREATE TABLE `inventory_rental_total_stock` (
 -- Dumping data for table `inventory_rental_total_stock`
 --
 
-INSERT INTO `inventory_rental_total_stock` (`rental_stock_id`, `item_id`, `is_sub_item`, `full_stock_count`, `out_stock_count`, `branch_id`, `max_rent_price`, `min_rent_price`, `damage_stock_count`, `repair_stock_count`, `stock_re_order_level`, `is_active_rental_stock`) VALUES
-(1, 1, 0, 30, 0, 2, '0.00', '0.00', 0, 0, 0, 1),
-(2, 6, 1, 30, 0, 2, '0.00', '0.00', 0, 0, 0, 1),
-(3, 2, 0, 10, 0, 2, '0.00', '0.00', 0, 0, 0, 1),
-(4, 3, 0, 10, 0, 2, '0.00', '0.00', 0, 0, 0, 1),
-(5, 1, 0, 40, 0, 1, '0.00', '0.00', 0, 0, 0, 1),
-(6, 2, 0, 190, 0, 1, '0.00', '0.00', 0, 0, 0, 1),
-(7, 3, 0, 30, 0, 1, '0.00', '0.00', 0, 0, 0, 1),
-(8, 6, 1, 60, 0, 1, '0.00', '0.00', 0, 0, 0, 1),
-(9, 3, 1, 40, 0, 1, '10.00', '10.00', 0, 0, 2, 1);
+INSERT INTO `inventory_rental_total_stock` (`rental_stock_id`, `branch_id`, `item_id`, `is_sub_item`, `full_stock_count`, `out_stock_count`, `max_rent_price`, `min_rent_price`, `damage_stock_count`, `repair_stock_count`, `stock_re_order_level`, `is_active_rental_stock`) VALUES
+(1, 2, 1, 0, 95, 0, '150.00', '100.00', 0, 0, 20, 1),
+(2, 2, 2, 0, 95, 0, '0.00', '0.00', 0, 0, 0, 1),
+(3, 2, 3, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(4, 2, 4, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(5, 2, 5, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(6, 2, 6, 0, 500, 0, '0.00', '0.00', 0, 0, 0, 1),
+(7, 2, 1, 1, 95, 0, '0.00', '0.00', 0, 0, 0, 1),
+(8, 2, 2, 1, 95, 0, '0.00', '0.00', 0, 0, 0, 1),
+(9, 2, 3, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(10, 2, 4, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(11, 2, 6, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(12, 1, 1, 0, 105, 0, '0.00', '0.00', 0, 0, 0, 1),
+(13, 1, 2, 0, 105, 0, '0.00', '0.00', 0, 0, 0, 1),
+(14, 1, 3, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(15, 1, 4, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(16, 1, 5, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(17, 1, 1, 1, 105, 0, '0.00', '0.00', 0, 0, 0, 1),
+(18, 1, 2, 1, 105, 0, '0.00', '0.00', 0, 0, 0, 1),
+(19, 1, 3, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(20, 1, 4, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(21, 1, 6, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1240,13 +1252,16 @@ CREATE TABLE `inventory_retail_total_stock` (
 --
 
 INSERT INTO `inventory_retail_total_stock` (`retail_stock_id`, `item_id`, `is_sub_item`, `max_sale_price`, `min_sale_price`, `full_stock_count`, `stock_re_order_level`, `branch_id`, `is_active_retail_stock`) VALUES
-(1, 1, 0, '0.00', '0.00', 20, 0, 1, 1),
-(2, 2, 0, '0.00', '0.00', 6, 0, 1, 1),
-(3, 6, 1, '0.00', '0.00', 6, 0, 1, 1),
-(4, 1, 1, '0.00', '0.00', 6, 0, 1, 1),
-(5, 2, 0, '0.00', '0.00', 24, 0, 2, 1),
-(6, 6, 1, '0.00', '0.00', 2, 0, 2, 1),
-(7, 1, 1, '1500.00', '1000.00', 2, 5, 2, 1);
+(1, 1, 0, '500.00', '400.00', 100, 10, 1, 1),
+(2, 2, 0, '0.00', '0.00', 100, 0, 1, 1),
+(3, 3, 0, '0.00', '0.00', 100, 0, 1, 1),
+(4, 4, 0, '0.00', '0.00', 100, 0, 1, 1),
+(5, 5, 0, '0.00', '0.00', 100, 0, 1, 1),
+(6, 1, 1, '0.00', '0.00', 100, 0, 1, 1),
+(7, 2, 1, '0.00', '0.00', 100, 0, 1, 1),
+(8, 3, 1, '0.00', '0.00', 100, 0, 1, 1),
+(9, 4, 1, '0.00', '0.00', 100, 0, 1, 1),
+(10, 6, 1, '0.00', '0.00', 100, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1270,10 +1285,17 @@ CREATE TABLE `inventory_stock_purchase_detail` (
 --
 
 INSERT INTO `inventory_stock_purchase_detail` (`purchase_detail_line_id`, `stock_batch_id`, `item_id`, `item_cost`, `no_of_items`, `allocated_no_of_items`, `available_no_of_items`, `is_sub_item`) VALUES
-(5, 1, 1, '1000.00', 500, 500, 0, 0),
-(6, 1, 2, '2000.00', 200, 200, 0, 0),
-(7, 1, 3, '3000.00', 100, 100, 0, 0),
-(8, 1, 6, '600.00', 400, 400, 0, 1);
+(12, 1, 1, '7500.00', 500, 500, 0, 0),
+(13, 1, 2, '6000.00', 500, 500, 0, 0),
+(14, 1, 3, '5000.00', 500, 500, 0, 0),
+(15, 1, 4, '6800.00', 500, 500, 0, 0),
+(16, 1, 5, '9000.00', 500, 500, 0, 0),
+(17, 1, 6, '10000.00', 500, 500, 0, 0),
+(18, 1, 1, '4000.00', 500, 500, 0, 1),
+(19, 1, 2, '2000.00', 500, 500, 0, 1),
+(20, 1, 3, '3500.00', 500, 500, 0, 1),
+(21, 1, 4, '2700.00', 500, 500, 0, 1),
+(22, 1, 6, '800.00', 500, 500, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1298,7 +1320,7 @@ CREATE TABLE `inventory_stock_purchase_header` (
 --
 
 INSERT INTO `inventory_stock_purchase_header` (`stock_batch_id`, `stock_purchase_date`, `stock_purchase_time`, `created_by`, `branch_id`, `approved_by`, `is_allocated_stock`, `is_approved_stock`, `is_active_stock_purchase`) VALUES
-(1, '2024-02-13', '', 3, 2, 3, 1, 1, 1);
+(1, '2024-02-15', '', 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1310,8 +1332,8 @@ CREATE TABLE `inventory_stock_rental_detail` (
   `rental_stock_id` int(10) NOT NULL,
   `rental_stock_header_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
-  `full_stock_count` int(10) NOT NULL,
   `is_sub_item` tinyint(1) NOT NULL,
+  `full_stock_count` int(10) NOT NULL,
   `is_active_rental_stock_detail` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1319,17 +1341,28 @@ CREATE TABLE `inventory_stock_rental_detail` (
 -- Dumping data for table `inventory_stock_rental_detail`
 --
 
-INSERT INTO `inventory_stock_rental_detail` (`rental_stock_id`, `rental_stock_header_id`, `item_id`, `full_stock_count`, `is_sub_item`, `is_active_rental_stock_detail`) VALUES
-(1, 1, 1, 10, 0, 1),
-(2, 1, 2, 10, 0, 1),
-(3, 1, 3, 10, 0, 1),
-(4, 1, 6, 10, 1, 1),
-(5, 2, 1, 20, 0, 1),
-(6, 2, 6, 20, 1, 1),
-(7, 3, 1, 470, 0, 1),
-(8, 3, 2, 190, 0, 1),
-(9, 3, 3, 90, 0, 1),
-(10, 3, 6, 370, 1, 1);
+INSERT INTO `inventory_stock_rental_detail` (`rental_stock_id`, `rental_stock_header_id`, `item_id`, `is_sub_item`, `full_stock_count`, `is_active_rental_stock_detail`) VALUES
+(1, 1, 1, 0, 100, 1),
+(2, 1, 2, 0, 100, 1),
+(3, 1, 3, 0, 100, 1),
+(4, 1, 4, 0, 100, 1),
+(5, 1, 5, 0, 100, 1),
+(6, 1, 6, 0, 500, 1),
+(7, 1, 1, 1, 100, 1),
+(8, 1, 2, 1, 100, 1),
+(9, 1, 3, 1, 100, 1),
+(10, 1, 4, 1, 100, 1),
+(11, 1, 6, 1, 100, 1),
+(12, 2, 1, 0, 100, 1),
+(13, 2, 2, 0, 100, 1),
+(14, 2, 3, 0, 100, 1),
+(15, 2, 4, 0, 100, 1),
+(16, 2, 5, 0, 100, 1),
+(17, 2, 1, 1, 100, 1),
+(18, 2, 2, 1, 100, 1),
+(19, 2, 3, 1, 100, 1),
+(20, 2, 4, 1, 100, 1),
+(21, 2, 6, 1, 100, 1);
 
 -- --------------------------------------------------------
 
@@ -1353,9 +1386,8 @@ CREATE TABLE `inventory_stock_rental_header` (
 --
 
 INSERT INTO `inventory_stock_rental_header` (`rental_stock_header_id`, `branch_id`, `rental_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_rental`, `is_active_inv_stock_rental`) VALUES
-(1, 2, '2024-02-12', 1, 3, 3, 1, 1),
-(2, 2, '2024-02-12', 1, 3, 3, 1, 1),
-(3, 1, '2024-02-16', 1, 1, 1, 1, 1);
+(1, 1, '2024-02-17', 1, 1, 3, 1, 1),
+(2, 2, '2024-02-17', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1377,23 +1409,16 @@ CREATE TABLE `inventory_stock_retail_detail` (
 --
 
 INSERT INTO `inventory_stock_retail_detail` (`retail_stock_detail_id`, `retail_stock_header_id`, `item_id`, `full_stock_count`, `is_sub_item`, `is_active_retail_stock_detail`) VALUES
-(1, 1, 1, 2, 0, 1),
-(2, 1, 2, 2, 0, 1),
-(3, 1, 6, 2, 1, 1),
-(4, 1, 1, 2, 1, 1),
-(5, 2, 1, 2, 0, 1),
-(6, 2, 2, 2, 0, 1),
-(7, 2, 6, 2, 1, 1),
-(8, 2, 1, 2, 1, 1),
-(9, 3, 1, 16, 0, 1),
-(10, 3, 2, 2, 0, 1),
-(11, 3, 6, 2, 1, 1),
-(12, 3, 1, 2, 1, 1),
-(13, 4, 2, 24, 0, 1),
-(14, 5, 6, 5, 1, 1),
-(15, 5, 1, 5, 1, 1),
-(16, 6, 6, 2, 1, 1),
-(17, 6, 1, 2, 1, 1);
+(1, 1, 1, 100, 0, 1),
+(2, 1, 2, 100, 0, 1),
+(3, 1, 3, 100, 0, 1),
+(4, 1, 4, 100, 0, 1),
+(5, 1, 5, 100, 0, 1),
+(6, 1, 1, 100, 1, 1),
+(7, 1, 2, 100, 1, 1),
+(8, 1, 3, 100, 1, 1),
+(9, 1, 4, 100, 1, 1),
+(10, 1, 6, 100, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1417,12 +1442,7 @@ CREATE TABLE `inventory_stock_retail_header` (
 --
 
 INSERT INTO `inventory_stock_retail_header` (`retail_stock_header_id`, `branch_id`, `retail_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_retail`, `is_active_inv_stock_retail`) VALUES
-(1, 1, '2024-02-12', 1, 1, 1, 1, 1),
-(2, 1, '2024-02-12', 1, 1, 1, 1, 1),
-(3, 1, '2024-02-12', 1, 1, 1, 1, 1),
-(4, 2, '2024-02-12', 1, 3, 0, 0, 0),
-(5, 2, '2024-02-12', 1, 3, 0, 0, 1),
-(6, 2, '2024-02-12', 1, 3, 3, 1, 1);
+(1, 1, '2024-02-17', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1444,10 +1464,10 @@ CREATE TABLE `inventory_stock_transfer_detail` (
 --
 
 INSERT INTO `inventory_stock_transfer_detail` (`inventory_stock_transfer_detail_id`, `inventory_stock_transfer_header_id`, `item_id`, `is_sub_item`, `no_of_items`, `is_active_stock_transfer_detail`) VALUES
-(1, 1, 1, 0, 10, 0),
-(2, 1, 3, 0, 20, 0),
-(3, 1, 6, 1, 30, 0),
-(4, 1, 3, 1, 40, 0),
+(1, 1, 1, 0, 5, 0),
+(2, 1, 1, 0, 5, 0),
+(3, 1, 1, 1, 5, 0),
+(4, 1, 2, 1, 5, 0),
 (5, 2, 1, 0, 5, 0),
 (6, 2, 2, 0, 5, 0),
 (7, 2, 1, 1, 5, 0),
@@ -1484,8 +1504,8 @@ CREATE TABLE `inventory_stock_transfer_header` (
 --
 
 INSERT INTO `inventory_stock_transfer_header` (`inventory_stock_transfer_header_id`, `branch_id_from`, `branch_id_to`, `create_date`, `create_time`, `created_by`, `transfer_type`, `stock_type`, `inform_user_id`, `note`, `approved_by`, `is_approved`, `rejected_by`, `is_rejected`, `is_accepted`, `accepted_by`, `is_active_inv_stock_trans`) VALUES
-(1, 2, 1, '2024-02-13', '', 3, 'IN', 'Rental', 1, 'No Stocks', 7, 1, 53, 1, 1, 53, 1),
-(2, 1, 2, '2024-02-16', '', 53, 'IN', 'Rental', 3, 'No Stocks', 8, 1, 0, 0, 0, 0, 1);
+(1, 2, 1, '2024-02-17', '', 1, 'IN', 'Retail', 53, '', 7, 1, 53, 1, 0, 0, 1),
+(2, 1, 2, '2024-02-17', '', 1, 'IN', 'Rental', 3, '', 8, 1, 0, 0, 1, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -1506,8 +1526,8 @@ CREATE TABLE `inventory_sub_item` (
 --
 
 INSERT INTO `inventory_sub_item` (`sub_item_id`, `sub_item_name`, `sub_item_image_url`, `sub_item_category`, `is_active_inv_sub_item`) VALUES
-(1, 'Sub Item 1', '', 0, 1),
-(2, 'Sub item 2', '', 0, 1),
+(1, 'Scaffolding Step Lader', '', 0, 1),
+(2, 'Acro Jack / Pipe Support ', '', 0, 1),
 (3, 'Sub item 3', '', 0, 1),
 (4, 'Sub Item 4', '', 0, 1),
 (5, 'cross brace1', 'http://localhost/API/assets/img/sub_items/Biljax-diagonal-brace-and-bolts.jpg', 4, 0),
@@ -1723,12 +1743,12 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-16 09:19:20', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-17 08:21:44', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-16 15:36:56', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-17 09:57:03', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
-(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '0a9b47c22a70d80fbe6a', '645185', '2024-02-16 15:55:22', 0, 1),
+(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'b29c393f38884d41ca1e', '776617', '2024-02-17 09:57:15', 0, 1),
 (54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-04 17:26:13', 0, 1);
 
 -- --------------------------------------------------------
@@ -2929,7 +2949,7 @@ ALTER TABLE `inventory_rental_invoice_header`
 -- AUTO_INCREMENT for table `inventory_rental_total_stock`
 --
 ALTER TABLE `inventory_rental_total_stock`
-  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `inventory_rent_charge_period`
@@ -2953,13 +2973,13 @@ ALTER TABLE `inventory_retail_invoice_header`
 -- AUTO_INCREMENT for table `inventory_retail_total_stock`
 --
 ALTER TABLE `inventory_retail_total_stock`
-  MODIFY `retail_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `retail_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_detail`
 --
 ALTER TABLE `inventory_stock_purchase_detail`
-  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_header`
@@ -2971,25 +2991,25 @@ ALTER TABLE `inventory_stock_purchase_header`
 -- AUTO_INCREMENT for table `inventory_stock_rental_detail`
 --
 ALTER TABLE `inventory_stock_rental_detail`
-  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_header`
 --
 ALTER TABLE `inventory_stock_rental_header`
-  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_retail_detail`
 --
 ALTER TABLE `inventory_stock_retail_detail`
-  MODIFY `retail_stock_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `retail_stock_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_retail_header`
 --
 ALTER TABLE `inventory_stock_retail_header`
-  MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_transfer_detail`

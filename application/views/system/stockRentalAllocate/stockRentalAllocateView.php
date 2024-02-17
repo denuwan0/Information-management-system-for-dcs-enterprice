@@ -43,6 +43,7 @@
 							<tr>
 								<th width="10%">Stock assigned id</th>
 								<th width="10%">Stock Batch No</th>
+								<th width="10%">Branch</th>
 								<th width="20%">Assigned date</th>
 								<th width="20%">Approved</th>
 								<th width="20%">Active</th>
@@ -126,6 +127,7 @@ function loadData() {
 					
 					table.row.add([item.rental_stock_header_id,
 					item.stock_batch_id,
+					item.company_branch_name,
 					item.rental_stock_assigned_date,
 					is_approved_inv_stock_rental,
 					is_active_inv_stock_rental,

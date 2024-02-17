@@ -29,7 +29,7 @@
 			</div>
 			
 			<form>
-				<div class="card-body">
+				<div class="card-body" style="overflow-x: auto">
 					<table id="data" class="table table-bordered table-striped">
 						<thead id="thead">
 							<tr>
@@ -91,7 +91,7 @@ function loadData() {
 										
 					var is_accepted ='';
 					if(item.is_accepted == 1){
-						is_accepted = '<span class="right badge badge-success">Yes</span>';
+						is_accepted = '<span class="right badge badge-success">Yes</span>';						
 					}
 					else{
 						is_accepted = '<span class="right badge badge-danger">No</span>';
@@ -211,6 +211,7 @@ $(document).on('click','.viewBtn', function(){
 			var is_active_inv_stock_trans='';
 			var is_approved='';
 			var is_accepted='';
+			var is_rejected='';
 			stock_type = data.header[0].stock_type;
 			
 			if(data.header[0].is_active_inv_stock_trans == 1){
@@ -228,10 +229,21 @@ $(document).on('click','.viewBtn', function(){
 			}
 			
 			if(data.header[0].is_accepted == 1){
+				$('#acceptBtn').css('display', 'none');	
+				$('#rejectBtn').css('display', 'none');	
 				is_accepted  = '<span class="right badge badge-success">Yes</span>';
 			}
 			else{
 				is_accepted  = '<span class="right badge badge-danger">No</span>';
+			}
+			
+			if(data.header[0].is_rejected == 1){
+				$('#acceptBtn').css('display', 'none');	
+				$('#rejectBtn').css('display', 'none');	
+				is_rejected  = '<span class="right badge badge-danger">Yes</span>';
+			}
+			else{
+				is_rejected  = '<span class="right badge badge-success">No</span>';
 			}
 			console.log(data.detail);
 			$.each(data.detail, function (i, item) {
@@ -268,6 +280,10 @@ $(document).on('click','.viewBtn', function(){
 						'<tr>'+						  
 						  '<th><label for="repair_loc_contact">Accepted: </label></th>'+
 						  '<td colspan="">'+is_accepted+'</td>'+
+						  '<th><label for="repair_loc_contact">Rejected: </label></th>'+
+						  '<td colspan="">'+is_rejected+'</td>'+
+						'</tr>'+
+						'<tr>'+	
 						  '<th><label for="repair_loc_contact">Note: </label></th>'+
 						  '<td colspan=""><textarea class="form-control" id="note" rows="3">'+data.header[0].note+'</textarea></td>'+	
 						'</tr>'+
@@ -294,7 +310,7 @@ $(document).on('click','.viewBtn', function(){
 		' (Request From: '+data.header[0].from_branch+' To:'+data.header[0].to_branch+')');
 		$('#modalInfoBody').html(HTML);
 		$('#modalInfo').modal('show');
-				
+			
 		}
 	});
 	
@@ -356,7 +372,7 @@ $(document).on("click", "#acceptBtn", function (e) {
 				success: function(data, result){
 					console.log(data);	
 					const notyf = new Notyf();
-					if(data['message'] == 'Data Updated!'){
+					if(data['message'] == 'Stock Transfer Accepted!'){
 						notyf.success({
 						  message: data['message'],
 						  duration: 5000,

@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Item Details</h3>
+				<h3 class="card-title">Main item Details</h3>
 				<div style="text-align: right;">
 					<a type="button" href="<?php echo base_url() ?>item/create" class="btn text-dark btn-default btn-sm">
 						<i class="nav-icon far fa-plus-square"></i> Add Item

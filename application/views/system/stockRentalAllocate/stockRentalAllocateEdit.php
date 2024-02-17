@@ -28,7 +28,7 @@
 			<form>
 				<div class="card-body itemBody">
 					<div class="row">
-						<div class="col-lg-9 row">
+						<div class="col-lg-12 row">
 							<input class="form-control" id="rental_stock_header_id" name="rental_stock_header_id" type="hidden"/>
 							<div class="col-lg-3 mb-3" >
 								<div class="form-group"> <!-- Date input 1-->
@@ -42,6 +42,14 @@
 									<input class="form-control stock_batch_id" id="stock_batch_id" name="stock_batch_id" type="text" autocomplete="off" readonly/>
 								</div>								
 							</div>
+							<div class="col-md-2 mb-3">
+								<label for="company_country">Branch</label>
+								<select class="form-control" id="branch_id" name="branch_id">
+								</select>
+							</div>
+							
+						</div>
+						<div class="col-lg-12 row">
 							<?php 
 								
 								if($this->session->userdata('sys_user_group_name') == 'Admin' ||
@@ -165,6 +173,36 @@ function loadData() {
 			if(data.header[0].is_active_inv_stock_rental == 1){
 				$('#is_active_inv_stock_rental').prop('checked', true);
 			}
+			
+			function loadBranchFrom(){
+				$.ajax({
+					type: "POST",
+					cache : false,
+					async: true,
+					dataType: "json",
+					url: API+"branch/fetch_all_active/",
+					success: function(data1, result){
+						var company_drp = '';
+						$.each(data1, function(index, item) {
+							//console.log(data.header[0].branch_id_from );
+							if(data.header[0].branch_id == item.company_branch_id){
+								company_drp += '<option selected value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
+							}
+							else{
+								company_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
+							}
+							
+						});
+						$('#branch_id').append(company_drp);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {						
+						
+						//console.log(errorThrown);
+					}
+				});
+			}
+
+			loadBranchFrom();
 			
 			var count1 = 1;
 			var count2 = 1;
@@ -628,116 +666,79 @@ $(document).on("click", "#submit", function (e) {
 	var is_sub_item = 0;
 	var rental_stock_id = 0;
 	
-					
-		stock_purchase_date = $('#stock_purchase_date').val();
-		rental_stock_header_id = $('#rental_stock_header_id').val();
-		stock_batch_id = $('#stock_batch_id').val();
-		is_approved_inv_stock_rental = $("#is_approved_inv_stock_rental").is(':checked')? 1 : 0;
-		is_active_inv_stock_rental = $("#is_active_inv_stock_rental").is(':checked')? 1 : 0;
+	branch_id = $('#branch_id').val();			
+	stock_purchase_date = $('#stock_purchase_date').val();
+	rental_stock_header_id = $('#rental_stock_header_id').val();
+	stock_batch_id = $('#stock_batch_id').val();
+	is_approved_inv_stock_rental = $("#is_approved_inv_stock_rental").is(':checked')? 1 : 0;
+	is_active_inv_stock_rental = $("#is_active_inv_stock_rental").is(':checked')? 1 : 0;
+	
+	var itemsArr = [];
+	var stockHeader = [];
+	
+	$('.itemRow').each(function(){
 		
-		var itemsArr = [];
-		var stockHeader = [];
+		rental_stock_id = $(this).find('#rental_stock_id').val();
+		item_id = $(this).find('.item_id').val();
+		full_stock_count = $(this).find('#full_stock_count').val();
+		is_sub_item = $(this).find('#is_sub_item').val();
 		
-		$('.itemRow').each(function(){
+		console.log(rental_stock_id);
+		
+		if(item_id != ''){
+			itemsArr.push({
+				rental_stock_id: rental_stock_id,
+				item_id: item_id,
+				full_stock_count: full_stock_count,
+				is_sub_item: is_sub_item
+			})
+		}
+		
+		
+	})
+	
+	
+	//console.log(itemsArr);
+	
+	stockHeader.push(
+		{
+			'rental_stock_header_id':rental_stock_header_id,
+			'stock_batch_id':stock_batch_id,
+			'branch_id':branch_id,
+			'stock_purchase_date':stock_purchase_date,
+			'is_approved_inv_stock_rental':is_approved_inv_stock_rental,
+			'is_active_inv_stock_rental':is_active_inv_stock_rental
+		}
+	);
+	
 			
-			rental_stock_id = $(this).find('#rental_stock_id').val();
-			item_id = $(this).find('.item_id').val();
-			full_stock_count = $(this).find('#full_stock_count').val();
-			is_sub_item = $(this).find('#is_sub_item').val();
+	console.log(stockHeader);
+	
+	
+	var formData = new Object();
+	formData = {
+		stockHeader:stockHeader,
+		itemsArr:itemsArr
+	};
+	
+	console.log(formData);
 			
-			console.log(rental_stock_id);
-			
-			if(item_id != ''){
-				itemsArr.push({
-					rental_stock_id: rental_stock_id,
-					item_id: item_id,
-					full_stock_count: full_stock_count,
-					is_sub_item: is_sub_item
-				})
-			}
-			
-			
-		})
-		
-		
-		//console.log(itemsArr);
-		
-		stockHeader.push(
-			{
-				'rental_stock_header_id':rental_stock_header_id,
-				'stock_batch_id':stock_batch_id,
-				'stock_purchase_date':stock_purchase_date,
-				'is_approved_inv_stock_rental':is_approved_inv_stock_rental,
-				'is_active_inv_stock_rental':is_active_inv_stock_rental
-			}
-		);
-		
-				
-		console.log(stockHeader);
-		
-		
-		var formData = new Object();
-		formData = {
-			stockHeader:stockHeader,
-			itemsArr:itemsArr
-		};
-		
-		console.log(formData);
-				
-		$.ajax({
-			type: "POST",
-			//enctype: 'multipart/form-data',
-			cache : false,
-			async: true,
-			contentType: 'application/json',
-			dataType: "json",
-			processData: false,
-			data: JSON.stringify(formData),	
-			url: API+"stockRental/update/",
-			success: function(data, result){
-				console.log(data);	
-				const notyf = new Notyf();
-				if(data['message'] == 'Data Updated!'){
-					notyf.success({
-					  message: data['message'],
-					  duration: 5000,
-					  icon: true,
-					  ripple: true,
-					  dismissible: true,
-					  position: {
-						x: 'right',
-						y: 'top',
-					  }
-					  
-					})
-					window.setTimeout(function() {
-						window.location = "<?php echo base_url() ?>stockRentalAllocate/view";
-					}, 3000);
-				}
-				if(data['message'] == "Cannot approve inactive document!"){
-					notyf.error({
-					  message: data['message'],
-					  duration: 5000,
-					  icon: true,
-					  ripple: true,
-					  dismissible: true,
-					  position: {
-						x: 'right',
-						y: 'top',
-					  }
-					  
-					})
-				}	
-				
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				console.log(XMLHttpRequest);
-				console.log(textStatus);		
-				console.log(errorThrown);	
-				const notyf = new Notyf();
-			
-				notyf.error({
-				  message: 'Error!',
+	$.ajax({
+		type: "POST",
+		//enctype: 'multipart/form-data',
+		cache : false,
+		async: true,
+		contentType: 'application/json',
+		dataType: "json",
+		processData: false,
+		data: JSON.stringify(formData),	
+		url: API+"stockRental/update/",
+		success: function(data, result){
+			console.log(data);	
+			const notyf = new Notyf();
+			if(data['message'] == 'Data Updated!'){
+				notyf.success({
+				  message: data['message'],
 				  duration: 5000,
 				  icon: true,
 				  ripple: true,
@@ -748,9 +749,47 @@ $(document).on("click", "#submit", function (e) {
 				  }
 				  
 				})
-				
+				window.setTimeout(function() {
+					window.location = "<?php echo base_url() ?>stockRentalAllocate/view";
+				}, 3000);
 			}
-		});
+			if(data['message'] == "Cannot approve inactive document!"){
+				notyf.error({
+				  message: data['message'],
+				  duration: 5000,
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+			}	
+			
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log(XMLHttpRequest);
+			console.log(textStatus);		
+			console.log(errorThrown);	
+			const notyf = new Notyf();
+		
+			notyf.error({
+			  message: 'Error!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+			
+		}
+	});
 		
 	
 	
