@@ -644,7 +644,31 @@
 		  <?php 
 		  
 			if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
-			echo '<li class="nav-item">
+			echo '
+			<li class="nav-item">
+				<a href="#" class="nav-link">
+				  <i class="nav-icon fas fa-circle text-primary"></i>
+				  <p>
+					POS
+					<i class="right fas fa-angle-left"></i>
+				  </p>
+				</a>
+				<ul class="nav nav-treeview">
+				  <li class="nav-item">
+					<a href="'.base_url().'PointOfSale/view" class="nav-link">
+					  <i class="fas fa-money-bill-alt nav-icon text-primary"></i>
+					  <p>Rental Invoice</p>
+					</a>
+				  </li>
+				  <li class="nav-item">
+					<a href="'.base_url().'PosRetail/view" class="nav-link">
+					  <i class="fas fa-money-bill-wave nav-icon text-primary"></i>
+					  <p>Retail Invoice</p>
+					</a>
+				  </li>
+				</ul>
+			  </li>
+			<li class="nav-item">
 				<a href="#" class="nav-link">
 				  <i class="nav-icon fas fa-circle text-success"></i>
 				  <p>
