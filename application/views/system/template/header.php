@@ -494,47 +494,53 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon text-info"></i>
-                  <p>
-                    Item
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>item/view" class="nav-link">
-                      <i class="fas fa-box nav-icon text-info"></i>
-                      <p>Item Details</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>subItem/view" class="nav-link">
-                      <i class="fas fa-clipboard-list nav-icon text-info"></i>
-                      <p>Sub-Item Details</p>
-                    </a>
-                  </li>
-				  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>itemSubItem/view" class="nav-link">
-                      <i class="fas fa-box nav-icon text-info"></i>
-                      <p>Item with Sub-Items</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>itemCategory/view" class="nav-link">
-                      <i class="fas fa-dolly nav-icon text-info"></i>
-                      <p>Item Category</p>
-                    </a>
-                  </li>
-				  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>itemSubCategory/view" class="nav-link">
-                      <i class="fas fa-clipboard nav-icon text-info"></i>
-                      <p>Item Sub Category</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
+				<?php
+				if($this->session->userdata('sys_user_group_name') == "Admin"){
+					echo '<li class="nav-item">
+						<a href="#" class="nav-link">
+						  <i class="far fa-circle nav-icon text-info"></i>
+						  <p>
+							Item
+							<i class="right fas fa-angle-left"></i>
+						  </p>
+						</a>
+						<ul class="nav nav-treeview">
+						  <li class="nav-item">
+							<a href="<?php echo base_url() ?>item/view" class="nav-link">
+							  <i class="fas fa-box nav-icon text-info"></i>
+							  <p>Item Details</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="<?php echo base_url() ?>subItem/view" class="nav-link">
+							  <i class="fas fa-clipboard-list nav-icon text-info"></i>
+							  <p>Sub-Item Details</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="<?php echo base_url() ?>itemSubItem/view" class="nav-link">
+							  <i class="fas fa-box nav-icon text-info"></i>
+							  <p>Item with Sub-Items</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="<?php echo base_url() ?>itemCategory/view" class="nav-link">
+							  <i class="fas fa-dolly nav-icon text-info"></i>
+							  <p>Item Category</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="<?php echo base_url() ?>itemSubCategory/view" class="nav-link">
+							  <i class="fas fa-clipboard nav-icon text-info"></i>
+							  <p>Item Sub Category</p>
+							</a>
+						  </li>
+						</ul>
+					  </li>';
+				}
+				
+				?>
+              
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon text-info"></i>
@@ -544,12 +550,18 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
-					<li class="nav-item">
-                    <a href="<?php echo base_url() ?>stock/view" class="nav-link">
-                      <i class="fas fa-store nav-icon text-info"></i>
-                      <p>Stock Purchase</p>
-                    </a>
-                  </li>
+				<?php
+				if($this->session->userdata('sys_user_group_name') == "Admin"){
+					echo '<li class="nav-item">
+						<a href="'.base_url().'stock/view" class="nav-link">
+						  <i class="fas fa-store nav-icon text-info"></i>
+						  <p>Stock Purchase</p>
+						</a>
+					  </li>';
+				}
+				
+				?>
+					
                   <li class="nav-item">
                     <a href="#" class="nav-link">
                       <i class="fas fa-people-arrows nav-icon text-info"></i>

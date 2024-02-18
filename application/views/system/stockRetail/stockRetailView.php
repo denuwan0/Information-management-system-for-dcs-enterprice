@@ -87,15 +87,15 @@ function loadData() {
 			
 			$(function () {
 				
-				 // Setup - add a text input to each footer cell
-				$('#data tfoot th').each( function () {
-					var title = $('#data thead th').eq( $(this).index() ).text();
-					$(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-				} );
+				
 				
 				var table = $('#data').DataTable(
 				{
 					dom: 'Bfrtip',
+					scrollX: true,
+					scrollCollapse: true,
+					scrollY: '400px',
+					paging: false,
 					buttons: [
 						{
 							extend: 'colvis',
@@ -122,6 +122,7 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
+					console.log($(this));
 					
 					var is_active_retail_stock ='';
 					var option_html ='';

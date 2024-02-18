@@ -143,7 +143,7 @@ $('#submit').click(function(e){
 	
 	var sub_item_id = 0;
 	var sub_item_category = 0;
-	var sub_item_id = 0;
+	var sub_item_id = 0;	
 	var sub_item_image_url = "";
 	var is_active_inv_sub_item = 0;
 	

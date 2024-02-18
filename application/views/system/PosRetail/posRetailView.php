@@ -63,7 +63,7 @@
             <!-- MAP & BOX PANE -->
             <div class="card" style="height:350px">
               <div class="card-header">
-                <h3 class="card-title">Products</h3>
+                <h3 class="card-title" id="prdHeader">Products</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body" style="max-height: 350px; overflow-y: auto;">
@@ -213,6 +213,9 @@ $(document).on('click', '.catDiv', function(){
 	var catId = 0;
 	catId = $(this).attr('value');
 	
+	console.log();
+	$('#prdHeader').text($(this)[0].innerText+' Products');
+	
 	$.ajax({
 		type: "GET",
 		cache : false,
@@ -222,6 +225,8 @@ $(document).on('click', '.catDiv', function(){
 		url: API+"Item/fetch_all_main_sub_item_by_category_id/?id="+catId,
 		success: function(data, result){
 			console.log(data);
+			
+			
 			
 			$(function () {
 
@@ -240,10 +245,10 @@ $(document).on('click', '.catDiv', function(){
 											'</div>'+
 										'</div>'+
 										'<div class="card-body">'+
-											'<img src="'+item.image_url+'" class="rounded float-left" alt="..." style="width: -webkit-fill-available;">'+
+											'<img src="'+item.image_url+'" class="rounded float-left" alt="..." style="width:100px; height:100px">'+
 										'</div>'+
 										'<div class="card-footer">'+
-											'<button type="button" class="btn btn-block btn-outline-dark btn-sm addItem">Add</button>'+
+											'<button type="button" item_id="'+item.item_id+'" is_sub_item="'+item.is_sub_item+'" class="btn btn-block btn-outline-dark btn-sm addItem">Add</button>'+
 										'</div>'+
 									'</div>'+
 								'</div>';
@@ -261,29 +266,154 @@ $(document).on('click', '.catDiv', function(){
 })
 
 $(document).on('click', '.addItem', function(){
+
+	var item_id = $(this).attr('item_id');
+	var is_sub_item = $(this).attr('is_sub_item');
 	
-	var checkoutHtml = "";
+	var formData = new FormData();
+	formData.append('item_id',item_id);
+	formData.append('is_sub_item',is_sub_item);
 	
-	checkoutHtml += '<tr>'+
-					  '<th scope="row">1</th>'+
-					  '<th scope="row">frame</th>'+
-					  '<td width="10%">'+
-						'<div class="btn-group">'+
-							'<a class="btn"><i class="fa fa-minus-circle minBtn" style="color:red"></i></a>'+
-							'<a class="btn" id="qty">1</a>'+
-							'<a class="btn"><i class="fas fa-plus-circle plusBtn" style="color:green"></i></a>'+
-						'</div>'+
-						'</td>'+
-					  '<td width="10%" align="right">500</td>	'+				  
-					  '<td width="10%"><a class="btn"><i class="fa fa-trash"></i></a></td>'+
-					'</tr>';
+	$.ajax({
+		type: "POST",
+		cache : false,
+		async: true,
+		dataType: "json",
+		processData: false,
+		contentType: false,
+		data: formData,
+		url: API+"StockRetail/get_retail_item_details_by_item_id_branch_id_is_sub_item/",
+		success: function(data, result){
+			
+			var prdHtml = '';
+			console.log(data);
+			
+			if(data.message == "Product not Available at the moment!"){	
+				const notyf = new Notyf();
+			
+				notyf.error({
+				  message: data.message,
+				  duration: 5000,
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+				
+			}
+			else{
+				$.each(data, function (i, item) {			
+					var duplicate = 0;
+					duplicate = $('.row'+item.item_id+''+item.is_sub_item+'').length;
+					
+					if(duplicate == 0){
+						prdHtml += '<tr class="detailRow row'+item.item_id+''+item.is_sub_item+'">'+
+							  '<th scope="row" class="count">'+numbering()+'</th>'+
+							  '<th scope="row">'+item.item_name+'</th>'+
+							  '<td width="10%">'+
+								'<div class="btn-group">'+
+									'<a class="btn"><i class="fa fa-minus-circle minBtn" style="color:red"></i></a>'+
+									'<a class="btn" id="qty" value="">1</a>'+
+									'<a class="btn"><i class="fas fa-plus-circle plusBtn" style="color:green"></i></a>'+
+								'</div>'+
+								'</td>'+
+							  '<td width="10%" align="right">'+item.max_sale_price+'</td>	'+				  
+							  '<td width="10%"><a class="btn deleteBtn"><i class="fa fa-trash"></i></a></td>'+
+							'</tr>';
+							$('#checkoutDiv').append(prdHtml);	
+							
+							const notyf = new Notyf();
+				
+							notyf.success({
+							  message: 'Product added!',
+							  duration: 5000,
+							  icon: true,
+							  ripple: true,
+							  dismissible: true,
+							  position: {
+								x: 'right',
+								y: 'top',
+							  }
+							  
+							})
+					}
+					else if(duplicate>0){
+						const notyf = new Notyf();
+				
+						notyf.error({
+						  message: 'Item already in the list',
+						  duration: 5000,
+						  icon: true,
+						  ripple: true,
+						  dismissible: true,
+						  position: {
+							x: 'right',
+							y: 'top',
+						  }
+						  
+						})
+					}
+									
+																	
+										
+						
+				});
+			}
+		
+			
+			
+			
+				
+		}
+	});
 	
-	$('#checkoutDiv').append(checkoutHtml);
+	
 });
+
+function numbering(){
+	var count = $('.count').length + 1;
+	return count;
+}
 
 $(document).on('click', '.minBtn', function(){
 	
-	console.log($(this).find('#qty').last());
+	console.log($(this).find('#qty'));
+	
+	/* var qtyHtml = "";
+	
+		qtyHtml += '<tr>'+
+		  '<th scope="row">1</th>'+
+		  '<th scope="row">frame</th>'+
+		  '<td width="10%">'+
+			'<div class="btn-group">'+
+				'<a class="btn"><i class="fa fa-minus-circle" style="color:red"></i></a>'+
+				'<a class="btn">1</a>'+
+				'<a class="btn"><i class="fas fa-plus-circle" style="color:green"></i></a>'+
+			'</div>'+
+			'</td>'+
+		  '<td width="10%" align="right">500</td>	'+				  
+		  '<td width="10%"><a class="btn"><i class="fa fa-trash"></i></a></td>'+
+		'</tr>';
+	
+	$('#qty').html(qtyHtml); */
+});
+
+$(document).on('click', '.deleteBtn', function(){
+	
+	
+	$(this).parent().parent().remove();
+	console.log($(this).find('.count').last());
+	
+	$('.detailRow').each( function(i){		
+		$(this).find('.count').text((i+1));
+	})
+	
+	//numbering()
+	//console.log(count);
 	
 	/* var qtyHtml = "";
 	
