@@ -175,7 +175,7 @@
                       <p>Personal details</p>
                     </a>
                   </li>	
-                  <li class="nav-item">
+                  <!--li class="nav-item">
 					<a href="<?php echo base_url() ?>EmpAdvance/view" class="nav-link">
 					  <i class="fas fa fa-retweet nav-icon text-red"></i>
 					  <p>Advance</p>
@@ -192,7 +192,7 @@
 					  <i class="fas fa fa-bolt nav-icon text-red"></i>
 					  <p>Bonus</p>
 					</a>
-				  </li>
+				  </li-->
                   <li class="nav-item">
 					<a href="<?php echo base_url() ?>EmpDesignation/view" class="nav-link">
 					  <i class="fas fa-puzzle-piece nav-icon text-red"></i>
@@ -296,7 +296,7 @@
 				  <p>Employee Attendance</p>
 				</a>
 			  </li>
-			  <li class="nav-item">
+			  <!--li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon text-red"></i>
                   <p>
@@ -318,8 +318,8 @@
                     </a>
                   </li>
                 </ul>
-              </li>
-			  <li class="nav-item">
+              </li-->
+			  <!--li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon text-red"></i>
                   <p>
@@ -359,11 +359,11 @@
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li-->
 			  <li class="nav-item">
 				<a href="<?php echo base_url() ?>EmpSpecialTask/view" class="nav-link">
 				  <i class="far fa-circle nav-icon text-red"></i>
-				  <p>Employee Special Task</p>
+				  <p>Employee Task List</p>
 				</a>
 			  </li>
             </ul>
@@ -506,31 +506,31 @@
 						</a>
 						<ul class="nav nav-treeview">
 						  <li class="nav-item">
-							<a href="<?php echo base_url() ?>item/view" class="nav-link">
+							<a href="'.base_url().'item/view" class="nav-link">
 							  <i class="fas fa-box nav-icon text-info"></i>
 							  <p>Item Details</p>
 							</a>
 						  </li>
 						  <li class="nav-item">
-							<a href="<?php echo base_url() ?>subItem/view" class="nav-link">
+							<a href="'.base_url().'subItem/view" class="nav-link">
 							  <i class="fas fa-clipboard-list nav-icon text-info"></i>
 							  <p>Sub-Item Details</p>
 							</a>
 						  </li>
 						  <li class="nav-item">
-							<a href="<?php echo base_url() ?>itemSubItem/view" class="nav-link">
+							<a href="'.base_url().'itemSubItem/view" class="nav-link">
 							  <i class="fas fa-box nav-icon text-info"></i>
 							  <p>Item with Sub-Items</p>
 							</a>
 						  </li>
 						  <li class="nav-item">
-							<a href="<?php echo base_url() ?>itemCategory/view" class="nav-link">
+							<a href="'.base_url().'itemCategory/view" class="nav-link">
 							  <i class="fas fa-dolly nav-icon text-info"></i>
 							  <p>Item Category</p>
 							</a>
 						  </li>
 						  <li class="nav-item">
-							<a href="<?php echo base_url() ?>itemSubCategory/view" class="nav-link">
+							<a href="'.base_url().'itemSubCategory/view" class="nav-link">
 							  <i class="fas fa-clipboard nav-icon text-info"></i>
 							  <p>Item Sub Category</p>
 							</a>
@@ -629,30 +629,14 @@
               </li>
             </ul>
           </li>
-		  <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-circle text-indigo"></i>
-              <p>
-                Leave
-              </p>
-            </a>
-          </li>
-		  <li class="nav-item">
+		  <!--li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-circle text-indigo"></i>
               <p>
                 Salary Advance
               </p>
             </a>
-          </li>
-		  <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-circle text-indigo"></i>
-              <p>
-                Task List
-              </p>
-            </a>
-          </li>
+          </li-->
 		  <?php 
 		  
 			if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
@@ -707,14 +691,14 @@
 					  <p>Special Offer</p>
 					</a>
 				  </li>
-				  <li class="nav-item">
+				  <!--li class="nav-item">
 					<a href="#" class="nav-link">
 					  <i class="fas fa-random nav-icon text-success"></i>
 					  <p>Delivery method</p>
 					</a>
-			</li>';}
+			</li-->';}
 			if($this->session->userdata('sys_user_group_name') == "Admin"){
-			echo '<li class="nav-item">
+			echo '<!--li class="nav-item">
 					<a href="#" class="nav-link">
 					  <i class="fas fa-city nav-icon text-success"></i>
 					  <p>Delivery Company</p>
@@ -725,7 +709,7 @@
 					  <i class="fas fa-truck nav-icon text-success"></i>
 					  <p>Order Delivery</p>
 					</a>
-				  </li>
+				  </li-->
 				</ul>
 			  </li>
 			  <li class="nav-item">

@@ -114,7 +114,7 @@
 							<td scope="col" width="10%"></th>
 							<th scope="col" width="40%">Total</th>
 							<th scope="col" width="10%"></th>
-							<th scope="col" width="30%" style="text-align:center">0.00</th>						
+							<th scope="col" width="30%" style="text-align:center" class="total">0.00</th>						
 							<th scope="col" width="10%"></th>
 						</tr>
 					  </tbody>
@@ -310,6 +310,12 @@ $(document).on('click', '.addItem', function(){
 					var duplicate = 0;
 					duplicate = $('.row'+item.item_id+''+item.is_sub_item+'').length;
 					
+					console.log(item.max_sale_price);
+					var sale_price = 0;
+					if(item.max_sale_price == "0.00"){
+						 sale_price = item.min_sale_price;
+					}
+					
 					if(duplicate == 0){
 						prdHtml += '<tr class="detailRow row'+item.item_id+''+item.is_sub_item+'">'+
 							  '<th scope="row" class="count">'+numbering()+'</th>'+
@@ -317,14 +323,20 @@ $(document).on('click', '.addItem', function(){
 							  '<td width="10%">'+
 								'<div class="btn-group">'+
 									'<a class="btn"><i class="fa fa-minus-circle minBtn" style="color:red"></i></a>'+
-									'<a class="btn" id="qty" value="">1</a>'+
+									'<a class="btn qty" id="" value="">1</a>'+
 									'<a class="btn"><i class="fas fa-plus-circle plusBtn" style="color:green"></i></a>'+
 								'</div>'+
 								'</td>'+
-							  '<td width="10%" align="right">'+item.max_sale_price+'</td>	'+				  
+								 '<td width="10%" style="display:none" align="right" class="unit_price">'+sale_price+'</td>	'+	
+							  '<td width="10%" align="right" class="price">'+sale_price+'</td>	'+				  
 							  '<td width="10%"><a class="btn deleteBtn"><i class="fa fa-trash"></i></a></td>'+
 							'</tr>';
 							$('#checkoutDiv').append(prdHtml);	
+							
+							var tot = parseFloat($('.total').text()).toFixed(2);
+							tot = parseFloat(tot)+parseFloat(sale_price);
+							$('.total').text('');
+							$('.total').text(tot);
 							
 							const notyf = new Notyf();
 				
@@ -380,26 +392,55 @@ function numbering(){
 }
 
 $(document).on('click', '.minBtn', function(){
+		
+	var qty = parseInt($(this).parent().parent().find('.qty').text());
+	var line_tot = parseFloat($(this).parent().parent().parent().parent().find('.price').text());
+	var unit_price = parseFloat($(this).parent().parent().parent().parent().find('.unit_price').text());
+	var tot = parseFloat($('.total').text());
 	
-	console.log($(this).find('#qty'));
+	if(qty > 1){
+		qty = qty - 1;
+		line_tot = line_tot - unit_price;
+		tot = tot - unit_price;
+		
+		$(this).parent().parent().find('.qty').text(qty);
+		$(this).parent().parent().parent().parent().find('.price').text(line_tot);
+		$('.total').text(tot);
+	}
+	else{
+		const notyf = new Notyf();
+				
+		notyf.error({
+		  message: 'Cannot reduce below 1',
+		  duration: 5000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	}
+
+});
+
+$(document).on('click', '.plusBtn', function(){
 	
-	/* var qtyHtml = "";
+	var qty = parseInt($(this).parent().parent().find('.qty').text());
+	var line_tot = parseFloat($(this).parent().parent().parent().parent().find('.price').text());
+	var unit_price = parseFloat($(this).parent().parent().parent().parent().find('.unit_price').text());
+	var tot = parseFloat($('.total').text());
 	
-		qtyHtml += '<tr>'+
-		  '<th scope="row">1</th>'+
-		  '<th scope="row">frame</th>'+
-		  '<td width="10%">'+
-			'<div class="btn-group">'+
-				'<a class="btn"><i class="fa fa-minus-circle" style="color:red"></i></a>'+
-				'<a class="btn">1</a>'+
-				'<a class="btn"><i class="fas fa-plus-circle" style="color:green"></i></a>'+
-			'</div>'+
-			'</td>'+
-		  '<td width="10%" align="right">500</td>	'+				  
-		  '<td width="10%"><a class="btn"><i class="fa fa-trash"></i></a></td>'+
-		'</tr>';
+	qty = qty + 1;
+	line_tot = line_tot + unit_price;
+	tot = tot + unit_price;
 	
-	$('#qty').html(qtyHtml); */
+	$(this).parent().parent().find('.qty').text(qty);
+	$(this).parent().parent().parent().parent().find('.price').text(line_tot);
+	$('.total').text(tot);
+	
 });
 
 $(document).on('click', '.deleteBtn', function(){
