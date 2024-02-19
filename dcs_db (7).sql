@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2024 at 03:09 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Generation Time: Feb 19, 2024 at 12:34 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ CREATE TABLE `bank` (
   `bank_id` int(10) NOT NULL,
   `bank_name` varchar(255) NOT NULL,
   `is_active_bank` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bank`
@@ -58,7 +58,7 @@ CREATE TABLE `bank_account_details` (
   `b_branch_id` int(10) NOT NULL,
   `contact_no` varchar(20) NOT NULL,
   `is_active_bank_acc` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bank_account_details`
@@ -83,7 +83,7 @@ CREATE TABLE `bank_branch` (
   `b_branch_contact` varchar(20) NOT NULL,
   `b_bank_swift_code` varchar(255) NOT NULL,
   `is_active_bank_b_branch` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bank_branch`
@@ -115,7 +115,7 @@ CREATE TABLE `bank_deposit` (
   `verified_emp_id` int(10) NOT NULL,
   `is_verified` tinyint(1) NOT NULL,
   `is_active_bank_deposit` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bank_deposit`
@@ -139,7 +139,7 @@ CREATE TABLE `company` (
   `company_logo` varchar(255) NOT NULL,
   `company_country` int(10) NOT NULL,
   `is_active_company` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `company`
@@ -163,7 +163,7 @@ CREATE TABLE `company_branch` (
   `branch_manager` int(10) NOT NULL,
   `branch_address` varchar(255) NOT NULL,
   `is_active_branch` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `company_branch`
@@ -186,7 +186,7 @@ CREATE TABLE `country` (
   `country_name` varchar(255) NOT NULL,
   `country_desc` varchar(255) NOT NULL,
   `is_active_country` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `country`
@@ -219,7 +219,7 @@ CREATE TABLE `customer` (
   `created_date` varchar(10) NOT NULL,
   `is_web` tinyint(1) NOT NULL,
   `is_active_customer` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
@@ -241,7 +241,7 @@ CREATE TABLE `emp_advance` (
   `advance_name` varchar(100) NOT NULL,
   `advance_desc` varchar(100) NOT NULL,
   `is_active_advance` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_advance`
@@ -262,7 +262,7 @@ CREATE TABLE `emp_allowance` (
   `allowance_name` varchar(20) NOT NULL,
   `allowance_desc` varchar(200) NOT NULL,
   `is_active_emp_allow` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_allowance`
@@ -289,7 +289,7 @@ CREATE TABLE `emp_attendance` (
   `uploaded_by` int(10) NOT NULL,
   `approved_by` int(10) NOT NULL,
   `is_approved` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_attendance`
@@ -321,8 +321,8 @@ INSERT INTO `emp_attendance` (`attendance_id`, `branch_id`, `emp_epf`, `date`, `
 
 CREATE TABLE `emp_bonus` (
   `bonus_id` int(10) NOT NULL,
-  `bonus_name` varchar(200) COLLATE armscii8_bin NOT NULL,
-  `bonus_desc` varchar(200) COLLATE armscii8_bin NOT NULL,
+  `bonus_name` varchar(200) NOT NULL,
+  `bonus_desc` varchar(200) NOT NULL,
   `is_active_bonus` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
@@ -345,7 +345,7 @@ CREATE TABLE `emp_designation` (
   `emp_desig_name` varchar(20) NOT NULL,
   `emp_desig_desc` varchar(200) NOT NULL,
   `is_active_emp_desig` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_designation`
@@ -377,7 +377,7 @@ CREATE TABLE `emp_details` (
   `emp_email` varchar(100) NOT NULL,
   `emp_emg_contact_no` varchar(20) NOT NULL,
   `is_active_emp` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_details`
@@ -407,7 +407,7 @@ CREATE TABLE `emp_driving_license` (
   `valid_to_date` varchar(10) NOT NULL,
   `license_type` varchar(10) NOT NULL,
   `is_active_driving_lice` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_driving_license`
@@ -437,7 +437,7 @@ CREATE TABLE `emp_final_salary` (
   `is_active_final_sal` tinyint(1) NOT NULL,
   `is_paid` tinyint(1) NOT NULL,
   `is_hold` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -451,7 +451,7 @@ CREATE TABLE `emp_finger_print_details` (
   `date` varchar(10) NOT NULL,
   `in_time` varchar(5) NOT NULL,
   `out_time` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -464,7 +464,7 @@ CREATE TABLE `emp_grade` (
   `emp_grade_name` varchar(100) NOT NULL,
   `emp_grade_desc` varchar(100) NOT NULL,
   `is_active_emp_grade` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_grade`
@@ -488,7 +488,7 @@ CREATE TABLE `emp_group` (
   `emp_grade_id` int(10) NOT NULL,
   `emp_designation_id` int(10) NOT NULL,
   `is_active_emp_group` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_group`
@@ -512,7 +512,7 @@ CREATE TABLE `emp_holiday_calender` (
   `created_date` varchar(10) NOT NULL,
   `created_by_emp_id` int(10) NOT NULL,
   `is_active_calendar` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -532,7 +532,7 @@ CREATE TABLE `emp_leave_details` (
   `created_by_emp_id` int(10) NOT NULL,
   `approved_by_emp_id` int(10) NOT NULL,
   `is_active_leave_details` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -548,7 +548,7 @@ CREATE TABLE `emp_leave_quota` (
   `valid_to_date` varchar(20) NOT NULL,
   `amount` int(10) NOT NULL,
   `is_active_leave_quota` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_leave_quota`
@@ -570,7 +570,7 @@ CREATE TABLE `emp_leave_type` (
   `leave_type_id` int(10) NOT NULL,
   `leave_type_name` varchar(100) NOT NULL,
   `is_active_leave_type` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_leave_type`
@@ -593,7 +593,7 @@ CREATE TABLE `emp_medical_checkup_location` (
   `emp_med_loc_name` varchar(100) NOT NULL,
   `emp_med_loc_contact` varchar(20) NOT NULL,
   `is_active_medical_checkup` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_medical_checkup_location`
@@ -619,7 +619,7 @@ CREATE TABLE `emp_medical_records` (
   `med_loc_id` int(10) NOT NULL,
   `emp_med_status` varchar(10) NOT NULL COMMENT 'normal, moderate, critical',
   `is_active_medical_records` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_medical_records`
@@ -642,7 +642,7 @@ CREATE TABLE `emp_over_time` (
   `approved_emp_id` int(10) NOT NULL,
   `special_task_id` int(10) NOT NULL,
   `is_active_emp_ot` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -656,7 +656,7 @@ CREATE TABLE `emp_over_time_allocation` (
   `over_time_start_time` varchar(10) NOT NULL,
   `over_time_end_time` varchar(10) NOT NULL,
   `emp_id` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -669,7 +669,7 @@ CREATE TABLE `emp_over_time_hour_rate` (
   `amount` decimal(10,2) NOT NULL,
   `description` varchar(200) NOT NULL,
   `is_active_ot_rate` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -690,7 +690,7 @@ CREATE TABLE `emp_salary_advance` (
   `percentage` decimal(10,2) NOT NULL,
   `is_approved_sal_advance` tinyint(1) NOT NULL,
   `is_active_sal_advance` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_salary_advance`
@@ -719,7 +719,7 @@ CREATE TABLE `emp_salary_allowance` (
   `approved_by` int(10) NOT NULL,
   `is_approve_sal_allow` tinyint(1) NOT NULL,
   `is_active_sal_allow` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_salary_allowance`
@@ -748,7 +748,7 @@ CREATE TABLE `emp_salary_bonus` (
   `year` int(10) NOT NULL,
   `is_approve_sal_bonus` tinyint(1) NOT NULL,
   `is_active_sal_bonus` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_salary_bonus`
@@ -774,7 +774,7 @@ CREATE TABLE `emp_salary_increment` (
   `created_by_emp_id` int(10) NOT NULL,
   `approved_by_emp_id` int(10) NOT NULL,
   `is_active_sal_increment` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -788,7 +788,7 @@ CREATE TABLE `emp_salary_scale` (
   `emp_group_id` int(10) NOT NULL,
   `basic_salary` decimal(10,2) NOT NULL,
   `is_active_sal_scale` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -799,9 +799,14 @@ CREATE TABLE `emp_salary_scale` (
 CREATE TABLE `emp_special_task_assign_emp` (
   `assign_emp_line_id` int(10) NOT NULL,
   `special_task_id` int(10) NOT NULL,
+  `branch_id` int(10) NOT NULL,
   `emp_id` int(10) NOT NULL,
+  `invoice_id` int(10) NOT NULL,
+  `task_start_date` varchar(20) NOT NULL,
+  `task_end_date` varchar(20) NOT NULL,
+  `is_complete` tinyint(1) NOT NULL,
   `is_active_sp_task_assign` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -811,17 +816,19 @@ CREATE TABLE `emp_special_task_assign_emp` (
 
 CREATE TABLE `emp_special_task_header` (
   `special_task_id` int(10) NOT NULL,
-  `branch_id` int(10) NOT NULL,
   `task_name` varchar(200) NOT NULL,
-  `invoice_id` int(10) NOT NULL,
-  `task_type` int(10) NOT NULL COMMENT 'scaffolding, heavy machine oerating',
-  `task_start_date` varchar(20) NOT NULL,
-  `task_end_date` varchar(20) NOT NULL,
-  `task_start_time` varchar(10) NOT NULL,
-  `task_end_time` varchar(10) NOT NULL,
-  `is_active_sp_task` tinyint(1) NOT NULL,
-  `is_complete` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `task_type` varchar(200) NOT NULL,
+  `is_active_sp_task` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `emp_special_task_header`
+--
+
+INSERT INTO `emp_special_task_header` (`special_task_id`, `task_name`, `task_type`, `is_active_sp_task`) VALUES
+(1, 'General Yard Work', 'General Work', 1),
+(2, 'Scaffolding Project', 'Scaffolding', 1),
+(3, 'Heavy Vehicle Operation', 'Heavy Vehicle Operation', 1);
 
 -- --------------------------------------------------------
 
@@ -836,7 +843,7 @@ CREATE TABLE `emp_wise_leave_quota` (
   `balance_leave_quota` int(10) NOT NULL,
   `is_hold_emp_wise_leave_quota` tinyint(1) NOT NULL,
   `is_active_emp_wise_leave_quota` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_wise_leave_quota`
@@ -875,7 +882,7 @@ CREATE TABLE `emp_work_contract` (
   `valid_from_date` varchar(10) NOT NULL,
   `valid_to_date` varchar(10) NOT NULL,
   `is_active_emp_work_cont` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_work_contract`
@@ -900,7 +907,7 @@ CREATE TABLE `emp_work_schedule` (
   `out_time` varchar(10) NOT NULL,
   `is_flexible` tinyint(1) NOT NULL,
   `is_active_work_schedule` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `emp_work_schedule`
@@ -923,7 +930,7 @@ CREATE TABLE `holiday` (
   `holiday_name` varchar(255) NOT NULL,
   `holiday_desc` varchar(255) NOT NULL,
   `is_active_holiday` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `holiday`
@@ -950,7 +957,7 @@ CREATE TABLE `holiday_calendar` (
   `h_holiday_date_to` varchar(10) NOT NULL,
   `h_holiday_bg_color` varchar(30) NOT NULL,
   `is_active_h_calendar` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `holiday_calendar`
@@ -972,7 +979,7 @@ CREATE TABLE `holiday_type` (
   `holiday_type_name` varchar(255) NOT NULL,
   `holiday_type_desc` varchar(255) NOT NULL,
   `is_active_holiday_type` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `holiday_type`
@@ -998,14 +1005,14 @@ CREATE TABLE `inventory_item` (
   `is_active_inv_item` tinyint(1) NOT NULL,
   `is_feature` tinyint(1) NOT NULL,
   `is_web_pattern` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_item`
 --
 
 INSERT INTO `inventory_item` (`item_id`, `item_name`, `item_image_url`, `item_type`, `item_category`, `is_active_inv_item`, `is_feature`, `is_web_pattern`) VALUES
-(1, 'Acro Jack / Pipe Support ', 'http://localhost/API/assets/img/items/acro_jack.png', 0, 4, 1, 0, 0),
+(1, 'Acro Jack / Pipe Support ', 'http://localhost/API/assets/img/items/acro_jack.png', 0, 4, 1, 1, 0),
 (2, 'Column box 4ft', 'http://localhost/API/assets/img/items/column_box_4.jpg', 0, 3, 1, 0, 0),
 (3, 'Column box 8ft', 'http://localhost/API/assets/img/items/column_box_8.jpg', 0, 3, 1, 0, 0),
 (4, 'Scaffold frame 3ft', 'http://localhost/API/assets/img/items/oe6rhd.jpg', 0, 4, 1, 0, 0),
@@ -1034,19 +1041,20 @@ CREATE TABLE `inventory_item_category` (
   `item_category_id` int(10) NOT NULL,
   `category_name` varchar(100) NOT NULL,
   `description` varchar(200) NOT NULL,
+  `cat_img_url` varchar(200) NOT NULL,
   `is_active_inv_item_cat` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_item_category`
 --
 
-INSERT INTO `inventory_item_category` (`item_category_id`, `category_name`, `description`, `is_active_inv_item_cat`) VALUES
-(1, 'Material', 'Materials', 1),
-(2, 'Vehicles', 'Vehicles', 1),
-(3, 'Power Tools', 'Power Tools', 1),
-(4, 'Scaffolding', 'Scaffolding desc', 1),
-(6, 'Services', 'Services', 1);
+INSERT INTO `inventory_item_category` (`item_category_id`, `category_name`, `description`, `cat_img_url`, `is_active_inv_item_cat`) VALUES
+(1, 'Material', 'Materials', 'http://localhost/API/assets/img/category/cement_insee.png', 1),
+(2, 'Vehicles', 'Vehicles', 'http://localhost/API/assets/img/category/escavator.jpg', 1),
+(3, 'Power Tools', 'Power Tools', 'http://localhost/API/assets/img/category/chainblock_5.jpg', 1),
+(4, 'Scaffolding', 'Scaffolding desc', 'http://localhost/API/assets/img/category/frame-14.jpg', 1),
+(6, 'Services', 'Services', 'http://localhost/API/assets/img/category/services.JPG', 1);
 
 -- --------------------------------------------------------
 
@@ -1060,7 +1068,7 @@ CREATE TABLE `inventory_item_sub_category` (
   `sub_cat_name` varchar(100) NOT NULL,
   `sub_cat_description` varchar(200) NOT NULL,
   `is_active_inv_item_sub_cat` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_item_sub_category`
@@ -1085,7 +1093,7 @@ CREATE TABLE `inventory_item_with_sub_items` (
   `sub_item_id` int(10) NOT NULL,
   `no_of_sub_items` int(10) NOT NULL,
   `is_active_item_sub_item` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_item_with_sub_items`
@@ -1111,7 +1119,7 @@ CREATE TABLE `inventory_rental_invoice_detail` (
   `item_price` decimal(10,2) NOT NULL,
   `item_discount` decimal(10,2) NOT NULL,
   `is_active_inv_rent_invoice_detail` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_rental_invoice_detail`
@@ -1137,7 +1145,7 @@ CREATE TABLE `inventory_rental_invoice_header` (
   `total_discount` decimal(10,2) NOT NULL,
   `is_active_inv_rent_invoice_hdr` tinyint(1) NOT NULL,
   `is_complete` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_rental_invoice_header`
@@ -1165,34 +1173,7 @@ CREATE TABLE `inventory_rental_total_stock` (
   `repair_stock_count` int(10) NOT NULL,
   `stock_re_order_level` int(10) NOT NULL,
   `is_active_rental_stock` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `inventory_rental_total_stock`
---
-
-INSERT INTO `inventory_rental_total_stock` (`rental_stock_id`, `branch_id`, `item_id`, `is_sub_item`, `full_stock_count`, `out_stock_count`, `max_rent_price`, `min_rent_price`, `damage_stock_count`, `repair_stock_count`, `stock_re_order_level`, `is_active_rental_stock`) VALUES
-(1, 2, 1, 0, 95, 0, '150.00', '100.00', 0, 0, 20, 1),
-(2, 2, 2, 0, 95, 0, '0.00', '0.00', 0, 0, 0, 1),
-(3, 2, 3, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(4, 2, 4, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(5, 2, 5, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(6, 2, 6, 0, 500, 0, '0.00', '0.00', 0, 0, 0, 1),
-(7, 2, 1, 1, 95, 0, '0.00', '0.00', 0, 0, 0, 1),
-(8, 2, 2, 1, 95, 0, '0.00', '0.00', 0, 0, 0, 1),
-(9, 2, 3, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(10, 2, 4, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(11, 2, 6, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(12, 1, 1, 0, 105, 0, '0.00', '0.00', 0, 0, 0, 1),
-(13, 1, 2, 0, 105, 0, '0.00', '0.00', 0, 0, 0, 1),
-(14, 1, 3, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(15, 1, 4, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(16, 1, 5, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(17, 1, 1, 1, 105, 0, '0.00', '0.00', 0, 0, 0, 1),
-(18, 1, 2, 1, 105, 0, '0.00', '0.00', 0, 0, 0, 1),
-(19, 1, 3, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(20, 1, 4, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(21, 1, 6, 1, 100, 0, '0.00', '0.00', 0, 0, 0, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1205,7 +1186,7 @@ CREATE TABLE `inventory_rent_charge_period` (
   `period_name` varchar(20) NOT NULL,
   `description` varchar(200) NOT NULL,
   `is_active_inv_rent_charge` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1221,7 +1202,7 @@ CREATE TABLE `inventory_retail_invoice_detail` (
   `item_price` decimal(10,2) NOT NULL,
   `item_discount` decimal(10,2) NOT NULL,
   `is_active_inv_retail_invoice_detail` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1241,7 +1222,7 @@ CREATE TABLE `inventory_retail_invoice_header` (
   `is_pos` tinyint(1) NOT NULL,
   `is_active_inv_retail_invoice_hdr` tinyint(1) NOT NULL,
   `is_complete` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1259,55 +1240,7 @@ CREATE TABLE `inventory_retail_total_stock` (
   `full_stock_count` int(10) NOT NULL,
   `stock_re_order_level` int(10) NOT NULL,
   `is_active_retail_stock` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `inventory_retail_total_stock`
---
-
-INSERT INTO `inventory_retail_total_stock` (`retail_stock_id`, `branch_id`, `item_id`, `is_sub_item`, `max_sale_price`, `min_sale_price`, `full_stock_count`, `stock_re_order_level`, `is_active_retail_stock`) VALUES
-(1, 1, 1, 0, '6000.00', '4500.00', 100, 10, 1),
-(2, 1, 2, 0, '5000.00', '4500.00', 100, 10, 1),
-(3, 1, 3, 0, '0.00', '0.00', 100, 0, 1),
-(4, 1, 4, 0, '0.00', '0.00', 100, 0, 1),
-(5, 1, 5, 0, '0.00', '0.00', 120, 0, 1),
-(6, 1, 1, 1, '0.00', '0.00', 120, 0, 1),
-(7, 1, 2, 1, '0.00', '0.00', 120, 0, 1),
-(8, 1, 3, 1, '0.00', '0.00', 120, 0, 1),
-(9, 1, 4, 1, '0.00', '0.00', 120, 0, 1),
-(10, 1, 6, 1, '0.00', '0.00', 150, 0, 1),
-(11, 1, 9, 0, '0.00', '0.00', 10, 0, 1),
-(12, 1, 10, 0, '0.00', '0.00', 1, 0, 1),
-(13, 1, 11, 0, '0.00', '0.00', 1, 0, 1),
-(14, 1, 12, 0, '0.00', '0.00', 1, 0, 1),
-(15, 1, 13, 0, '0.00', '0.00', 20, 0, 1),
-(16, 1, 14, 0, '0.00', '0.00', 20, 0, 1),
-(17, 1, 15, 0, '0.00', '0.00', 3, 0, 1),
-(18, 1, 16, 0, '0.00', '0.00', 3, 0, 1),
-(19, 1, 17, 0, '0.00', '0.00', 3, 0, 1),
-(20, 1, 18, 0, '0.00', '0.00', 1, 0, 1),
-(21, 1, 5, 1, '0.00', '0.00', 20, 0, 1),
-(22, 1, 7, 1, '0.00', '0.00', 50, 0, 1),
-(23, 1, 7, 0, '0.00', '0.00', 9999, 0, 1),
-(24, 2, 7, 0, '0.00', '20000.00', 9999, 0, 1),
-(25, 2, 5, 0, '7500.00', '6500.00', 20, 10, 1),
-(26, 2, 9, 0, '175000.00', '150000.00', 10, 5, 1),
-(27, 2, 10, 0, '0.00', '10000.00', 1, 0, 1),
-(28, 2, 11, 0, '0.00', '10000.00', 1, 0, 1),
-(29, 2, 12, 0, '0.00', '10000.00', 1, 0, 1),
-(30, 2, 13, 0, '2400.00', '2350.00', 20, 5, 1),
-(31, 2, 14, 0, '2400.00', '2350.00', 20, 5, 1),
-(32, 2, 15, 0, '18000.00', '16000.00', 3, 1, 1),
-(33, 2, 16, 0, '20000.00', '18000.00', 3, 1, 1),
-(34, 2, 17, 0, '18000.00', '20000.00', 3, 1, 1),
-(35, 2, 18, 0, '6000.00', '4000.00', 10, 2, 1),
-(36, 2, 1, 1, '6000.00', '5000.00', 20, 5, 1),
-(37, 2, 2, 1, '8500.00', '7000.00', 20, 5, 1),
-(38, 2, 3, 1, '5000.00', '3000.00', 20, 5, 1),
-(39, 2, 4, 1, '6000.00', '5000.00', 20, 5, 1),
-(40, 2, 5, 1, '6000.00', '5000.00', 20, 5, 1),
-(41, 2, 6, 1, '3000.00', '2000.00', 50, 10, 1),
-(42, 2, 7, 1, '14000.00', '12000.00', 50, 5, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1324,43 +1257,38 @@ CREATE TABLE `inventory_stock_purchase_detail` (
   `allocated_no_of_items` int(10) NOT NULL,
   `available_no_of_items` int(10) NOT NULL,
   `is_sub_item` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_stock_purchase_detail`
 --
 
 INSERT INTO `inventory_stock_purchase_detail` (`purchase_detail_line_id`, `stock_batch_id`, `item_id`, `item_cost`, `no_of_items`, `allocated_no_of_items`, `available_no_of_items`, `is_sub_item`) VALUES
-(12, 1, 1, '7500.00', 500, 500, 0, 0),
-(13, 1, 2, '6000.00', 500, 500, 0, 0),
-(14, 1, 3, '5000.00', 500, 500, 0, 0),
-(15, 1, 4, '6800.00', 500, 500, 0, 0),
-(16, 1, 5, '9000.00', 500, 500, 0, 0),
-(17, 1, 6, '10000.00', 500, 500, 0, 0),
-(18, 1, 1, '4000.00', 500, 500, 0, 1),
-(19, 1, 2, '2000.00', 500, 500, 0, 1),
-(20, 1, 3, '3500.00', 500, 500, 0, 1),
-(21, 1, 4, '2700.00', 500, 500, 0, 1),
-(22, 1, 6, '800.00', 500, 500, 0, 1),
-(41, 2, 5, '6000.00', 200, 40, 160, 0),
-(42, 2, 9, '120000.00', 50, 20, 30, 0),
-(43, 2, 10, '800000.00', 5, 2, 3, 0),
-(44, 2, 11, '1000000.00', 5, 2, 3, 0),
-(45, 2, 12, '1500000.00', 5, 2, 3, 0),
-(46, 2, 13, '2300.00', 200, 40, 160, 0),
-(47, 2, 14, '2300.00', 200, 40, 160, 0),
-(48, 2, 15, '15000.00', 20, 6, 14, 0),
-(49, 2, 16, '12000.00', 20, 6, 14, 0),
-(50, 2, 17, '8000.00', 20, 6, 14, 0),
-(51, 2, 18, '7500.00', 50, 11, 39, 0),
-(52, 2, 1, '4000.00', 200, 40, 160, 1),
-(53, 2, 2, '5000.00', 200, 40, 160, 1),
-(54, 2, 3, '3000.00', 200, 40, 160, 1),
-(55, 2, 4, '3500.00', 200, 40, 160, 1),
-(56, 2, 5, '4000.00', 200, 40, 160, 1),
-(57, 2, 6, '2000.00', 500, 100, 400, 1),
-(58, 2, 7, '3000.00', 300, 100, 200, 1),
-(61, 3, 7, '20000.00', 99999999, 19998, 99980001, 0);
+(1, 1, 1, '16000.00', 1000, 0, 1000, 0),
+(2, 1, 2, '13000.00', 1000, 0, 1000, 0),
+(3, 1, 3, '15000.00', 1000, 0, 1000, 0),
+(4, 1, 4, '6000.00', 1000, 0, 1000, 0),
+(5, 1, 5, '7000.00', 1000, 0, 1000, 0),
+(6, 1, 6, '5000.00', 1000, 0, 1000, 0),
+(7, 1, 7, '20000.00', 1000, 0, 1000, 0),
+(8, 1, 8, '3500.00', 1000, 0, 1000, 0),
+(9, 1, 9, '120000.00', 1000, 0, 1000, 0),
+(10, 1, 10, '10000.00', 1000, 0, 1000, 0),
+(11, 1, 11, '10000.00', 1000, 0, 1000, 0),
+(12, 1, 12, '10000.00', 1000, 0, 1000, 0),
+(13, 1, 13, '2000.00', 1000, 0, 1000, 0),
+(14, 1, 14, '2000.00', 1000, 0, 1000, 0),
+(15, 1, 15, '16000.00', 1000, 0, 1000, 0),
+(16, 1, 16, '15000.00', 1000, 0, 1000, 0),
+(17, 1, 17, '13000.00', 1000, 0, 1000, 0),
+(18, 1, 18, '7000.00', 1000, 0, 1000, 0),
+(19, 1, 1, '3500.00', 1000, 0, 1000, 1),
+(20, 1, 2, '4500.00', 1000, 0, 1000, 1),
+(21, 1, 3, '3500.00', 1000, 0, 1000, 1),
+(22, 1, 4, '5000.00', 1000, 0, 1000, 1),
+(23, 1, 5, '6000.00', 1000, 0, 1000, 1),
+(24, 1, 6, '4000.00', 1000, 0, 1000, 1),
+(25, 1, 7, '5000.00', 1000, 0, 1000, 1);
 
 -- --------------------------------------------------------
 
@@ -1378,16 +1306,14 @@ CREATE TABLE `inventory_stock_purchase_header` (
   `is_allocated_stock` tinyint(1) NOT NULL,
   `is_approved_stock` tinyint(1) NOT NULL,
   `is_active_stock_purchase` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_stock_purchase_header`
 --
 
 INSERT INTO `inventory_stock_purchase_header` (`stock_batch_id`, `stock_purchase_date`, `stock_purchase_time`, `created_by`, `branch_id`, `approved_by`, `is_allocated_stock`, `is_approved_stock`, `is_active_stock_purchase`) VALUES
-(1, '2024-02-15', '', 1, 1, 1, 1, 1, 1),
-(2, '2024-02-18', '', 1, 1, 1, 0, 1, 1),
-(3, '2024-02-18', '', 1, 1, 1, 0, 1, 1);
+(1, '2024-02-18', '', 1, 1, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1402,34 +1328,7 @@ CREATE TABLE `inventory_stock_rental_detail` (
   `is_sub_item` tinyint(1) NOT NULL,
   `full_stock_count` int(10) NOT NULL,
   `is_active_rental_stock_detail` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `inventory_stock_rental_detail`
---
-
-INSERT INTO `inventory_stock_rental_detail` (`rental_stock_id`, `rental_stock_header_id`, `item_id`, `is_sub_item`, `full_stock_count`, `is_active_rental_stock_detail`) VALUES
-(1, 1, 1, 0, 100, 1),
-(2, 1, 2, 0, 100, 1),
-(3, 1, 3, 0, 100, 1),
-(4, 1, 4, 0, 100, 1),
-(5, 1, 5, 0, 100, 1),
-(6, 1, 6, 0, 500, 1),
-(7, 1, 1, 1, 100, 1),
-(8, 1, 2, 1, 100, 1),
-(9, 1, 3, 1, 100, 1),
-(10, 1, 4, 1, 100, 1),
-(11, 1, 6, 1, 100, 1),
-(12, 2, 1, 0, 100, 1),
-(13, 2, 2, 0, 100, 1),
-(14, 2, 3, 0, 100, 1),
-(15, 2, 4, 0, 100, 1),
-(16, 2, 5, 0, 100, 1),
-(17, 2, 1, 1, 100, 1),
-(18, 2, 2, 1, 100, 1),
-(19, 2, 3, 1, 100, 1),
-(20, 2, 4, 1, 100, 1),
-(21, 2, 6, 1, 100, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1446,15 +1345,7 @@ CREATE TABLE `inventory_stock_rental_header` (
   `approved_by` int(10) NOT NULL,
   `is_approved_inv_stock_rental` tinyint(1) NOT NULL,
   `is_active_inv_stock_rental` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `inventory_stock_rental_header`
---
-
-INSERT INTO `inventory_stock_rental_header` (`rental_stock_header_id`, `branch_id`, `rental_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_rental`, `is_active_inv_stock_rental`) VALUES
-(1, 1, '2024-02-17', 1, 1, 3, 1, 1),
-(2, 2, '2024-02-17', 1, 1, 1, 1, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1469,61 +1360,7 @@ CREATE TABLE `inventory_stock_retail_detail` (
   `full_stock_count` int(10) NOT NULL,
   `is_sub_item` tinyint(1) NOT NULL,
   `is_active_retail_stock_detail` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `inventory_stock_retail_detail`
---
-
-INSERT INTO `inventory_stock_retail_detail` (`retail_stock_detail_id`, `retail_stock_header_id`, `item_id`, `full_stock_count`, `is_sub_item`, `is_active_retail_stock_detail`) VALUES
-(1, 1, 1, 100, 0, 1),
-(2, 1, 2, 100, 0, 1),
-(3, 1, 3, 100, 0, 1),
-(4, 1, 4, 100, 0, 1),
-(5, 1, 5, 100, 0, 1),
-(6, 1, 1, 100, 1, 1),
-(7, 1, 2, 100, 1, 1),
-(8, 1, 3, 100, 1, 1),
-(9, 1, 4, 100, 1, 1),
-(10, 1, 6, 100, 1, 1),
-(11, 2, 5, 20, 0, 1),
-(12, 2, 9, 10, 0, 1),
-(13, 2, 10, 1, 0, 1),
-(14, 2, 11, 1, 0, 1),
-(15, 2, 12, 1, 0, 1),
-(16, 2, 13, 20, 0, 1),
-(17, 2, 14, 20, 0, 1),
-(18, 2, 15, 3, 0, 1),
-(19, 2, 16, 3, 0, 1),
-(20, 2, 17, 3, 0, 1),
-(21, 2, 18, 1, 0, 1),
-(22, 2, 1, 20, 1, 1),
-(23, 2, 2, 20, 1, 1),
-(24, 2, 3, 20, 1, 1),
-(25, 2, 4, 20, 1, 1),
-(26, 2, 5, 20, 1, 1),
-(27, 2, 6, 50, 1, 1),
-(28, 2, 7, 50, 1, 1),
-(29, 3, 7, 9999, 0, 1),
-(30, 4, 7, 9999, 0, 1),
-(31, 5, 5, 20, 0, 1),
-(32, 5, 9, 10, 0, 1),
-(33, 5, 10, 1, 0, 1),
-(34, 5, 11, 1, 0, 1),
-(35, 5, 12, 1, 0, 1),
-(36, 5, 13, 20, 0, 1),
-(37, 5, 14, 20, 0, 1),
-(38, 5, 15, 3, 0, 1),
-(39, 5, 16, 3, 0, 1),
-(40, 5, 17, 3, 0, 1),
-(41, 5, 18, 10, 0, 1),
-(42, 5, 1, 20, 1, 1),
-(43, 5, 2, 20, 1, 1),
-(44, 5, 3, 20, 1, 1),
-(45, 5, 4, 20, 1, 1),
-(46, 5, 5, 20, 1, 1),
-(47, 5, 6, 50, 1, 1),
-(48, 5, 7, 50, 1, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1540,18 +1377,7 @@ CREATE TABLE `inventory_stock_retail_header` (
   `approved_by` int(11) NOT NULL,
   `is_approved_inv_stock_retail` tinyint(1) NOT NULL,
   `is_active_inv_stock_retail` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `inventory_stock_retail_header`
---
-
-INSERT INTO `inventory_stock_retail_header` (`retail_stock_header_id`, `branch_id`, `retail_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_retail`, `is_active_inv_stock_retail`) VALUES
-(1, 1, '2024-02-17', 1, 1, 1, 1, 1),
-(2, 1, '2024-02-18', 2, 53, 53, 1, 1),
-(3, 1, '2024-02-18', 3, 53, 53, 1, 1),
-(4, 2, '2024-02-18', 3, 3, 3, 1, 1),
-(5, 2, '2024-02-18', 2, 3, 3, 1, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1566,7 +1392,7 @@ CREATE TABLE `inventory_stock_transfer_detail` (
   `is_sub_item` tinyint(1) NOT NULL,
   `no_of_items` int(10) NOT NULL,
   `is_active_stock_transfer_detail` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_stock_transfer_detail`
@@ -1606,7 +1432,7 @@ CREATE TABLE `inventory_stock_transfer_header` (
   `is_accepted` tinyint(1) NOT NULL,
   `accepted_by` int(10) NOT NULL,
   `is_active_inv_stock_trans` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_stock_transfer_header`
@@ -1627,21 +1453,22 @@ CREATE TABLE `inventory_sub_item` (
   `sub_item_name` varchar(100) NOT NULL,
   `sub_item_image_url` varchar(100) NOT NULL,
   `sub_item_category` int(10) NOT NULL,
+  `is_feature_sub` tinyint(1) NOT NULL,
   `is_active_inv_sub_item` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory_sub_item`
 --
 
-INSERT INTO `inventory_sub_item` (`sub_item_id`, `sub_item_name`, `sub_item_image_url`, `sub_item_category`, `is_active_inv_sub_item`) VALUES
-(1, 'Caster Wheel 6inch', 'http://localhost/API/assets/img/sub_items/caster_wheel_6.jpg', 4, 1),
-(2, 'Caster Wheel 8inch', 'http://localhost/API/assets/img/sub_items/caster_wheel_8.jpg', 4, 1),
-(3, 'Bone Joint', 'http://localhost/API/assets/img/sub_items/bone_joint.jpg', 4, 1),
-(4, 'T jack', 'http://localhost/API/assets/img/sub_items/t_jack.jpg', 4, 1),
-(5, 'U jack', 'http://localhost/API/assets/img/sub_items/u_jack.jpg', 4, 1),
-(6, 'Clamp', 'http://localhost/API/assets/img/sub_items/clamp.jpg', 4, 1),
-(7, 'C clamp', 'http://localhost/API/assets/img/sub_items/c_clamp.jpg', 4, 1);
+INSERT INTO `inventory_sub_item` (`sub_item_id`, `sub_item_name`, `sub_item_image_url`, `sub_item_category`, `is_feature_sub`, `is_active_inv_sub_item`) VALUES
+(1, 'Caster Wheel 6inch', 'http://localhost/API/assets/img/sub_items/caster_wheel_6.jpg', 4, 0, 1),
+(2, 'Caster Wheel 8inch', 'http://localhost/API/assets/img/sub_items/caster_wheel_8.jpg', 4, 0, 1),
+(3, 'Bone Joint', 'http://localhost/API/assets/img/sub_items/bone_joint.jpg', 4, 0, 1),
+(4, 'T jack', 'http://localhost/API/assets/img/sub_items/t_jack.jpg', 4, 0, 1),
+(5, 'U jack', 'http://localhost/API/assets/img/sub_items/u_jack.jpg', 4, 0, 1),
+(6, 'Clamp', 'http://localhost/API/assets/img/sub_items/clamp.jpg', 4, 0, 1),
+(7, 'C clamp', 'http://localhost/API/assets/img/sub_items/c_clamp.jpg', 4, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1655,7 +1482,7 @@ CREATE TABLE `location` (
   `location_name` varchar(255) NOT NULL,
   `location_desc` varchar(255) NOT NULL,
   `is_active_location` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `location`
@@ -1678,7 +1505,7 @@ CREATE TABLE `online_buying_pattern_detail` (
   `pattern_detail_id` int(10) NOT NULL,
   `pattern_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1691,7 +1518,7 @@ CREATE TABLE `online_buying_pattern_header` (
   `pattern_name` varchar(200) NOT NULL,
   `is_active_buy_pttrn_hdr` tinyint(1) NOT NULL,
   `create_date` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1705,7 +1532,7 @@ CREATE TABLE `online_feedback` (
   `description` varchar(500) NOT NULL,
   `no_of_stars` int(10) NOT NULL,
   `create_date` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1721,7 +1548,7 @@ CREATE TABLE `online_order` (
   `is_paid` tinyint(1) NOT NULL,
   `is_complete` tinyint(1) NOT NULL,
   `is_active_online_order` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1736,7 +1563,7 @@ CREATE TABLE `online_promo_code` (
   `valid_from_date` varchar(10) NOT NULL,
   `valid_to_date` varchar(10) NOT NULL,
   `is_active_online_promo_code` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1750,7 +1577,7 @@ CREATE TABLE `online_shopping_kart_detail` (
   `item_id` int(10) NOT NULL,
   `no_of_items` int(10) NOT NULL,
   `is_active_shpng_kart_detail` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1764,7 +1591,7 @@ CREATE TABLE `online_shopping_kart_header` (
   `create_date` varchar(10) NOT NULL,
   `create_time` varchar(10) NOT NULL,
   `is_active_shpng_kart_hdr` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1780,7 +1607,7 @@ CREATE TABLE `online_special_offers` (
   `valid_from_date` varchar(10) NOT NULL,
   `valid_to_date` varchar(10) NOT NULL,
   `is_active_online_special_offers` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1801,7 +1628,7 @@ CREATE TABLE `sys_notification` (
   `valid_from_date` varchar(10) NOT NULL,
   `for_user_group_id` int(10) NOT NULL,
   `is_active_sys_notify` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1813,7 +1640,7 @@ CREATE TABLE `sys_notify_type` (
   `sys_notify_type_id` int(10) NOT NULL,
   `notify_name` varchar(100) NOT NULL,
   `is_active_sys_notify_type` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sys_notify_type`
@@ -1846,7 +1673,7 @@ CREATE TABLE `sys_user` (
   `otp_code_gen_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `is_customer` tinyint(1) NOT NULL,
   `is_active_sys_user` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sys_user`
@@ -1872,7 +1699,7 @@ CREATE TABLE `sys_user_group` (
   `sys_user_group_name` varchar(20) NOT NULL,
   `sys_user_group_desc` varchar(50) NOT NULL,
   `is_active_sys_user_group` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sys_user_group`
@@ -1898,7 +1725,7 @@ CREATE TABLE `sys_user_page` (
   `page_url` int(100) NOT NULL,
   `page_description` varchar(200) NOT NULL,
   `is_active_user_pages` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1913,7 +1740,7 @@ CREATE TABLE `sys_user_permission` (
   `sys_user_role_is_view` tinyint(1) NOT NULL,
   `sys_user_role_is_create` tinyint(1) NOT NULL,
   `sys_user_role_is_edit` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sys_user_permission`
@@ -1933,7 +1760,7 @@ CREATE TABLE `user_page_category` (
   `category_name` varchar(100) NOT NULL,
   `category_desc` varchar(200) NOT NULL,
   `is_active_user_page_cat` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1950,7 +1777,7 @@ CREATE TABLE `user_permission` (
   `is_view` tinyint(1) NOT NULL,
   `is_edit` tinyint(1) NOT NULL,
   `is_create` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1963,7 +1790,7 @@ CREATE TABLE `vehicle_category` (
   `vehicle_category_name` varchar(255) NOT NULL,
   `vehicle_category_desc` varchar(255) NOT NULL,
   `is_active_vhcl_cat` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_category`
@@ -1990,7 +1817,7 @@ CREATE TABLE `vehicle_details` (
   `max_load` decimal(10,2) NOT NULL,
   `branch_id` int(10) NOT NULL,
   `is_active_vhcl_details` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_details`
@@ -2014,7 +1841,7 @@ CREATE TABLE `vehicle_eco_test` (
   `valid_from_date` varchar(10) NOT NULL,
   `valid_to_date` varchar(10) NOT NULL,
   `is_active_vhcl_eco_test` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_eco_test`
@@ -2038,7 +1865,7 @@ CREATE TABLE `vehicle_insuarance_claim_details` (
   `claim_amount` decimal(10,2) NOT NULL,
   `claimed_date` varchar(20) NOT NULL,
   `is_active_claim` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_insuarance_claim_details`
@@ -2057,7 +1884,7 @@ CREATE TABLE `vehicle_insuarance_company` (
   `insuar_comp_id` int(10) NOT NULL,
   `insuar_comp_name` varchar(100) NOT NULL,
   `is_active_ins_comp` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_insuarance_company`
@@ -2084,7 +1911,7 @@ CREATE TABLE `vehicle_insuarance_details` (
   `premimum_amount` decimal(10,2) NOT NULL,
   `vehicle_id` int(10) NOT NULL,
   `is_active_vhcl_ins_details` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_insuarance_details`
@@ -2111,7 +1938,7 @@ CREATE TABLE `vehicle_repair` (
   `repair_cost` decimal(10,2) NOT NULL,
   `is_active_vhcl_repair` tinyint(1) NOT NULL,
   `is_complete` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_repair`
@@ -2134,7 +1961,7 @@ CREATE TABLE `vehicle_repair_location` (
   `repair_loc_address` varchar(200) NOT NULL,
   `repair_loc_contact` varchar(20) NOT NULL,
   `is_active_vhcl_repair_loc` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_repair_location`
@@ -2157,7 +1984,7 @@ CREATE TABLE `vehicle_revenue_license` (
   `valid_from_date` varchar(10) NOT NULL,
   `valid_to_date` varchar(10) NOT NULL,
   `is_active_vhcl_rev_lice` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_revenue_license`
@@ -2179,7 +2006,7 @@ CREATE TABLE `vehicle_service_center` (
   `service_center_contact` varchar(20) NOT NULL,
   `service_center_address` varchar(200) NOT NULL,
   `is_active_vhcl_srv_cntr` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_service_center`
@@ -2209,7 +2036,7 @@ CREATE TABLE `vehicle_service_details` (
   `description` varchar(500) NOT NULL,
   `is_complete` tinyint(1) NOT NULL,
   `is_active_vhcl_srv_detail` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_service_details`
@@ -2233,7 +2060,7 @@ CREATE TABLE `vehicle_type` (
   `vehicle_type_name` varchar(255) NOT NULL,
   `vehicle_type_decs` varchar(255) NOT NULL,
   `is_active_vhcl_type` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicle_type`
@@ -2450,6 +2277,12 @@ ALTER TABLE `emp_salary_scale`
 --
 ALTER TABLE `emp_special_task_assign_emp`
   ADD PRIMARY KEY (`assign_emp_line_id`);
+
+--
+-- Indexes for table `emp_special_task_header`
+--
+ALTER TABLE `emp_special_task_header`
+  ADD PRIMARY KEY (`special_task_id`);
 
 --
 -- Indexes for table `emp_wise_leave_quota`
@@ -2984,6 +2817,12 @@ ALTER TABLE `emp_special_task_assign_emp`
   MODIFY `assign_emp_line_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `emp_special_task_header`
+--
+ALTER TABLE `emp_special_task_header`
+  MODIFY `special_task_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `emp_wise_leave_quota`
 --
 ALTER TABLE `emp_wise_leave_quota`
@@ -3029,7 +2868,7 @@ ALTER TABLE `inventory_item`
 -- AUTO_INCREMENT for table `inventory_item_category`
 --
 ALTER TABLE `inventory_item_category`
-  MODIFY `item_category_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `item_category_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `inventory_item_sub_category`
@@ -3059,7 +2898,7 @@ ALTER TABLE `inventory_rental_invoice_header`
 -- AUTO_INCREMENT for table `inventory_rental_total_stock`
 --
 ALTER TABLE `inventory_rental_total_stock`
-  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_rent_charge_period`
@@ -3083,43 +2922,43 @@ ALTER TABLE `inventory_retail_invoice_header`
 -- AUTO_INCREMENT for table `inventory_retail_total_stock`
 --
 ALTER TABLE `inventory_retail_total_stock`
-  MODIFY `retail_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `retail_stock_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_detail`
 --
 ALTER TABLE `inventory_stock_purchase_detail`
-  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_header`
 --
 ALTER TABLE `inventory_stock_purchase_header`
-  MODIFY `stock_batch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `stock_batch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_detail`
 --
 ALTER TABLE `inventory_stock_rental_detail`
-  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_header`
 --
 ALTER TABLE `inventory_stock_rental_header`
-  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_retail_detail`
 --
 ALTER TABLE `inventory_stock_retail_detail`
-  MODIFY `retail_stock_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `retail_stock_detail_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_retail_header`
 --
 ALTER TABLE `inventory_stock_retail_header`
-  MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_transfer_detail`

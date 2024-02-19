@@ -21,6 +21,11 @@
 									<select class="form-control stock_batch_id" id="stock_batch_id" name="stock_batch_id" required></select>
 								</div>								
 							</div>
+							<div class="col-md-2 mb-3">
+								<label for="company_country">Branch</label>
+								<select class="form-control" id="branch_id" name="branch_id">
+								</select>
+							</div>
 							<div class="col-md-4 mb-3">
 								<div class="custom-control custom-checkbox">
 									<input class="custom-control-input" type="checkbox" id="is_active_inv_stock_retail" name="is_active_inv_stock_retail" value="1">
@@ -97,7 +102,29 @@
 	</div>
 </section>
 <script>
+function loadBranchFrom(){
+	$.ajax({
+		type: "POST",
+		cache : false,
+		async: true,
+		dataType: "json",
+		url: API+"branch/fetch_all_active/",
+		success: function(data, result){
+			var company_drp = '';
+			$.each(data, function(index, item) {
+				//console.log(item);
+				company_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
+			});
+			$('#branch_id').append(company_drp);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			
+			//console.log(errorThrown);
+		}
+	});
+}
 
+loadBranchFrom();
 
 $(document).ready(function(){
 	var date_input=$('input[name="stock_purchase_date"]'); 
@@ -353,12 +380,14 @@ $('#submit').click(function(e){
 		var full_stock_count = 0;
 		var is_sub_item = 0;
 		var stock_batch_id = 0;
+		var branch_id = 0;
 		var is_active_inv_stock_retail = 0;
 		var stock_purchase_date = "";
 			
 		stock_purchase_date = $('#stock_purchase_date').val();
 		stock_batch_id = $('#stock_batch_id').val();
 		is_active_inv_stock_retail = $("#is_active_inv_stock_retail").is(':checked')? 1 : 0;
+		branch_id = $('#branch_id').val();
 		
 		
 		//is_allocated_stock = $("#is_allocated_stock").is(':checked')? 1 : 0;
@@ -409,6 +438,7 @@ $('#submit').click(function(e){
 			stockHeader.push(
 				{	
 					'stock_batch_id':stock_batch_id,
+					'branch_id':branch_id,
 					'is_active_inv_stock_retail':is_active_inv_stock_retail
 				}
 			);	

@@ -217,7 +217,7 @@ $(document).on('click','.viewBtn', function(){
 			$.each(data.detail, function (i, item) {
 				HTML2 +='<tr>'+
 						  '<td>'+(i+1)+'</td>'+
-						  '<td>'+item.item_name+' ('+(item.is_sub_item == 0 ? 'Sub item' : 'Main item')+')</td>'+
+						  '<td>'+item.item_name+' ('+(item.is_sub_item == 1 ? 'Sub item' : 'Main item')+')</td>'+
 						  '<td>'+item.item_cost+'</td>'+
 						  '<td>'+item.no_of_items+'</td>'+
 						  '<td>'+item.allocated_no_of_items+'</td>'+

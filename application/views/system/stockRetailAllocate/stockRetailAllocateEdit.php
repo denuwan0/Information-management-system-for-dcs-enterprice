@@ -42,6 +42,11 @@
 									<input class="form-control stock_batch_id" id="stock_batch_id" name="stock_batch_id" type="text" autocomplete="off" readonly/>
 								</div>								
 							</div>
+							<div class="col-md-2 mb-3">
+								<label for="company_country">Branch</label>
+								<select class="form-control" id="branch_id" name="branch_id">
+								</select>
+							</div>
 							<?php 
 								
 								if($this->session->userdata('sys_user_group_name') == 'Admin' ||
@@ -165,6 +170,36 @@ function loadData() {
 			if(data.header[0].is_active_inv_stock_retail == 1){
 				$('#is_active_inv_stock_retail').prop('checked', true);
 			}
+			
+			function loadBranchFrom(){
+				$.ajax({
+					type: "POST",
+					cache : false,
+					async: true,
+					dataType: "json",
+					url: API+"branch/fetch_all_active/",
+					success: function(data1, result){
+						var company_drp = '';
+						$.each(data1, function(index, item) {
+							//console.log(data.header[0].branch_id_from );
+							if(data.header[0].branch_id == item.company_branch_id){
+								company_drp += '<option selected value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
+							}
+							else{
+								company_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
+							}
+							
+						});
+						$('#branch_id').append(company_drp);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {						
+						
+						//console.log(errorThrown);
+					}
+				});
+			}
+
+			loadBranchFrom();
 			
 			var count1 = 1;
 			var count2 = 1;
@@ -631,7 +666,7 @@ $(document).on("click", "#submit", function (e) {
 	
 			
 	
-					
+		branch_id = $('#branch_id').val();				
 		stock_purchase_date = $('#stock_purchase_date').val();
 		retail_stock_header_id = $('#retail_stock_header_id').val();
 		stock_batch_id = $('#stock_batch_id').val();
@@ -669,6 +704,7 @@ $(document).on("click", "#submit", function (e) {
 			{
 				'retail_stock_header_id':retail_stock_header_id,
 				'stock_batch_id':stock_batch_id,
+				'branch_id':branch_id,
 				'stock_purchase_date':stock_purchase_date,
 				'is_approved_inv_stock_retail':is_approved_inv_stock_retail,
 				'is_active_inv_stock_retail':is_active_inv_stock_retail
