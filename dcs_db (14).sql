@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 19, 2024 at 12:34 PM
+-- Generation Time: Feb 19, 2024 at 02:54 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -1029,7 +1029,14 @@ INSERT INTO `inventory_item` (`item_id`, `item_name`, `item_image_url`, `item_ty
 (15, 'Sand', 'http://localhost/API/assets/img/items/sand.png', 0, 1, 1, 0, 0),
 (16, 'Metal 3/4', 'http://localhost/API/assets/img/items/metal_rock34.jpg', 0, 1, 1, 0, 0),
 (17, 'Metal chips', 'http://localhost/API/assets/img/items/metal_rock_chips.jpg', 0, 1, 1, 0, 0),
-(18, 'Chainblock 5tonn', 'http://localhost/API/assets/img/items/chainblock_5.jpg', 0, 3, 1, 0, 0);
+(18, 'Chainblock 5tonn', 'http://localhost/API/assets/img/items/chainblock_5.jpg', 0, 3, 1, 0, 0),
+(19, 'Caster Wheel 6inch', 'http://localhost/API/assets/img/items/caster_wheel_6.jpg', 0, 4, 1, 0, 0),
+(20, 'Caster Wheel 8inch', 'http://localhost/API/assets/img/items/caster_wheel_8.jpg', 0, 4, 1, 0, 0),
+(21, 'Bone Joint', 'http://localhost/API/assets/img/items/bone_joint.jpg', 0, 4, 1, 0, 0),
+(22, 'T jack', 'http://localhost/API/assets/img/items/t_jack.jpg', 0, 4, 1, 0, 0),
+(23, 'U jack', 'http://localhost/API/assets/img/items/u_jack.jpg', 0, 4, 1, 0, 0),
+(24, 'Clamp', 'http://localhost/API/assets/img/items/clamp.jpg', 0, 4, 1, 0, 0),
+(25, 'C clamp', 'http://localhost/API/assets/img/items/c_clamp.jpg', 0, 4, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1175,6 +1182,62 @@ CREATE TABLE `inventory_rental_total_stock` (
   `is_active_rental_stock` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory_rental_total_stock`
+--
+
+INSERT INTO `inventory_rental_total_stock` (`rental_stock_id`, `branch_id`, `item_id`, `is_sub_item`, `full_stock_count`, `out_stock_count`, `max_rent_price`, `min_rent_price`, `damage_stock_count`, `repair_stock_count`, `stock_re_order_level`, `is_active_rental_stock`) VALUES
+(1, 1, 1, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(2, 1, 2, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(3, 1, 3, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(4, 1, 4, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(5, 1, 5, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(6, 1, 6, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(7, 1, 7, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(8, 1, 8, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(9, 1, 9, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(10, 1, 10, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(11, 1, 11, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(12, 1, 12, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(13, 1, 13, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(14, 1, 14, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(15, 1, 15, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(16, 1, 16, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(17, 1, 17, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(18, 1, 18, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(19, 1, 19, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(20, 1, 20, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(21, 1, 21, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(22, 1, 22, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(23, 1, 23, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(24, 1, 24, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(25, 1, 25, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(26, 2, 1, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(27, 2, 2, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(28, 2, 3, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(29, 2, 4, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(30, 2, 5, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(31, 2, 6, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(32, 2, 7, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(33, 2, 8, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(34, 2, 9, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(35, 2, 10, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(36, 2, 11, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(37, 2, 12, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(38, 2, 13, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(39, 2, 14, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(40, 2, 15, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(41, 2, 16, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(42, 2, 17, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(43, 2, 18, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(44, 2, 19, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(45, 2, 20, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(46, 2, 21, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(47, 2, 22, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(48, 2, 23, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(49, 2, 24, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
+(50, 2, 25, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1242,6 +1305,62 @@ CREATE TABLE `inventory_retail_total_stock` (
   `is_active_retail_stock` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory_retail_total_stock`
+--
+
+INSERT INTO `inventory_retail_total_stock` (`retail_stock_id`, `branch_id`, `item_id`, `is_sub_item`, `max_sale_price`, `min_sale_price`, `full_stock_count`, `stock_re_order_level`, `is_active_retail_stock`) VALUES
+(1, 1, 1, 0, '0.00', '0.00', 200, 0, 1),
+(2, 1, 2, 0, '0.00', '0.00', 200, 0, 1),
+(3, 1, 3, 0, '0.00', '0.00', 200, 0, 1),
+(4, 1, 4, 0, '0.00', '0.00', 200, 0, 1),
+(5, 1, 5, 0, '0.00', '0.00', 200, 0, 1),
+(6, 1, 6, 0, '0.00', '0.00', 200, 0, 1),
+(7, 1, 7, 0, '0.00', '0.00', 200, 0, 1),
+(8, 1, 8, 0, '0.00', '0.00', 200, 0, 1),
+(9, 1, 9, 0, '0.00', '0.00', 200, 0, 1),
+(10, 1, 10, 0, '0.00', '0.00', 200, 0, 1),
+(11, 1, 11, 0, '0.00', '0.00', 200, 0, 1),
+(12, 1, 12, 0, '0.00', '0.00', 200, 0, 1),
+(13, 1, 13, 0, '0.00', '0.00', 200, 0, 1),
+(14, 1, 14, 0, '0.00', '0.00', 200, 0, 1),
+(15, 1, 15, 0, '0.00', '0.00', 200, 0, 1),
+(16, 1, 16, 0, '0.00', '0.00', 200, 0, 1),
+(17, 1, 17, 0, '0.00', '0.00', 200, 0, 1),
+(18, 1, 18, 0, '0.00', '0.00', 200, 0, 1),
+(19, 1, 19, 0, '0.00', '0.00', 200, 0, 1),
+(20, 1, 20, 0, '0.00', '0.00', 200, 0, 1),
+(21, 1, 21, 0, '0.00', '0.00', 200, 0, 1),
+(22, 1, 22, 0, '0.00', '0.00', 200, 0, 1),
+(23, 1, 23, 0, '0.00', '0.00', 200, 0, 1),
+(24, 1, 24, 0, '0.00', '0.00', 200, 0, 1),
+(25, 1, 25, 0, '0.00', '0.00', 200, 0, 1),
+(26, 2, 1, 0, '0.00', '0.00', 100, 0, 1),
+(27, 2, 2, 0, '0.00', '0.00', 100, 0, 1),
+(28, 2, 3, 0, '0.00', '0.00', 100, 0, 1),
+(29, 2, 4, 0, '0.00', '0.00', 100, 0, 1),
+(30, 2, 5, 0, '0.00', '0.00', 100, 0, 1),
+(31, 2, 6, 0, '0.00', '0.00', 100, 0, 1),
+(32, 2, 7, 0, '0.00', '0.00', 100, 0, 1),
+(33, 2, 8, 0, '0.00', '0.00', 100, 0, 1),
+(34, 2, 9, 0, '0.00', '0.00', 100, 0, 1),
+(35, 2, 10, 0, '0.00', '0.00', 100, 0, 1),
+(36, 2, 11, 0, '0.00', '0.00', 100, 0, 1),
+(37, 2, 12, 0, '0.00', '0.00', 100, 0, 1),
+(38, 2, 13, 0, '0.00', '0.00', 100, 0, 1),
+(39, 2, 14, 0, '0.00', '0.00', 100, 0, 1),
+(40, 2, 15, 0, '0.00', '0.00', 100, 0, 1),
+(41, 2, 16, 0, '0.00', '0.00', 100, 0, 1),
+(42, 2, 17, 0, '0.00', '0.00', 100, 0, 1),
+(43, 2, 18, 0, '0.00', '0.00', 100, 0, 1),
+(44, 2, 19, 0, '0.00', '0.00', 100, 0, 1),
+(45, 2, 20, 0, '0.00', '0.00', 100, 0, 1),
+(46, 2, 21, 0, '0.00', '0.00', 100, 0, 1),
+(47, 2, 22, 0, '0.00', '0.00', 100, 0, 1),
+(48, 2, 23, 0, '0.00', '0.00', 100, 0, 1),
+(49, 2, 24, 0, '0.00', '0.00', 100, 0, 1),
+(50, 2, 25, 0, '0.00', '0.00', 100, 0, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1264,31 +1383,31 @@ CREATE TABLE `inventory_stock_purchase_detail` (
 --
 
 INSERT INTO `inventory_stock_purchase_detail` (`purchase_detail_line_id`, `stock_batch_id`, `item_id`, `item_cost`, `no_of_items`, `allocated_no_of_items`, `available_no_of_items`, `is_sub_item`) VALUES
-(1, 1, 1, '16000.00', 1000, 0, 1000, 0),
-(2, 1, 2, '13000.00', 1000, 0, 1000, 0),
-(3, 1, 3, '15000.00', 1000, 0, 1000, 0),
-(4, 1, 4, '6000.00', 1000, 0, 1000, 0),
-(5, 1, 5, '7000.00', 1000, 0, 1000, 0),
-(6, 1, 6, '5000.00', 1000, 0, 1000, 0),
-(7, 1, 7, '20000.00', 1000, 0, 1000, 0),
-(8, 1, 8, '3500.00', 1000, 0, 1000, 0),
-(9, 1, 9, '120000.00', 1000, 0, 1000, 0),
-(10, 1, 10, '10000.00', 1000, 0, 1000, 0),
-(11, 1, 11, '10000.00', 1000, 0, 1000, 0),
-(12, 1, 12, '10000.00', 1000, 0, 1000, 0),
-(13, 1, 13, '2000.00', 1000, 0, 1000, 0),
-(14, 1, 14, '2000.00', 1000, 0, 1000, 0),
-(15, 1, 15, '16000.00', 1000, 0, 1000, 0),
-(16, 1, 16, '15000.00', 1000, 0, 1000, 0),
-(17, 1, 17, '13000.00', 1000, 0, 1000, 0),
-(18, 1, 18, '7000.00', 1000, 0, 1000, 0),
-(19, 1, 1, '3500.00', 1000, 0, 1000, 1),
-(20, 1, 2, '4500.00', 1000, 0, 1000, 1),
-(21, 1, 3, '3500.00', 1000, 0, 1000, 1),
-(22, 1, 4, '5000.00', 1000, 0, 1000, 1),
-(23, 1, 5, '6000.00', 1000, 0, 1000, 1),
-(24, 1, 6, '4000.00', 1000, 0, 1000, 1),
-(25, 1, 7, '5000.00', 1000, 0, 1000, 1);
+(26, 1, 1, '16000.00', 1000, 500, 500, 0),
+(27, 1, 2, '13000.00', 1000, 500, 500, 0),
+(28, 1, 3, '15000.00', 1000, 500, 500, 0),
+(29, 1, 4, '6000.00', 1000, 500, 500, 0),
+(30, 1, 5, '7000.00', 1000, 500, 500, 0),
+(31, 1, 6, '5000.00', 1000, 500, 500, 0),
+(32, 1, 7, '20000.00', 1000, 500, 500, 0),
+(33, 1, 8, '3500.00', 1000, 500, 500, 0),
+(34, 1, 9, '120000.00', 1000, 500, 500, 0),
+(35, 1, 10, '10000.00', 1000, 500, 500, 0),
+(36, 1, 11, '10000.00', 1000, 500, 500, 0),
+(37, 1, 12, '10000.00', 1000, 500, 500, 0),
+(38, 1, 13, '2000.00', 1000, 500, 500, 0),
+(39, 1, 14, '2000.00', 1000, 500, 500, 0),
+(40, 1, 15, '16000.00', 1000, 500, 500, 0),
+(41, 1, 16, '15000.00', 1000, 500, 500, 0),
+(42, 1, 17, '13000.00', 1000, 500, 500, 0),
+(43, 1, 18, '7000.00', 1000, 500, 500, 0),
+(44, 1, 19, '3500.00', 1000, 500, 500, 0),
+(45, 1, 20, '4500.00', 1000, 500, 500, 0),
+(46, 1, 21, '3500.00', 1000, 500, 500, 0),
+(47, 1, 22, '5000.00', 1000, 500, 500, 0),
+(48, 1, 23, '6000.00', 1000, 500, 500, 0),
+(49, 1, 24, '4000.00', 1000, 500, 500, 0),
+(50, 1, 25, '5000.00', 1000, 500, 500, 0);
 
 -- --------------------------------------------------------
 
@@ -1313,7 +1432,7 @@ CREATE TABLE `inventory_stock_purchase_header` (
 --
 
 INSERT INTO `inventory_stock_purchase_header` (`stock_batch_id`, `stock_purchase_date`, `stock_purchase_time`, `created_by`, `branch_id`, `approved_by`, `is_allocated_stock`, `is_approved_stock`, `is_active_stock_purchase`) VALUES
-(1, '2024-02-18', '', 1, 1, 0, 0, 0, 1);
+(1, '2024-02-18', '', 1, 1, 1, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1329,6 +1448,62 @@ CREATE TABLE `inventory_stock_rental_detail` (
   `full_stock_count` int(10) NOT NULL,
   `is_active_rental_stock_detail` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_stock_rental_detail`
+--
+
+INSERT INTO `inventory_stock_rental_detail` (`rental_stock_id`, `rental_stock_header_id`, `item_id`, `is_sub_item`, `full_stock_count`, `is_active_rental_stock_detail`) VALUES
+(1, 1, 1, 0, 100, 1),
+(2, 1, 2, 0, 100, 1),
+(3, 1, 3, 0, 100, 1),
+(4, 1, 4, 0, 100, 1),
+(5, 1, 5, 0, 100, 1),
+(6, 1, 6, 0, 100, 1),
+(7, 1, 7, 0, 100, 1),
+(8, 1, 8, 0, 100, 1),
+(9, 1, 9, 0, 100, 1),
+(10, 1, 10, 0, 100, 1),
+(11, 1, 11, 0, 100, 1),
+(12, 1, 12, 0, 100, 1),
+(13, 1, 13, 0, 100, 1),
+(14, 1, 14, 0, 100, 1),
+(15, 1, 15, 0, 100, 1),
+(16, 1, 16, 0, 100, 1),
+(17, 1, 17, 0, 100, 1),
+(18, 1, 18, 0, 100, 1),
+(19, 1, 19, 0, 100, 1),
+(20, 1, 20, 0, 100, 1),
+(21, 1, 21, 0, 100, 1),
+(22, 1, 22, 0, 100, 1),
+(23, 1, 23, 0, 100, 1),
+(24, 1, 24, 0, 100, 1),
+(25, 1, 25, 0, 100, 1),
+(26, 2, 1, 0, 100, 1),
+(27, 2, 2, 0, 100, 1),
+(28, 2, 3, 0, 100, 1),
+(29, 2, 4, 0, 100, 1),
+(30, 2, 5, 0, 100, 1),
+(31, 2, 6, 0, 100, 1),
+(32, 2, 7, 0, 100, 1),
+(33, 2, 8, 0, 100, 1),
+(34, 2, 9, 0, 100, 1),
+(35, 2, 10, 0, 100, 1),
+(36, 2, 11, 0, 100, 1),
+(37, 2, 12, 0, 100, 1),
+(38, 2, 13, 0, 100, 1),
+(39, 2, 14, 0, 100, 1),
+(40, 2, 15, 0, 100, 1),
+(41, 2, 16, 0, 100, 1),
+(42, 2, 17, 0, 100, 1),
+(43, 2, 18, 0, 100, 1),
+(44, 2, 19, 0, 100, 1),
+(45, 2, 20, 0, 100, 1),
+(46, 2, 21, 0, 100, 1),
+(47, 2, 22, 0, 100, 1),
+(48, 2, 23, 0, 100, 1),
+(49, 2, 24, 0, 100, 1),
+(50, 2, 25, 0, 100, 1);
 
 -- --------------------------------------------------------
 
@@ -1347,6 +1522,14 @@ CREATE TABLE `inventory_stock_rental_header` (
   `is_active_inv_stock_rental` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory_stock_rental_header`
+--
+
+INSERT INTO `inventory_stock_rental_header` (`rental_stock_header_id`, `branch_id`, `rental_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_rental`, `is_active_inv_stock_rental`) VALUES
+(1, 1, '2024-02-19', 1, 1, 1, 1, 1),
+(2, 2, '2024-02-19', 1, 1, 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1361,6 +1544,87 @@ CREATE TABLE `inventory_stock_retail_detail` (
   `is_sub_item` tinyint(1) NOT NULL,
   `is_active_retail_stock_detail` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory_stock_retail_detail`
+--
+
+INSERT INTO `inventory_stock_retail_detail` (`retail_stock_detail_id`, `retail_stock_header_id`, `item_id`, `full_stock_count`, `is_sub_item`, `is_active_retail_stock_detail`) VALUES
+(1, 1, 1, 100, 0, 1),
+(2, 1, 2, 100, 0, 1),
+(3, 1, 3, 100, 0, 1),
+(4, 1, 4, 100, 0, 1),
+(5, 1, 5, 100, 0, 1),
+(6, 1, 6, 100, 0, 1),
+(7, 1, 7, 100, 0, 1),
+(8, 1, 8, 100, 0, 1),
+(9, 1, 9, 100, 0, 1),
+(10, 1, 10, 100, 0, 1),
+(11, 1, 11, 100, 0, 1),
+(12, 1, 12, 100, 0, 1),
+(13, 1, 13, 100, 0, 1),
+(14, 1, 14, 100, 0, 1),
+(15, 1, 15, 100, 0, 1),
+(16, 1, 16, 100, 0, 1),
+(17, 1, 17, 100, 0, 1),
+(18, 1, 18, 100, 0, 1),
+(19, 1, 19, 100, 0, 1),
+(20, 1, 20, 100, 0, 1),
+(21, 1, 21, 100, 0, 1),
+(22, 1, 22, 100, 0, 1),
+(23, 1, 23, 100, 0, 1),
+(24, 1, 24, 100, 0, 1),
+(25, 1, 25, 100, 0, 1),
+(26, 2, 1, 100, 0, 1),
+(27, 2, 2, 100, 0, 1),
+(28, 2, 3, 100, 0, 1),
+(29, 2, 4, 100, 0, 1),
+(30, 2, 5, 100, 0, 1),
+(31, 2, 6, 100, 0, 1),
+(32, 2, 7, 100, 0, 1),
+(33, 2, 8, 100, 0, 1),
+(34, 2, 9, 100, 0, 1),
+(35, 2, 10, 100, 0, 1),
+(36, 2, 11, 100, 0, 1),
+(37, 2, 12, 100, 0, 1),
+(38, 2, 13, 100, 0, 1),
+(39, 2, 14, 100, 0, 1),
+(40, 2, 15, 100, 0, 1),
+(41, 2, 16, 100, 0, 1),
+(42, 2, 17, 100, 0, 1),
+(43, 2, 18, 100, 0, 1),
+(44, 2, 19, 100, 0, 1),
+(45, 2, 20, 100, 0, 1),
+(46, 2, 21, 100, 0, 1),
+(47, 2, 22, 100, 0, 1),
+(48, 2, 23, 100, 0, 1),
+(49, 2, 24, 100, 0, 1),
+(50, 2, 25, 100, 0, 1),
+(51, 3, 1, 100, 0, 1),
+(52, 3, 2, 100, 0, 1),
+(53, 3, 3, 100, 0, 1),
+(54, 3, 4, 100, 0, 1),
+(55, 3, 5, 100, 0, 1),
+(56, 3, 6, 100, 0, 1),
+(57, 3, 7, 100, 0, 1),
+(58, 3, 8, 100, 0, 1),
+(59, 3, 9, 100, 0, 1),
+(60, 3, 10, 100, 0, 1),
+(61, 3, 11, 100, 0, 1),
+(62, 3, 12, 100, 0, 1),
+(63, 3, 13, 100, 0, 1),
+(64, 3, 14, 100, 0, 1),
+(65, 3, 15, 100, 0, 1),
+(66, 3, 16, 100, 0, 1),
+(67, 3, 17, 100, 0, 1),
+(68, 3, 18, 100, 0, 1),
+(69, 3, 19, 100, 0, 1),
+(70, 3, 20, 100, 0, 1),
+(71, 3, 21, 100, 0, 1),
+(72, 3, 22, 100, 0, 1),
+(73, 3, 23, 100, 0, 1),
+(74, 3, 24, 100, 0, 1),
+(75, 3, 25, 100, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1379,6 +1643,15 @@ CREATE TABLE `inventory_stock_retail_header` (
   `is_active_inv_stock_retail` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory_stock_retail_header`
+--
+
+INSERT INTO `inventory_stock_retail_header` (`retail_stock_header_id`, `branch_id`, `retail_stock_assigned_date`, `stock_batch_id`, `created_by`, `approved_by`, `is_approved_inv_stock_retail`, `is_active_inv_stock_retail`) VALUES
+(1, 1, '2024-02-19', 1, 1, 1, 1, 1),
+(2, 1, '2024-02-19', 1, 1, 1, 1, 1),
+(3, 2, '2024-02-19', 1, 1, 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1393,20 +1666,6 @@ CREATE TABLE `inventory_stock_transfer_detail` (
   `no_of_items` int(10) NOT NULL,
   `is_active_stock_transfer_detail` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `inventory_stock_transfer_detail`
---
-
-INSERT INTO `inventory_stock_transfer_detail` (`inventory_stock_transfer_detail_id`, `inventory_stock_transfer_header_id`, `item_id`, `is_sub_item`, `no_of_items`, `is_active_stock_transfer_detail`) VALUES
-(1, 1, 1, 0, 5, 0),
-(2, 1, 1, 0, 5, 0),
-(3, 1, 1, 1, 5, 0),
-(4, 1, 2, 1, 5, 0),
-(5, 2, 1, 0, 5, 0),
-(6, 2, 2, 0, 5, 0),
-(7, 2, 1, 1, 5, 0),
-(8, 2, 2, 1, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -1433,14 +1692,6 @@ CREATE TABLE `inventory_stock_transfer_header` (
   `accepted_by` int(10) NOT NULL,
   `is_active_inv_stock_trans` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `inventory_stock_transfer_header`
---
-
-INSERT INTO `inventory_stock_transfer_header` (`inventory_stock_transfer_header_id`, `branch_id_from`, `branch_id_to`, `create_date`, `create_time`, `created_by`, `transfer_type`, `stock_type`, `inform_user_id`, `note`, `approved_by`, `is_approved`, `rejected_by`, `is_rejected`, `is_accepted`, `accepted_by`, `is_active_inv_stock_trans`) VALUES
-(1, 2, 1, '2024-02-17', '', 1, 'IN', 'Retail', 53, '', 7, 1, 53, 1, 0, 0, 1),
-(2, 1, 2, '2024-02-17', '', 1, 'IN', 'Rental', 3, '', 8, 1, 0, 0, 1, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -1680,9 +1931,9 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-18 12:52:07', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'fcfd064cdeefe24a629a', '958836', '2024-02-19 13:50:38', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '1e25f58afa99761d6aa7', '970707', '2024-02-18 12:53:44', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-19 12:40:05', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
 (53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-18 12:53:31', 0, 1),
@@ -2862,7 +3113,7 @@ ALTER TABLE `holiday_type`
 -- AUTO_INCREMENT for table `inventory_item`
 --
 ALTER TABLE `inventory_item`
-  MODIFY `item_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `item_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `inventory_item_category`
@@ -2898,7 +3149,7 @@ ALTER TABLE `inventory_rental_invoice_header`
 -- AUTO_INCREMENT for table `inventory_rental_total_stock`
 --
 ALTER TABLE `inventory_rental_total_stock`
-  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `inventory_rent_charge_period`
@@ -2922,13 +3173,13 @@ ALTER TABLE `inventory_retail_invoice_header`
 -- AUTO_INCREMENT for table `inventory_retail_total_stock`
 --
 ALTER TABLE `inventory_retail_total_stock`
-  MODIFY `retail_stock_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `retail_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_detail`
 --
 ALTER TABLE `inventory_stock_purchase_detail`
-  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `purchase_detail_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_purchase_header`
@@ -2940,37 +3191,37 @@ ALTER TABLE `inventory_stock_purchase_header`
 -- AUTO_INCREMENT for table `inventory_stock_rental_detail`
 --
 ALTER TABLE `inventory_stock_rental_detail`
-  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `rental_stock_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_rental_header`
 --
 ALTER TABLE `inventory_stock_rental_header`
-  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `rental_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_retail_detail`
 --
 ALTER TABLE `inventory_stock_retail_detail`
-  MODIFY `retail_stock_detail_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `retail_stock_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_retail_header`
 --
 ALTER TABLE `inventory_stock_retail_header`
-  MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `retail_stock_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_transfer_detail`
 --
 ALTER TABLE `inventory_stock_transfer_detail`
-  MODIFY `inventory_stock_transfer_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `inventory_stock_transfer_detail_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_transfer_header`
 --
 ALTER TABLE `inventory_stock_transfer_header`
-  MODIFY `inventory_stock_transfer_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `inventory_stock_transfer_header_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_sub_item`

@@ -128,8 +128,7 @@ function loadData() {
 					var option_html ='';
 					if(item.is_active_retail_stock == 1){
 						is_active_retail_stock = '<span class="right badge badge-success">Active</span>';
-						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
-							$this->session->userdata('sys_user_group_name') == "Manager"){
+						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" ){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
 								
 								echo '<a style="display:block" type="button" id="editBtn" retail_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
@@ -142,8 +141,7 @@ function loadData() {
 					}
 					else{
 						is_active_retail_stock = '<span class="right badge badge-danger">Inactive</span>';
-						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
-							$this->session->userdata('sys_user_group_name') == "Manager"){
+						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" ){
 								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
 								echo '<a type="button" id="editBtn" retail_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 							}

@@ -191,7 +191,7 @@ $(document).on('click','.viewBtn', function(){
 				console.log(item);
 				HTML2 +='<tr>'+
 						  '<td>'+(i+1)+'</td>'+
-						  '<td>'+item.item_name+' ('+(item.is_sub_item == 0 ? 'Sub item' : 'Main item')+')</td>'+
+						  '<td>'+item.item_name+' ('+(item.is_sub_item == 1 ? 'Sub item' : 'Main item')+')</td>'+
 						  '<td>'+item.full_stock_count+'</td>'+
 						'</tr>';
 				//console.log(HTML2);		

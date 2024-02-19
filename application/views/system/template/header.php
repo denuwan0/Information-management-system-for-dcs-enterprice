@@ -91,7 +91,7 @@
       </li>
       
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <!--li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="fas fa-bell" aria-hidden="true"></i>
         </a>
@@ -104,16 +104,16 @@
             notification 2
           </a>
         </div>
-      </li>
+      </li-->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="fas fa-user" aria-hidden="true"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="<?php echo base_url() ?>userProfile/view" class="dropdown-item">
+          <!--a href="<?php echo base_url() ?>userProfile/view" class="dropdown-item">
             <i class="far fa-edit mr-2"></i> Edit User Info
-          </a>
-          <div class="dropdown-divider"></div>
+          </a-->
+          <!--div class="dropdown-divider"></div-->
           <a id="logout" class="dropdown-item">
             <i class="fas fa-power-off mr-2"></i> Log Out
           </a>
@@ -528,30 +528,30 @@
 							  <p>Item Details</p>
 							</a>
 						  </li>
-						  <li class="nav-item">
+						  <!--li class="nav-item">
 							<a href="'.base_url().'subItem/view" class="nav-link">
 							  <i class="fas fa-clipboard-list nav-icon text-info"></i>
 							  <p>Sub-Item Details</p>
 							</a>
-						  </li>
-						  <li class="nav-item">
+						  </li-->
+						  <!--li class="nav-item">
 							<a href="'.base_url().'itemSubItem/view" class="nav-link">
 							  <i class="fas fa-box nav-icon text-info"></i>
 							  <p>Item with Sub-Items</p>
 							</a>
-						  </li>
+						  </li-->
 						  <li class="nav-item">
 							<a href="'.base_url().'itemCategory/view" class="nav-link">
 							  <i class="fas fa-dolly nav-icon text-info"></i>
 							  <p>Item Category</p>
 							</a>
 						  </li>
-						  <li class="nav-item">
+						  <!--li class="nav-item">
 							<a href="'.base_url().'itemSubCategory/view" class="nav-link">
 							  <i class="fas fa-clipboard nav-icon text-info"></i>
 							  <p>Item Sub Category</p>
 							</a>
-						  </li>
+						  </li-->
 						</ul>
 					  </li>';
 				}
@@ -586,12 +586,18 @@
 					  <i class="right fas fa-angle-left"></i>
                     </a>
 					<ul class="nav nav-treeview">
-					  <li class="nav-item">
-						<a href="<?php echo base_url() ?>stockRentalAllocate/view" class="nav-link">
-						  <i class="fas fa-boxes nav-icon text-yellow"></i>
-						  <p>Stock Allocation</p>
-						</a>
-					  </li>
+						<?php
+						if($this->session->userdata('sys_user_group_name') == "Admin"){
+							echo '<li class="nav-item">
+								<a href="'.base_url().'stockRentalAllocate/view" class="nav-link">
+								  <i class="fas fa-boxes nav-icon text-yellow"></i>
+								  <p>Stock Allocation</p>
+								</a>
+							  </li>';
+						}
+						
+						?>
+					  
 					  <li class="nav-item">
 						<a href="<?php echo base_url() ?>stockRental/view" class="nav-link">
 						  <i class="fas fa-cube nav-icon text-yellow"></i>
@@ -607,12 +613,18 @@
 					  <i class="right fas fa-angle-left"></i>
                     </a>
 					<ul class="nav nav-treeview">
-					  <li class="nav-item">
-						<a href="<?php echo base_url() ?>stockRetailAllocate/view" class="nav-link">
-						  <i class="fas fa-boxes nav-icon text-white"></i>
-						  <p>Stock Allocation</p>
-						</a>
-					  </li>
+						<?php
+						if($this->session->userdata('sys_user_group_name') == "Admin"){
+							echo '<li class="nav-item">
+									<a href="'.base_url().'stockRetailAllocate/view" class="nav-link">
+									  <i class="fas fa-boxes nav-icon text-white"></i>
+									  <p>Stock Allocation</p>
+									</a>
+								  </li>';
+						}
+						
+						?>
+					 
 					  <li class="nav-item">
 						<a href="<?php echo base_url() ?>stockRetail/view" class="nav-link">
 						  <i class="fas fa-cube nav-icon text-white"></i>
@@ -729,7 +741,7 @@
 				  </li-->
 				</ul>
 			  </li>
-			  <li class="nav-item">
+			  <!--li class="nav-item">
 				<a href="#" class="nav-link">
 				  <i class="nav-icon fas fa-circle text-primary"></i>
 				  <p>
@@ -751,7 +763,7 @@
 					</a>
 				  </li>
 				</ul>
-			  </li>
+			  </li-->
 			  
 				<li class="nav-item">
 				<a href="#" class="nav-link">
@@ -786,7 +798,7 @@
 							<p>Branch</p>
 						</a>
 					</li>              
-				  <li class="nav-item">
+				  <!--li class="nav-item">
 					<a href="#" class="nav-link">
 					  <i class="far fa-circle nav-icon text-pink"></i>
 					  <p>
@@ -814,7 +826,7 @@
 						</a>
 					  </li>                  
 					</ul>
-				  </li>
+				  </li-->
 				  <li class="nav-item">
 					<a href="#" class="nav-link">
 					  <i class="far fa-circle nav-icon text-pink"></i>
@@ -861,29 +873,29 @@
 				  </p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item">
-					<a href="#" class="nav-link">
-					  <i class="far far fa-bell nav-icon text-white"></i>
-					  <p>
-						System Notifications
-						<i class="right fas fa-angle-left"></i>
-					  </p>
-					</a>
-					<ul class="nav nav-treeview">
-					  <li class="nav-item">
-						<a href="'.base_url().'SystemNotifyType/view" class="nav-link">
-						  <i class="fab fas fa-info-circle nav-icon text-white"></i>
-						  <p>Notification type</p>
+					<!--li class="nav-item">
+						<a href="#" class="nav-link">
+						  <i class="far far fa-bell nav-icon text-white"></i>
+						  <p>
+							System Notifications
+							<i class="right fas fa-angle-left"></i>
+						  </p>
 						</a>
-					  </li>
-					  <li class="nav-item">
-						<a href="'.base_url().'SystemNotification/view" class="nav-link">
-						  <i class="fas fas fa-bullhorn nav-icon text-white"></i>
-						  <p>Notification</p>
-						</a>
-					  </li>					  
-					</ul>
-				  </li>
+						<ul class="nav nav-treeview">
+						  <li class="nav-item">
+							<a href="'.base_url().'SystemNotifyType/view" class="nav-link">
+							  <i class="fab fas fa-info-circle nav-icon text-white"></i>
+							  <p>Notification type</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="'.base_url().'SystemNotification/view" class="nav-link">
+							  <i class="fas fas fa-bullhorn nav-icon text-white"></i>
+							  <p>Notification</p>
+							</a>
+						  </li>					  
+						</ul>
+					</li-->
 				  <li class="nav-item">
 					<a href="'.base_url().'userGroup/view" class="nav-link">
 					  <i class="fas fa-user-friends nav-icon text-orange"></i>
@@ -896,12 +908,12 @@
 					  <p>User Detail</p>
 					</a>
 				  </li>
-				  <li class="nav-item">
+				  <!--li class="nav-item">
 					<a href="'.base_url().'userRole/view" class="nav-link">
 					  <i class="fas fa-user-lock nav-icon text-orange"></i>
 					  <p>User Permission</p>
 					</a>
-				  </li>
+				  </li-->
 				</ul>
 			  </li>';
 		}
