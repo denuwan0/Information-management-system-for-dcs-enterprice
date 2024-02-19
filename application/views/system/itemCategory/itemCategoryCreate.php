@@ -22,6 +22,22 @@
 								Please provide a valid zip.
 							</div>
 						</div>
+						
+						<div class="col-md-6 mb-3">
+							<label for="cat_img_url">Category Image</label>
+							<div class="input-group">							
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" name="cat_img_url" id="cat_img_url" onchange="document.getElementById('imagePreview').src = window.URL.createObjectURL(this.files[0]);">
+									<label class="custom-file-label" for="cat_img_url">Choose file</label>
+								</div>
+							</div>
+							<h4><!-- Selected file will get here --></h4>
+						</div>
+						<div class="col-md-6 mb-3">
+							<img id="imagePreview" alt="your image" width="200" height="200" src=""/>
+						</div>
+					</div>
+					<div class="form-row">
 						<div class="col-md-6 mb-3">
 							<div class="custom-control custom-checkbox">
 								<input class="custom-control-input" type="checkbox" id="is_active_inv_item_cat" name="is_active_inv_item_cat" value="1">
@@ -29,7 +45,8 @@
 							</div>
 						</div>
 					</div>
-				</div>			
+				</div>	
+				
 
 				<div class="card-footer text-center">
 					<button class="btn btn-primary" type="submit" id="submit">Submit</button>
@@ -39,7 +56,7 @@
 	</div>
 </section>
 <script>
-
+$("#imagePreview").attr("src",API+"assets/img/download.png");
 
 
 $('#submit').click(function(e){
@@ -48,10 +65,12 @@ $('#submit').click(function(e){
 	var item_category_id = 0;
 	var category_name = "";
 	var description = "";
+	var cat_img_url = "";
 	var is_active_inv_item_cat = 0;
 		
 	category_name = $('#category_name').val();
 	description = $('#description').val();
+	cat_img_url = $('#cat_img_url').prop('files')[0];
 	is_active_inv_item_cat = $("#is_active_inv_item_cat").is(':checked')? 1 : 0;
 	
 	
@@ -62,6 +81,7 @@ $('#submit').click(function(e){
 		var formData = new FormData();
         formData.append('category_name',category_name);
 		formData.append('description',description);
+		formData.append('cat_img_url',cat_img_url);
 		formData.append('is_active_inv_item_cat',is_active_inv_item_cat);
 				
 		$.ajax({

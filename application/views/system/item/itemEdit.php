@@ -68,8 +68,7 @@
 	</div>
 </section>
 <script>
-
-$('#form')[0].reset(); 
+ 
 
 var pageUrl = $(location).attr('href');
 parts = pageUrl.split("/"),
