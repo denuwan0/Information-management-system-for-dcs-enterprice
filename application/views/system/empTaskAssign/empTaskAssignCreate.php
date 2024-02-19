@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Task Details</h3>
+				<h3 class="card-title">Task Assign Details</h3>
 			</div>
 			<form>
 				<div class="card-body ">

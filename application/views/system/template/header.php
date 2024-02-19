@@ -696,7 +696,7 @@
 					  <p>Online Orders</p>
 					</a>
 				  </li>
-				  <li class="nav-item">
+				  <!--li class="nav-item">
 					<a href="#" class="nav-link">
 					  <i class="fas fa-bullhorn nav-icon text-success"></i>
 					  <p>Promo Code</p>
@@ -707,7 +707,7 @@
 					  <i class="fas fa-funnel-dollar nav-icon text-success"></i>
 					  <p>Special Offer</p>
 					</a>
-				  </li>
+				  </li-->
 				  <!--li class="nav-item">
 					<a href="#" class="nav-link">
 					  <i class="fas fa-random nav-icon text-success"></i>
