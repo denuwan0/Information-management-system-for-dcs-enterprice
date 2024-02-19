@@ -359,13 +359,30 @@
                     </a>
                   </li>
                 </ul>
-              </li-->
+              </li-->			 
 			  <li class="nav-item">
-				<a href="<?php echo base_url() ?>EmpSpecialTask/view" class="nav-link">
-				  <i class="far fa-circle nav-icon text-red"></i>
-				  <p>Employee Task List</p>
-				</a>
-			  </li>
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon text-red"></i>
+                  <p>
+                    Employee Task List
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+				  <li class="nav-item">
+                    <a href="<?php echo base_url() ?>EmpSpecialTask/view" class="nav-link">
+                      <i class="fa fa-history nav-icon text-red"></i>
+                      <p>Task List</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url() ?>EmpTaskAssign/view" class="nav-link">
+                      <i class="fa fa fa-check-circle nav-icon text-red"></i>
+                      <p>Assign Tasks</p>
+                    </a>
+                  </li>                  
+                </ul>
+              </li>
             </ul>
           </li>
          <li class="nav-item">
