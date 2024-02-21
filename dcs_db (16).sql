@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2024 at 03:20 PM
+-- Generation Time: Feb 21, 2024 at 10:02 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -1001,6 +1001,7 @@ CREATE TABLE `inventory_item` (
   `item_name` varchar(100) NOT NULL,
   `item_image_url` varchar(100) NOT NULL,
   `item_type` int(10) NOT NULL,
+  `item_desc` varchar(500) NOT NULL,
   `item_category` int(10) NOT NULL,
   `is_active_inv_item` tinyint(1) NOT NULL,
   `is_feature` tinyint(1) NOT NULL,
@@ -1011,32 +1012,32 @@ CREATE TABLE `inventory_item` (
 -- Dumping data for table `inventory_item`
 --
 
-INSERT INTO `inventory_item` (`item_id`, `item_name`, `item_image_url`, `item_type`, `item_category`, `is_active_inv_item`, `is_feature`, `is_web_pattern`) VALUES
-(1, 'Acro Jack / Pipe Support ', 'http://localhost/API/assets/img/items/acro_jack.png', 0, 4, 1, 0, 0),
-(2, 'Column box 4ft', 'http://localhost/API/assets/img/items/column_box_4.jpg', 0, 3, 1, 0, 0),
-(3, 'Column box 8ft', 'http://localhost/API/assets/img/items/column_box_8.jpg', 0, 3, 1, 0, 0),
-(4, 'Scaffold frame 3ft', 'http://localhost/API/assets/img/items/oe6rhd.jpg', 0, 4, 1, 1, 0),
-(5, 'Scaffold Plate', 'http://localhost/API/assets/img/items/scaffold_plate.jpg', 0, 4, 1, 1, 0),
-(6, 'Scaffold frame 2ft', 'http://localhost/API/assets/img/items/oe6rhd.jpg', 0, 4, 1, 0, 0),
-(7, 'Scaffold Erecting', 'http://localhost/API/assets/img/items/scaffold_erecting.jpg', 0, 6, 1, 0, 0),
-(8, 'Cross brace', 'http://localhost/API/assets/img/items/Biljax-diagonal-brace-and-bolts.jpg', 0, 4, 1, 1, 0),
-(9, 'Mobile toilet', 'http://localhost/API/assets/img/items/mobile_toilet.jpg', 0, 3, 1, 0, 0),
-(10, 'Fork Lift 3tonn', 'http://localhost/API/assets/img/items/forklift_3.jpg', 0, 2, 1, 0, 0),
-(11, 'Fork Lift 5tonn', 'http://localhost/API/assets/img/items/forklift_5.jpg', 0, 2, 1, 0, 0),
-(12, 'Fork Lift 10tonn', 'http://localhost/API/assets/img/items/forklift_10.jpg', 0, 2, 1, 0, 0),
-(13, 'Tokyo Cement', 'http://localhost/API/assets/img/items/cement_tokyo.png', 0, 1, 1, 0, 0),
-(14, 'Insee Cement', 'http://localhost/API/assets/img/items/cement_insee.png', 0, 1, 1, 0, 0),
-(15, 'Sand', 'http://localhost/API/assets/img/items/sand.png', 0, 1, 1, 0, 0),
-(16, 'Metal 3/4', 'http://localhost/API/assets/img/items/metal_rock34.jpg', 0, 1, 1, 0, 0),
-(17, 'Metal chips', 'http://localhost/API/assets/img/items/metal_rock_chips.jpg', 0, 1, 1, 0, 0),
-(18, 'Chainblock 5tonn', 'http://localhost/API/assets/img/items/chainblock_5.jpg', 0, 3, 1, 0, 0),
-(19, 'Caster Wheel 6inch', 'http://localhost/API/assets/img/items/caster_wheel_6.jpg', 0, 4, 1, 1, 0),
-(20, 'Caster Wheel 8inch', 'http://localhost/API/assets/img/items/caster_wheel_8.jpg', 0, 4, 1, 0, 0),
-(21, 'Bone Joint', 'http://localhost/API/assets/img/items/bone_joint.jpg', 0, 4, 1, 0, 0),
-(22, 'T jack', 'http://localhost/API/assets/img/items/t_jack.jpg', 0, 4, 1, 0, 0),
-(23, 'U jack', 'http://localhost/API/assets/img/items/u_jack.jpg', 0, 4, 1, 0, 0),
-(24, 'Clamp', 'http://localhost/API/assets/img/items/clamp.jpg', 0, 4, 1, 0, 0),
-(25, 'C clamp', 'http://localhost/API/assets/img/items/c_clamp.jpg', 0, 4, 1, 0, 0);
+INSERT INTO `inventory_item` (`item_id`, `item_name`, `item_image_url`, `item_type`, `item_desc`, `item_category`, `is_active_inv_item`, `is_feature`, `is_web_pattern`) VALUES
+(1, 'Acro Jack / Pipe Support ', 'http://localhost/API/assets/img/items/acro_jack.png', 0, '', 4, 1, 0, 0),
+(2, 'Column box 4ft', 'http://localhost/API/assets/img/items/column_box_4.jpg', 0, '', 3, 1, 0, 0),
+(3, 'Column box 8ft', 'http://localhost/API/assets/img/items/column_box_8.jpg', 0, '', 3, 1, 0, 0),
+(4, 'Scaffold frame 3ft', 'http://localhost/API/assets/img/items/oe6rhd.jpg', 0, '', 4, 1, 1, 0),
+(5, 'Scaffold Plate', 'http://localhost/API/assets/img/items/scaffold_plate.jpg', 0, '', 4, 1, 1, 0),
+(6, 'Scaffold frame 2ft', 'http://localhost/API/assets/img/items/oe6rhd.jpg', 0, '', 4, 1, 0, 0),
+(7, 'Scaffold Erecting', 'http://localhost/API/assets/img/items/scaffold_erecting.jpg', 0, '', 6, 1, 0, 0),
+(8, 'Cross brace', 'http://localhost/API/assets/img/items/Biljax-diagonal-brace-and-bolts.jpg', 0, '', 4, 1, 1, 0),
+(9, 'Mobile toilet', 'http://localhost/API/assets/img/items/mobile_toilet.jpg', 0, '', 3, 1, 0, 0),
+(10, 'Fork Lift 3tonn', 'http://localhost/API/assets/img/items/forklift_3.jpg', 0, '', 2, 1, 0, 0),
+(11, 'Fork Lift 5tonn', 'http://localhost/API/assets/img/items/forklift_5.jpg', 0, '', 2, 1, 0, 0),
+(12, 'Fork Lift 10tonn', 'http://localhost/API/assets/img/items/forklift_10.jpg', 0, '', 2, 1, 0, 0),
+(13, 'Tokyo Cement', 'http://localhost/API/assets/img/items/cement_tokyo.png', 0, '', 1, 1, 0, 0),
+(14, 'Insee Cement', 'http://localhost/API/assets/img/items/cement_insee.png', 0, '', 1, 1, 0, 0),
+(15, 'Sand', 'http://localhost/API/assets/img/items/sand.png', 0, '', 1, 1, 0, 0),
+(16, 'Metal 3/4', 'http://localhost/API/assets/img/items/metal_rock34.jpg', 0, '', 1, 1, 0, 0),
+(17, 'Metal chips', 'http://localhost/API/assets/img/items/metal_rock_chips.jpg', 0, '', 1, 1, 0, 0),
+(18, 'Chainblock 5tonn', 'http://localhost/API/assets/img/items/chainblock_5.jpg', 0, '', 3, 1, 0, 0),
+(19, 'Caster Wheel 6inch', 'http://localhost/API/assets/img/items/caster_wheel_6.jpg', 0, '', 4, 1, 1, 0),
+(20, 'Caster Wheel 8inch', 'http://localhost/API/assets/img/items/caster_wheel_8.jpg', 0, '', 4, 1, 0, 0),
+(21, 'Bone Joint', 'http://localhost/API/assets/img/items/bone_joint.jpg', 0, '', 4, 1, 0, 0),
+(22, 'T jack', 'http://localhost/API/assets/img/items/t_jack.jpg', 0, '', 4, 1, 0, 0),
+(23, 'U jack', 'http://localhost/API/assets/img/items/u_jack.jpg', 0, '', 4, 1, 0, 0),
+(24, 'Clamp', 'http://localhost/API/assets/img/items/clamp.jpg', 0, '', 4, 1, 0, 0),
+(25, 'C clamp', 'http://localhost/API/assets/img/items/c_clamp.jpg', 0, '', 4, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1310,8 +1311,8 @@ CREATE TABLE `inventory_retail_total_stock` (
 --
 
 INSERT INTO `inventory_retail_total_stock` (`retail_stock_id`, `branch_id`, `item_id`, `is_sub_item`, `max_sale_price`, `min_sale_price`, `full_stock_count`, `stock_re_order_level`, `is_active_retail_stock`) VALUES
-(1, 1, 1, 0, '0.00', '0.00', 200, 0, 1),
-(2, 1, 2, 0, '0.00', '0.00', 200, 0, 1),
+(1, 1, 1, 0, '1.00', '0.00', 200, 0, 1),
+(2, 1, 2, 0, '0.00', '2.00', 200, 0, 1),
 (3, 1, 3, 0, '0.00', '0.00', 200, 0, 1),
 (4, 1, 4, 0, '0.00', '0.00', 200, 0, 1),
 (5, 1, 5, 0, '0.00', '0.00', 200, 0, 1),
@@ -1931,7 +1932,7 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '7dce9f7c918afbade093', '231846', '2024-02-20 12:33:52', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'bfac184f5b3365fb6bef', '571145', '2024-02-21 05:16:53', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
 (3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-19 12:40:05', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
