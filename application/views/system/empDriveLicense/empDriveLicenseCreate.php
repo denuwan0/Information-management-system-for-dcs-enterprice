@@ -8,6 +8,14 @@
 				<div class="card-body ">
 					<div class="form-row">
 						<div class="col-md-3 mb-3">
+							<label for="location">Employee</label>
+							<select class="custom-select" id="emp_id" name="emp_id" required>
+							</select>
+							<div id="locationError" class="invalid-feedback">
+								Please select a valid state.
+							</div>
+						</div>	
+						<div class="col-md-3 mb-3">
 							<label for="license_number">License No.</label>
 							<input type="text" class="form-control" id="license_number" required>
 							<div class="valid-feedback">
@@ -62,6 +70,30 @@ $(document).ready(function(){
 	date_input2.datepicker(options);
 })
 
+function loadEmp(){
+$.ajax({
+	type: "POST",
+	cache : false,
+	async: true,
+	dataType: "json",
+	url: API+"Employee/fetch_all_active/",
+	success: function(data, result){
+		console.log(data);
+		var location_drp = '<option value="">Select Employee</option>';
+		$.each(data, function(index, item) {			
+			location_drp += '<option value="'+item.emp_id+'">'+item.emp_epf+' - '+item.emp_first_name+'</option>';
+        });
+		$('#emp_id').append(location_drp);
+	},
+	error: function(XMLHttpRequest, textStatus, errorThrown) {						
+		
+		//console.log(errorThrown);
+	}
+});
+}
+
+loadEmp();
+
 $('#submit').click(function(e){
 	e.preventDefault();
 		
@@ -70,18 +102,21 @@ $('#submit').click(function(e){
 	var valid_to_date = "";
 	var license_type = 0;
 	var is_active_driving_lice = 0;
+	var emp_id = 0;
 	
 	license_number = $('#license_number').val();
 	valid_from_date = $('#valid_from_date').val();
 	valid_to_date = $('#valid_to_date').val();
 	license_type = $('#license_type').val();
+	emp_id = $('#emp_id').val();
 	is_active_driving_lice = $("#is_active_driving_lice").is(':checked')? 1 : 0;
 	
 		
 	if(typeof license_number !== 'undefined' && license_number !== '' 
 	&& typeof valid_from_date !== 'undefined' && valid_from_date !== ''
 	&& typeof valid_to_date !== 'undefined' && valid_to_date !== '' 
-	&& typeof license_type !== 'undefined' && license_type !== '')
+	&& typeof license_type !== 'undefined' && license_type !== ''
+	&& typeof emp_id !== 'undefined' && emp_id !== '')
 	{
 		
 		var formData = new FormData();
@@ -89,6 +124,7 @@ $('#submit').click(function(e){
 		formData.append('valid_from_date',valid_from_date);
 		formData.append('valid_to_date',valid_to_date);
 		formData.append('license_type',license_type);
+		formData.append('emp_id',emp_id);
 		formData.append('is_active_driving_lice',is_active_driving_lice);
 				
 		$.ajax({

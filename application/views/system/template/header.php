@@ -601,7 +601,7 @@
 					  <li class="nav-item">
 						<a href="<?php echo base_url() ?>stockRental/view" class="nav-link">
 						  <i class="fas fa-cube nav-icon text-yellow"></i>
-						  <p>Stock Details</p>
+						  <p>Rental Stock Details</p>
 						</a>
 					  </li>
 					</ul>
@@ -628,7 +628,7 @@
 					  <li class="nav-item">
 						<a href="<?php echo base_url() ?>stockRetail/view" class="nav-link">
 						  <i class="fas fa-cube nav-icon text-white"></i>
-						  <p>Stock Details</p>
+						  <p>Retail Stock Details</p>
 						</a>
 					  </li>
 					</ul>

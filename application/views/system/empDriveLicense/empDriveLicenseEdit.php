@@ -9,6 +9,14 @@
 					<div class="form-row">
 					<input type="hidden" class="form-control typeahead" id="driving_license_id" name="driving_license_id"  placeholder="" value="" required>
 						<div class="col-md-3 mb-3">
+							<label for="location">Employee</label>
+							<select class="custom-select" id="emp_id" name="emp_id" required>
+							</select>
+							<div id="locationError" class="invalid-feedback">
+								Please select a valid state.
+							</div>
+						</div>
+						<div class="col-md-3 mb-3">
 							<label for="license_number">License No.</label>
 							<input type="text" class="form-control" id="license_number" required>
 							<div class="valid-feedback">
@@ -99,6 +107,29 @@ function loadData() {
 			}
 			
 			
+			function loadEmp(){
+			$.ajax({
+				type: "POST",
+				cache : false,
+				async: true,
+				dataType: "json",
+				url: API+"Employee/fetch_all_active/",
+				success: function(data, result){
+					console.log(data);
+					var location_drp = '<option value="">Select Employee</option>';
+					$.each(data, function(index, item) {			
+						location_drp += '<option value="'+item.emp_id+'">'+item.emp_epf+' - '+item.emp_first_name+'</option>';
+					});
+					$('#emp_id').append(location_drp);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {						
+					
+					//console.log(errorThrown);
+				}
+			});
+			}
+
+			loadEmp();
 			
 				
 		},
