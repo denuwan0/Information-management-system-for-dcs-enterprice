@@ -181,23 +181,39 @@ $('#submit').click(function(e){
 			success: function(data, result){
 				console.log(data);	
 				const notyf = new Notyf();
-			if(data['message'] == 'Data Saved!'){
-				notyf.success({
-				  message: data['message'],
-				  duration: 5000,
-				  icon: true,
-				  ripple: true,
-				  dismissible: true,
-				  position: {
-					x: 'right',
-					y: 'top',
-				  }
-				  
-				})
-				window.setTimeout(function() {
-					window.location = "<?php echo base_url() ?>user/view";
-				}, 3000);
-			}	
+				if(data['message'] == 'Data Saved!'){
+					notyf.success({
+					  message: data['message'],
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					window.setTimeout(function() {
+						window.location = "<?php echo base_url() ?>user/view";
+					}, 3000);
+				}
+				else{
+					if(data['message'] == 'User already in the System!'){
+						notyf.error({
+						  message: data['message'],
+						  duration: 5000,
+						  icon: true,
+						  ripple: true,
+						  dismissible: true,
+						  position: {
+							x: 'right',
+							y: 'top',
+						  }
+						  
+						})
+					}
+				}				
 				
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
