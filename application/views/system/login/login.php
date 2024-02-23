@@ -60,7 +60,7 @@
 		<div class="row">
 			<div class="col-12">
 				<p class="mb-1">
-					<a href="<?php echo base_url() ?>login/forgotPassword">I forgot my password</a>
+					<a href="<?php echo base_url() ?>login/forgotPassword">Reset my password</a>
 				</p>
 			 </div>
 		</div>

@@ -66,12 +66,15 @@ class ApiRequest extends CI_Controller {
 		
 		$post_endpoint = 'SysUser/authenticate';
 		
+		
 		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);
 		
-		//var_dump($response);
+		
 		
 		$phpObj = json_decode($response);
 		$phparray = (array) $phpObj;
+		
+		
 		
 		
 		
@@ -86,9 +89,9 @@ class ApiRequest extends CI_Controller {
 			
 			echo json_encode($data);
 		}
-		else{
+		/* else{
 			echo $response;
-		}
+		} */
 		
 		
 		
@@ -170,9 +173,19 @@ class ApiRequest extends CI_Controller {
 		$post_endpoint = 'SysUser/verifyOtp';
 		
 		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);
+		
 				
 		$phpObj = json_decode($response);
 		$phparray = (array) $phpObj;
+		//var_dump($phparray);
+		
+		$request_data = json_encode($phparray);
+		
+		$post_endpoint2 = 'Notify/get_all_close_to_expire';
+		$response2 = perform_http_request('POST', $rest_api_base_url . $post_endpoint2,  $request_data);
+		
+				
+		//var_dump($request_data);
 		
 		$this->session->set_userdata($phparray);
 		

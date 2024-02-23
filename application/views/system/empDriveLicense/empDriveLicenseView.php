@@ -44,6 +44,7 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
+								<th>Employee</th>
 								<th>License No.</th>
 								<th>Valid from</th>
 								<th>Valid to</th>
@@ -102,6 +103,7 @@ function loadData() {
 					
 					
 					table.row.add([item.driving_license_id,
+					item.emp_epf+' - '+item.emp_first_name,	
 					item.license_number,
 					item.valid_from_date, 					
 					item.valid_to_date,

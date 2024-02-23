@@ -114,11 +114,20 @@ function loadData() {
 				async: true,
 				dataType: "json",
 				url: API+"Employee/fetch_all_active/",
-				success: function(data, result){
-					console.log(data);
+				success: function(data1, result){
+					console.log(data1);
 					var location_drp = '<option value="">Select Employee</option>';
-					$.each(data, function(index, item) {			
-						location_drp += '<option value="'+item.emp_id+'">'+item.emp_epf+' - '+item.emp_first_name+'</option>';
+					$.each(data1, function(index, item) {
+
+						if(data[0].emp_id == item.emp_id){
+							location_drp += '<option value="'+item.emp_id+'" selected>'+item.emp_epf+' - '+item.emp_first_name+'</option>';
+						}
+						else{
+							location_drp += '<option value="'+item.emp_id+'">'+item.emp_epf+' - '+item.emp_first_name+'</option>';
+						}
+						
+						
+						
 					});
 					$('#emp_id').append(location_drp);
 				},
@@ -152,12 +161,14 @@ $('#submit').click(function(e){
 	var valid_to_date = "";
 	var license_type = "";
 	var is_active_driving_lice = 0;
+	var emp_id = 0;
 	
 	driving_license_id = $('#driving_license_id').val();
 	license_number = $('#license_number').val();
 	valid_from_date = $('#valid_from_date').val();
 	valid_to_date = $('#valid_to_date').val();
 	license_type = $('#license_type').val();
+	emp_id = $('#emp_id').val();
 	is_active_driving_lice = $("#is_active_driving_lice").is(':checked')? 1 : 0;
 	
 			
@@ -165,7 +176,8 @@ $('#submit').click(function(e){
 	&& typeof license_number !== 'undefined' && license_number !== ''	
 	&& typeof valid_from_date !== 'undefined' && valid_from_date !== '' 
 	&& typeof valid_to_date !== 'undefined' && valid_to_date !== '' 
-	&& typeof license_type !== 'undefined' && license_type !== '')
+	&& typeof license_type !== 'undefined' && license_type !== ''
+	&& typeof emp_id !== 'undefined' && emp_id !== '')
 	{
 		var formData = new FormData();
 		formData.append('driving_license_id',driving_license_id);
@@ -173,10 +185,9 @@ $('#submit').click(function(e){
         formData.append('valid_from_date',valid_from_date);
 		formData.append('valid_to_date',valid_to_date);
 		formData.append('license_type',license_type);
+		formData.append('emp_id',emp_id);
 		formData.append('is_active_driving_lice',is_active_driving_lice);
-		
-		
-				
+							
 		$.ajax({
 			type: "POST",
 			cache : false,
