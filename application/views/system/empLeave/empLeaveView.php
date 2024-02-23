@@ -26,7 +26,8 @@
 				<div style="text-align: right;">
 					<?php 
 						if($this->session->userdata('sys_user_group_name') == "Admin" || 
-						$this->session->userdata('sys_user_group_name') == "Manager"){
+						$this->session->userdata('sys_user_group_name') == "Manager" || 
+						$this->session->userdata('sys_user_group_name') == "Staff"){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
 							echo '<a type="button" href="'.base_url().'vehicle/create" class="btn text-dark btn-default btn-sm">
 									<i class="nav-icon far fa-plus-square"></i> Apply Leave
@@ -44,10 +45,11 @@
 						<thead id="thead">
 							<tr>
 								<th>id</th>
-								<th>Registered No.</th>
-								<th>YOM</th>
-								<th>Type</th>
-								<th>Category</th>
+								<th>Leave Type</th>
+								<th>From Date</th>
+								<th>To Date</th>
+								<th>Amount</th>
+								<th>Emplyee</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -78,7 +80,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_all_join/",
+		url: API+"EmpLeave/fetch_all_join/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -101,11 +103,12 @@ function loadData() {
 					}
 					
 					
-					table.row.add([item.vehicle_id,
-					item.license_plate_no,
-					item.vehicle_yom, 					
-					item.vehicle_type_name,
-					item.vehicle_category_name,
+					table.row.add([item.emp_wise_leave_quota_id,
+					item.leave_type_name,
+					item.leave_from_date, 					
+					item.leave_to_date,
+					item.leave_amount,
+					item.emp_epf +' - '+item.emp_first_name,
 					is_active_vhcl_details ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
