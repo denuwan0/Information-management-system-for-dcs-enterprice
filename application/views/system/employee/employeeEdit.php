@@ -189,7 +189,7 @@ function loadData() {
 						var branch_drp = '';
 						$.each(data1, function(index, item) {
 							
-							if(data[0].branch_id == item.emp_branch_id){
+							if(data[0].branch_id == item.company_branch_id){
 								branch_drp += '<option selected value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
 							}
 							else{
@@ -215,11 +215,11 @@ function loadData() {
 					async: true,
 					dataType: "json",
 					url: API+"company/fetch_all_active/",
-					success: function(data1, result){
-						console.log(data1);
+					success: function(data2, result){
+						console.log(data2);
 						
 						var company_drp = '';
-						$.each(data1, function(index, item) {
+						$.each(data2, function(index, item) {
 							
 							if(data[0].company_id == item.company_id){
 								company_drp += '<option selected value="'+item.company_id+'">'+item.company_name+'</option>';

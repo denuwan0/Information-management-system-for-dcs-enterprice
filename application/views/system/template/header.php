@@ -193,36 +193,46 @@
 					  <p>Bonus</p>
 					</a>
 				  </li-->
-                  <li class="nav-item">
-					<a href="<?php echo base_url() ?>EmpDesignation/view" class="nav-link">
-					  <i class="fas fa-puzzle-piece nav-icon text-red"></i>
-					  <p>Designation</p>
-					</a>
-				  </li>
-				  <li class="nav-item">
-					<a href="<?php echo base_url() ?>EmpGrade/view" class="nav-link">
-					  <i class="fas fa-rocket nav-icon text-red"></i>
-					  <p>Grade</p>
-					</a>
-				  </li>
-				  <li class="nav-item">
-					<a href="<?php echo base_url() ?>EmpGroup/view" class="nav-link">
-					  <i class="fas fa-users nav-icon text-red"></i>
-					  <p>Group</p>
-					</a>
-				  </li>
+				  <?php
+					if($this->session->userdata('sys_user_group_name') == "Admin"){
+						echo '<li class="nav-item">
+							<a href="'.base_url().'EmpDesignation/view" class="nav-link">
+							  <i class="fas fa-puzzle-piece nav-icon text-red"></i>
+							  <p>Designation</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="'.base_url().'EmpGrade/view" class="nav-link">
+							  <i class="fas fa-rocket nav-icon text-red"></i>
+							  <p>Grade</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="'.base_url().'EmpGroup/view" class="nav-link">
+							  <i class="fas fa-users nav-icon text-red"></i>
+							  <p>Group</p>
+							</a>
+						  </li>';
+					}
+					?>
+                  
 				  <li class="nav-item">
 					<a href="<?php echo base_url() ?>EmpDrivingLicense/view" class="nav-link">
 					  <i class="fas fa-id-badge nav-icon text-red"></i>
 					  <p>Driving License</p>
 					</a>
 				  </li>
-				  <li class="nav-item">
-					<a href="<?php echo base_url() ?>EmpWorkSchedule/view" class="nav-link">
+				   <?php
+					if($this->session->userdata('sys_user_group_name') == "Admin"){
+						echo '<li class="nav-item">
+					<a href="'.base_url().'EmpWorkSchedule/view" class="nav-link">
 					  <i class="fas fa-sync nav-icon text-red"></i>
 					  <p>Work Schedule</p>
 					</a>
-				  </li>
+				  </li>';
+					}
+					?>
+				  
 				  <li class="nav-item">
 					<a href="<?php echo base_url() ?>EmpWorkContract/view" class="nav-link">
 					  <i class="fas fa-calendar-check nav-icon text-red"></i>
@@ -241,13 +251,19 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
-				  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>EmpLeaveType/view" class="nav-link">
-                      <i class="fas fa-mug-hot nav-icon text-red"></i>
-                      <p>Leave Type</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
+					<?php
+					if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+						echo ' <li class="nav-item">
+							<a href="'.base_url().'EmpLeaveType/view" class="nav-link">
+							  <i class="fas fa-mug-hot nav-icon text-red"></i>
+							  <p>Leave Type</p>
+							</a>
+						  </li>';
+						
+					}
+					?>
+				 
+                  <!--li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpLeaveQuota/view" class="nav-link">
                       <i class="fas fa-toggle-on nav-icon text-red"></i>
                       <p>Leave Quota</p>
@@ -258,7 +274,7 @@
                       <i class="fas fa-toggle-on nav-icon text-red"></i>
                       <p>Employee wise Leave Quota</p>
                     </a>
-                  </li>
+                  </li-->
                   <li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpLeave/view" class="nav-link">
                       <i class="fas fa-bed nav-icon text-red"></i>
@@ -276,12 +292,16 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
-				  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>EmpMedicalLoc/view" class="nav-link">
-                      <i class="fas fa-h-square nav-icon text-red"></i>
-                      <p>Medical Center Location</p>
-                    </a>
-                  </li>
+					 <?php
+					if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+					  echo'<li class="nav-item">
+						<a href="'.base_url().'EmpMedicalLoc/view" class="nav-link">
+						  <i class="fas fa-h-square nav-icon text-red"></i>
+						  <p>Medical Center Location</p>
+						</a>
+					  </li>';
+					}
+					 ?>
                   <li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpMedicalRecord/view" class="nav-link">
                       <i class="fas fa-heartbeat nav-icon text-red"></i>
@@ -359,149 +379,162 @@
                     </a>
                   </li>
                 </ul>
-              </li-->			 
-			  <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon text-red"></i>
-                  <p>
-                    Employee Task List
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-				  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>EmpSpecialTask/view" class="nav-link">
-                      <i class="fa fa-history nav-icon text-red"></i>
-                      <p>Task List</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>EmpTaskAssign/view" class="nav-link">
-                      <i class="fa fa fa-check-circle nav-icon text-red"></i>
-                      <p>Assign Tasks</p>
-                    </a>
-                  </li>                  
-                </ul>
-              </li>
+              </li-->
+				 <?php
+				if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+					echo '<li class="nav-item">
+						<a href="#" class="nav-link">
+						  <i class="far fa-circle nav-icon text-red"></i>
+						  <p>
+							Employee Task List
+							<i class="right fas fa-angle-left"></i>
+						  </p>
+						</a>
+						<ul class="nav nav-treeview">
+						  <li class="nav-item">
+							<a href="'.base_url().'EmpSpecialTask/view" class="nav-link">
+							  <i class="fa fa-history nav-icon text-red"></i>
+							  <p>Task List</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="'.base_url().'EmpTaskAssign/view" class="nav-link">
+							  <i class="fa fa fa-check-circle nav-icon text-red"></i>
+							  <p>Assign Tasks</p>
+							</a>
+						  </li>                  
+						</ul>
+					  </li>';
+					
+				}
+			  ?>
             </ul>
           </li>
-         <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-circle text-warning"></i>
-              <p>
-                Vehicle
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-			  <li class="nav-item">
-                <a href="<?php echo base_url() ?>vehicleType/view" class="nav-link">
-                  <i class="far fa-circle nav-icon text-warning"></i>
-                  <p>Vehicle Type</p>
-                </a>
-              </li>
-			  <li class="nav-item">
-                <a href="<?php echo base_url() ?>vehicleCategory/view" class="nav-link">
-                  <i class="far fa-circle nav-icon text-warning"></i>
-                  <p>Vehicle Category</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo base_url() ?>vehicle/view" class="nav-link">
-                  <i class="far fa-circle nav-icon text-warning"></i>
-                  <p>Vehicle Details</p>
-                </a>
-              </li>
-			  <li class="nav-item">
-                <a href="<?php echo base_url() ?>vehicleEcoTest/view" class="nav-link">
-                  <i class="far fa-circle nav-icon text-warning"></i>
-                  <p>Vehicle Eco-Test</p>
-                </a>
-              </li>
-			  <li class="nav-item">
-                <a href="<?php echo base_url() ?>vehicleRevenue/view" class="nav-link">
-                  <i class="far fa-circle nav-icon text-warning"></i>
-                  <p>Revenue License</p>
-                </a>
-              </li>
-			  <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon text-warning"></i>
-                  <p>
-                    Vehicle Repair
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-					<li class="nav-item">
-						<a href="<?php echo base_url() ?>vehicleRepairLoc/view" class="nav-link">
-						  <i class="fas fa-car-battery nav-icon text-warning"></i>
-						  <p>Repair Location</p>
+         <?php
+			if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+				echo '<li class="nav-item">
+						<a href="#" class="nav-link">
+						  <i class="nav-icon fas fa-circle text-warning"></i>
+						  <p>
+							Vehicle
+							<i class="right fas fa-angle-left"></i>
+						  </p>
 						</a>
-					</li>
-					<li class="nav-item">
-						<a href="<?php echo base_url() ?>vehicleRepair/view" class="nav-link">
-						  <i class="fas fa-wrench nav-icon text-warning"></i>
-						  <p>Repair Details</p>
-						</a>
-					</li>                  
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon text-warning"></i>
-                  <p>
-                    Vehicle Insuarance
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-					<li class="nav-item">
-						<a href="<?php echo base_url() ?>vehicleInsuranceCompany/view" class="nav-link">
-						  <i class="fas fa-building nav-icon text-warning"></i>
-						  <p>Insuarance Company</p>
-						</a>
-					  </li>
-					<li class="nav-item">
-                    <a href="<?php echo base_url() ?>vehicleInsurance/view" class="nav-link">
-                      <i class="fas fa-ambulance nav-icon text-warning"></i>
-                      <p>Insuarance Details</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>vehicleInsuranceClaim/view" class="nav-link">
-                      <i class="fas fa-file-medical nav-icon text-warning"></i>
-                      <p>Claim</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-			  <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon text-warning"></i>
-                  <p>
-                    Vehicle Service
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-					<li class="nav-item">
-                    <a href="<?php echo base_url() ?>vehicleServiceCenter/view" class="nav-link">
-                      <i class="fas fa-air-freshener nav-icon text-warning"></i>
-                      <p>Service Center</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url() ?>vehicleService/view" class="nav-link">
-                      <i class="fas fa-oil-can nav-icon text-warning"></i>
-                      <p>Service Details</p>
-                    </a>
-                  </li>
-                  
-                </ul>
-              </li>
-            </ul>
-          </li>
+						<ul class="nav nav-treeview">
+						  <li class="nav-item">
+							<a href="'.base_url().'vehicleType/view" class="nav-link">
+							  <i class="far fa-circle nav-icon text-warning"></i>
+							  <p>Vehicle Type</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="'.base_url().'vehicleCategory/view" class="nav-link">
+							  <i class="far fa-circle nav-icon text-warning"></i>
+							  <p>Vehicle Category</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="'.base_url().'vehicle/view" class="nav-link">
+							  <i class="far fa-circle nav-icon text-warning"></i>
+							  <p>Vehicle Details</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="'.base_url().'vehicleEcoTest/view" class="nav-link">
+							  <i class="far fa-circle nav-icon text-warning"></i>
+							  <p>Vehicle Eco-Test</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="'.base_url().'vehicleRevenue/view" class="nav-link">
+							  <i class="far fa-circle nav-icon text-warning"></i>
+							  <p>Revenue License</p>
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="#" class="nav-link">
+							  <i class="far fa-circle nav-icon text-warning"></i>
+							  <p>
+								Vehicle Repair
+								<i class="right fas fa-angle-left"></i>
+							  </p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="'.base_url().'vehicleRepairLoc/view" class="nav-link">
+									  <i class="fas fa-car-battery nav-icon text-warning"></i>
+									  <p>Repair Location</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="'.base_url().'vehicleRepair/view" class="nav-link">
+									  <i class="fas fa-wrench nav-icon text-warning"></i>
+									  <p>Repair Details</p>
+									</a>
+								</li>                  
+							</ul>
+						  </li>
+						  <li class="nav-item">
+							<a href="#" class="nav-link">
+							  <i class="far fa-circle nav-icon text-warning"></i>
+							  <p>
+								Vehicle Insuarance
+								<i class="right fas fa-angle-left"></i>
+							  </p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="'.base_url().'vehicleInsuranceCompany/view" class="nav-link">
+									  <i class="fas fa-building nav-icon text-warning"></i>
+									  <p>Insuarance Company</p>
+									</a>
+								  </li>
+								<li class="nav-item">
+								<a href="'.base_url().'vehicleInsurance/view" class="nav-link">
+								  <i class="fas fa-ambulance nav-icon text-warning"></i>
+								  <p>Insuarance Details</p>
+								</a>
+							  </li>
+							  <li class="nav-item">
+								<a href="'.base_url().'vehicleInsuranceClaim/view" class="nav-link">
+								  <i class="fas fa-file-medical nav-icon text-warning"></i>
+								  <p>Claim</p>
+								</a>
+							  </li>
+							</ul>
+						  </li>
+						  <li class="nav-item">
+							<a href="#" class="nav-link">
+							  <i class="far fa-circle nav-icon text-warning"></i>
+							  <p>
+								Vehicle Service
+								<i class="right fas fa-angle-left"></i>
+							  </p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+								<a href="'.base_url().'vehicleServiceCenter/view" class="nav-link">
+								  <i class="fas fa-air-freshener nav-icon text-warning"></i>
+								  <p>Service Center</p>
+								</a>
+							  </li>
+							  <li class="nav-item">
+								<a href="'.base_url().'vehicleService/view" class="nav-link">
+								  <i class="fas fa-oil-can nav-icon text-warning"></i>
+								  <p>Service Details</p>
+								</a>
+							  </li>
+							  
+							</ul>
+						  </li>
+						</ul>
+					  </li>';
+				
+			}
+		 
+		 
+		 
+		 ?>
 		  <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-circle text-info"></i>
@@ -633,27 +666,32 @@
 					  </li>
 					</ul>
                   </li>
-				  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="fas fa-cube nav-icon text-info"></i>
-                      <p>Stock Transfer</p>
-					  <i class="right fas fa-angle-left"></i>
-                    </a>
-					<ul class="nav nav-treeview">
-					  <li class="nav-item">
-						<a href="<?php echo base_url() ?>stockTransfer/view" class="nav-link">
-						  <i class="fas fa-edit nav-icon text-white"></i>
-						  <p>Create</p>
-						</a>
-					  </li>
-					  <li class="nav-item">
-						<a href="<?php echo base_url() ?>stockTransfer/accept" class="nav-link">
-						  <i class="fas fa-handshake nav-icon text-white"></i>
-						  <p>Accept/ Reject</p>
-						</a>
-					  </li>
-					</ul>
-                  </li>
+				  <?php
+						if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
+							echo '<li class="nav-item">
+									<a href="#" class="nav-link">
+									  <i class="fas fa-cube nav-icon text-info"></i>
+									  <p>Stock Transfer</p>
+									  <i class="right fas fa-angle-left"></i>
+									</a>
+									<ul class="nav nav-treeview">
+									  <li class="nav-item">
+										<a href="'.base_url().'stockTransfer/view" class="nav-link">
+										  <i class="fas fa-edit nav-icon text-white"></i>
+										  <p>Create</p>
+										</a>
+									  </li>
+									  <li class="nav-item">
+										<a href="'.base_url().'stockTransfer/accept" class="nav-link">
+										  <i class="fas fa-handshake nav-icon text-white"></i>
+										  <p>Accept/ Reject</p>
+										</a>
+									  </li>
+									</ul>
+								  </li>';
+						}
+					?>
+				  
                 </ul>
               </li>
             </ul>
