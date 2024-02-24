@@ -87,7 +87,7 @@ $.ajax({
 	cache : false,
 	async: true,
 	dataType: "json",
-	url: API+"Employee/fetch_all_active/",
+	url: API+"Employee/fetch_all_active_for_select/",
 	success: function(data, result){
 		//console.log(data);
 		var location_drp = '';
@@ -115,7 +115,7 @@ $.ajax({
 		var company_drp = '<option value="">Select Leave type</option>';
 		$.each(data, function(index, item) {
 			//console.log(item);
-			company_drp += '<option value="'+item.balance_leave_quota+'">'+item.leave_type_name+' - '+item.balance_leave_quota+' remaining</option>';
+			company_drp += '<option value="'+item.emp_wise_leave_quota_id+'">'+item.leave_type_name+' - '+item.balance_leave_quota+' remaining</option>';
         });
 		$('#emp_wise_leave_quota_id').append(company_drp);
 	},

@@ -29,6 +29,13 @@ class EmpLeave extends CI_Controller {
 		$this->load->view('/system/empLeave/empLeaveCreate');
 		$this->load->view('/system/template/footer');
 	}
+	
+	public function approve()
+	{		
+		$this->load->view('/system/template/header');		
+		$this->load->view('/system/empLeave/empLeaveCreate');
+		$this->load->view('/system/template/footer');
+	}
 		
 	
 }

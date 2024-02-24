@@ -174,6 +174,21 @@ $(document).on('click', '#submit', function(e){
 	
 	otp_code = $('#otp_code').val();
 	
+	const notyf = new Notyf();
+	notyf.error({
+	  message: "Please wait while Validating User!",
+	  duration: 5000,
+	  icon: true,
+	  background: 'orange',
+	  ripple: true,
+	  dismissible: true,
+	  position: {
+		x: 'right',
+		y: 'top',
+	  }
+	  
+	})
+	
 		
 	if(typeof otp_code !== 'undefined' && otp_code !== '')
 	{
@@ -188,7 +203,7 @@ $(document).on('click', '#submit', function(e){
 				},			
 			url: web+"ApiRequest/otpVerify/",
 			success: function(data, result){
-				//var count = Object.keys(data).length;
+				
 				console.log(data);	
 				if(data.error == false){
 					$(location).prop('href', web+'login/')				

@@ -278,9 +278,21 @@
                   <li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpLeave/view" class="nav-link">
                       <i class="fas fa-bed nav-icon text-red"></i>
-                      <p>Leave</p>
+                      <p>My Leave</p>
                     </a>
-                  </li>                  
+                  </li> 
+					<?php
+					if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+						echo ' <li class="nav-item">
+							<a href="'.base_url().'EmpLeave/view" class="nav-link">
+							  <i class="fas fa-door-open nav-icon text-red"></i>
+							  <p>Branch Leave</p>
+							</a>
+						  </li>';
+						
+					}
+					?>
+					
                 </ul>
               </li>
 			  <li class="nav-item">

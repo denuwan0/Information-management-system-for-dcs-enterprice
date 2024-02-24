@@ -173,7 +173,7 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpLeave/fetch_single_join?id="+vehicleId,
+		url: API+"vehicle/fetch_single_join?id="+vehicleId,
 		success: function(data, result){
 			console.log(data);
 			
