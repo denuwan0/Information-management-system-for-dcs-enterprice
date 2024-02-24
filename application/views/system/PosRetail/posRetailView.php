@@ -8,42 +8,27 @@
 				</button>
 			</div>
 			<div class="modal-body" id="modalInfoBody" >	
-				<div class="row">
-					<div class="col-md-4">
-						<div class="info-box bg-gradient-danger" style="cursor: pointer;">
-							<span class="info-box-icon"><i class="fa fa-trash"></i></span>
-							<div class="info-box-content">
-							<span class="info-box-text">Cancel</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="info-box bg-gradient-danger" style="cursor: pointer;">
-							<span class="info-box-icon"><i class="fa fa-trash"></i></span>
-							<div class="info-box-content">
-							<span class="info-box-text">Cancel</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="info-box bg-gradient-danger" style="cursor: pointer;">
-							<span class="info-box-icon"><i class="fa fa-trash"></i></span>
-							<div class="info-box-content">
-							<span class="info-box-text">Cancel</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="info-box bg-gradient-danger" style="cursor: pointer;">
-							<span class="info-box-icon"><i class="fa fa-trash"></i></span>
-							<div class="info-box-content">
-							<span class="info-box-text">Cancel</span>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 			</div>
-			<div class="modal-footer justify-content-right">
+			<div class="modal-footer justify-content-right" id="modalFooter">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="qrModal"  aria-hidden="true" style="">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="modalInfoHeader" style="font-size: inherit;">Scan with any LankaQR certified app</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalInfoBody" >	
+				<img src="<?php echo base_url()?>assets/system/backend/dist/img/lankaQR.jpg" class="card-img-top" style="display: block; margin-left: auto; margin-right: auto;" alt="Centered Image">
+			</div>
+			<div class="modal-footer justify-content-right" id="modalFooter">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -129,7 +114,7 @@
         </div>
 		<div class="row" style="justify-content: right;">
 			<div class="col-md-4 col-sm-4 col-12">
-				<div class="info-box bg-gradient-danger" style="cursor: pointer;">
+				<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="cancelBtn">
 					<span class="info-box-icon"><i class="fa fa-trash"></i></span>
 					<div class="info-box-content">
 					<span class="info-box-text">Cancel</span>
@@ -141,6 +126,14 @@
 					<span class="info-box-icon"><i class="fa fa-check-circle"></i></span>
 					<div class="info-box-content">
 					<span class="info-box-text">Pay</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-4 col-12">
+				<div class="info-box bg-gradient-warning" style="cursor: pointer;" id="payBtn">
+					<span class="info-box-icon"><i class="fa fa-check-circle"></i></span>
+					<div class="info-box-content">
+					<span class="info-box-text">Complete</span>
 					</div>
 				</div>
 			</div>
@@ -315,6 +308,9 @@ $(document).on('click', '.addItem', function(){
 					if(item.max_sale_price == "0.00"){
 						 sale_price = item.min_sale_price;
 					}
+					else{
+						sale_price = item.max_sale_price;
+					}
 					
 					if(duplicate == 0){
 						prdHtml += '<tr class="detailRow row'+item.item_id+''+item.is_sub_item+'">'+
@@ -327,7 +323,8 @@ $(document).on('click', '.addItem', function(){
 									'<a class="btn"><i class="fas fa-plus-circle plusBtn" style="color:green"></i></a>'+
 								'</div>'+
 								'</td>'+
-								 '<td width="10%" style="display:none" align="right" class="unit_price">'+sale_price+'</td>	'+	
+								'<td width="10%" style="display:none" align="right" class="item_id">'+item.item_id+'</td>	'+	
+								'<td width="10%" style="display:none" align="right" class="unit_price">'+sale_price+'</td>	'+	
 							  '<td width="10%" align="right" class="price">'+sale_price+'</td>	'+				  
 							  '<td width="10%"><a class="btn deleteBtn"><i class="fa fa-trash"></i></a></td>'+
 							'</tr>';
@@ -403,9 +400,12 @@ $(document).on('click', '.minBtn', function(){
 		line_tot = line_tot - unit_price;
 		tot = tot - unit_price;
 		
+		console.log(tot.toFixed(2));
+		console.log(line_tot.toFixed(2));
+		
 		$(this).parent().parent().find('.qty').text(qty);
-		$(this).parent().parent().parent().parent().find('.price').text(line_tot);
-		$('.total').text(tot);
+		$(this).parent().parent().parent().parent().find('.price').text((line_tot.toFixed(2)));
+		$('.total').text((tot.toFixed(2)));
 	}
 	else{
 		const notyf = new Notyf();
@@ -437,9 +437,12 @@ $(document).on('click', '.plusBtn', function(){
 	line_tot = line_tot + unit_price;
 	tot = tot + unit_price;
 	
+	console.log(tot.toFixed(2));
+	console.log(line_tot.toFixed(2));
+	
 	$(this).parent().parent().find('.qty').text(qty);
-	$(this).parent().parent().parent().parent().find('.price').text(line_tot);
-	$('.total').text(tot);
+	$(this).parent().parent().parent().parent().find('.price').text((line_tot.toFixed(2)));
+	$('.total').text((tot.toFixed(2)));
 	
 });
 
@@ -453,26 +456,65 @@ $(document).on('click', '.deleteBtn', function(){
 		$(this).find('.count').text((i+1));
 	})
 	
-	//numbering()
-	//console.log(count);
 	
-	/* var qtyHtml = "";
-	
-		qtyHtml += '<tr>'+
-		  '<th scope="row">1</th>'+
-		  '<th scope="row">frame</th>'+
-		  '<td width="10%">'+
-			'<div class="btn-group">'+
-				'<a class="btn"><i class="fa fa-minus-circle" style="color:red"></i></a>'+
-				'<a class="btn">1</a>'+
-				'<a class="btn"><i class="fas fa-plus-circle" style="color:green"></i></a>'+
-			'</div>'+
-			'</td>'+
-		  '<td width="10%" align="right">500</td>	'+				  
-		  '<td width="10%"><a class="btn"><i class="fa fa-trash"></i></a></td>'+
-		'</tr>';
-	
-	$('#qty').html(qtyHtml); */
 });
+
+$(document).on('click', '#cancelBtn', function(){
+	$('#modalInfoBody').html('');
+	$('#modalInfoHeader').html('');
+	$('#modalInfoHeader').html('Order Cancelation Confirm');
+	$('#modalInfoBody').html('This Order will be no loger accessible, Are you sure?');
+	$('#modalFooter').html('<button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmYes">Yes</button><button type="button" class="btn btn-warning" data-dismiss="modal">No</button>');
+	//$('#modalInfo').show();
+	$('#modalInfo').modal('show');
+	
+	
+});
+
+$(document).on('click', '#payBtn', function(){
+	$('#modalInfoBody').html('');
+	$('#modalInfoHeader').html('');
+	$('#modalInfoHeader').html('Select Payment Option');
+	$('#modalInfoBody').html('<div class="row">'+
+					'<div class="col-md-4">'+
+						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="cashBtn">'+
+							'<span class="info-box-icon"><i class="fas fa-money-bill-alt"></i></span>'+
+							'<div class="info-box-content">'+
+							'<span class="info-box-text" style="font-size: x-large;">Cash</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-4">'+
+						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="qrBtn">'+
+							'<span class="info-box-icon"><i class="fas fa-qrcode"></i></span>'+
+							'<div class="info-box-content">'+
+							'<span class="info-box-text" style="font-size: x-large;">Lanka QR</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-4">'+
+						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="bankCardBtn">'+
+							'<span class="info-box-icon"><i class="far fa-credit-card"></i></span>'+
+							'<div class="info-box-content">'+
+							'<span class="info-box-text" style="font-size: large;">Bank Transfer</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>');
+		$('#modalFooter').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+	//$('#modalInfo').show();
+	$('#modalInfo').modal('show');
+	
+	
+});
+
+$(document).on('click', '#qrBtn', function(){
+	$('#modalInfo').modal('hide');;
+	$('#qrModal').modal('show');
+})
+
+$(document).on('click', '#confirmYes', function(){
+	location.reload(true);
+})
 
   </script>
