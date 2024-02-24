@@ -51,6 +51,7 @@
 								<th>Amount</th>
 								<th>Emplyee</th>
 								<th>Approved</th>
+								<th>Rejected</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -111,6 +112,14 @@ function loadData() {
 						is_approved_leave  = '<span class="right badge badge-danger">No</span>';
 					}
 					
+					var is_rejected_leave  ='';
+					if(item.is_rejected_leave  == 1){
+						is_rejected_leave  = '<span class="right badge badge-danger">Yes</span>';
+					}
+					else{
+						is_rejected_leave  = '<span class="right badge badge-success">No</span>';
+					}
+					
 					
 					table.row.add([item.leave_detail_id,
 					item.leave_type_name,
@@ -119,10 +128,11 @@ function loadData() {
 					item.leave_amount,
 					item.emp_epf +' - '+item.emp_first_name,
 					is_approved_leave,
+					is_rejected_leave,
 					is_active_leave_details ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
-							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							echo '<div class="btn-group margin"><a style="display:none" type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
 							echo '<a type="button" id="approveBtn" vehicleId="" href="" class="btn btn-warning btn-sm approveBtn"><i class="far fa-edit"></i></a></div>';
 						}
 						else{
@@ -141,6 +151,11 @@ function loadData() {
 					$(".approveBtn").last().attr('href', '<?php echo base_url() ?>EmpLeave/edit/'+item.leave_detail_id);
 					$(".viewBtn").last().attr('value', item.leave_detail_id);
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
+					
+					if(item.is_rejected_leave  == 1 || item.is_approved_leave  == 1){
+						is_rejected_leave  = '<span class="right badge badge-danger">Yes</span>';
+						$(".editBtn").last().css('display', 'none');
+					}
 				});
 							
 			});

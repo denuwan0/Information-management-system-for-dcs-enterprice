@@ -284,7 +284,7 @@
 					<?php
 					if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
 						echo ' <li class="nav-item">
-							<a href="'.base_url().'EmpLeave/view" class="nav-link">
+							<a href="'.base_url().'EmpLeave/approve" class="nav-link">
 							  <i class="fas fa-door-open nav-icon text-red"></i>
 							  <p>Branch Leave</p>
 							</a>

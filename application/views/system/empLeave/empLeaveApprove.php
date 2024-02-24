@@ -1,324 +1,373 @@
+
+<div class="modal fade" id="modalInfo"  aria-hidden="true" style="">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="modalInfoHeader"></h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalInfoBody" >	
+				
+			</div>
+			<div class="modal-footer justify-content-right">
+				<button type="button" class="btn btn-success" id="acceptBtn">Accept</button>
+				<button type="button" class="btn btn-danger" id="rejectBtn">Reject</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+	</div>
+</div>
+
+</div>
 <section class="content">
 	<div class="container-fluid">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Vehicle Details</h3>
+				<h3 class="card-title">Leave Approve Details</h3>
+				<div style="text-align: right;">
+					
+					
+				</div>
 			</div>
+			
 			<form>
-				<div class="card-body ">
-					<form>
-						<div class="form-row">
-						<input type="hidden" class="form-control" id="vehicle_id" required>
-							<div class="col-md-6 mb-3">
-								<label for="license_plate_no">License Plate No.</label>
-								<input type="text" class="form-control" id="license_plate_no" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="branch_id">Branch</label>
-								<select class="custom-select" id="branch_id" aria-describedby="" required>
-									<option value="">Select Branch</option>
-								</select>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="vehicle_yom">YOM</label>
-								<input type="text" class="form-control" id="vehicle_yom" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">
-									Please provide a valid zip.
-								</div>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="chasis_no">Chasis No.</label>
-								<input type="text" class="form-control" id="chasis_no" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="vehicle_type_id">Vehicle Type</label>
-								<select class="custom-select" id="vehicle_type_id" aria-describedby="" required>
-									<option value="">Select Type</option>
-								</select>
-								<div id="validationServer04Feedback" class="invalid-feedback">
-									Please select a valid state.
-								</div>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="vehicle_category_id">Vehicle Category</label>
-								<select class="custom-select" id="vehicle_category_id" aria-describedby="validationServer04Feedback" required>
-									<option value="">Select Category</option>
-								</select>
-								<div id="validationServer04Feedback" class="invalid-feedback">
-									Please select a valid state.
-								</div>
-							</div>
-							
-						</div>
-						<div class="form-row">
-							<div class="col-md-6 mb-3">
-								<label for="engine_no">Engine No.</label>
-								<input type="text" class="form-control" id="engine_no" aria-describedby="validationServer03Feedback" required>
-								<div id="validationServer03Feedback" class="invalid-feedback">
-									Please provide a valid city.
-								</div>
-							</div>	
-							<div class="col-md-3 mb-3">
-								<label for="number_of_passengers">No. of Passengers</label>
-								<input type="text" class="form-control" id="number_of_passengers" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">
-									Please provide a valid zip.
-								</div>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="max_load">Max Load (Kg)</label>
-								<input type="text" class="form-control" id="max_load" aria-describedby="validationServer05Feedback" required>
-								<div id="validationServer05Feedback" class="invalid-feedback">
-									Please provide a valid zip.
-								</div>
-							</div>
-							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="is_active_vhcl_details" value="1">
-								<label for="is_active_vhcl_details" class="custom-control-label">is active</label>
-							</div>
-						</div>
-					  
-					</form>
-				</div>			
-
-				<div class="card-footer text-center">
-					<button class="btn btn-primary" id="submit" type="submit">Submit</button>
+				<div class="card-body">
+					<table id="data" class="table table-bordered table-striped" style="width:100%">
+						<thead id="thead">
+							<tr>
+								<th>id</th>
+								<th>Leave Type</th>
+								<th>From Date</th>
+								<th>To Date</th>
+								<th>Amount</th>
+								<th>Emplyee</th>
+								<th>Approved</th>
+								<th>Rejected</th>
+								<th>Status</th>
+								<th>Option</th>
+							</tr>
+						</thead>
+						<tbody id="tbody">                
+						</tbody>
+						<tfoot>
+						</tfoot>
+					</table>					
 				</div>				
 			</form>
+			<div id="" class="" >
+				
+			</div>
 		</div>
 	</div>
 </section>
 <script>
 
-//$('#form')[0].reset(); 
 
-var pageUrl = $(location).attr('href');
-parts = pageUrl.split("/"),
-last_part = parts[parts.length-1];
-//console.log(last_part);
-
-//var country_id = 0;
+var country_id = 0;
 function loadData() {
 	
 		
 	$.ajax({
-		type: "POST",
+		type: "GET",
 		cache : false,
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"vehicle/fetch_single/?id="+last_part,
+		url: API+"EmpLeave/fetch_all_for_approve/",
 		success: function(data, result){
+			console.log(data);
 			//var parseData = JSON.stringify(data);
-			//var parseData1 = JSON.parse(parseData);	
-			console.log(data);			
-			//console.log(data[0].country_id);
+			//var parseData1 = JSON.parse(parseData);
 			
-			$('#chasis_no').val(data[0].chasis_no);
-			$('#engine_no').val(data[0].engine_no);
-			$('#license_plate_no').val(data[0].license_plate_no);
-			$('#max_load').val(data[0].max_load);
-			$('#number_of_passengers').val(data[0].number_of_passengers);
-			$('#vehicle_category_id').val(data[0].vehicle_category_id);
-			$('#vehicle_id').val(data[0].vehicle_id);	
-			$('#vehicle_type_id').val(data[0].vehicle_type_id);
-			$('#vehicle_yom').val(data[0].vehicle_yom);
-			$('#branch_id').val(data[0].branch_id);
-						
-			if(data[0].is_active_vhcl_details == 1){
-				$('#is_active_vhcl_details').prop('checked', true);
-			}
-			
-			loadCompanyBranch();
-			vehType();
-			vehCategory();
-			
-			function loadCompanyBranch() {
+			$(function () {
+				var table = $('#data').DataTable({
+					"scrollX": true					
+				}); 
+							
 				
-				$.ajax({
-					type: "POST",
-					cache : false,
-					async: true,
-					dataType: "json",
-					url: API+"branch/fetch_all_active/",
-					success: function(data1, result){
-						console.log(data1);
-						
-						var branch_drp = '';
-						$.each(data1, function(index, item) {
-							
-							if(data[0].branch_id == item.company_branch_id){
-								branch_drp += '<option selected value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
-							}
-							else{
-								branch_drp += '<option value="'+item.company_branch_id+'">'+item.company_branch_name+'</option>';
-							}
-
-							
-						});
-						$('#branch_id').append(branch_drp);
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {						
-						
-						//console.log(textStatus);
+				$.each(data, function (i, item) {
+					//console.log(item);
+					var is_active_leave_details  ='';
+					if(item.is_active_leave_details  == 1){
+						is_active_leave_details  = '<span class="right badge badge-success">Active</span>';
 					}
-				});
-			}
-			
-			function vehType() {
-				
-				$.ajax({
-					type: "POST",
-					cache : false,
-					async: true,
-					dataType: "json",
-					url: API+"vehicleType/fetch_all_active/",
-					success: function(data1, result){
-						console.log(data1);
-						
-						var vtype_drp = '';
-						$.each(data1, function(index, item) {
-							
-							if(data[0].vehicle_type_id == item.vehicle_type_id){
-								vtype_drp += '<option selected value="'+item.vehicle_type_id+'">'+item.vehicle_type_name+'</option>';
-							}
-							else{
-								vtype_drp += '<option value="'+item.vehicle_type_id+'">'+item.vehicle_type_name+'</option>';
-							}
-
-							
-						});
-						$('#vehicle_type_id').append(vtype_drp);
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {						
-						
-						//console.log(textStatus);
+					else{
+						is_active_leave_details  = '<span class="right badge badge-danger">Inactive</span>';
 					}
-				});
-			}
-			
-			function vehCategory() {
-				
-				$.ajax({
-					type: "POST",
-					cache : false,
-					async: true,
-					dataType: "json",
-					url: API+"vehicleCategory/fetch_all_active/",
-					success: function(data1, result){
-						console.log(data1);
-						
-						var branch_drp = '';
-						$.each(data1, function(index, item) {
-							
-							if(data[0].vehicle_category_id == item.vehicle_category_id){
-								branch_drp += '<option selected value="'+item.vehicle_category_id+'">'+item.vehicle_category_name+'</option>';
-							}
-							else{
-								branch_drp += '<option value="'+item.vehicle_category_id+'">'+item.vehicle_category_name+'</option>';
-							}
-
-							
-						});
-						$('#vehicle_category_id').append(branch_drp);
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {						
-						
-						//console.log(textStatus);
+					
+					var is_approved_leave  ='';
+					if(item.is_approved_leave  == 1){
+						is_approved_leave  = '<span class="right badge badge-success">Yes</span>';
 					}
+					else{
+						is_approved_leave  = '<span class="right badge badge-danger">No</span>';
+					}
+					
+					var is_rejected_leave  ='';
+					if(item.is_rejected_leave  == 1){
+						is_rejected_leave  = '<span class="right badge badge-danger">Yes</span>';
+					}
+					else{
+						is_rejected_leave  = '<span class="right badge badge-success">No</span>';
+					}
+					
+					
+					table.row.add([item.leave_detail_id,
+					item.leave_type_name,
+					item.leave_from_date, 					
+					item.leave_to_date,
+					item.leave_amount,
+					item.emp_epf +' - '+item.emp_first_name,
+					is_approved_leave,
+					is_rejected_leave,
+					is_active_leave_details ,
+					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
+						$this->session->userdata('sys_user_group_name') == "Manager"){
+							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							
+						}
+						else{
+							echo '<a type="button" style="display:none" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							echo '<a type="button" style="display:none" id="editBtn" vehicleId="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
+						}
+
+					?>'
+					//'<a type="button" id="editBtn" href="<?php echo base_url() ?>branch/edit/'+item.company_branch_id+'" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a> '
+					]).columns.adjust().draw();	
+					
+					//table.columns.adjust().draw();
+
+					//console.log($(".editBtn").last());
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpLeave/edit/'+item.leave_detail_id);
+					$(".approveBtn").last().attr('href', '<?php echo base_url() ?>EmpLeave/edit/'+item.leave_detail_id);
+					$(".viewBtn").last().attr('value', item.leave_detail_id);
+					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
-			}
+							
+			});
 			
+
 				
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {						
-			//console.log(errorThrown);					
+			console.log(textStatus);					
 		}
 	});
 };
 
-$(document).ready(function() {
-	loadData();
-});
+loadData();
 
-$('#submit').click(function(e){
-	e.preventDefault();
+var leave_detail_id = 0;
+
+$(document).on('click','.viewBtn', function(){
+
 	
-	var vehicle_id = 0;
-	var license_plate_no = 0;
-	var vehicle_yom = "";
-	var vehicle_type_id = 0;
-	var vehicle_category_id = 0;
-	var chasis_no = "";
-	var engine_no = "";
-	var number_of_passengers = 0;
-	var max_load = 0;
-	var branch_id = 0;
-	var is_active_vhcl_details = 0;
+	var Header = "";
+	var HTML = "";
 	
-	vehicle_id = $('#vehicle_id').val();
-	license_plate_no = $('#license_plate_no').val();
-	vehicle_yom = $('#vehicle_yom').val();
-	vehicle_type_id = $('#vehicle_type_id').val();
-	vehicle_category_id = $('#vehicle_category_id').val();
-	chasis_no = $('#chasis_no').val();
-	engine_no = $('#engine_no').val();
-	number_of_passengers = $('#number_of_passengers').val();
-	max_load = $('#max_load').val();
-	branch_id = $('#branch_id').val();
-	is_active_vhcl_details = $("#is_active_vhcl_details").is(':checked')? 1 : 0;
+	leave_detail_id = $(this).attr('value');
+	console.log(leave_detail_id);
 	
-	console.log(vehicle_id+'/'+vehicle_yom+'/'+vehicle_type_id+'/'+vehicle_category_id+'/'+chasis_no+'/'+engine_no
-	+'/'+number_of_passengers+'/'+max_load+'/'+branch_id);
+	$.ajax({
+		type: "GET",
+		cache : false,
+		async: true,
+		dataType: "json",
+		contentType: 'application/json',
+		url: API+"EmpLeave/fetch_single_join?id="+leave_detail_id,
+		success: function(data, result){
+			console.log(data);
+			
+			Header = 'Employee : '+data[0].emp_first_name+' - '+data[0].emp_epf;
+			//console.log(Header);
+			if(data[0].is_active_leave_details  == 1){
+				is_active_leave_details  = '<span class="right badge badge-success">Active</span>';
+			}
+			else{
+				is_active_leave_details  = '<span class="right badge badge-danger">Inactive</span>';
+			}
+			
+			if(data[0].is_approved_leave  == 1 ){
+				is_approved_leave  = '<span class="right badge badge-success">Yes</span>';
+			}
+			else{
+				is_approved_leave  = '<span class="right badge badge-danger">No</span>';
+			}
+			
+			if(data[0].is_rejected_leave  == 1){
+				is_rejected_leave  = '<span class="right badge badge-success">Yes</span>';
+			}
+			else{
+				is_rejected_leave  = '<span class="right badge badge-danger">No</span>';
+			}
+			
+			if(data[0].is_rejected_leave == 1 || data[0].is_approved_leave  == 1 ){
+				$('#acceptBtn').css("display", "none");
+				$('#rejectBtn').css("display", "none");
+			}
+			
+			
+			HTML ='<table class="table table-borderless">'+					  
+					  '<tbody>'+
+						'<tr>'+
+						  '<th><label for="license_plate_no">Leave Id: </label></th>'+
+						  '<td>'+data[0].leave_detail_id+'</td>'+
+						  '<td><label for="branch_id">Leave Type: </label></td>'+
+						  '<td>'+data[0].leave_type_name+'</td>'+
+						'</tr>'+
+						'<tr>'+
+						  '<th><label for="vehicle_yom">Date From: </label></th>'+
+						  '<td>'+data[0].leave_from_date+'</td>'+
+						  '<td><label for="chasis_no">Date To: </label></td>'+
+						  '<td>'+data[0].leave_to_date+'</td>'+
+						'</tr>'+
+						'<tr>'+
+						  '<th><label for="vehicle_type_id">Amount: </label></th>'+
+						  '<td >'+data[0].amount+'</td>'+
+						  '<td><label for="vehicle_category_id">Employee: </label></td>'+
+						  '<td >'+data[0].emp_first_name+' - '+data[0].emp_epf+'</td>'+
+						'</tr>'+						
+						'<tr>'+
+						  '<td><label for="max_load">Approved: </label></td>'+
+						  '<td>'+is_approved_leave+'</td>'+
+						  '<td><label for="max_load">Rejected: </label></td>'+
+						  '<td>'+is_rejected_leave+'</td>'+
+						'</tr>'+
+						'<tr>'+
+						  '<td><label for="max_load">Status: </label></td>'+
+						  '<td>'+is_active_leave_details+'</td>'+
+						'</tr>'+
+					  '</tbody>'+
+					'</table>';
+					
 		
-	if(typeof license_plate_no !== 'undefined' && license_plate_no !== ''
-	&& typeof vehicle_id !== 'undefined' && vehicle_id !== ''	
-	&& typeof vehicle_yom !== 'undefined' && vehicle_yom !== '' 
-	&& typeof vehicle_type_id !== 'undefined' && vehicle_type_id !== '' 
-	&& typeof vehicle_category_id !== 'undefined' && vehicle_category_id !== '' 
-	&& typeof chasis_no !== 'undefined' && chasis_no !== '' 
-	&& typeof engine_no !== 'undefined' && engine_no !== ''
-	&& typeof number_of_passengers !== 'undefined' && number_of_passengers !== '' 
-	&& typeof max_load !== 'undefined' && max_load !== ''
-	&& typeof branch_id !== 'undefined' && branch_id !== '')
-	{
-		var formData = new FormData();
-		formData.append('vehicle_id',vehicle_id);
-		formData.append('license_plate_no',license_plate_no);
-        formData.append('vehicle_yom',vehicle_yom);
-		formData.append('vehicle_type_id',vehicle_type_id);
-		formData.append('vehicle_category_id',vehicle_category_id);
-        formData.append('chasis_no',chasis_no);
-		formData.append('engine_no',engine_no);
-		formData.append('number_of_passengers',number_of_passengers);
-		formData.append('max_load',max_load);
-		formData.append('branch_id',branch_id);
-		formData.append('is_active_vhcl_details',is_active_vhcl_details);
-		
-		
+		$('#modalInfoHeader').html(Header);
+		$('#modalInfoBody').html(HTML);
+		$('#modalInfo').modal('show');
 				
-		$.ajax({
-			type: "POST",
-			cache : false,
-			async: true,
-			dataType: "json",
-			processData: false,
-			contentType: false,
-			data: formData,				
-			url: API+"vehicle/update/",
-			success: function(data, result){
+		}
+	});
+	
+	
+})
 
-				if(data.message == "Changes Updated!"){	
+
+
+$(document).on("click", "#acceptBtn", function (e) {
+	e.preventDefault();
+			
+		var Header = [];
+			
+		
+		Header.push(
+			{
+				'leave_detail_id':leave_detail_id,
+				'is_approved_leave':1	
+			}
+		);
+						
+		
+		
+		var formData = new Object();
+		formData = {
+			Header:Header
+		};
+		
+		
+		
+		if(Header.length > 0){
+			submitData();
+		}
+		else{
+			const notyf = new Notyf();
+			notyf.error({
+			  message: 'Please fill all fields!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+		}
+				
+		function submitData(){
+			$.ajax({
+				type: "POST",
+				//enctype: 'multipart/form-data',
+				cache : false,
+				async: true,
+				contentType: 'application/json',
+				dataType: "json",
+				processData: false,
+				data: JSON.stringify(formData),	
+				url: API+"EmpLeave/approve/",
+				success: function(data, result){
+					console.log(data);	
+					const notyf = new Notyf();
+					if(data['message'] == 'Leave Approved!'){
+						notyf.success({
+						  message: data['message'],
+						  duration: 5000,
+						  icon: true,
+						  ripple: true,
+						  dismissible: true,
+						  position: {
+							x: 'right',
+							y: 'top',
+						  }
+						  
+						})
+						window.setTimeout(function() {
+							window.location = "<?php echo base_url() ?>EmpLeave/approve";
+						}, 3000);
+					}
+					if(data['message'] == 'Leave Quoata is Inactive/ Hold!'){
+						notyf.error({
+						  message: data['message'],
+						  duration: 5000,
+						  background: 'orange',
+						  icon: true,
+						  ripple: true,
+						  dismissible: true,
+						  position: {
+							x: 'right',
+							y: 'top',
+						  }
+						  
+						})
+						window.setTimeout(function() {
+							window.location = "<?php echo base_url() ?>EmpLeave/approve";
+						}, 3000);
+					}
+					else if(data['error'] == true){
+						notyf.error({
+						  message: data['message'],
+						  duration: 5000,
+						  icon: true,
+						  ripple: true,
+						  dismissible: true,
+						  position: {
+							x: 'right',
+							y: 'top',
+						  }
+						  
+						})
+					}		
+					
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(XMLHttpRequest);
+					console.log(textStatus);		
+					console.log(errorThrown);	
 					const notyf = new Notyf();
 				
-					notyf.success({
-					  message: 'Changes Updated!',
+					notyf.error({
+					  message: 'Error!',
 					  duration: 5000,
 					  icon: true,
 					  ripple: true,
@@ -328,18 +377,78 @@ $('#submit').click(function(e){
 						y: 'top',
 					  }
 					  
-					})	
-					window.setTimeout(function() {
-						window.location = "<?php echo base_url() ?>vehicle/view";
-					}, 3000);
+					})
 					
 				}
-				if(data.message == "Please Fill Required Fields!" || data.message == "Vehicle is being used by other modules at the moment!"){
-					const notyf = new Notyf();
+			});
+		}
+		
+		
+	
+	
+	
+})
+
+$(document).on("click", "#rejectBtn", function (e) {
+	e.preventDefault();
+	
+		
+	var Header = [];
+			
+		
+	Header.push(
+		{
+			'leave_detail_id':leave_detail_id,
+			'is_approved_leave':0	
+		}
+	);
 					
-					notyf.error({
-					  message: ''+data.message+'',
-					  duration: 3000,
+	
+	
+	var formData = new Object();
+	formData = {
+		Header:Header
+	};
+	
+	
+	
+	if(Header.length > 0){
+		submitData();
+	}
+	else{
+		const notyf = new Notyf();
+		notyf.error({
+		  message: 'Please fill all fields!',
+		  duration: 5000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	}
+			
+	function submitData(){
+		$.ajax({
+			type: "POST",
+			//enctype: 'multipart/form-data',
+			cache : false,
+			async: true,
+			contentType: 'application/json',
+			dataType: "json",
+			processData: false,
+			data: JSON.stringify(formData),	
+			url: API+"EmpLeave/approve/",
+			success: function(data, result){
+				console.log(data);	
+				const notyf = new Notyf();
+				if(data['message'] == 'Leave Rejected!'){
+					notyf.success({
+					  message: data['message'],
+					  duration: 5000,
 					  icon: true,
 					  ripple: true,
 					  dismissible: true,
@@ -350,13 +459,15 @@ $('#submit').click(function(e){
 					  
 					})
 					window.setTimeout(function() {
-						loadData();
+						window.location = "<?php echo base_url() ?>EmpLeave/approve";
 					}, 3000);
-					
-				}
-
+				}	
+				
 			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(XMLHttpRequest);
+				console.log(textStatus);		
+				console.log(errorThrown);	
 				const notyf = new Notyf();
 			
 				notyf.error({
@@ -374,28 +485,9 @@ $('#submit').click(function(e){
 				
 			}
 		});
+	}
 		
-	}
-	else{
-		const notyf = new Notyf();
-			
-		notyf.error({
-		  message: 'Please Fill Required Fields!',
-		  duration: 5000,
-		  icon: true,
-		  ripple: true,
-		  dismissible: true,
-		  position: {
-			x: 'right',
-			y: 'top',
-		  }
-		  
-		})
-	}
-	
+		
 	
 })
-
-
-
 </script>

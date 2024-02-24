@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2024 at 11:18 AM
+-- Generation Time: Feb 24, 2024 at 05:39 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -385,13 +385,13 @@ CREATE TABLE `emp_details` (
 
 INSERT INTO `emp_details` (`emp_id`, `emp_epf`, `emp_branch_id`, `emp_company_id`, `emp_first_name`, `emp_middle_name`, `emp_last_name`, `emp_nic`, `emp_dob`, `emp_perm_address`, `emp_temp_address`, `emp_contact_no`, `emp_email`, `emp_emg_contact_no`, `is_active_emp`) VALUES
 (1, 17534, 1, 1, 'Charith', 'Denuwan', 'Porage', '', '12.05.1991', '21, Polhena, Madapatha', 'Welisara, Wattala', '94712917184', 'denuwan0@gmail.com', '94712917184', 1),
-(2, 17533, 3, 1, 'Sachith', 'Sasindu', 'Sasindu', '', '26.01.1996', '120/36A, Nahena, Hunupitiya, Wattala', '120/36A, Nahena, Hunupitiya, Wattala', '94712917184', 'may12contact@gmail.com\n', '94712917184', 1),
-(4, 21212, 4, 1, 'Umesh', 'Minsara', 'Minsara', '94131313V', '2023-12-01', '21, Polhena, Madapatha', '21dsdsds', '94712917184', 'denuwan0@gmail.com', '94712917184', 0),
+(2, 17533, 1, 1, 'Sachith', 'Sasindu', 'Sasindu', '', '26.01.1996', '120/36A, Nahena, Hunupitiya, Wattala', '120/36A, Nahena, Hunupitiya, Wattala', '94712917184', 'denuwan9@gmail.com\n', '94712917184', 1),
+(4, 21212, 4, 1, 'Umesh', 'Minsara', 'Minsara', '94131313V', '2023-12-01', '21, Polhena, Madapatha', '21dsdsds', '94712917184', 'umesh@gmail.com', '94712917184', 0),
 (5, 21212, 2, 1, 'Tharaka', 'Nadeesha', 'R', '94131313V', '2023-12-01', '21, Polhena, Madapatha', 'sasas', '94712917184', 'denuwan0@gmail.com', '94712917184', 0),
-(6, 2542, 4, 1, 'Ravindu', 'Niduk', 'Porage', '424424', '2023-12-02', '21, Polhena, Madapatha', '43dffd', '94712917184', '', '94712917184', 0),
-(7, 2542, 2, 1, 'Hashani', 'Dilrangi', 'Ruberu', '424424', '2023-12-22', '21, Polhena, Madapatha', 'sas2332', '94712917184', 'denuwan9@gmail.com', '94712917184', 1),
+(6, 2542, 4, 1, 'Ravindu', 'Niduk', 'Porage', '424424', '2023-12-02', '21, Polhena, Madapatha', '43dffd', '94712917184', 'denuwan0@yahoo.com', '94712917184', 0),
+(7, 2542, 2, 1, 'Hashani', 'Dilrangi', 'Ruberu', '424424', '2023-12-22', '21, Polhena, Madapatha', 'sas2332', '94712917184', 'may12contact@gmail.com\n', '94712917184', 1),
 (8, 2121, 1, 1, 'Nadeesha', 'Tharaka', 'Tharaka', '212121', '2023-12-02', 'Bandaragama1', 'Bandaragama', '94712917184', 'nadeetharu1225@gmail.com\n', '94712917184', 1),
-(9, 3212, 2, 1, 'Madushanka', 'M', 'D', '991330762V', '1991-01-04', 'No.12, Illukumbura, Matale', 'Enderamulla', '94712917184', 'cykatm@gmail.com', '94712917184', 1);
+(9, 3212, 2, 1, 'Madushanka', 'M', 'D', '991330762V', '1991-01-04', 'No.12, Illukumbura, Matale', 'Enderamulla', '94712917184', 'cykatm@gmail.com\n', '94712917184', 1);
 
 -- --------------------------------------------------------
 
@@ -525,12 +525,15 @@ CREATE TABLE `emp_leave_details` (
   `leave_from_date` varchar(10) NOT NULL,
   `leave_to_date` varchar(10) NOT NULL,
   `emp_id` int(10) NOT NULL,
+  `branch_id` int(10) NOT NULL,
   `emp_wise_leave_quota_id` int(10) NOT NULL,
   `leave_amount` varchar(5) NOT NULL,
   `leave_start_time` varchar(10) NOT NULL,
   `leave_end_time` varchar(10) NOT NULL,
   `created_by` int(10) NOT NULL,
   `approved_by` int(10) NOT NULL,
+  `rejected_by` int(10) NOT NULL,
+  `is_rejected_leave` tinyint(1) NOT NULL,
   `is_approved_leave` tinyint(1) NOT NULL,
   `is_active_leave_details` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -539,9 +542,14 @@ CREATE TABLE `emp_leave_details` (
 -- Dumping data for table `emp_leave_details`
 --
 
-INSERT INTO `emp_leave_details` (`leave_detail_id`, `leave_from_date`, `leave_to_date`, `emp_id`, `emp_wise_leave_quota_id`, `leave_amount`, `leave_start_time`, `leave_end_time`, `created_by`, `approved_by`, `is_approved_leave`, `is_active_leave_details`) VALUES
-(1, '2024-02-01', '2024-02-01', 8, 6, '1', '', '', 53, 0, 0, 1),
-(2, '2024-02-26', '2024-02-26', 9, 7, '2', '', '', 55, 0, 0, 1);
+INSERT INTO `emp_leave_details` (`leave_detail_id`, `leave_from_date`, `leave_to_date`, `emp_id`, `branch_id`, `emp_wise_leave_quota_id`, `leave_amount`, `leave_start_time`, `leave_end_time`, `created_by`, `approved_by`, `rejected_by`, `is_rejected_leave`, `is_approved_leave`, `is_active_leave_details`) VALUES
+(1, '2024-02-01', '2024-02-01', 8, 1, 6, '1', '', '', 53, 0, 0, 0, 0, 1),
+(2, '2024-02-26', '2024-02-26', 8, 1, 7, '2', '', '', 53, 0, 0, 0, 0, 1),
+(3, '2024-02-25', '2024-02-25', 9, 2, 7, '2', '', '', 55, 0, 0, 0, 0, 0),
+(4, '2024-02-25', '2024-02-25', 9, 2, 7, '1', '', '', 55, 3, 0, 0, 1, 1),
+(5, '2024-03-01', '2024-03-01', 2, 1, 2, '1', '', '', 54, 53, 53, 1, 0, 1),
+(6, '2024-03-02', '2024-03-02', 2, 1, 2, '1', '', '', 54, 53, 0, 0, 1, 1),
+(7, '2024-03-06', '2024-03-07', 2, 1, 2, '2', '', '', 54, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -860,7 +868,7 @@ CREATE TABLE `emp_wise_leave_quota` (
 
 INSERT INTO `emp_wise_leave_quota` (`emp_wise_leave_quota_id`, `leave_quota_id`, `emp_id`, `balance_leave_quota`, `is_hold_emp_wise_leave_quota`, `is_active_emp_wise_leave_quota`) VALUES
 (1, 1, 1, 7, 0, 1),
-(2, 1, 2, 1, 1, 0),
+(2, 1, 2, 6, 0, 1),
 (3, 1, 5, 7, 0, 1),
 (4, 1, 6, 7, 0, 1),
 (5, 1, 7, 7, 0, 1),
@@ -1890,7 +1898,9 @@ CREATE TABLE `sys_notification` (
 INSERT INTO `sys_notification` (`sys_notify_id`, `user_id`, `create_date`, `is_sent_notify`) VALUES
 (1, 1, '2024-02-24', 1),
 (3, 53, '2024-02-24', 1),
-(4, 55, '2024-02-24', 1);
+(4, 55, '2024-02-24', 1),
+(5, 3, '2024-02-24', 1),
+(6, 54, '2024-02-24', 1);
 
 -- --------------------------------------------------------
 
@@ -1944,12 +1954,12 @@ CREATE TABLE `sys_user` (
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
 (1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-24 08:50:36', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-19 12:40:05', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-24 15:16:16', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
-(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'ab7ae61c4eefb133418a', '232570', '2024-02-24 08:52:02', 0, 1),
-(54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-04 17:26:13', 0, 1),
-(55, 9, 4, 'madushanka', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-02-24 08:51:43', 0, 1);
+(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '81b8fbffe651fcc7c161', '526384', '2024-02-24 15:49:14', 0, 1),
+(54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-24 15:49:01', 0, 1),
+(55, 9, 4, 'madushanka', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-02-24 11:07:40', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2999,7 +3009,7 @@ ALTER TABLE `emp_holiday_calender`
 -- AUTO_INCREMENT for table `emp_leave_details`
 --
 ALTER TABLE `emp_leave_details`
-  MODIFY `leave_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `leave_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `emp_leave_quota`
@@ -3269,7 +3279,7 @@ ALTER TABLE `online_feedback`
 -- AUTO_INCREMENT for table `sys_notification`
 --
 ALTER TABLE `sys_notification`
-  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sys_notify_type`
