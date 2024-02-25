@@ -78,9 +78,9 @@
 							  <li class="nav-item">
 								<a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Main Items</a>
 							  </li>
-							  <li class="nav-item">
+							  <!--li class="nav-item">
 								<a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Sub Items</a>
-							  </li>
+							  </li-->
 							</ul>
 						  </div>
 						  <div class="card-body itemBody">

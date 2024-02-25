@@ -52,6 +52,24 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="invoiceModal"  aria-hidden="true" style="">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="modalBankHeader" style="font-size: inherit;">Customer Details</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalInvoiceBody" >	
+				
+			</div>
+			<div class="modal-footer justify-content-right" id="modalFooter">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
     <!-- Main content -->
     <section class="content">
 	
@@ -146,6 +164,14 @@
 				</div>
 			</div>	
 			<div class="col-md-4 col-sm-4 col-12">
+				<div class="info-box bg-gradient-warning" style="cursor: pointer;" id="invoiceBtn">
+					<span class="info-box-icon"><i class="fa fa-check-circle"></i></span>
+					<div class="info-box-content">
+					<span class="info-box-text">Invoice</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-4 col-12">
 				<div class="info-box bg-gradient-success" style="cursor: pointer;" id="payBtn">
 					<span class="info-box-icon"><i class="fa fa-check-circle"></i></span>
 					<div class="info-box-content">
@@ -153,14 +179,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 col-sm-4 col-12">
-				<div class="info-box bg-gradient-warning" style="cursor: pointer;" id="payBtn">
-					<span class="info-box-icon"><i class="fa fa-check-circle"></i></span>
-					<div class="info-box-content">
-					<span class="info-box-text">Complete</span>
-					</div>
-				</div>
-			</div>
+			
 		</div>
         <!-- /.row -->
       </div><!--/. container-fluid -->
@@ -239,7 +258,7 @@ $(document).on('click', '.catDiv', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"Item/fetch_all_main_sub_item_by_category_id/?id="+catId,
+		url: API+"Item/fetch_all_items_by_category_id/?id="+catId,
 		success: function(data, result){
 			console.log(data);
 			
@@ -262,10 +281,10 @@ $(document).on('click', '.catDiv', function(){
 											'</div>'+
 										'</div>'+
 										'<div class="card-body">'+
-											'<img src="'+item.image_url+'" class="rounded float-left" alt="..." style="width:100px; height:100px">'+
+											'<img src="'+item.item_image_url+'" class="rounded float-left" alt="..." style="width:100px; height:100px">'+
 										'</div>'+
 										'<div class="card-footer">'+
-											'<button type="button" item_id="'+item.item_id+'" is_sub_item="'+item.is_sub_item+'" class="btn btn-block btn-outline-dark btn-sm addItem">Add</button>'+
+											'<button type="button" item_id="'+item.item_id+'" is_sub_item="0" class="btn btn-block btn-outline-dark btn-sm addItem">Add</button>'+
 										'</div>'+
 									'</div>'+
 								'</div>';
@@ -503,37 +522,10 @@ $(document).on('click', '#cancelBtn', function(){
 $(document).on('click', '#payBtn', function(){
 	$('#modalInfoBody').html('');
 	$('#modalInfoHeader').html('');
-	$('#modalInfoHeader').html('Customer Details/ Payment Option');
+	$('#modalInfoHeader').html('Payment Option');
 	$('#modalInfoBody').html('<div class="row col-md-12">'+
 						
-						'<form class="row col-md-12">'+
-							'<div class="col-md-6">'+
-								'<div class="form-group">'+
-								  '<label for="customer_old_nic_no">NIC</label>'+
-								  '<input type="password" class="form-control" id="customer_old_nic_no" placeholder="NIC search">'+
-								'</div>'+
-								'<div class="form-group">'+
-								  '<label for="customer_name">Customer Name</label>'+
-								  '<input type="text" class="form-control" id="customer_name" placeholder="Customer username">'+
-								'</div>'+								
-							'</div>'+
-							'<div class="col-md-6">'+
-								'<div class="form-group">'+
-								  '<label for="customer_contact_no">Mobile</label>'+
-								  '<input type="text" class="form-control" id="customer_contact_no" placeholder="Mobile No.">'+
-								'</div>'+
-								'<div class="form-group">'+
-								  '<label for="customer_email">E-mail</label>'+
-								  '<input type="password" class="form-control" id="customer_email" placeholder="Email">'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-12">'+
-								'<div class="form-group">'+
-								  '<label for="customer_shipping_address">Shipping Address</label>'+
-								  '<input type="text" class="form-control" id="customer_shipping_address" placeholder="Shipping Address">'+
-								'</div>'+
-							'</div>'+
-						'</form>'+
+						
 					'</div>'+
 					'<div class="row">'+
 					'<div class="col-md-4">'+
@@ -567,6 +559,85 @@ $(document).on('click', '#payBtn', function(){
 		$('#modalFooter').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
 	//$('#modalInfo').show();
 	$('#modalInfo').modal('show');
+	
+	
+});
+
+$(document).on('click', '#invoiceBtn', function(){
+	
+	var rowCount = $('.detailRow').length;
+	
+	if(rowCount == 0){
+		const notyf = new Notyf();
+				
+		notyf.error({
+		  message: 'Please add items!',
+		  duration: 5000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	}
+	else{
+		$('#modalInvoiceBody').html('');
+		$('#modalInfoHeader').html('');
+		$('#modalInfoHeader').html('Customer Details/ Print Invoice');
+		$('#modalInvoiceBody').html('<div class="row col-md-12">'+
+							
+							'<form class="row col-md-12">'+
+								'<div class="col-md-6">'+
+									'<div class="form-group">'+
+									  '<label for="customer_old_nic_no">NIC</label>'+
+									  '<input type="text" class="form-control" id="customer_old_nic_no" placeholder="NIC search">'+
+									'</div>'+
+									'<div class="form-group">'+
+									  '<label for="customer_name">Customer Name</label>'+
+									  '<input type="text" class="form-control" id="customer_name" placeholder="Customer username">'+
+									'</div>'+								
+								'</div>'+
+								'<div class="col-md-6">'+
+									'<div class="form-group">'+
+									  '<label for="customer_contact_no">Mobile</label>'+
+									  '<input type="text" class="form-control" id="customer_contact_no" placeholder="Mobile No.">'+
+									'</div>'+
+									'<div class="form-group">'+
+									  '<label for="customer_email">E-mail</label>'+
+									  '<input type="text" class="form-control" id="customer_email" placeholder="Email">'+
+									'</div>'+
+								'</div>'+
+								'<div class="col-md-12">'+
+									'<div class="form-group">'+
+									  '<label for="customer_shipping_address">Shipping Address</label>'+
+									  '<input type="text" class="form-control" id="customer_shipping_address" placeholder="Shipping Address">'+
+									'</div>'+
+								'</div>'+
+							'</form>'+
+						'</div>'+
+						'<div class="row">'+
+						'<div class="col-md-3">'+
+						'</div>'+
+						'<div class="col-md-6">'+
+							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="qrBtn">'+
+								'<span class="info-box-icon"><i class="fas fa-print	"></i></span>'+
+								'<div class="info-box-content">'+
+								'<span class="info-box-text" style="font-size:large;">Print Invoice</span>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+						'<div class="col-md-3">'+
+						'</div>'+
+					'</div>');
+			$('#modalFooter').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+		//$('#modalInfo').show();
+		$('#invoiceModal').modal('show');
+	}
+	
+	
 	
 	
 });
@@ -632,7 +703,27 @@ $(document).on('click', '#confirmYes', function(){
 	location.reload(true);
 })
 $(document).on('keyup', '#customer_old_nic_no', function(){
-	console.log($(this).val());
+	//console.log($(this).val());
+	var nic = $(this).val();
+	
+	$.ajax({
+		type: "GET",
+		cache : false,
+		async: true,
+		dataType: "json",
+		contentType: 'application/json',
+		url: API+"Customer/fetch_single_by_nic/?nic="+nic,
+		success: function(data, result){
+			console.log(Object.keys(data).length);
+			if (data){
+				console.log(data);
+			}
+			
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			console.log(textStatus);					
+		}
+	});
 })
 
 
