@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2024 at 07:31 PM
+-- Generation Time: Feb 25, 2024 at 12:45 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -353,7 +353,8 @@ CREATE TABLE `emp_designation` (
 
 INSERT INTO `emp_designation` (`emp_desig_id`, `emp_desig_name`, `emp_desig_desc`, `is_active_emp_desig`) VALUES
 (1, 'Yard Manager', 'Overall manage yard', 1),
-(2, 'Driver', 'Lorry driver', 1);
+(2, 'Driver', 'Lorry driver', 1),
+(3, 'Staff', 'General Staff', 1);
 
 -- --------------------------------------------------------
 
@@ -390,7 +391,7 @@ INSERT INTO `emp_details` (`emp_id`, `emp_epf`, `emp_branch_id`, `emp_company_id
 (5, 21212, 2, 1, 'Tharaka', 'Nadeesha', 'R', '94131313V', '2023-12-01', '21, Polhena, Madapatha', 'sasas', '94712917184', 'denuwan0@gmail.com', '94712917184', 0),
 (6, 2542, 4, 1, 'Ravindu', 'Niduk', 'Porage', '424424', '2023-12-02', '21, Polhena, Madapatha', '43dffd', '94712917184', 'denuwan0@yahoo.com', '94712917184', 0),
 (7, 2542, 2, 1, 'Hashani', 'Dilrangi', 'Ruberu', '424424', '2023-12-22', '21, Polhena, Madapatha', 'sas2332', '94712917184', 'may12contact@gmail.com\n', '94712917184', 1),
-(8, 2121, 1, 1, 'Nadeesha', 'Tharaka', 'Tharaka', '212121', '2023-12-02', 'Bandaragama1', 'Bandaragama', '94712917184', 'nadeetharu1225@gmail.com\n', '94712917184', 1),
+(8, 2121, 1, 1, 'Nadeesha', 'Tharaka', 'Tharaka', '946333263V', '2023-12-02', 'Bandaragama1', 'Bandaragama', '94712917184', 'nadeetharu1225@gmail.com', '94712917184', 1),
 (9, 3212, 2, 1, 'Madushanka', 'M', 'D', '991330762V', '1991-01-04', 'No.12, Illukumbura, Matale', 'Enderamulla', '94712917184', 'cykatm@gmail.com\n', '94712917184', 1);
 
 -- --------------------------------------------------------
@@ -414,9 +415,9 @@ CREATE TABLE `emp_driving_license` (
 --
 
 INSERT INTO `emp_driving_license` (`driving_license_id`, `emp_id`, `license_number`, `valid_from_date`, `valid_to_date`, `license_type`, `is_active_driving_lice`) VALUES
-(1, 0, 'B1447703', '01-01-2020', '01.01.2027', 'Light', 1),
-(2, 0, 'B2383231', '2023-12-27', '2023-12-28', 'Heavy', 1),
-(3, 0, 'C43434', '2023-11-01', '2024-05-01', 'Heavy', 1);
+(1, 2, 'B1447703', '01-01-2020', '01.01.2027', 'Light', 1),
+(2, 9, 'B2383231', '2023-12-27', '2023-12-28', 'Heavy', 1),
+(3, 4, 'C43434', '2023-11-01', '2024-05-01', 'Heavy', 1);
 
 -- --------------------------------------------------------
 
@@ -496,7 +497,8 @@ CREATE TABLE `emp_group` (
 
 INSERT INTO `emp_group` (`emp_group_id`, `emp_group_name`, `emp_group_desc`, `emp_grade_id`, `emp_designation_id`, `is_active_emp_group`) VALUES
 (1, 'Manager Group', 'Group for Managers', 2, 1, 1),
-(2, 'Driver', 'Group for Drivers', 3, 2, 1);
+(2, 'Driver Group', 'Group for Drivers', 3, 2, 1),
+(3, 'Staff Group', 'General Staff Group', 2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -618,7 +620,7 @@ CREATE TABLE `emp_medical_checkup_location` (
 
 INSERT INTO `emp_medical_checkup_location` (`emp_med_loc_id`, `emp_med_loc_name`, `emp_med_loc_contact`, `is_active_medical_checkup`) VALUES
 (1, 'Asiri Laboratory Wattala', '0114568258', 1),
-(2, 'Nwaloka Laboratory Wattala', '011365248', 1),
+(2, 'Nawaloka Laboratory Wattala', '011365248', 1),
 (3, 'Durdans Laboratory Wattala', '0112484756', 1);
 
 -- --------------------------------------------------------
@@ -644,7 +646,8 @@ CREATE TABLE `emp_medical_records` (
 
 INSERT INTO `emp_medical_records` (`med_record_id`, `this_med_checkup_date`, `next_med_checkup_date`, `special_note`, `emp_id`, `med_loc_id`, `emp_med_status`, `is_active_medical_records`) VALUES
 (1, '2024-02-01', '2025-02-01', 'Check MRI report', 1, 1, 'good', 1),
-(2, '2024-02-05', '2024-08-05', 'Use treadmill', 5, 1, 'good', 1);
+(2, '2024-02-05', '2024-08-05', 'Use treadmill', 5, 1, 'good', 1),
+(3, '2024-02-25', '2024-05-25', 'nothing special all normal', 2, 2, 'good', 1);
 
 -- --------------------------------------------------------
 
@@ -906,9 +909,9 @@ CREATE TABLE `emp_work_contract` (
 --
 
 INSERT INTO `emp_work_contract` (`work_contract_id`, `emp_id`, `emp_grade_id`, `emp_branch_id`, `emp_company_id`, `emp_desig_id`, `emp_ws_id`, `valid_from_date`, `valid_to_date`, `is_active_emp_work_cont`) VALUES
-(1, 2, 1, 4, 15, 1, 2, '2024-01-02', '2025-01-02', 0),
+(1, 2, 1, 1, 1, 3, 2, '2024-01-02', '2025-01-02', 1),
 (2, 5, 1, 2, 1, 1, 1, '2024-01-01', '2025-01-01', 1),
-(3, 9, 3, 2, 1, 2, 1, '2024-01-27', '2025-01-27', 1);
+(3, 9, 3, 2, 1, 3, 1, '2024-01-27', '2025-01-27', 1);
 
 -- --------------------------------------------------------
 
@@ -1900,7 +1903,9 @@ INSERT INTO `sys_notification` (`sys_notify_id`, `user_id`, `create_date`, `is_s
 (3, 53, '2024-02-24', 1),
 (4, 55, '2024-02-24', 1),
 (5, 3, '2024-02-24', 1),
-(6, 54, '2024-02-24', 1);
+(6, 54, '2024-02-24', 1),
+(7, 53, '2024-02-25', 1),
+(8, 1, '2024-02-25', 1);
 
 -- --------------------------------------------------------
 
@@ -1952,12 +1957,12 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '46ecb4a19e56167fb206', '593820', '2024-02-24 16:43:12', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'a2010345d19b55939bd2', '345879', '2024-02-25 09:20:56', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
 (3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-24 15:16:16', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
-(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-24 16:43:01', 0, 1),
+(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-25 09:20:42', 0, 1),
 (54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-24 15:49:01', 0, 1),
 (55, 9, 4, 'madushanka', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-02-24 11:07:40', 0, 1);
 
@@ -2070,7 +2075,8 @@ CREATE TABLE `vehicle_category` (
 --
 
 INSERT INTO `vehicle_category` (`vehicle_category_id`, `vehicle_category_name`, `vehicle_category_desc`, `is_active_vhcl_cat`) VALUES
-(1, 'Heavy Weight 10', 'Weight more than 10 tonns', 1);
+(1, 'Heavy Weight 10', 'Weight more than 10 tonns', 1),
+(2, 'Light Weight', 'weight less than 10tonn', 1);
 
 -- --------------------------------------------------------
 
@@ -2097,7 +2103,7 @@ CREATE TABLE `vehicle_details` (
 --
 
 INSERT INTO `vehicle_details` (`vehicle_id`, `license_plate_no`, `vehicle_yom`, `vehicle_type_id`, `vehicle_category_id`, `chasis_no`, `engine_no`, `number_of_passengers`, `max_load`, `branch_id`, `is_active_vhcl_details`) VALUES
-(1, 'CAI 2079', 2015, 1, 1, '21212121', 'dsasas5445454', 4, '1000.00', 2, 1),
+(1, 'CAI 2079', 2015, 1, 1, 'DSE35445BKL', 'DSE35445454', 4, '1000.00', 2, 1),
 (2, 'BBB 7077', 2019, 6, 1, '3333333333', '1111111111111', 2, '300.00', 2, 1),
 (3, 'CBB 34561', 2019, 6, 1, '1111111111111', '222222222222222', 2, '300.00', 2, 1);
 
@@ -2123,7 +2129,7 @@ CREATE TABLE `vehicle_eco_test` (
 INSERT INTO `vehicle_eco_test` (`eco_test_id`, `eco_test_number`, `vehicle_id`, `valid_from_date`, `valid_to_date`, `is_active_vhcl_eco_test`) VALUES
 (1, 'CL19-194206', 2, '2022-10-10', '2023-10-10', 1),
 (2, 'CL20-1942501', 2, '2023-10-22', '2023-10-22', 1),
-(3, 'CL20-194206', 2, '2022-10-22', '2023-10-22', 1);
+(3, 'CL20-194206', 1, '2023-10-22', '2024-10-22', 1);
 
 -- --------------------------------------------------------
 
@@ -2341,7 +2347,8 @@ CREATE TABLE `vehicle_type` (
 
 INSERT INTO `vehicle_type` (`vehicle_type_id`, `vehicle_type_name`, `vehicle_type_decs`, `is_active_vhcl_type`) VALUES
 (1, 'Car', 'Sedan, Hatchback Car 1', 1),
-(6, 'Bike', 'Motor Bike', 1);
+(6, 'Bike', 'Motor Bike', 1),
+(7, 'Tata Demo Batta', 'Tata Demo Batta', 1);
 
 --
 -- Indexes for dumped tables
@@ -2961,7 +2968,7 @@ ALTER TABLE `emp_bonus`
 -- AUTO_INCREMENT for table `emp_designation`
 --
 ALTER TABLE `emp_designation`
-  MODIFY `emp_desig_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `emp_desig_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `emp_details`
@@ -2997,7 +3004,7 @@ ALTER TABLE `emp_grade`
 -- AUTO_INCREMENT for table `emp_group`
 --
 ALTER TABLE `emp_group`
-  MODIFY `emp_group_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `emp_group_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `emp_holiday_calender`
@@ -3033,7 +3040,7 @@ ALTER TABLE `emp_medical_checkup_location`
 -- AUTO_INCREMENT for table `emp_medical_records`
 --
 ALTER TABLE `emp_medical_records`
-  MODIFY `med_record_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `med_record_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `emp_over_time`
@@ -3279,7 +3286,7 @@ ALTER TABLE `online_feedback`
 -- AUTO_INCREMENT for table `sys_notification`
 --
 ALTER TABLE `sys_notification`
-  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `sys_notify_type`
@@ -3321,7 +3328,7 @@ ALTER TABLE `user_page_category`
 -- AUTO_INCREMENT for table `vehicle_category`
 --
 ALTER TABLE `vehicle_category`
-  MODIFY `vehicle_category_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `vehicle_category_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vehicle_details`
@@ -3387,7 +3394,7 @@ ALTER TABLE `vehicle_service_details`
 -- AUTO_INCREMENT for table `vehicle_type`
 --
 ALTER TABLE `vehicle_type`
-  MODIFY `vehicle_type_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `vehicle_type_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

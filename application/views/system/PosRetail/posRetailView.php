@@ -34,17 +34,17 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="qrModal"  aria-hidden="true" style="">
-	<div class="modal-dialog modal-sm">
+<div class="modal fade" id="bankAccModal"  aria-hidden="true" style="">
+	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="modalInfoHeader" style="font-size: inherit;">Bank Details</h4>
+				<h4 class="modal-title" id="modalBankHeader" style="font-size: inherit;">Bank Details</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
-			<div class="modal-body" id="modalInfoBody" >	
-				<img src="<?php echo base_url()?>assets/system/backend/dist/img/lankaQR.jpg" class="card-img-top" style="display: block; margin-left: auto; margin-right: auto;" alt="Centered Image">
+			<div class="modal-body" id="modalBankBody" >	
+				
 			</div>
 			<div class="modal-footer justify-content-right" id="modalFooter">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -577,8 +577,55 @@ $(document).on('click', '#qrBtn', function(){
 })
 
 $(document).on('click', '#bankTransferBtn', function(){
-	$('#modalInfo').modal('hide');;
-	$('#qrModal').modal('show');
+	$('#modalInfo').modal('hide');
+	$.ajax({
+		type: "GET",
+		cache : false,
+		async: true,
+		dataType: "json",
+		contentType: 'application/json',
+		url: API+"BankAcc/fetch_all_active_join",
+		success: function(data, result){
+			console.log(data);
+			//var parseData = JSON.stringify(data);
+			//var parseData1 = JSON.parse(parseData);
+			//console.log(data);
+			var bankHtml = '';
+			bankHtml += '<table class="table table-bordered table-striped dataTable no-footer">'+
+							  '<thead>'+
+								'<tr>'+
+								  '<td scope="col">Accout Name</td>'+
+								  '<td scope="col">Accout No.</td>'+
+								  '<td scope="col">Bank</td>'+
+								  '<td scope="col">Branch</td>'+
+								'</tr>'+
+								'</thead>'+
+								'<tbody>';
+			$.each(data, function (i, item) {
+				
+				bankHtml += '<tr>'+
+							  '<td>'+item.account_name+'</td>'+
+							  '<td>'+item.account_no+'</td>'+
+							  '<td>'+item.bank_name+'</td>'+
+							  '<td>'+item.b_branch_address+'</td>'+
+							'</tr>';
+			})
+								
+			bankHtml += '</tbody>'+
+							'</table>';
+								
+							  
+			$('#modalBankBody').html(bankHtml);
+			$('#bankAccModal').modal('show');
+			
+
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			console.log(textStatus);					
+		}
+	});
+	
+	
 })
 
 $(document).on('click', '#confirmYes', function(){
