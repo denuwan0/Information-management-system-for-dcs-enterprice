@@ -34,9 +34,33 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="qrModal"  aria-hidden="true" style="">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="modalInfoHeader" style="font-size: inherit;">Bank Details</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalInfoBody" >	
+				<img src="<?php echo base_url()?>assets/system/backend/dist/img/lankaQR.jpg" class="card-img-top" style="display: block; margin-left: auto; margin-right: auto;" alt="Centered Image">
+			</div>
+			<div class="modal-footer justify-content-right" id="modalFooter">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">        
+	
+      <div class="container-fluid"> 
+		<div class="float-right" style="text-align: right;">
+			<h5>Order Status: <span class="badge badge-danger orderStatus">Not Saved</span></h5>   
+			<h5>Payment Status: <span class="badge badge-danger orderStatus">Not Paid</span></h5>   		
+		</div>
+
 		<div class="row" id="categoryDiv">
 		  
 		</div>
@@ -450,13 +474,18 @@ $(document).on('click', '.deleteBtn', function(){
 	
 	
 	$(this).parent().parent().remove();
-	console.log($(this).find('.count').last());
+	//console.log($(this).find('.count').last());
+	
+	var tot = 0;
 	
 	$('.detailRow').each( function(i){		
 		$(this).find('.count').text((i+1));
+		//console.log($(this).find('.price').text());
+		tot += parseFloat($(this).find('.price').text());
 	})
 	
-	
+	console.log(tot.toFixed(2));
+	$('.total').text((tot.toFixed(2)));
 });
 
 $(document).on('click', '#cancelBtn', function(){
@@ -474,13 +503,45 @@ $(document).on('click', '#cancelBtn', function(){
 $(document).on('click', '#payBtn', function(){
 	$('#modalInfoBody').html('');
 	$('#modalInfoHeader').html('');
-	$('#modalInfoHeader').html('Select Payment Option');
-	$('#modalInfoBody').html('<div class="row">'+
+	$('#modalInfoHeader').html('Customer Details/ Payment Option');
+	$('#modalInfoBody').html('<div class="row col-md-12">'+
+						
+						'<form class="row col-md-12">'+
+							'<div class="col-md-6">'+
+								'<div class="form-group">'+
+								  '<label for="customer_old_nic_no">NIC</label>'+
+								  '<input type="password" class="form-control" id="customer_old_nic_no" placeholder="NIC search">'+
+								'</div>'+
+								'<div class="form-group">'+
+								  '<label for="customer_name">Customer Name</label>'+
+								  '<input type="text" class="form-control" id="customer_name" placeholder="Customer username">'+
+								'</div>'+								
+							'</div>'+
+							'<div class="col-md-6">'+
+								'<div class="form-group">'+
+								  '<label for="customer_contact_no">Mobile</label>'+
+								  '<input type="text" class="form-control" id="customer_contact_no" placeholder="Mobile No.">'+
+								'</div>'+
+								'<div class="form-group">'+
+								  '<label for="customer_email">E-mail</label>'+
+								  '<input type="password" class="form-control" id="customer_email" placeholder="Email">'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-12">'+
+								'<div class="form-group">'+
+								  '<label for="customer_shipping_address">Shipping Address</label>'+
+								  '<input type="text" class="form-control" id="customer_shipping_address" placeholder="Shipping Address">'+
+								'</div>'+
+							'</div>'+
+						'</form>'+
+					'</div>'+
+					'<div class="row">'+
 					'<div class="col-md-4">'+
 						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="cashBtn">'+
 							'<span class="info-box-icon"><i class="fas fa-money-bill-alt"></i></span>'+
 							'<div class="info-box-content">'+
 							'<span class="info-box-text" style="font-size: x-large;">Cash</span>'+
+							'<small class="text-white">(Save Order)</small>'+
 							'</div>'+
 						'</div>'+
 					'</div>'+
@@ -489,14 +550,16 @@ $(document).on('click', '#payBtn', function(){
 							'<span class="info-box-icon"><i class="fas fa-qrcode"></i></span>'+
 							'<div class="info-box-content">'+
 							'<span class="info-box-text" style="font-size: x-large;">Lanka QR</span>'+
+							'<small class="text-white">(Save Order)</small>'+
 							'</div>'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-md-4">'+
-						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="bankCardBtn">'+
+						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="bankTransferBtn">'+
 							'<span class="info-box-icon"><i class="far fa-credit-card"></i></span>'+
 							'<div class="info-box-content">'+
 							'<span class="info-box-text" style="font-size: large;">Bank Transfer</span>'+
+							'<small class="text-white">(Save Order)</small>'+
 							'</div>'+
 						'</div>'+
 					'</div>'+
@@ -513,8 +576,25 @@ $(document).on('click', '#qrBtn', function(){
 	$('#qrModal').modal('show');
 })
 
+$(document).on('click', '#bankTransferBtn', function(){
+	$('#modalInfo').modal('hide');;
+	$('#qrModal').modal('show');
+})
+
 $(document).on('click', '#confirmYes', function(){
 	location.reload(true);
 })
+$(document).on('keyup', '#customer_old_nic_no', function(){
+	console.log($(this).val());
+})
+
+
+window.addEventListener('beforeunload', function (e) {
+  // Cancel the event as stated by the standard.
+  e.preventDefault();
+  // Chrome requires returnValue to be set.
+  e.returnValue = '';
+});
+
 
   </script>
