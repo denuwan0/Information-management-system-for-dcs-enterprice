@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2024 at 12:45 PM
+-- Generation Time: Feb 26, 2024 at 05:26 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -170,8 +170,8 @@ CREATE TABLE `company_branch` (
 --
 
 INSERT INTO `company_branch` (`company_branch_id`, `company_id`, `company_branch_name`, `location_id`, `branch_contact`, `branch_manager`, `branch_address`, `is_active_branch`) VALUES
-(1, 1, 'Wattala', 1, 2147483611, 1, 'Wattala', 1),
-(2, 1, 'Kadawatha', 1, 712917184, 2, 'Kadawatha', 1),
+(1, 1, 'Wattala', 2, 2147483611, 8, 'Wattala', 1),
+(2, 1, 'Kadawatha', 1, 712917184, 7, 'Kadawatha', 1),
 (3, 1, 'Nittambuwa', 4, 712917184, 7, 'Kandy Rd, Nittambuwa', 1),
 (4, 1, 'Kadana', 4, 21212121, 5, 'Negambo Rd, Kadana', 1);
 
@@ -193,8 +193,8 @@ CREATE TABLE `country` (
 --
 
 INSERT INTO `country` (`country_id`, `country_name`, `country_desc`, `is_active_country`) VALUES
-(1, 'Sri Lanka', '1234', 1),
-(2, 'Japan', '123', 1),
+(1, 'Sri Lanka', 'Sri Lanka	', 1),
+(2, 'Japan', 'Japan', 1),
 (3, 'India', 'India', 0),
 (4, 'China', 'China', 1),
 (5, 'Russia', 'Russia', 1),
@@ -226,7 +226,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `customer_name`, `customer_working_address`, `customer_shipping_address`, `customer_nic_address`, `customer_old_nic_no`, `customer_new_nic_no`, `customer_contact_no`, `customer_email`, `created_date`, `is_web`, `is_active_customer`) VALUES
-(1, 'Shanaka', 'Mahara, Kadawatha', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', '961330456V', '', '94757848081', 'nadeetharu1225@gmail.com', '', 1, 1),
+(1, 'Shanaka', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', '961330456V', '', '94757848081', 'nadeetharu1225@gmail.com', '', 1, 1),
 (2, 'Sanjaya Hettiarachchi', 'No.56, Dekatana, Dompe', 'No.56, Dekatana, Dompe', '', '901330456V', '', '9428689591', 'cykatm@gmail.com', '', 1, 1),
 (3, 'Pavithra Jayasundara', 'No.4, Makola', 'No.4, Makola', '', '902345654V', '', '9471895456', 'may12contact@gmail.com', '', 1, 1);
 
@@ -1168,6 +1168,7 @@ CREATE TABLE `inventory_rental_invoice_header` (
   `emp_id` int(10) NOT NULL,
   `customer_id` int(10) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
+  `deposite_amount` decimal(10,2) NOT NULL,
   `created_date` varchar(10) NOT NULL,
   `create_time` varchar(10) NOT NULL,
   `total_discount` decimal(10,2) NOT NULL,
@@ -1179,8 +1180,8 @@ CREATE TABLE `inventory_rental_invoice_header` (
 -- Dumping data for table `inventory_rental_invoice_header`
 --
 
-INSERT INTO `inventory_rental_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `created_date`, `create_time`, `total_discount`, `is_active_inv_rent_invoice_hdr`, `is_complete`) VALUES
-(1, 2, 7, 1, '15000.00', '02-02-2024', '10:00:00', '0.00', 1, 1);
+INSERT INTO `inventory_rental_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `deposite_amount`, `created_date`, `create_time`, `total_discount`, `is_active_inv_rent_invoice_hdr`, `is_complete`) VALUES
+(1, 2, 7, 1, '15000.00', '0.00', '02-02-2024', '10:00:00', '0.00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1288,6 +1289,115 @@ CREATE TABLE `inventory_retail_invoice_detail` (
   `is_active_inv_retail_invoice_detail` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `inventory_retail_invoice_detail`
+--
+
+INSERT INTO `inventory_retail_invoice_detail` (`rental_detail_id`, `invoice_id`, `item_id`, `no_of_items`, `item_price`, `item_discount`, `is_active_inv_retail_invoice_detail`) VALUES
+(1, 1, 6, 2, '5000.00', '0.00', 1),
+(2, 1, 5, 2, '7000.00', '0.00', 1),
+(3, 1, 20, 2, '5000.00', '0.00', 1),
+(4, 2, 7, 1, '12000.00', '0.00', 1),
+(5, 3, 6, 1, '5000.00', '0.00', 1),
+(6, 3, 5, 1, '7000.00', '0.00', 1),
+(7, 4, 18, 1, '7000.00', '0.00', 1),
+(8, 5, 18, 1, '7000.00', '0.00', 1),
+(9, 6, 18, 1, '7000.00', '0.00', 1),
+(10, 7, 4, 1, '5000.00', '0.00', 1),
+(11, 7, 5, 1, '7000.00', '0.00', 1),
+(12, 7, 6, 1, '5000.00', '0.00', 1),
+(13, 8, 4, 1, '5000.00', '0.00', 1),
+(14, 8, 5, 1, '7000.00', '0.00', 1),
+(15, 8, 6, 1, '5000.00', '0.00', 1),
+(16, 9, 4, 1, '5000.00', '0.00', 1),
+(17, 9, 5, 1, '7000.00', '0.00', 1),
+(18, 9, 6, 1, '5000.00', '0.00', 1),
+(19, 10, 4, 1, '5000.00', '0.00', 1),
+(20, 10, 5, 1, '7000.00', '0.00', 1),
+(21, 10, 6, 1, '5000.00', '0.00', 1),
+(22, 11, 4, 1, '5000.00', '0.00', 1),
+(23, 11, 5, 1, '7000.00', '0.00', 1),
+(24, 11, 6, 1, '5000.00', '0.00', 1),
+(25, 12, 4, 1, '5000.00', '0.00', 1),
+(26, 12, 5, 1, '7000.00', '0.00', 1),
+(27, 12, 6, 1, '5000.00', '0.00', 1),
+(28, 13, 4, 1, '5000.00', '0.00', 1),
+(29, 13, 5, 1, '7000.00', '0.00', 1),
+(30, 13, 6, 1, '5000.00', '0.00', 1),
+(31, 14, 4, 1, '5000.00', '0.00', 1),
+(32, 14, 5, 1, '7000.00', '0.00', 1),
+(33, 14, 6, 1, '5000.00', '0.00', 1),
+(34, 15, 4, 1, '5000.00', '0.00', 1),
+(35, 15, 5, 1, '7000.00', '0.00', 1),
+(36, 15, 6, 1, '5000.00', '0.00', 1),
+(37, 16, 4, 1, '5000.00', '0.00', 1),
+(38, 16, 5, 1, '7000.00', '0.00', 1),
+(39, 16, 6, 1, '5000.00', '0.00', 1),
+(40, 17, 4, 1, '5000.00', '0.00', 1),
+(41, 17, 5, 1, '7000.00', '0.00', 1),
+(42, 17, 6, 1, '5000.00', '0.00', 1),
+(43, 18, 4, 1, '5000.00', '0.00', 1),
+(44, 18, 5, 1, '7000.00', '0.00', 1),
+(45, 18, 6, 1, '5000.00', '0.00', 1),
+(46, 19, 4, 1, '5000.00', '0.00', 1),
+(47, 19, 5, 1, '7000.00', '0.00', 1),
+(48, 19, 6, 1, '5000.00', '0.00', 1),
+(49, 20, 4, 1, '5000.00', '0.00', 1),
+(50, 20, 5, 1, '7000.00', '0.00', 1),
+(51, 20, 6, 1, '5000.00', '0.00', 1),
+(52, 21, 4, 1, '5000.00', '0.00', 1),
+(53, 21, 5, 1, '7000.00', '0.00', 1),
+(54, 21, 6, 1, '5000.00', '0.00', 1),
+(55, 22, 4, 1, '5000.00', '0.00', 1),
+(56, 22, 5, 1, '7000.00', '0.00', 1),
+(57, 22, 6, 1, '5000.00', '0.00', 1),
+(58, 23, 4, 1, '5000.00', '0.00', 1),
+(59, 23, 5, 1, '7000.00', '0.00', 1),
+(60, 23, 6, 1, '5000.00', '0.00', 1),
+(61, 24, 6, 1, '5000.00', '0.00', 1),
+(62, 24, 5, 1, '7000.00', '0.00', 1),
+(63, 25, 6, 1, '5000.00', '0.00', 1),
+(64, 25, 5, 1, '7000.00', '0.00', 1),
+(65, 26, 6, 1, '5000.00', '0.00', 1),
+(66, 26, 5, 1, '7000.00', '0.00', 1),
+(67, 27, 6, 1, '5000.00', '0.00', 1),
+(68, 27, 5, 1, '7000.00', '0.00', 1),
+(69, 28, 6, 1, '5000.00', '0.00', 1),
+(70, 28, 5, 1, '7000.00', '0.00', 1),
+(71, 29, 18, 1, '7000.00', '0.00', 1),
+(72, 29, 9, 1, '120000.00', '0.00', 1),
+(73, 30, 4, 1, '5000.00', '0.00', 1),
+(74, 30, 5, 1, '7000.00', '0.00', 1),
+(75, 30, 6, 1, '5000.00', '0.00', 1),
+(76, 31, 5, 1, '7000.00', '0.00', 1),
+(77, 32, 5, 1, '7000.00', '0.00', 1),
+(78, 32, 6, 1, '5000.00', '0.00', 1),
+(79, 33, 4, 1, '5000.00', '0.00', 1),
+(80, 33, 5, 1, '7000.00', '0.00', 1),
+(81, 33, 6, 1, '5000.00', '0.00', 1),
+(82, 34, 6, 1, '5000.00', '0.00', 1),
+(83, 34, 5, 1, '7000.00', '0.00', 1),
+(84, 35, 6, 1, '5000.00', '0.00', 1),
+(85, 35, 5, 1, '7000.00', '0.00', 1),
+(86, 36, 6, 1, '5000.00', '0.00', 1),
+(87, 36, 5, 1, '7000.00', '0.00', 1),
+(88, 37, 6, 1, '5000.00', '0.00', 1),
+(89, 37, 5, 1, '7000.00', '0.00', 1),
+(90, 38, 6, 1, '5000.00', '0.00', 1),
+(91, 38, 5, 1, '7000.00', '0.00', 1),
+(92, 39, 6, 1, '5000.00', '0.00', 1),
+(93, 39, 5, 1, '7000.00', '0.00', 1),
+(94, 40, 6, 1, '5000.00', '0.00', 1),
+(95, 40, 5, 1, '7000.00', '0.00', 1),
+(96, 41, 6, 1, '5000.00', '0.00', 1),
+(97, 42, 18, 1, '7000.00', '0.00', 1),
+(98, 42, 9, 1, '120000.00', '0.00', 1),
+(99, 43, 6, 1, '5000.00', '0.00', 1),
+(100, 43, 5, 1, '7000.00', '0.00', 1),
+(101, 44, 9, 1, '120000.00', '0.00', 1),
+(102, 45, 6, 1, '5000.00', '0.00', 1),
+(103, 45, 5, 1, '7000.00', '0.00', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1307,6 +1417,57 @@ CREATE TABLE `inventory_retail_invoice_header` (
   `is_active_inv_retail_invoice_hdr` tinyint(1) NOT NULL,
   `is_complete` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventory_retail_invoice_header`
+--
+
+INSERT INTO `inventory_retail_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `created_date`, `create_time`, `total_discount`, `is_pos`, `is_active_inv_retail_invoice_hdr`, `is_complete`) VALUES
+(1, 1, 1, 1, '34000.00', '2024-02-26', '15:46:23', '0.00', 1, 1, 0),
+(2, 1, 1, 1, '12000.00', '2024-02-26', '15:50:30', '0.00', 1, 1, 0),
+(3, 1, 1, 3, '12000.00', '2024-02-26', '15:51:44', '0.00', 1, 1, 0),
+(4, 1, 1, 3, '7000.00', '2024-02-26', '15:53:15', '0.00', 1, 1, 0),
+(5, 1, 1, 3, '7000.00', '2024-02-26', '15:53:29', '0.00', 1, 1, 0),
+(6, 1, 1, 1, '7000.00', '2024-02-26', '16:00:58', '0.00', 1, 1, 0),
+(7, 1, 1, 2, '17000.00', '2024-02-26', '18:09:33', '0.00', 1, 1, 0),
+(8, 1, 1, 2, '17000.00', '2024-02-26', '18:10:04', '0.00', 1, 1, 0),
+(9, 1, 1, 2, '17000.00', '2024-02-26', '18:10:23', '0.00', 1, 1, 0),
+(10, 1, 1, 2, '17000.00', '2024-02-26', '18:12:06', '0.00', 1, 1, 0),
+(11, 1, 1, 2, '17000.00', '2024-02-26', '18:16:13', '0.00', 1, 1, 0),
+(12, 1, 1, 2, '17000.00', '2024-02-26', '18:16:33', '0.00', 1, 1, 0),
+(13, 1, 1, 2, '17000.00', '2024-02-26', '18:18:13', '0.00', 1, 1, 0),
+(14, 1, 1, 2, '17000.00', '2024-02-26', '18:19:11', '0.00', 1, 1, 0),
+(15, 1, 1, 2, '17000.00', '2024-02-26', '18:19:36', '0.00', 1, 1, 0),
+(16, 1, 1, 2, '17000.00', '2024-02-26', '18:19:59', '0.00', 1, 1, 0),
+(17, 1, 1, 2, '17000.00', '2024-02-26', '18:20:30', '0.00', 1, 1, 0),
+(18, 1, 1, 2, '17000.00', '2024-02-26', '18:27:10', '0.00', 1, 1, 0),
+(19, 1, 1, 2, '17000.00', '2024-02-26', '18:32:26', '0.00', 1, 1, 0),
+(20, 1, 1, 2, '17000.00', '2024-02-26', '18:32:43', '0.00', 1, 1, 0),
+(21, 1, 1, 2, '17000.00', '2024-02-26', '18:36:02', '0.00', 1, 1, 0),
+(22, 1, 1, 2, '17000.00', '2024-02-26', '18:41:24', '0.00', 1, 1, 0),
+(23, 1, 1, 2, '17000.00', '2024-02-26', '18:44:52', '0.00', 1, 1, 0),
+(24, 1, 1, 2, '12000.00', '2024-02-26', '18:45:07', '0.00', 1, 1, 0),
+(25, 1, 1, 2, '12000.00', '2024-02-26', '18:45:17', '0.00', 1, 1, 0),
+(26, 1, 1, 2, '12000.00', '2024-02-26', '18:46:50', '0.00', 1, 1, 0),
+(27, 1, 1, 2, '12000.00', '2024-02-26', '19:12:33', '0.00', 1, 1, 0),
+(28, 1, 1, 2, '12000.00', '2024-02-26', '19:18:11', '0.00', 1, 1, 0),
+(29, 1, 1, 2, '127000.00', '2024-02-26', '19:20:21', '0.00', 1, 1, 0),
+(30, 1, 1, 2, '17000.00', '2024-02-26', '19:35:14', '0.00', 1, 1, 0),
+(31, 1, 1, 2, '7000.00', '2024-02-26', '19:41:42', '0.00', 1, 1, 0),
+(32, 1, 1, 2, '12000.00', '2024-02-26', '19:42:34', '0.00', 1, 1, 0),
+(33, 1, 1, 2, '17000.00', '2024-02-26', '19:45:01', '0.00', 1, 1, 0),
+(34, 1, 1, 2, '12000.00', '2024-02-26', '19:45:36', '0.00', 1, 1, 0),
+(35, 1, 1, 2, '12000.00', '2024-02-26', '19:45:54', '0.00', 1, 1, 0),
+(36, 1, 1, 2, '12000.00', '2024-02-26', '19:48:38', '0.00', 1, 1, 0),
+(37, 1, 1, 2, '12000.00', '2024-02-26', '19:48:48', '0.00', 1, 1, 0),
+(38, 1, 1, 2, '12000.00', '2024-02-26', '20:16:44', '0.00', 1, 1, 0),
+(39, 1, 1, 2, '12000.00', '2024-02-26', '20:23:11', '0.00', 1, 1, 0),
+(40, 1, 1, 2, '12000.00', '2024-02-26', '20:23:51', '0.00', 1, 1, 0),
+(41, 1, 1, 2, '5000.00', '2024-02-26', '20:26:56', '0.00', 1, 1, 0),
+(42, 1, 1, 2, '127000.00', '2024-02-26', '21:43:46', '0.00', 1, 1, 0),
+(43, 1, 1, 2, '12000.00', '2024-02-26', '21:45:27', '0.00', 1, 1, 0),
+(44, 1, 1, 2, '120000.00', '2024-02-26', '21:46:18', '0.00', 1, 1, 0),
+(45, 1, 1, 2, '12000.00', '2024-02-26', '21:46:58', '0.00', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1688,6 +1849,14 @@ CREATE TABLE `inventory_stock_transfer_detail` (
   `is_active_stock_transfer_detail` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `inventory_stock_transfer_detail`
+--
+
+INSERT INTO `inventory_stock_transfer_detail` (`inventory_stock_transfer_detail_id`, `inventory_stock_transfer_header_id`, `item_id`, `is_sub_item`, `no_of_items`, `is_active_stock_transfer_detail`) VALUES
+(1, 1, 1, 0, 10, 0),
+(2, 1, 5, 0, 5, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -1713,6 +1882,13 @@ CREATE TABLE `inventory_stock_transfer_header` (
   `accepted_by` int(10) NOT NULL,
   `is_active_inv_stock_trans` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventory_stock_transfer_header`
+--
+
+INSERT INTO `inventory_stock_transfer_header` (`inventory_stock_transfer_header_id`, `branch_id_from`, `branch_id_to`, `create_date`, `create_time`, `created_by`, `transfer_type`, `stock_type`, `inform_user_id`, `note`, `approved_by`, `is_approved`, `rejected_by`, `is_rejected`, `is_accepted`, `accepted_by`, `is_active_inv_stock_trans`) VALUES
+(1, 2, 1, '2024-02-25', '', 3, 'IN', 'Retail', 53, '', 0, 0, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1761,9 +1937,9 @@ CREATE TABLE `location` (
 --
 
 INSERT INTO `location` (`location_id`, `country_id`, `location_name`, `location_desc`, `is_active_location`) VALUES
-(1, 2, 'Kadawata', 'Kadawata', 1),
-(2, 2, 'Wattala', 'Wattala', 1),
-(3, 5, 'Ibaraki Prefetcher', 'Ibaraki Prefetcher Japan', 1),
+(1, 1, 'Kadawata', 'Kadawata', 1),
+(2, 1, 'Wattala', 'Wattala', 1),
+(3, 2, 'Ibaraki Prefetcher', 'Ibaraki Prefetcher Japan', 1),
 (4, 1, 'Nittambuwa', 'Nittambuwa', 1),
 (5, 1, 'Kadana', 'Kadana', 1);
 
@@ -1884,6 +2060,22 @@ CREATE TABLE `online_special_offers` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `order_payments`
+--
+
+CREATE TABLE `order_payments` (
+  `payment_id` int(10) NOT NULL,
+  `order_id` int(10) NOT NULL,
+  `reference` varchar(200) NOT NULL,
+  `is_retail_order` tinyint(1) NOT NULL,
+  `is_rental_order` tinyint(1) NOT NULL,
+  `is_web_order` tinyint(1) NOT NULL,
+  `is_complete` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sys_notification`
 --
 
@@ -1905,7 +2097,9 @@ INSERT INTO `sys_notification` (`sys_notify_id`, `user_id`, `create_date`, `is_s
 (5, 3, '2024-02-24', 1),
 (6, 54, '2024-02-24', 1),
 (7, 53, '2024-02-25', 1),
-(8, 1, '2024-02-25', 1);
+(8, 1, '2024-02-25', 1),
+(9, 3, '2024-02-25', 1),
+(10, 1, '2024-02-26', 1);
 
 -- --------------------------------------------------------
 
@@ -1957,12 +2151,12 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'a2010345d19b55939bd2', '345879', '2024-02-25 09:20:56', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '75a114c6db27c4c0c4b9', '287187', '2024-02-26 03:26:32', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-24 15:16:16', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-25 15:15:00', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
-(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-25 09:20:42', 0, 1),
+(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-25 15:19:07', 0, 1),
 (54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-24 15:49:01', 0, 1),
 (55, 9, 4, 'madushanka', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-02-24 11:07:40', 0, 1);
 
@@ -1987,7 +2181,7 @@ INSERT INTO `sys_user_group` (`sys_user_group_id`, `sys_user_group_name`, `sys_u
 (1, 'Admin', 'All privilages included', 1),
 (2, 'Manager', 'yard manager', 1),
 (3, 'Driver', 'Yard Driver', 1),
-(4, 'Staff', 'General staff 1', 1),
+(4, 'Staff', 'General staff', 1),
 (5, 'Customer', 'Customer', 1);
 
 -- --------------------------------------------------------
@@ -2769,6 +2963,12 @@ ALTER TABLE `online_special_offers`
   ADD PRIMARY KEY (`offer_id`);
 
 --
+-- Indexes for table `order_payments`
+--
+ALTER TABLE `order_payments`
+  ADD PRIMARY KEY (`payment_id`);
+
+--
 -- Indexes for table `sys_notification`
 --
 ALTER TABLE `sys_notification`
@@ -3190,13 +3390,13 @@ ALTER TABLE `inventory_rent_charge_period`
 -- AUTO_INCREMENT for table `inventory_retail_invoice_detail`
 --
 ALTER TABLE `inventory_retail_invoice_detail`
-  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `inventory_retail_invoice_header`
 --
 ALTER TABLE `inventory_retail_invoice_header`
-  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `inventory_retail_total_stock`
@@ -3244,13 +3444,13 @@ ALTER TABLE `inventory_stock_retail_header`
 -- AUTO_INCREMENT for table `inventory_stock_transfer_detail`
 --
 ALTER TABLE `inventory_stock_transfer_detail`
-  MODIFY `inventory_stock_transfer_detail_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `inventory_stock_transfer_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `inventory_stock_transfer_header`
 --
 ALTER TABLE `inventory_stock_transfer_header`
-  MODIFY `inventory_stock_transfer_header_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `inventory_stock_transfer_header_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `inventory_sub_item`
@@ -3283,10 +3483,16 @@ ALTER TABLE `online_feedback`
   MODIFY `feedback_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `order_payments`
+--
+ALTER TABLE `order_payments`
+  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `sys_notification`
 --
 ALTER TABLE `sys_notification`
-  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `sys_notify_type`

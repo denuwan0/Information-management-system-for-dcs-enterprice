@@ -53,10 +53,10 @@
 	</div>
 </div>
 <div class="modal fade" id="invoiceModal"  aria-hidden="true" style="">
-	<div class="modal-dialog modal-md">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="modalBankHeader" style="font-size: inherit;">Customer Details</h4>
+				<h4 class="modal-title" id="modalBankHeader" style="font-size: large;">Customer Details</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
@@ -76,7 +76,7 @@
       <div class="container-fluid"> 
 		<div class="float-right" style="text-align: right;">
 			<h5>Order Status: <span class="badge badge-danger orderStatus">Not Saved</span></h5>   
-			<h5>Payment Status: <span class="badge badge-danger orderStatus">Not Paid</span></h5>   		
+			<h5>Payment Status: <span class="badge badge-danger paymentStatus">Not Paid</span></h5>   		
 		</div>
 
 		<div class="row" id="categoryDiv">
@@ -187,6 +187,18 @@
 
  
   <script>
+	var customer_old_nic_no = '';
+	var customer_name = '';
+	var customer_contact_no = '';
+	var customer_email = '';
+	var customer_working_address = '';
+	var customer_shipping_address = '';
+	
+	
+	
+	var is_order_saved = 0;
+	var is_order_paid = 0;
+  
   
 function loadData() {
 	
@@ -520,45 +532,83 @@ $(document).on('click', '#cancelBtn', function(){
 });
 
 $(document).on('click', '#payBtn', function(){
-	$('#modalInfoBody').html('');
-	$('#modalInfoHeader').html('');
-	$('#modalInfoHeader').html('Payment Option');
-	$('#modalInfoBody').html('<div class="row col-md-12">'+
-						
-						
-					'</div>'+
-					'<div class="row">'+
-					'<div class="col-md-4">'+
-						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="cashBtn">'+
-							'<span class="info-box-icon"><i class="fas fa-money-bill-alt"></i></span>'+
-							'<div class="info-box-content">'+
-							'<span class="info-box-text" style="font-size: x-large;">Cash</span>'+
-							'<small class="text-white">(Save Order)</small>'+
+	
+	if(is_order_saved == 1){
+		$('#modalInfoBody').html('');
+		$('#modalInfoHeader').html('');
+		$('#modalInfoHeader').html('Payment Option');
+		$('#modalInfoBody').html('<div class="row col-md-12">'+
+							
+						'<form class="row col-md-12">'+
+							'<div class="col-md-6 mb-3">'+
+								'<div class="form-group">'+
+								  '<label for="customer_old_nic_no">Customer</label>'+
+								  '<input type="text" class="form-control" id="customer_old_nic_no" value="'+customer_name+'" readonly>'+
+								'</div>'+							
+							'</div>'+
+							'<div class="col-md-6">'+
+								'<div class="form-group">'+
+								  '<label for="customer_name">Payment Reference</label>'+
+								  '<input type="text" class="form-control" id="customer_name" placeholder="Customer username">'+
+								'</div>'+								
+							'</div>'+
+						'</form>'+	
+						'</div>'+
+						'<div class="row">'+
+						'<div class="col-md-6">'+
+							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="cashBtn">'+
+								'<span class="info-box-icon"><i class="fas fa-money-bill-alt"></i></span>'+
+								'<div class="info-box-content">'+
+								'<span class="info-box-text" style="font-size: large;">Paid by Cash</span>'+
+								'</div>'+
 							'</div>'+
 						'</div>'+
-					'</div>'+
-					'<div class="col-md-4">'+
-						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="qrBtn">'+
-							'<span class="info-box-icon"><i class="fas fa-qrcode"></i></span>'+
-							'<div class="info-box-content">'+
-							'<span class="info-box-text" style="font-size: x-large;">Lanka QR</span>'+
-							'<small class="text-white">(Save Order)</small>'+
+						'<div class="col-md-6">'+
+							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="qrBtn">'+
+								'<span class="info-box-icon"><i class="fas fa-qrcode"></i></span>'+
+								'<div class="info-box-content">'+
+								'<span class="info-box-text" style="font-size: large;">Paid by Lanka QR</span>'+
+								'</div>'+
 							'</div>'+
 						'</div>'+
-					'</div>'+
-					'<div class="col-md-4">'+
-						'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="bankTransferBtn">'+
-							'<span class="info-box-icon"><i class="far fa-credit-card"></i></span>'+
-							'<div class="info-box-content">'+
-							'<span class="info-box-text" style="font-size: large;">Bank Transfer</span>'+
-							'<small class="text-white">(Save Order)</small>'+
+						'<div class="col-md-6">'+
+							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="bankTransferBtn">'+
+								'<span class="info-box-icon"><i class="fas fa-landmark"></i></span>'+
+								'<div class="info-box-content">'+
+								'<span class="info-box-text" style="font-size: large;">Paid by Bank Transfer</span>'+
+								'</div>'+
 							'</div>'+
 						'</div>'+
-					'</div>'+
-				'</div>');
-		$('#modalFooter').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
-	//$('#modalInfo').show();
-	$('#modalInfo').modal('show');
+						'<div class="col-md-6">'+
+							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="bankTransferBtn">'+
+								'<span class="info-box-icon"><i class="far fa-credit-card"></i></span>'+
+								'<div class="info-box-content">'+
+								'<span class="info-box-text" style="font-size: large;">Paid by Bank Card</span>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+					'</div>');
+			$('#modalFooter').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+		//$('#modalInfo').show();
+		$('#modalInfo').modal('show');
+	}
+	else{
+		const notyf = new Notyf();
+				
+		notyf.error({
+		  message: 'Please Generate Invoice before Payment!',
+		  duration: 5000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	}	
+	
 	
 	
 });
@@ -612,6 +662,10 @@ $(document).on('click', '#invoiceBtn', function(){
 								'</div>'+
 								'<div class="col-md-12">'+
 									'<div class="form-group">'+
+									  '<label for="customer_working_address">Billing Address</label>'+
+									  '<input type="text" class="form-control" id="customer_working_address" placeholder="Billing Address">'+
+									'</div>'+
+									'<div class="form-group">'+
 									  '<label for="customer_shipping_address">Shipping Address</label>'+
 									  '<input type="text" class="form-control" id="customer_shipping_address" placeholder="Shipping Address">'+
 									'</div>'+
@@ -622,12 +676,13 @@ $(document).on('click', '#invoiceBtn', function(){
 						'<div class="col-md-3">'+
 						'</div>'+
 						'<div class="col-md-6">'+
-							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="qrBtn">'+
+							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="invoicePrintBtn">'+
 								'<span class="info-box-icon"><i class="fas fa-print	"></i></span>'+
 								'<div class="info-box-content">'+
 								'<span class="info-box-text" style="font-size:large;">Print Invoice</span>'+
 								'</div>'+
 							'</div>'+
+							'<a style="display:none;" class="downloadPdf" id="downloadPdf" href="http://localhost/API/RetailInvoice/printInvoice/" target="_blank">Visit W3Schools.com!</a>'+
 						'</div>'+
 						'<div class="col-md-3">'+
 						'</div>'+
@@ -702,6 +757,7 @@ $(document).on('click', '#bankTransferBtn', function(){
 $(document).on('click', '#confirmYes', function(){
 	location.reload(true);
 })
+
 $(document).on('keyup', '#customer_old_nic_no', function(){
 	//console.log($(this).val());
 	var nic = $(this).val();
@@ -714,10 +770,51 @@ $(document).on('keyup', '#customer_old_nic_no', function(){
 		contentType: 'application/json',
 		url: API+"Customer/fetch_single_by_nic/?nic="+nic,
 		success: function(data, result){
-			console.log(Object.keys(data).length);
-			if (data){
-				console.log(data);
+			
+			if (Object.keys(data).length > 0){
+				const notyf = new Notyf();
+			
+				notyf.error({
+				  message: 'Existing Customer',
+				  duration: 5000,
+				  background: 'blue',
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+				
+				$('#customer_old_nic_no').val(data[0].customer_old_nic_no);	
+				$('#customer_name').val(data[0].customer_name);
+				$('#customer_contact_no').val(data[0].customer_contact_no);
+				$('#customer_email').val(data[0].customer_email);
+				$('#customer_working_address').val(data[0].customer_working_address);
+				$('#customer_shipping_address').val(data[0].customer_shipping_address);
+				
+				customer_old_nic_no = data[0].customer_old_nic_no;
+				customer_name = data[0].customer_name;
+				customer_contact_no = data[0].customer_contact_no;
+				customer_email = data[0].customer_email;
+				customer_working_address = data[0].customer_working_address;
+				customer_shipping_address = data[0].customer_shipping_address;
 			}
+			else{
+				
+				
+				$('#customer_name').val('');
+				$('#customer_contact_no').val('');
+				$('#customer_email').val('');
+				$('#customer_working_address').val('');
+				$('#customer_shipping_address').val('');
+				
+				
+				
+			}
+			
 			
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {						
@@ -726,6 +823,183 @@ $(document).on('keyup', '#customer_old_nic_no', function(){
 	});
 })
 
+
+$(document).on('click', '#invoicePrintBtn', function(){
+	
+	customer_old_nic_no = $('#customer_old_nic_no').val();
+	customer_name = $('#customer_name').val();
+	customer_contact_no = $('#customer_contact_no').val();
+	customer_email = $('#customer_email').val();
+	customer_working_address = $('#customer_working_address').val();
+	customer_shipping_address = $('#customer_shipping_address').val();
+	var selectedItemsArr = [];
+	var customerDataArr = [];
+	
+	$('.detailRow').each(function(){
+		selectedItemsArr.push({
+			'item_id': parseFloat($(this).find(".item_id").text()),
+			'qty': parseFloat($(this).find(".qty").text()),
+			'unit_price': parseFloat($(this).find(".unit_price").text())
+		})
+	});
+	
+	customerDataArr.push({
+		'customer_old_nic_no': customer_old_nic_no,
+		'customer_name': customer_name,
+		'customer_contact_no': customer_contact_no,
+		'customer_email': customer_email,
+		'customer_working_address': customer_working_address,
+		'customer_shipping_address': customer_shipping_address
+	})
+	
+	
+	
+	if(customer_old_nic_no && customerDataArr.length > 0 &&  selectedItemsArr.length > 0)
+	{
+		
+		var formData = new Object();
+		formData = {
+			customerDataArr:customerDataArr,
+			selectedItemsArr:selectedItemsArr
+		};
+		
+		console.log(formData);
+		
+		submitData();
+		
+		
+		
+	}
+	else{
+		const notyf = new Notyf();
+			
+		notyf.error({
+		  message: 'Please Fill Required Fields!',
+		  duration: 5000,
+		  icon: true,
+		  ripple: true,
+		  dismissible: true,
+		  position: {
+			x: 'right',
+			y: 'top',
+		  }
+		  
+		})
+	}
+	
+	
+	function submitData(){
+		$.ajax({
+			type: "POST",
+			//enctype: 'multipart/form-data',
+			cache : false,
+			async: true,
+			contentType: 'application/json',
+			dataType: "json",
+			processData: false,
+			data: JSON.stringify(formData),	
+			url: API+"RetailInvoice/insert/",
+			success: function(data, result){
+				console.log(data['invoice_header_header_id']);	
+				const notyf = new Notyf();
+				if(data['message'] == 'Data Saved!'){
+					is_order_saved = 1;
+					
+					var id = data['invoice_header_header_id'];
+					
+					$('#downloadPdf').attr("href", "http://localhost/API/RetailInvoice/printInvoice/?id="+id);
+					$('#downloadPdf')[0].click();					
+						
+					$('.orderStatus').text('Saved');
+					$('.orderStatus').removeClass('badge-danger');
+					$('.orderStatus').addClass('badge-success');
+					
+					$('#invoiceModal').modal('hide');
+					
+					notyf.success({
+					  message: data['message'],
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					
+					
+					
+					/* window.setTimeout(function() {
+						window.location = "<?php echo base_url() ?>stockTransfer/view";
+					}, 3000); */
+				}	
+				else{
+					notyf.error({
+					  message: 'Error!',
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+				}
+				
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(XMLHttpRequest);
+				console.log(textStatus);		
+				console.log(errorThrown);	
+				const notyf = new Notyf();
+			
+				notyf.error({
+				  message: 'Error!',
+				  duration: 5000,
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+				
+			}
+		});
+	}	
+	 
+	
+	
+	
+	
+})
+
+
+	function print(id){
+		$.ajax({
+			type: "GET",
+			cache : false,
+			async: true,
+			dataType: "json",
+			contentType: 'application/json',
+			url: API+"RetailInvoice/printInvoice/?id="+id,
+			success: function(data, result){
+				
+				
+				
+				
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {						
+				console.log(textStatus);					
+			}
+		});	
+	}
 
 window.addEventListener('beforeunload', function (e) {
   // Cancel the event as stated by the standard.
