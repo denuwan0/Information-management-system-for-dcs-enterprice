@@ -677,9 +677,9 @@ $(document).on('click', '#invoiceBtn', function(){
 						'</div>'+
 						'<div class="col-md-6">'+
 							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="invoicePrintBtn">'+
-								'<span class="info-box-icon"><i class="fas fa-print	"></i></span>'+
+								'<span class="info-box-icon"><i class="fas fa-file-download"></i></span>'+
 								'<div class="info-box-content">'+
-								'<span class="info-box-text" style="font-size:large;">Print Invoice</span>'+
+								'<span class="info-box-text" style="font-size:large;">Download Invoice</span>'+
 								'</div>'+
 							'</div>'+
 							'<a style="display:none;" class="downloadPdf" id="downloadPdf" href="http://localhost/API/RetailInvoice/printInvoice/" target="_blank">Visit W3Schools.com!</a>'+
