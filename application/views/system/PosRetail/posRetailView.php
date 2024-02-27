@@ -193,7 +193,7 @@
 	var customer_email = '';
 	var customer_working_address = '';
 	var customer_shipping_address = '';
-	
+	var invoice_header_header_id ='';
 	
 	
 	var is_order_saved = 0;
@@ -540,13 +540,19 @@ $(document).on('click', '#payBtn', function(){
 		$('#modalInfoBody').html('<div class="row col-md-12">'+
 							
 						'<form class="row col-md-12">'+
-							'<div class="col-md-6 mb-3">'+
+							'<div class="col-md-4 mb-3">'+
 								'<div class="form-group">'+
 								  '<label for="customer_old_nic_no">Customer</label>'+
 								  '<input type="text" class="form-control" id="customer_old_nic_no" value="'+customer_name+'" readonly>'+
 								'</div>'+							
 							'</div>'+
-							'<div class="col-md-6">'+
+							'<div class="col-md-4 mb-3">'+
+								'<div class="form-group">'+
+								  '<label for="invoice_header_header_id">Invoice Id</label>'+
+								  '<input type="text" class="form-control" id="invoice_header_header_id" value="'+invoice_header_header_id+'" readonly>'+
+								'</div>'+								
+							'</div>'+
+							'<div class="col-md-4 mb-3">'+
 								'<div class="form-group">'+
 								  '<label for="customer_name">Payment Reference</label>'+
 								  '<input type="text" class="form-control" id="customer_name" placeholder="Customer username">'+
@@ -556,7 +562,7 @@ $(document).on('click', '#payBtn', function(){
 						'</div>'+
 						'<div class="row">'+
 						'<div class="col-md-6">'+
-							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="cashBtn">'+
+							'<div class="info-box bg-gradient-danger payMethod" style="cursor: pointer;" value="cashBtn">'+
 								'<span class="info-box-icon"><i class="fas fa-money-bill-alt"></i></span>'+
 								'<div class="info-box-content">'+
 								'<span class="info-box-text" style="font-size: large;">Paid by Cash</span>'+
@@ -564,7 +570,7 @@ $(document).on('click', '#payBtn', function(){
 							'</div>'+
 						'</div>'+
 						'<div class="col-md-6">'+
-							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="qrBtn">'+
+							'<div class="info-box bg-gradient-danger payMethod" style="cursor: pointer;" value="qrBtn">'+
 								'<span class="info-box-icon"><i class="fas fa-qrcode"></i></span>'+
 								'<div class="info-box-content">'+
 								'<span class="info-box-text" style="font-size: large;">Paid by Lanka QR</span>'+
@@ -572,7 +578,7 @@ $(document).on('click', '#payBtn', function(){
 							'</div>'+
 						'</div>'+
 						'<div class="col-md-6">'+
-							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="bankTransferBtn">'+
+							'<div class="info-box bg-gradient-danger payMethod" style="cursor: pointer;" value="bankTransferBtn">'+
 								'<span class="info-box-icon"><i class="fas fa-landmark"></i></span>'+
 								'<div class="info-box-content">'+
 								'<span class="info-box-text" style="font-size: large;">Paid by Bank Transfer</span>'+
@@ -580,7 +586,7 @@ $(document).on('click', '#payBtn', function(){
 							'</div>'+
 						'</div>'+
 						'<div class="col-md-6">'+
-							'<div class="info-box bg-gradient-danger" style="cursor: pointer;" id="bankTransferBtn">'+
+							'<div class="info-box bg-gradient-danger payMethod" style="cursor: pointer;" value="bankCardBtn">'+
 								'<span class="info-box-icon"><i class="far fa-credit-card"></i></span>'+
 								'<div class="info-box-content">'+
 								'<span class="info-box-text" style="font-size: large;">Paid by Bank Card</span>'+
@@ -906,6 +912,8 @@ $(document).on('click', '#invoicePrintBtn', function(){
 					is_order_saved = 1;
 					
 					var id = data['invoice_header_header_id'];
+					invoice_header_header_id =  data['invoice_header_header_id'];
+					
 					
 					$('#downloadPdf').attr("href", "http://localhost/API/RetailInvoice/printInvoice/?id="+id);
 					$('#downloadPdf')[0].click();					
@@ -1000,6 +1008,10 @@ $(document).on('click', '#invoicePrintBtn', function(){
 			}
 		});	
 	}
+	
+	$(document).on('click', '.payMethod', function(){
+		console.log($(this).attr('value'));
+	})
 
 window.addEventListener('beforeunload', function (e) {
   // Cancel the event as stated by the standard.
