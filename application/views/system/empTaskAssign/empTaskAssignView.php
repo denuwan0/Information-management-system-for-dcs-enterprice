@@ -45,7 +45,12 @@
 							<tr>
 								<th>id</th>
 								<th>Task Name</th>
-								<th>Type</th>
+								<th>Branch</th>
+								<th>Employee</th>
+								<th>Order Id</th>
+								<th>Order type</th>
+								<th>Start Date</th>
+								<th>End Date</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -76,7 +81,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpSpecialTask/fetch_all_join/",
+		url: API+"EmpTaskAssign/fetch_all_join/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -90,12 +95,12 @@ function loadData() {
 				
 				$.each(data, function (i, item) {
 					//console.log(item);
-					var is_active_sp_task  ='';
-					if(item.is_active_sp_task  == 1){
-						is_active_sp_task  = '<span class="right badge badge-success">Active</span>';
+					var is_active_sp_task_assign  ='';
+					if(item.is_active_sp_task_assign  == 1){
+						is_active_sp_task_assign  = '<span class="right badge badge-success">Active</span>';
 					}
 					else{
-						is_active_sp_task  = '<span class="right badge badge-danger">Inactive</span>';
+						is_active_sp_task_assign  = '<span class="right badge badge-danger">Inactive</span>';
 					}
 					
 					
@@ -103,8 +108,14 @@ function loadData() {
 					
 					table.row.add([item.special_task_id,
 					item.task_name,					
-					item.task_type,
-					is_active_sp_task ,
+					item.company_branch_name,
+					item.emp_epf+' - '+item.emp_first_name,
+					item.invoice_id,
+					item.order_type,
+					item.task_start_date,
+					item.task_end_date,
+					item.company_branch_name,
+					is_active_sp_task_assign ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';

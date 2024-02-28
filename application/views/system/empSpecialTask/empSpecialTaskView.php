@@ -76,7 +76,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpSpecialTask/fetch_all_join/",
+		url: API+"EmpSpecialTask//",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);

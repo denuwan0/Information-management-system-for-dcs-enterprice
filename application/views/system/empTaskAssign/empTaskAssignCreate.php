@@ -9,73 +9,58 @@
 					<form>
 						<div class="form-row">
 							<div class="col-md-6 mb-3">
-								<label for="task_name">Task Name</label>
-								<input type="text" class="form-control" id="task_name" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
+								<label for="special_task_id">Task</label>
+								<select class="custom-select" id="special_task_id" aria-describedby="" required>
+								</select>
 							</div>
-							<!--div class="col-md-3 mb-3">
+							<div class="col-md-3 mb-3">
 								<label for="branch_id">Branch Id</label>
 								<select class="custom-select" id="branch_id" aria-describedby="" required>
 								</select>
-							</div-->
-							<!--div class="col-md-3 mb-3">
-								<label for="invoice_id">Invoice Id</label>
-								<select class="custom-select" id="invoice_id" aria-describedby="" required>
-								</select>
-							</div-->
+							</div>
 							<div class="col-md-3 mb-3">
-								<label for="task_type">Task Type</label>
-								<select class="custom-select" id="task_type" aria-describedby="" required>
-									<option value="">Select Task Type</option>
-									<option value="General Work">General Work</option>
-									<option value="Scaffolding">Scaffolding</option>
-									<option value="Heavy Vehicle Operation">Heavy Vehicle Operation</option>
+								<label for="emp_id">Employee</label>
+								<select class="custom-select" id="emp_id" aria-describedby="" required>
 								</select>
 							</div>
-							<!--div class="col-md-3 mb-3">
-								<label for="valid_from_date">Date from</label>
-								<input class="form-control" id="valid_from_date" name="valid_from_date" placeholder="YYYY-MM-DD" type="text" autocomplete="off"/>
+							<div class="col-md-3 mb-3">
+								<label for="order_type">Order Type</label>
+								<select class="custom-select" id="order_type" aria-describedby="" required>
+									<option value="">Select Order Type</option>
+									<option value="Retail">Retail Order</option>
+									<option value="Rental">Rental Order</option>
+									<option value="Online">Online Order</option>
+								</select>
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="invoice_id">Order</label>
+								<select class="custom-select" id="invoice_id" aria-describedby="" required>
+								</select>
+							</div>
+							
+							<div class="col-md-3 mb-3">
+								<label for="task_start_date">Start Date</label>
+								<input class="form-control" id="task_start_date" name="task_start_date" placeholder="YYYY-MM-DD" type="text" autocomplete="off"/>
 								<div id="validationServer05Feedback" class="invalid-feedback">
 									Please provide a valid zip.
 								</div>
 							</div>
 							<div class="col-md-3 mb-3">
-								<label for="valid_to_date">Date to</label>
-								<input class="form-control" id="valid_to_date" name="valid_to_date" placeholder="YYYY-MM-DD" type="text" autocomplete="off"/>
+								<label for="task_end_date">End Date</label>
+								<input class="form-control" id="task_end_date" name="task_end_date" placeholder="YYYY-MM-DD" type="text" autocomplete="off"/>
 								<div class="valid-feedback">
 									Looks good!
 								</div>
 							</div>
-							<div class="col-md-3 mb-3">
-								<label for="task_start_time">Task Start Time</label>
-								<input type="text" class="form-control" id="task_start_time" placeholder="ex 10:00:00" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
-							</div>
-							<div class="col-md-3 mb-3">
-								<label for="task_end_time">Task End Time</label>
-								<input type="text" class="form-control" id="task_end_time" placeholder="ex 17:20:00" required>
-								<div class="valid-feedback">
-									Looks good!
-								</div>
-							</div-->							
+													
 						</div>
 						<div class="form-row">
 							<div class="col-md-2 mb-3">
 								<div class="custom-control custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="is_active_sp_task"  value="1">
-									<label for="is_active_sp_task" class="custom-control-label">is active</label>
+									<input class="custom-control-input" type="checkbox" id="is_active_sp_task_assign"  value="1">
+									<label for="is_active_sp_task_assign" class="custom-control-label">is active</label>
 								</div>
 							</div>
-							<!--div class="col-md-2 mb-3">
-								<div class="custom-control custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="is_complete" value="1">
-									<label for="is_complete" class="custom-control-label">is complete</label>
-								</div>
-							</div-->
 						</div>
 					  
 					</form>
@@ -90,8 +75,8 @@
 </section>
 <script>
 $(document).ready(function(){
-	var date_input=$('input[name="valid_from_date"]'); //our date input has the name "date"
-	var date_input1=$('input[name="valid_to_date"]'); //our date input has the name "date"
+	var date_input=$('input[name="task_start_date"]'); //our date input has the name "date"
+	var date_input1=$('input[name="task_end_date"]'); //our date input has the name "date"
 	var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
 	var options={
 		format: 'yyyy-mm-dd',
@@ -128,23 +113,21 @@ $.ajax({
 
 loadBranch();
 
-
-
-function loadRentInvoice(){
+function loadEmployee(){
 $.ajax({
 	type: "POST",
 	cache : false,
 	async: true,
 	dataType: "json",
-	url: API+"InventoryRentalInvoice/fetch_all_active/",
-	success: function(data2, result){
-		console.log(data2);
-		var company_drp = '<option value="">Select Invoice</option>';
-		$.each(data2, function(index, item) {
+	url: API+"Employee/fetch_all_active/",
+	success: function(data, result){
+		console.log(data);
+		var company_drp = '';
+		$.each(data, function(index, item) {
 			
-			company_drp += '<option value="'+item.invoice_id+'">'+item.invoice_id+' - '+item.customer_old_nic_no+' - '+item.customer_name+'</option>';
+			company_drp += '<option value="'+item.emp_id+'">'+item.emp_epf+' - '+item.emp_first_name+'</option>';
         });
-		$('#invoice_id').append(company_drp);
+		$('#emp_id').append(company_drp);
 	},
 	error: function(XMLHttpRequest, textStatus, errorThrown) {						
 		
@@ -153,55 +136,134 @@ $.ajax({
 });
 }
 
-loadRentInvoice();
+loadEmployee();
+
+function loadTask(){
+$.ajax({
+	type: "POST",
+	cache : false,
+	async: true,
+	dataType: "json",
+	url: API+"EmpSpecialTask/fetch_all_active/",
+	success: function(data, result){
+		console.log(data);
+		var company_drp = '';
+		$.each(data, function(index, item) {
+			
+			company_drp += '<option value="'+item.special_task_id+'">'+item.task_name+'</option>';
+        });
+		$('#special_task_id').append(company_drp);
+		
+		
+	},
+	error: function(XMLHttpRequest, textStatus, errorThrown) {						
+		
+		//console.log(errorThrown);
+	}
+});
+}
+
+loadTask();
+
+function loadInvoice(type){
+	
+	var url = '';
+	
+	if(type == 'Retail'){
+		url = API+"RetailInvoice/fetch_all_active_not_complete/";
+	}
+	else if(type == 'Rental'){
+		url = API+"RentalInvoice/fetch_all_active_not_complete/";
+	}
+	else if(type == 'Online'){
+		url = API+"OnlineInvoice/fetch_all_active_not_complete/";
+	}
+	
+	$.ajax({
+		type: "POST",
+		cache : false,
+		async: true,
+		dataType: "json",
+		url: url,
+		success: function(data2, result){
+			console.log(data2);
+			var company_drp = '<option value="">Select Order</option>';
+			$.each(data2, function(index, item) {
+				
+				company_drp += '<option value="'+item.invoice_id+'">'+item.invoice_id+' - '+item.customer_old_nic_no+' - '+item.customer_name+'</option>';
+			});
+			$('#invoice_id').html(company_drp);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			const notyf = new Notyf();
+			
+			$('#invoice_id').html('');
+			
+			notyf.error({
+			  message: 'Invoices not found!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+			//console.log(errorThrown);
+		}
+	});
+}
+
+
+$(document).on('change','#order_type', function(){
+	console.log($(this).val());
+	loadInvoice($(this).val());
+})
+
 
 $('#submit').click(function(e){
 	e.preventDefault();
 		
-	var branch_id = 0;
-	var task_name = "";
-	//var invoice_id = 0;
-	var task_type = 0;
-	//var task_start_date = "";
-	//var task_end_date = "";
-	//var task_start_time = 0;
-	//var task_end_time = 0;
-	var is_active_sp_task = 0;
-	//var is_complete = 0;
+	var special_task_id = 0;
+	var branch_id = "";
+	var emp_id = 0;
+	var invoice_id = 0;
+	var order_type = "";
+	var task_start_date = "";
+	var task_end_date = 0;
+	var is_active_sp_task_assign = 0;
 	
-	//branch_id = $('#branch_id').val();
-	task_name = $('#task_name').val();
-	//invoice_id = $('#invoice_id').val();
-	task_type = $('#task_type').val();
-	//task_start_date = $('#task_start_date').val();
-	//task_end_date = $('#task_end_date').val();
-	//task_start_time = $('#task_start_time').val();
-	//task_end_time = $('#task_end_time').val();
-	is_active_sp_task = $("#is_active_sp_task").is(':checked')? 1 : 0;
-	//is_complete = $("#is_complete").is(':checked')? 1 : 0;
+	special_task_id = $('#special_task_id').val();
+	branch_id = $('#branch_id').val();
+	emp_id = $('#emp_id').val();
+	invoice_id = $('#invoice_id').val();
+	order_type = $('#order_type').val();
+	task_start_date = $('#task_start_date').val();
+	task_end_date = $('#task_end_date').val();
+	is_active_sp_task_assign = $("#is_active_sp_task_assign").is(':checked')? 1 : 0;
 	
-	/* typeof branch_id !== 'undefined' && branch_id !== '' 
-	&& typeof invoice_id !== 'undefined' && invoice_id !== '' 
-	&& typeof task_start_date !== 'undefined' && task_start_date !== '' 
-	&& typeof task_end_date !== 'undefined' && task_end_date !== ''
-	&& typeof task_start_time !== 'undefined' && task_start_time !== '' 
-	&& typeof task_end_time !== 'undefined' && task_end_time !== '' */
+
 		
-	if( typeof task_name !== 'undefined' && task_name !== ''
-	&& typeof task_type !== 'undefined' && task_type !== '')
+	if( typeof special_task_id !== 'undefined' && special_task_id !== ''
+	&& typeof branch_id !== 'undefined' && branch_id !== ''
+	&& typeof emp_id !== 'undefined' && emp_id !== ''
+	&& typeof order_type !== 'undefined' && order_type !== ''
+	&& typeof task_start_date !== 'undefined' && task_start_date !== ''
+	&& typeof task_end_date !== 'undefined' && task_end_date !== ''
+	&& typeof invoice_id !== 'undefined' && invoice_id !== '')
 	{
 		
 		var formData = new FormData();
-        //formData.append('branch_id',branch_id);
-		formData.append('task_name',task_name);
-		//formData.append('invoice_id',invoice_id);
-		formData.append('task_type',task_type);
-		/* formData.append('task_start_date',task_start_date);
+        formData.append('special_task_id',special_task_id);
+		formData.append('branch_id',branch_id);
+		formData.append('emp_id',emp_id);	
+		formData.append('invoice_id',invoice_id);	
+		formData.append('order_type',order_type);
+		formData.append('task_start_date',task_start_date);
 		formData.append('task_end_date',task_end_date);
-		formData.append('task_start_time',task_start_time);
-		formData.append('task_end_time',task_end_time); */
-		formData.append('is_active_sp_task',is_active_sp_task);
-		//formData.append('is_complete',is_complete);
+		formData.append('is_active_sp_task_assign',is_active_sp_task_assign);
 				
 		$.ajax({
 			type: "POST",
@@ -212,7 +274,7 @@ $('#submit').click(function(e){
 			processData: false,
 			contentType: false,
 			data: formData,	
-			url: API+"EmpSpecialTask/insert/",
+			url: API+"EmpTaskAssign/insert/",
 			success: function(data, result){
 				console.log(data);	
 				const notyf = new Notyf();
@@ -230,7 +292,7 @@ $('#submit').click(function(e){
 				  
 				})
 				window.setTimeout(function() {
-					window.location = "<?php echo base_url() ?>EmpSpecialTask/view";
+					window.location = "<?php echo base_url() ?>EmpTaskAssign/view";
 				}, 3000);
 			}	
 				
