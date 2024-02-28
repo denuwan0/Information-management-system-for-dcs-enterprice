@@ -194,7 +194,7 @@
 	var customer_working_address = '';
 	var customer_shipping_address = '';
 	var invoice_header_header_id ='';
-	
+	var customer_id = '';
 	
 	var is_order_saved = 0;
 	var is_order_paid = 0;
@@ -544,6 +544,7 @@ $(document).on('click', '#payBtn', function(){
 								'<div class="form-group">'+
 								  '<label for="customer_old_nic_no">Customer</label>'+
 								  '<input type="text" class="form-control" id="customer_old_nic_no" value="'+customer_name+'" readonly>'+
+								  '<input type="hidden" class="form-control" id="customer_id" value="'+customer_id+'" readonly>'+
 								'</div>'+							
 							'</div>'+
 							'<div class="col-md-4 mb-3">'+
@@ -554,8 +555,8 @@ $(document).on('click', '#payBtn', function(){
 							'</div>'+
 							'<div class="col-md-4 mb-3">'+
 								'<div class="form-group">'+
-								  '<label for="customer_name">Payment Reference</label>'+
-								  '<input type="text" class="form-control" id="customer_name" placeholder="Customer username">'+
+								  '<label for="payment_reference">Payment Reference</label>'+
+								  '<input type="text" class="form-control" id="payment_reference" value="" placeholder="Payment Reference">'+
 								'</div>'+								
 							'</div>'+
 						'</form>'+	
@@ -803,6 +804,7 @@ $(document).on('keyup', '#customer_old_nic_no', function(){
 				
 				customer_old_nic_no = data[0].customer_old_nic_no;
 				customer_name = data[0].customer_name;
+				customer_id = data[0].customer_id;
 				customer_contact_no = data[0].customer_contact_no;
 				customer_email = data[0].customer_email;
 				customer_working_address = data[0].customer_working_address;
@@ -1010,8 +1012,79 @@ $(document).on('click', '#invoicePrintBtn', function(){
 	}
 	
 	$(document).on('click', '.payMethod', function(){
-		console.log($(this).attr('value'));
+		console.log($(this).parent().parent().parent());
+		console.log($('#customer_id').attr('value'));
+		console.log($('#invoice_header_header_id').attr('value'));
+		console.log($('#payment_reference').attr('value'));
+		
+		var payement_method = $(this).attr('value');
+		var customer_id = $('#customer_id').attr('value');
+		var invoice_header_header_id = $('#invoice_header_header_id').attr('value');
+		var payment_reference = $(document).find('#payment_reference').val();
+		
+	
+		
+		payement(customer_id, invoice_header_header_id, payment_reference, payement_method);
 	})
+	
+	function payement(customer_id, invoice_header_header_id, payment_reference, payement_method){
+		
+		var paymentArr = [];
+		
+		paymentArr.push({
+			'customer_id': customer_id,
+			'invoice_header_header_id': invoice_header_header_id,
+			'payment_reference': payment_reference,
+			'payement_method': payement_method
+		})
+		
+		
+		console.log(paymentArr);
+		
+		var formData = new Object();
+		formData = {
+			paymentArr:paymentArr
+		};
+		
+		
+		
+		$.ajax({
+			type: "POST",
+			//enctype: 'multipart/form-data',
+			cache : false,
+			async: true,
+			contentType: 'application/json',
+			dataType: "json",
+			processData: false,
+			data: JSON.stringify(formData),	
+			url: API+"RetailInvoice/updatePayment/",
+			success: function(data, result){
+				console.log(data);
+				const notyf = new Notyf();
+				if(data.message == "Payment Updated!"){	
+					notyf.success({
+					  message: 'Payment Updated!',
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					//window.setTimeout(function() {
+					//	window.location = "<?php echo base_url() ?>branch/view";
+					//}, 3000);
+				}
+				
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {						
+				console.log(textStatus);					
+			}
+		});	
+	}
 
 window.addEventListener('beforeunload', function (e) {
   // Cancel the event as stated by the standard.
