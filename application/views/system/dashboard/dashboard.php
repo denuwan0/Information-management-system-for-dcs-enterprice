@@ -1,11 +1,11 @@
  <section class="content">
   <div class="container-fluid">
 	<div class="row">
-		<div class="col-12 col-sm-6 col-md-3">
+		<div class="col-12 col-sm-6 col-md-3 user_box">
 		<div class="info-box mb-3">
 		  <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
-		  <div class="info-box-content">
+		  <div class="info-box-content ">
 			<span class="info-box-text">System Users</span>
 			<span class="info-box-number" id="user_count">2,000</span>
 		  </div>
@@ -102,36 +102,7 @@
 			</div>
 		  </div>
 		  <div class="card-footer">
-			<!--div class="row">
-			  <div class="col-sm-3 col-6">
-				<div class="description-block border-right">
-				  <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-				  <h5 class="description-header">$35,210.43</h5>
-				  <span class="description-text">TOTAL REVENUE</span>
-				</div>
-			  </div>
-			  <div class="col-sm-3 col-6">
-				<div class="description-block border-right">
-				  <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-				  <h5 class="description-header">$10,390.90</h5>
-				  <span class="description-text">TOTAL COST</span>
-				</div>
-			  </div>
-			  <div class="col-sm-3 col-6">
-				<div class="description-block border-right">
-				  <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-				  <h5 class="description-header">$24,813.53</h5>
-				  <span class="description-text">TOTAL PROFIT</span>
-				</div>
-			  </div>
-			  <div class="col-sm-3 col-6">
-				<div class="description-block">
-				  <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-				  <h5 class="description-header">1200</h5>
-				  <span class="description-text">GOAL COMPLETIONS</span>
-				</div>
-			  </div>
-			</div-->
+			
 		  </div>
 		</div>
 	  </div>
@@ -170,7 +141,7 @@
 			</div>
 		  </div>
 		  <div class="card-footer clearfix text-center">
-			<!--a href="javascript:void(0)" class="uppercase">View All Orders</a-->
+			
 		  </div>
 		</div>
 	  </div>
@@ -220,8 +191,14 @@ function loadData() {
 		contentType: 'application/json',
 		url: API+"Dashboard/data",
 		success: function(data, result){
-			console.log(data);
-			$('#user_count').text(data.system_users);
+			console.log(data.system_users);
+			if(data.system_users != ''){
+				$('#user_count').text(data.system_users);
+			}
+			else{
+				$('.user_box').remove();
+			}
+			
 			$('#vehicle_count').text(data.yard_vehicles);
 			$('#employee_count').text(data.yard_employees);
 			$('#customer_count').text(data.customers);
