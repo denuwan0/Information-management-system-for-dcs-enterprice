@@ -79,30 +79,30 @@
 
 				<div class="progress-group">
 				  Compeleted Rental Orders
-				  <span class="float-right"><b>160</b>/200</span>
+				  <span class="float-right"><b id="complete_rental_orders">0</b>/100</span>
 				  <div class="progress progress-sm">
-					<div class="progress-bar bg-primary" style="width: 80%"></div>
+					<div class="progress-bar bg-primary" id="complete_rental_orders_width"  ></div>
 				  </div>
 				</div>
 				<div class="progress-group">
 				  Compeleted Retail Orders
-				  <span class="float-right"><b>310</b>/400</span>
+				  <span class="float-right"><b id="complete_retail_orders">0</b>/100</span>
 				  <div class="progress progress-sm">
-					<div class="progress-bar bg-danger" style="width: 75%"></div>
+					<div class="progress-bar bg-danger" id="complete_retail_orders_width" ></div>
 				  </div>
 				</div>
 				<div class="progress-group">
 				  <span class="progress-text">Compeleted Online Orders</span>
-				  <span class="float-right"><b>480</b>/800</span>
+				  <span class="float-right"><b id="complete_online_orders">0</b>/100</span>
 				  <div class="progress progress-sm">
-					<div class="progress-bar bg-success" style="width: 60%"></div>
+					<div class="progress-bar bg-success" id="complete_online_orders_width"></div>
 				  </div>
 				</div>
 			  </div>
 			</div>
 		  </div>
 		  <div class="card-footer">
-			<div class="row">
+			<!--div class="row">
 			  <div class="col-sm-3 col-6">
 				<div class="description-block border-right">
 				  <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
@@ -131,14 +131,14 @@
 				  <span class="description-text">GOAL COMPLETIONS</span>
 				</div>
 			  </div>
-			</div>
+			</div-->
 		  </div>
 		</div>
 	  </div>
 	</div>
 
 	<div class="row">
-	  <div class="col-md-6">
+	  <div class="col-md-8">
 		<div class="card">
 		  <div class="card-header border-transparent">
 			<h3 class="card-title">Latest Orders</h3>
@@ -156,31 +156,29 @@
 				<thead>
 				<tr>
 				  <th>Order ID</th>
-				  <th>Customer</th>
+				  <th>Ordet Date</th>
+				  <th>Ordet Type</th>
 				  <th>Status</th>
+				  <th></th>
 				</tr>
 				</thead>
-				<tbody>
-				<tr>
-				  <td><a href="pages/examples/invoice.html">OR9842</a></td>
-				  <td>Call of Duty IV</td>
-				  <td><span class="badge badge-success">Shipped</span></td>
-				</tr>
+				<tbody id="orders_list">
+				
 				
 				</tbody>
 			  </table>
 			</div>
 		  </div>
 		  <div class="card-footer clearfix text-center">
-			<a href="javascript:void(0)" class="uppercase">View All Orders</a>
+			<!--a href="javascript:void(0)" class="uppercase">View All Orders</a-->
 		  </div>
 		</div>
 	  </div>
 
-	  <div class="col-md-6"> 
+	  <div class="col-md-4"> 
 		<div class="card">
 		  <div class="card-header">
-			<h3 class="card-title">Recently Added Main Products</h3>
+			<h3 class="card-title">Recently Added Products</h3>
 
 			<div class="card-tools">
 			  <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -190,62 +188,14 @@
 			</div>
 		  </div>
 		  <div class="card-body p-0">
-			<ul class="products-list product-list-in-card pl-2 pr-2">
-			  <li class="item">
-				<div class="product-img">
-				  <img src="<?php echo base_url() ?>assets/system/backend/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-				</div>
-				<div class="product-info">
-				  <a href="javascript:void(0)" class="product-title">Samsung TV
-					<span class="badge badge-warning float-right">$1800</span></a>
-				  <span class="product-description">
-					Samsung 32" 1080p 60Hz LED Smart HDTV.
-				  </span>
-				</div>
-			  </li>
-			  <li class="item">
-				<div class="product-img">
-				  <img src="<?php echo base_url() ?>assets/system/backend/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-				</div>
-				<div class="product-info">
-				  <a href="javascript:void(0)" class="product-title">Bicycle
-					<span class="badge badge-info float-right">$700</span></a>
-				  <span class="product-description">
-					26" Mongoose Dolomite Mens 7-speed, Navy Blue.
-				  </span>
-				</div>
-			  </li>
-			  <li class="item">
-				<div class="product-img">
-				  <img src="<?php echo base_url() ?>assets/system/backend/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-				</div>
-				<div class="product-info">
-				  <a href="javascript:void(0)" class="product-title">
-					Xbox One <span class="badge badge-danger float-right">
-					$350
-				  </span>
-				  </a>
-				  <span class="product-description">
-					Xbox One Console Bundle with Halo Master Chief Collection.
-				  </span>
-				</div>
-			  </li>
-			  <li class="item">
-				<div class="product-img">
-				  <img src="<?php echo base_url() ?>assets/system/backend/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-				</div>
-				<div class="product-info">
-				  <a href="javascript:void(0)" class="product-title">PlayStation 4
-					<span class="badge badge-success float-right">$399</span></a>
-				  <span class="product-description">
-					PlayStation 4 500GB Console (PS4)
-				  </span>
-				</div>
-			  </li>
+			<ul class="products-list product-list-in-card pl-2 pr-2" id="item_list">
+			
+			  
+			  
 			</ul>
 		  </div>
 		  <div class="card-footer text-center">
-			<a href="javascript:void(0)" class="uppercase">View All Products</a>
+			<a href="http://localhost/dcs/item/view" class="uppercase">View All Products</a>
 		  </div>
 		</div>
 	  </div>
@@ -275,6 +225,92 @@ function loadData() {
 			$('#vehicle_count').text(data.yard_vehicles);
 			$('#employee_count').text(data.yard_employees);
 			$('#customer_count').text(data.customers);
+			
+			$('#complete_online_orders').text(data.complete_online_orders);
+			$('#complete_rental_orders').text(data.complete_rental_orders);
+			$('#complete_retail_orders').text(data.complete_retail_orders);
+			
+			var complete_online_orders_width = ((data.complete_online_orders)/100)*100;
+			var complete_rental_orders_width = ((data.complete_rental_orders)/100)*100;
+			var complete_retail_orders_width = ((data.complete_retail_orders)/100)*100;
+			
+			$('#complete_online_orders_width').css('width',complete_online_orders_width+'%');
+			$('#complete_rental_orders_width').css('width',complete_rental_orders_width+'%');
+			$('#complete_retail_orders_width').css('width',complete_retail_orders_width+'%');
+			
+			
+			$.each(data.latest_orders, function (i, item) {
+				
+				var status = '';
+				if(item.is_complete == 1){
+					status = '<span class="badge badge-success">Complete</span>';
+				}
+				else{
+					status = '<span class="badge badge-danger">Not Complete</span>';
+				}
+				
+				//console.log(item);
+				var listHtml = '<tr>'+					 
+					  '<td>'+item.order_id+'</td>'+
+					  '<td>'+item.created_date+'</td>'+
+					   '<td>'+item.order_type+'</td>'+
+					  '<td>'+status+'</td>'+
+					  '<td><a class="btn btn-primary btn-sm" href="pages/examples/invoice.html"><i class="fa fa-eye"></i></a></td>'+					  
+					'</tr>';
+					
+				$('#orders_list').append(listHtml);
+			})
+			
+			$.each(data.latest_items, function (i, item) {
+				
+								
+				//console.log(item);
+				var listHtml = '<li class="item">'+
+								'<div class="product-img">'+
+								  '<img src="'+item.item_image_url+'" alt="Product Image" class="img-size-50">'+
+								'</div>'+
+								'<div class="product-info">'+
+								  '<a href="javascript:void(0)" class="product-title">'+item.item_name+
+								  '<span class="product-description">'+item.item_desc+
+									
+								  '</span>'+
+								'</div>'+
+							  '</li>';
+					
+				$('#item_list').append(listHtml);
+			})
+			
+			var labels = [];
+			var total = [];
+			
+			$.each(data.branch_wise_sale, function (i, item) {
+				labels.push(item.company_branch_name);
+				total.push(item.total);
+			})
+			
+			console.log(data.branch_wise_sale);
+			var ctx = document.getElementById("salesChart").getContext("2d");
+			
+
+			var myChart = new Chart(ctx, {
+				type: "bar",
+				data: {
+					labels: labels,
+					datasets: [{
+						label: "Branch Revenue Rs.", // Name the series
+						data: total, // Specify the data values array
+						fill: false,
+						borderColor: "#2196f3", // Add custom color border (Line)
+						backgroundColor: "#2196f3", // Add custom color background (Points and Fill)
+						borderWidth: 1 // Specify bar border width
+					}]},
+				options: {
+				  responsive: true, // Instruct chart js to respond nicely.
+				  maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
+				}
+			});
+			
+			
 				
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {						
@@ -287,26 +323,7 @@ loadData();
 
 
 
-	var ctx = document.getElementById("salesChart").getContext("2d");
-
-
-	var myChart = new Chart(ctx, {
-		type: "bar",
-		data: {
-			labels: ["Wattala",	"Kiribathgoda"],
-			datasets: [{
-				label: "Branch Revenue", // Name the series
-				data: [1000000,	800000], // Specify the data values array
-				fill: false,
-				borderColor: "#2196f3", // Add custom color border (Line)
-				backgroundColor: "#2196f3", // Add custom color background (Points and Fill)
-				borderWidth: 1 // Specify bar border width
-			}]},
-		options: {
-		  responsive: true, // Instruct chart js to respond nicely.
-		  maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
-		}
-	});
+	
 </script> 
     
  

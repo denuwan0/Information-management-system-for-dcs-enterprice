@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2024 at 08:12 PM
+-- Generation Time: Mar 03, 2024 at 03:02 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -1856,6 +1856,8 @@ CREATE TABLE `online_feedback` (
 CREATE TABLE `online_order` (
   `order_id` int(10) NOT NULL,
   `kart_id` int(10) NOT NULL,
+  `created_date` varchar(20) NOT NULL,
+  `create_time` varchar(20) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
   `promo_code_id` int(10) NOT NULL,
   `is_paid` tinyint(1) NOT NULL,
@@ -3365,6 +3367,12 @@ ALTER TABLE `online_buying_pattern_header`
 --
 ALTER TABLE `online_feedback`
   MODIFY `feedback_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `online_order`
+--
+ALTER TABLE `online_order`
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_payments`
