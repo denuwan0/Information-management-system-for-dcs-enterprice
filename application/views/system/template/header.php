@@ -813,7 +813,7 @@
 				</a>
 				<ul class="nav nav-treeview">
 				  <li class="nav-item">
-					<a href="'.base_url().'PointOfSale/view" class="nav-link">
+					<a href="'.base_url().'PosRental/view" class="nav-link">
 					  <i class="fas fa-money-bill-alt nav-icon text-primary"></i>
 					  <p>Rental Invoice</p>
 					</a>

@@ -125,7 +125,7 @@ function startTimer(duration, display) {
 }
 
 window.onload = function () {
-    var count = 30,
+    var count = 60,
         display = document.querySelector('#countDown');
        // display.textContent = "00:"+count;
      startTimer(count, display);       

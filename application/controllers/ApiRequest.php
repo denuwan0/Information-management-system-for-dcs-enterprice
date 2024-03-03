@@ -64,12 +64,9 @@ class ApiRequest extends CI_Controller {
 						
 		$rest_api_base_url = 'http://localhost/API/';
 		
-		$post_endpoint = 'SysUser/authenticate';
+		$post_endpoint = 'SysUser/authenticate';		
 		
-		
-		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);
-		
-		
+		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);				
 		
 		$phpObj = json_decode($response);
 		$phparray = (array) $phpObj;
@@ -89,9 +86,9 @@ class ApiRequest extends CI_Controller {
 			
 			echo json_encode($data);
 		}
-		/* else{
+		else{
 			echo $response;
-		} */
+		}
 		
 		
 		
