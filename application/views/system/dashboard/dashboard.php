@@ -11,7 +11,7 @@
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-12 col-sm-6 col-md-3">
+	  <div class="col-12 col-sm-6 col-md-3 yard_box">
 		<div class="info-box">
 		  <span class="info-box-icon bg-info elevation-1"><i class="fas fa-truck"></i></span>
 
@@ -23,7 +23,7 @@
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-12 col-sm-6 col-md-3">
+	  <div class="col-12 col-sm-6 col-md-3 employee_box">
 		<div class="info-box mb-3">
 		  <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-id-card"></i></span>
 
@@ -35,7 +35,7 @@
 	  </div>
 	  <div class="clearfix hidden-md-up"></div>
 
-	  <div class="col-12 col-sm-6 col-md-3">
+	  <div class="col-12 col-sm-6 col-md-3 customer_box">
 		<div class="info-box mb-3">
 		  <span class="info-box-icon bg-success elevation-1"><i class="fas fa-smile"></i></span>
 
@@ -191,7 +191,7 @@ function loadData() {
 		contentType: 'application/json',
 		url: API+"Dashboard/data",
 		success: function(data, result){
-			console.log(data.system_users);
+			console.log(data);
 			if(data.system_users != ''){
 				$('#user_count').text(data.system_users);
 			}
@@ -199,9 +199,28 @@ function loadData() {
 				$('.user_box').remove();
 			}
 			
-			$('#vehicle_count').text(data.yard_vehicles);
-			$('#employee_count').text(data.yard_employees);
-			$('#customer_count').text(data.customers);
+			if(data.yard_vehicles != ''){
+				$('#vehicle_count').text(data.yard_vehicles);
+			}
+			else{
+				$('.yard_box').remove();
+			}
+			
+			if(data.yard_employees != ''){
+				$('#employee_count').text(data.yard_employees);
+			}
+			else{
+				$('.employee_box').remove();
+			}
+			
+			if(data.customers != ''){
+				$('#customer_count').text(data.customers);
+			}
+			else{
+				$('.customer_box').remove();
+			}
+			
+			
 			
 			$('#complete_online_orders').text(data.complete_online_orders);
 			$('#complete_rental_orders').text(data.complete_rental_orders);
@@ -256,6 +275,8 @@ function loadData() {
 					
 				$('#item_list').append(listHtml);
 			})
+			
+			console.log(data.branch_wise_sale);
 			
 			var labels = [];
 			var total = [];
