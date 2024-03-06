@@ -393,7 +393,7 @@
                 </ul>
               </li-->
 				 <?php
-				if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+				
 					echo '<li class="nav-item">
 						<a href="#" class="nav-link">
 						  <i class="far fa-circle nav-icon text-red"></i>
@@ -402,23 +402,33 @@
 							<i class="right fas fa-angle-left"></i>
 						  </p>
 						</a>
-						<ul class="nav nav-treeview">
-						  <li class="nav-item">
-							<a href="'.base_url().'EmpSpecialTask/view" class="nav-link">
-							  <i class="fa fa-history nav-icon text-red"></i>
-							  <p>Task List</p>
-							</a>
-						  </li>
-						  <li class="nav-item">
-							<a href="'.base_url().'EmpTaskAssign/view" class="nav-link">
-							  <i class="fa fa fa-check-circle nav-icon text-red"></i>
-							  <p>Assign Tasks</p>
-							</a>
-						  </li>                  
-						</ul>
+						<ul class="nav nav-treeview">';
+							if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+								 echo ' <li class="nav-item">
+									<a href="'.base_url().'EmpSpecialTask/view" class="nav-link">
+									  <i class="fa fa-history nav-icon text-red"></i>
+									  <p>Task List</p>
+									</a>
+								  </li>
+								  <li class="nav-item">
+									<a href="'.base_url().'EmpTaskAssign/view" class="nav-link">
+									  <i class="fa fa fa-check-circle nav-icon text-red"></i>
+									  <p>Assign Tasks</p>
+									</a>
+								  </li>';
+									}
+							if($this->session->userdata('sys_user_group_name') == "Staff"){
+								 echo ' <li class="nav-item">
+									<a href="'.base_url().'empTaskAssign/myTaskView" class="nav-link">
+									  <i class="fa fa-history nav-icon text-red"></i>
+									  <p>My Task List</p>
+									</a>
+								  </li>';
+							}
+					echo '</ul>
 					  </li>';
 					
-				}
+			
 			  ?>
             </ul>
           </li>

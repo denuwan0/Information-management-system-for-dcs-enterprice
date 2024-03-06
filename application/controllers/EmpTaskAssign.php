@@ -29,6 +29,13 @@ class EmpTaskAssign extends CI_Controller {
 		$this->load->view('/system/empTaskAssign/empTaskAssignCreate');
 		$this->load->view('/system/template/footer');
 	}
+	
+	public function myTaskView()
+	{		
+		$this->load->view('/system/template/header');		
+		$this->load->view('/system/empTaskAssign/myTaskView');
+		$this->load->view('/system/template/footer');
+	}
 		
 	
 }
