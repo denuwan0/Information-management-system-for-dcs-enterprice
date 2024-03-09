@@ -113,7 +113,7 @@ function loadData() {
 					}
 					
 					
-					table.row.add([item.special_task_id,
+					table.row.add([item.assign_emp_line_id ,
 					item.task_name,					
 					item.company_branch_name,
 					item.emp_epf+' - '+item.emp_first_name,
@@ -124,8 +124,9 @@ function loadData() {
 					is_active_sp_task_assign ,
 					is_complete,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Staff" ){
-							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-							echo '<a type="button" id="editBtn" vehicleId="" href="" class="btn btn-danger btn-sm editBtn"><i class="fa fa-share"></i></a></div>';
+							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn" order_type=""><i class="fa fa-eye"></i></a>';
+							echo '<div class="btn-group margin"><a type="button" id="completeBtn" class="btn btn-success btn-sm completeBtn"><i class="far fa-calendar-check"></i></a>';
+							//echo '<a type="button" id="skipBtn" href="" class="btn btn-danger btn-sm skipBtn"><i class="fa fa-share"></i></a></div>';
 						}
 
 					?>'
@@ -135,8 +136,10 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpSpecialTask/edit/'+item.special_task_id);
-					$(".viewBtn").last().attr('value', item.special_task_id);
+					//$(".skipBtn").last().attr('value', item.assign_emp_line_id );
+					$(".completeBtn").last().attr('value', item.assign_emp_line_id );
+					$(".viewBtn").last().attr('value', item.assign_emp_line_id );
+					$(".viewBtn").last().attr('order_type', item.order_type );
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							
@@ -157,56 +160,152 @@ loadData();
 
 $(document).on('click','.viewBtn', function(){
 
-	var special_task_id = "";
+	var assign_emp_line_id = "";
+	var order_type = "";
 	var Header = "";
 	var HTML = "";
 	
-	special_task_id = $(this).attr('value');
-	console.log(special_task_id);
+	assign_emp_line_id = $(this).attr('value');
+	order_type = $(this).attr('order_type');
+	console.log(order_type);
 	
-	$.ajax({
-		type: "GET",
-		cache : false,
-		async: true,
-		dataType: "json",
-		contentType: 'application/json',
-		url: API+"EmpSpecialTask/fetch_single_join?id="+special_task_id,
-		success: function(data, result){
-			console.log(data);
-			
-			Header = 'Task Name: '+data[0].task_name;
-			console.log(Header);
-			if(data[0].is_active_sp_task  == 1){
-				is_active_sp_task  = '<span class="right badge badge-success">Active</span>';
-			}
-			else{
-				is_active_sp_task  = '<span class="right badge badge-danger">Inactive</span>';
-			}
-			
-			HTML ='<table class="table table-borderless">'+					  
-					  '<tbody>'+
-						'<tr>'+
-						  '<th><label for="license_plate_no">Task Id: </label></th>'+
-						  '<td>'+data[0].special_task_id+'</td>'+
-						  '<td><label for="branch_id">Name: </label></td>'+
-						  '<td>'+data[0].task_name+'</td>'+
-						'</tr>'+
-						'<tr>'+
-						  '<th><label for="vehicle_yom">Type: </label></th>'+
-						  '<td>'+data[0].task_type+'</td>'+
-						  '<td><label for="max_load">Status: </label></td>'+
-						  '<td>'+is_active_sp_task+'</td>'+
-						'</tr>'+
-					  '</tbody>'+
-					'</table>';
-					
-		
-		$('#modalInfoHeader').html(Header);
-		$('#modalInfoBody').html(HTML);
-		$('#modalInfo').modal('show');
+	if(order_type == 'Retail'){
+		$.ajax({
+			type: "GET",
+			cache : false,
+			async: true,
+			dataType: "json",
+			contentType: 'application/json',
+			url: API+"EmpSpecialTask/fetch_single_join?id="+assign_emp_line_id,
+			success: function(data, result){
+				console.log(data);
 				
-		}
-	});
+				Header = 'Task Name: '+data[0].task_name;
+				console.log(Header);
+				if(data[0].is_active_sp_task  == 1){
+					is_active_sp_task  = '<span class="right badge badge-success">Active</span>';
+				}
+				else{
+					is_active_sp_task  = '<span class="right badge badge-danger">Inactive</span>';
+				}
+				
+				HTML ='<table class="table table-borderless">'+					  
+						  '<tbody>'+
+							'<tr>'+
+							  '<th><label for="license_plate_no">Task Id: </label></th>'+
+							  '<td>'+data[0].special_task_id+'</td>'+
+							  '<td><label for="branch_id">Name: </label></td>'+
+							  '<td>'+data[0].task_name+'</td>'+
+							'</tr>'+
+							'<tr>'+
+							  '<th><label for="vehicle_yom">Type: </label></th>'+
+							  '<td>'+data[0].task_type+'</td>'+
+							  '<td><label for="max_load">Status: </label></td>'+
+							  '<td>'+is_active_sp_task+'</td>'+
+							'</tr>'+
+						  '</tbody>'+
+						'</table>';
+						
+			
+			$('#modalInfoHeader').html(Header);
+			$('#modalInfoBody').html(HTML);
+			$('#modalInfo').modal('show');
+					
+			}
+		});
+	}
+	else if(order_type == 'Rental'){
+		$.ajax({
+			type: "GET",
+			cache : false,
+			async: true,
+			dataType: "json",
+			contentType: 'application/json',
+			url: API+"EmpSpecialTask/fetch_single_join?id="+assign_emp_line_id,
+			success: function(data, result){
+				console.log(data);
+				
+				Header = 'Task Name: '+data[0].task_name;
+				console.log(Header);
+				if(data[0].is_active_sp_task  == 1){
+					is_active_sp_task  = '<span class="right badge badge-success">Active</span>';
+				}
+				else{
+					is_active_sp_task  = '<span class="right badge badge-danger">Inactive</span>';
+				}
+				
+				HTML ='<table class="table table-borderless">'+					  
+						  '<tbody>'+
+							'<tr>'+
+							  '<th><label for="license_plate_no">Task Id: </label></th>'+
+							  '<td>'+data[0].special_task_id+'</td>'+
+							  '<td><label for="branch_id">Name: </label></td>'+
+							  '<td>'+data[0].task_name+'</td>'+
+							'</tr>'+
+							'<tr>'+
+							  '<th><label for="vehicle_yom">Type: </label></th>'+
+							  '<td>'+data[0].task_type+'</td>'+
+							  '<td><label for="max_load">Status: </label></td>'+
+							  '<td>'+is_active_sp_task+'</td>'+
+							'</tr>'+
+						  '</tbody>'+
+						'</table>';
+						
+			
+			$('#modalInfoHeader').html(Header);
+			$('#modalInfoBody').html(HTML);
+			$('#modalInfo').modal('show');
+					
+			}
+		});
+	}
+	else if(order_type == 'Online'){
+		$.ajax({
+			type: "GET",
+			cache : false,
+			async: true,
+			dataType: "json",
+			contentType: 'application/json',
+			url: API+"EmpSpecialTask/fetch_single_join?id="+assign_emp_line_id,
+			success: function(data, result){
+				console.log(data);
+				
+				Header = 'Task Name: '+data[0].task_name;
+				console.log(Header);
+				if(data[0].is_active_sp_task  == 1){
+					is_active_sp_task  = '<span class="right badge badge-success">Active</span>';
+				}
+				else{
+					is_active_sp_task  = '<span class="right badge badge-danger">Inactive</span>';
+				}
+				
+				HTML ='<table class="table table-borderless">'+					  
+						  '<tbody>'+
+							'<tr>'+
+							  '<th><label for="license_plate_no">Task Id: </label></th>'+
+							  '<td>'+data[0].special_task_id+'</td>'+
+							  '<td><label for="branch_id">Name: </label></td>'+
+							  '<td>'+data[0].task_name+'</td>'+
+							'</tr>'+
+							'<tr>'+
+							  '<th><label for="vehicle_yom">Type: </label></th>'+
+							  '<td>'+data[0].task_type+'</td>'+
+							  '<td><label for="max_load">Status: </label></td>'+
+							  '<td>'+is_active_sp_task+'</td>'+
+							'</tr>'+
+						  '</tbody>'+
+						'</table>';
+						
+			
+			$('#modalInfoHeader').html(Header);
+			$('#modalInfoBody').html(HTML);
+			$('#modalInfo').modal('show');
+					
+			}
+		});
+	}
+	
+	
 	
 	
 })
