@@ -52,6 +52,7 @@
 								<th>Start Date</th>
 								<th>End Date</th>
 								<th>Status</th>
+								<th>Complete</th>
 								<th>Option</th>
 							</tr>
 						</thead>
@@ -81,7 +82,7 @@ function loadData() {
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"EmpTaskAssign/fetch_all_join/",
+		url: API+"EmpTaskAssign/fetch_all_daily_task_join/",
 		success: function(data, result){
 			console.log(data);
 			//var parseData = JSON.stringify(data);
@@ -103,7 +104,13 @@ function loadData() {
 						is_active_sp_task_assign  = '<span class="right badge badge-danger">Inactive</span>';
 					}
 					
-					
+					var is_complete  ='';
+					if(item.is_complete  == 1){
+						is_complete  = '<span class="right badge badge-success">Complete</span>';
+					}
+					else{
+						is_complete  = '<span class="right badge badge-danger">Not Complete</span>';
+					}
 					
 					
 					table.row.add([item.special_task_id,
@@ -113,8 +120,9 @@ function loadData() {
 					item.invoice_id,
 					item.order_type,
 					item.task_start_date,
-					item.task_end_date,
+					item.task_end_date,					
 					is_active_sp_task_assign ,
+					is_complete,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Staff" ){
 							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
 							echo '<a type="button" id="editBtn" vehicleId="" href="" class="btn btn-danger btn-sm editBtn"><i class="fa fa-share"></i></a></div>';

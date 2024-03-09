@@ -17,9 +17,17 @@ class Dashboard extends CI_Controller {
 				//or redirect to 
 			}
 			else{
-				$this->load->view('/system/template/header');
-				$this->load->view('/system/dashboard/dashboard');
-				$this->load->view('/system/template/footer');
+				if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+					$this->load->view('/system/template/header');
+					$this->load->view('/system/dashboard/dashboard');
+					$this->load->view('/system/template/footer');
+				}
+				else{
+					$this->load->view('/system/template/header');
+					$this->load->view('/system/dashboard/dashboard1');
+					$this->load->view('/system/template/footer');
+				}
+				
 			}
 			
 		}
