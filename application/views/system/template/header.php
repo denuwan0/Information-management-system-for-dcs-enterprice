@@ -268,13 +268,13 @@
                       <i class="fas fa-toggle-on nav-icon text-red"></i>
                       <p>Leave Quota</p>
                     </a>
-                  </li>
+                  </li-->
 				   <li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpWiseLeaveQuota/view" class="nav-link">
                       <i class="fas fa-toggle-on nav-icon text-red"></i>
-                      <p>Employee wise Leave Quota</p>
+                      <p>My Leave Quota</p>
                     </a>
-                  </li-->
+                  </li>
                   <li class="nav-item">
                     <a href="<?php echo base_url() ?>EmpLeave/view" class="nav-link">
                       <i class="fas fa-bed nav-icon text-red"></i>

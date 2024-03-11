@@ -70,18 +70,19 @@
 				<tr>
 				  <th>Task</th>
 				  <th>Order Id</th>
-				  <th>Option</th>
+				  <th>Order Type</th>
+				  <th>Status</th>
 				</tr>
 				</thead>
-				<tbody id="orders_list">
+				<tbody id="daily_task_list">
 				
 				
 				</tbody>
 			  </table>
 			</div>
 		  </div>
-		  <div class="card-footer clearfix text-center">
-			
+		  <div class="card-footer text-center">
+			<a href="http://localhost/dcs/empTaskAssign/myTaskView" class="uppercase">View task list details</a>
 		  </div>
 		</div>
 	  </div>
@@ -103,12 +104,13 @@
 			<table class="table m-0">
 				<thead>
 				<tr>
+				  <th>Year</th>	
 				  <th>Leave type</th>
 				  <th>Occupied Leaves</th>
 				  <th>Available Leaves</th>
 				</tr>
 				</thead>
-				<tbody id="orders_list">
+				<tbody id="leave_quota_list">
 				
 				
 				</tbody>
@@ -118,7 +120,7 @@
 			</ul>
 		  </div>
 		  <div class="card-footer text-center">
-			<a href="http://localhost/dcs/item/view" class="uppercase">View All Products</a>
+			<a href="http://localhost/dcs/EmpWiseLeaveQuota/view" class="uppercase">View Leave quota details</a>
 		  </div>
 		</div>
 	  </div>
@@ -144,50 +146,30 @@ function loadData() {
 		url: API+"Dashboard/data",
 		success: function(data, result){
 			console.log(data);
-			if(data.system_users != ''){
-				$('#user_count').text(data.system_users);
-			}
-			else{
-				$('.user_box').remove();
+			if(data.monthly_rank != ''){
+				$('#monthly_rank').text(data.monthly_rank);
 			}
 			
-			if(data.yard_vehicles != ''){
-				$('#vehicle_count').text(data.yard_vehicles);
-			}
-			else{
-				$('.yard_box').remove();
+			
+			if(data.monthly_task_completed != ''){
+				$('#task_complete').text(data.monthly_task_completed);
 			}
 			
-			if(data.yard_employees != ''){
-				$('#employee_count').text(data.yard_employees);
-			}
-			else{
-				$('.employee_box').remove();
+			
+			if(data.monthly_task_skipped != ''){
+				$('#task_skipped').text(data.monthly_task_skipped);
 			}
 			
-			if(data.customers != ''){
-				$('#customer_count').text(data.customers);
-			}
-			else{
-				$('.customer_box').remove();
+			
+			if(data.monthly_task_completion_rate != ''){
+				$('#task_completion_rate').text(data.monthly_task_completion_rate+'%');
 			}
 			
 			
 			
-			$('#complete_online_orders').text(data.complete_online_orders);
-			$('#complete_rental_orders').text(data.complete_rental_orders);
-			$('#complete_retail_orders').text(data.complete_retail_orders);
-			
-			var complete_online_orders_width = ((data.complete_online_orders)/100)*100;
-			var complete_rental_orders_width = ((data.complete_rental_orders)/100)*100;
-			var complete_retail_orders_width = ((data.complete_retail_orders)/100)*100;
-			
-			$('#complete_online_orders_width').css('width',complete_online_orders_width+'%');
-			$('#complete_rental_orders_width').css('width',complete_rental_orders_width+'%');
-			$('#complete_retail_orders_width').css('width',complete_retail_orders_width+'%');
 			
 			
-			$.each(data.latest_orders, function (i, item) {
+			$.each(data.daily_task_list, function (i, item) {
 				
 				var status = '';
 				if(item.is_complete == 1){
@@ -199,33 +181,35 @@ function loadData() {
 				
 				//console.log(item);
 				var listHtml = '<tr>'+					 
-					  '<td>'+item.order_id+'</td>'+
-					  '<td>'+item.created_date+'</td>'+
-					   '<td>'+item.order_type+'</td>'+
-					  '<td>'+status+'</td>'+
-					  '<td><a class="btn btn-primary btn-sm" href="pages/examples/invoice.html"><i class="fa fa-eye"></i></a></td>'+					  
+					  '<td>'+item.task_name+'</td>'+
+					  '<td>'+item.invoice_id+'</td>'+
+					  '<td>'+item.order_type+'</td>'+
+					  '<td>'+status+'</td>'+					  
 					'</tr>';
 					
-				$('#orders_list').append(listHtml);
+				$('#daily_task_list').append(listHtml);
 			})
 			
-			$.each(data.latest_items, function (i, item) {
+			$.each(data.leave_quota_list, function (i, item) {
 				
 								
+				var status = '';
+				if(item.is_complete == 1){
+					status = '<span class="badge badge-success">Complete</span>';
+				}
+				else{
+					status = '<span class="badge badge-danger">Not Complete</span>';
+				}
+				
 				//console.log(item);
-				var listHtml = '<li class="item">'+
-								'<div class="product-img">'+
-								  '<img src="'+item.item_image_url+'" alt="Product Image" class="img-size-50">'+
-								'</div>'+
-								'<div class="product-info">'+
-								  '<a href="javascript:void(0)" class="product-title">'+item.item_name+
-								  '<span class="product-description">'+item.item_desc+
-									
-								  '</span>'+
-								'</div>'+
-							  '</li>';
+				var listHtml = '<tr>'+					 
+					  '<td>'+item.year+'</td>'+
+					  '<td>'+item.leave_type_name+'</td>'+
+					  '<td>'+(item.amount - item.balance_leave_quota) +'</td>'+
+					  '<td>'+item.balance_leave_quota+'</td>'+
+					'</tr>';
 					
-				$('#item_list').append(listHtml);
+				$('#leave_quota_list').append(listHtml);
 			})
 			
 			console.log(data.branch_wise_sale);
