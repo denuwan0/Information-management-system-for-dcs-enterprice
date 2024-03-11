@@ -72,8 +72,32 @@
 </div>
     <!-- Main content -->
     <section class="content">
-	
+		
       <div class="container-fluid"> 
+		<div class="row">
+			<div class="col-3 ">
+
+				<div class="card">
+					
+					<div class="card-body">
+						<div class="form-group">
+							<div class="custom-control custom-radio">
+								<input class="custom-control-input" type="radio" id="ordetType1" name="customRadio">
+								<label for="ordetType" class="custom-control-label">Retail Invoice</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input class="custom-control-input" type="radio" id="ordetType2" name="customRadio" checked="">
+								<label for="ordetType2" class="custom-control-label">Rental Invoice</label>
+							</div>
+							
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		
 		<div class="float-right" style="text-align: right;">
 			<h5>Order Status: <span class="badge badge-danger orderStatus">Not Saved</span></h5>   
 			<h5>Payment Status: <span class="badge badge-danger paymentStatus">Not Paid</span></h5>   		
@@ -1061,7 +1085,13 @@ $(document).on('click', '#invoicePrintBtn', function(){
 			success: function(data, result){
 				console.log(data);
 				const notyf = new Notyf();
-				if(data.message == "Payment Updated!"){	
+				if(data.message == "Payment Updated!"){
+
+					$('.paymentStatus').text('Paid');
+					$('.paymentStatus').removeClass('badge-danger');
+					$('.paymentStatus').addClass('badge-success');
+
+					
 					notyf.success({
 					  message: 'Payment Updated!',
 					  duration: 5000,

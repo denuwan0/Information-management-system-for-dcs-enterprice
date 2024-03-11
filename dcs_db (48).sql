@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2024 at 03:02 PM
+-- Generation Time: Mar 11, 2024 at 05:58 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -162,6 +162,7 @@ CREATE TABLE `company_branch` (
   `branch_contact` int(10) NOT NULL,
   `branch_manager` int(10) NOT NULL,
   `branch_address` varchar(255) NOT NULL,
+  `is_main_branch` tinyint(1) NOT NULL,
   `is_active_branch` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -169,11 +170,11 @@ CREATE TABLE `company_branch` (
 -- Dumping data for table `company_branch`
 --
 
-INSERT INTO `company_branch` (`company_branch_id`, `company_id`, `company_branch_name`, `location_id`, `branch_contact`, `branch_manager`, `branch_address`, `is_active_branch`) VALUES
-(1, 1, 'Wattala', 2, 2147483611, 8, 'Wattala', 1),
-(2, 1, 'Kadawatha', 1, 712917184, 7, 'Kadawatha', 1),
-(3, 1, 'Nittambuwa', 4, 712917184, 7, 'Kandy Rd, Nittambuwa', 1),
-(4, 1, 'Kadana', 4, 21212121, 5, 'Negambo Rd, Kadana', 1);
+INSERT INTO `company_branch` (`company_branch_id`, `company_id`, `company_branch_name`, `location_id`, `branch_contact`, `branch_manager`, `branch_address`, `is_main_branch`, `is_active_branch`) VALUES
+(1, 1, 'Wattala', 2, 2147483611, 8, 'Wattala', 0, 1),
+(2, 1, 'Kadawatha', 1, 712917184, 7, 'Kadawatha', 0, 1),
+(3, 1, 'Nittambuwa', 4, 712917184, 7, 'Kandy Rd, Nittambuwa', 0, 1),
+(4, 1, 'Kadana', 4, 21212121, 5, 'Negambo Rd, Kadana', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -827,6 +828,7 @@ CREATE TABLE `emp_special_task_assign_emp` (
   `task_start_date` varchar(20) NOT NULL,
   `task_end_date` varchar(20) NOT NULL,
   `is_complete` tinyint(1) NOT NULL,
+  `is_skipped` tinyint(1) NOT NULL,
   `is_active_sp_task_assign` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -834,8 +836,9 @@ CREATE TABLE `emp_special_task_assign_emp` (
 -- Dumping data for table `emp_special_task_assign_emp`
 --
 
-INSERT INTO `emp_special_task_assign_emp` (`assign_emp_line_id`, `special_task_id`, `branch_id`, `emp_id`, `invoice_id`, `order_type`, `task_start_date`, `task_end_date`, `is_complete`, `is_active_sp_task_assign`) VALUES
-(1, 2, 1, 2, 1, 'Retail', '2024-03-02', '2024-03-02', 0, 1);
+INSERT INTO `emp_special_task_assign_emp` (`assign_emp_line_id`, `special_task_id`, `branch_id`, `emp_id`, `invoice_id`, `order_type`, `task_start_date`, `task_end_date`, `is_complete`, `is_skipped`, `is_active_sp_task_assign`) VALUES
+(1, 2, 1, 2, 1, 'Retail', '2024-03-02', '2024-03-11', 1, 0, 1),
+(2, 1, 1, 2, 2, 'Retail', '2024-03-02', '2024-03-11', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1190,7 +1193,7 @@ CREATE TABLE `inventory_rental_invoice_header` (
 --
 
 INSERT INTO `inventory_rental_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `deposite_amount`, `created_date`, `create_time`, `total_discount`, `is_active_inv_rent_invoice_hdr`, `is_complete`) VALUES
-(1, 2, 7, 1, '15000.00', '0.00', '02-02-2024', '10:00:00', '0.00', 1, 1);
+(1, 2, 7, 1, '15000.00', '0.00', '2024-02-29', '10:00:00', '0.00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1304,7 +1307,8 @@ CREATE TABLE `inventory_retail_invoice_detail` (
 
 INSERT INTO `inventory_retail_invoice_detail` (`rental_detail_id`, `invoice_id`, `item_id`, `no_of_items`, `item_price`, `item_discount`, `is_active_inv_retail_invoice_detail`) VALUES
 (1, 1, 6, 1, '5000.00', '0.00', 1),
-(2, 2, 20, 1, '5000.00', '0.00', 1);
+(2, 2, 20, 1, '5000.00', '0.00', 1),
+(3, 3, 7, 1, '12000.00', '0.00', 1);
 
 -- --------------------------------------------------------
 
@@ -1331,8 +1335,9 @@ CREATE TABLE `inventory_retail_invoice_header` (
 --
 
 INSERT INTO `inventory_retail_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `created_date`, `create_time`, `total_discount`, `is_pos`, `is_active_inv_retail_invoice_hdr`, `is_complete`) VALUES
-(1, 1, 53, 10, '5000.00', '2024-02-28', '11:18:10', '0.00', 1, 1, 0),
-(2, 1, 53, 10, '5000.00', '2024-02-28', '14:49:32', '0.00', 1, 1, 0);
+(1, 1, 53, 10, '5000.00', '2024-02-28', '11:18:10', '0.00', 1, 1, 1),
+(2, 1, 53, 10, '5000.00', '2024-02-28', '14:49:32', '0.00', 1, 1, 1),
+(3, 2, 3, 10, '12000.00', '2024-03-05', '22:57:58', '0.00', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1953,7 +1958,8 @@ INSERT INTO `order_payments` (`payment_id`, `order_id`, `cust_id`, `reference`, 
 (2, 0, 0, 'QR', '2024-02-28', '11:54:36', 'Bank Card Payment', 1, 0, 0, 1),
 (3, 10, 0, '911330768V', '2024-02-28', '14:49:43', 'Lanka QR Payment', 1, 0, 0, 1),
 (4, 2, 10, '911330768V', '2024-02-28', '14:53:01', 'Lanka QR Payment', 1, 0, 0, 1),
-(5, 2, 10, '911330768V', '2024-02-28', '14:53:16', 'Lanka QR Payment', 1, 0, 0, 1);
+(5, 2, 10, '911330768V', '2024-02-28', '14:53:16', 'Lanka QR Payment', 1, 0, 0, 1),
+(6, 3, 10, 'saasa', '2024-03-05', '22:58:27', 'Lanka QR Payment', 1, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1985,7 +1991,17 @@ INSERT INTO `sys_notification` (`sys_notify_id`, `user_id`, `create_date`, `is_s
 (11, 53, '2024-02-28', 1),
 (12, 3, '2024-02-28', 1),
 (13, 54, '2024-02-28', 1),
-(14, 1, '2024-02-28', 1);
+(14, 1, '2024-02-28', 1),
+(15, 3, '2024-03-03', 1),
+(16, 1, '2024-03-03', 1),
+(17, 1, '2024-03-04', 1),
+(18, 3, '2024-03-05', 1),
+(19, 3, '2024-03-06', 1),
+(20, 53, '2024-03-06', 1),
+(21, 54, '2024-03-06', 1),
+(22, 54, '2024-03-09', 1),
+(23, 54, '2024-03-11', 1),
+(24, 3, '2024-03-11', 1);
 
 -- --------------------------------------------------------
 
@@ -2037,13 +2053,13 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'ab4908438343aea1c2b4', '948359', '2024-02-28 17:37:52', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'f239da74351e44611357', '356066', '2024-03-04 15:33:54', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-28 16:03:38', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '0b88147f1347fc71a209', '881414', '2024-03-11 16:53:44', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
-(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-28 16:20:13', 0, 1),
-(54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-28 17:37:41', 0, 1),
+(53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-03-06 02:11:41', 0, 1),
+(54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-03-11 16:53:27', 0, 1),
 (55, 9, 4, 'madushanka', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-02-24 11:07:40', 0, 1);
 
 -- --------------------------------------------------------
@@ -3180,7 +3196,7 @@ ALTER TABLE `emp_salary_scale`
 -- AUTO_INCREMENT for table `emp_special_task_assign_emp`
 --
 ALTER TABLE `emp_special_task_assign_emp`
-  MODIFY `assign_emp_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `assign_emp_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `emp_special_task_header`
@@ -3276,13 +3292,13 @@ ALTER TABLE `inventory_rent_charge_period`
 -- AUTO_INCREMENT for table `inventory_retail_invoice_detail`
 --
 ALTER TABLE `inventory_retail_invoice_detail`
-  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `inventory_retail_invoice_header`
 --
 ALTER TABLE `inventory_retail_invoice_header`
-  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `inventory_retail_total_stock`
@@ -3378,13 +3394,13 @@ ALTER TABLE `online_order`
 -- AUTO_INCREMENT for table `order_payments`
 --
 ALTER TABLE `order_payments`
-  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sys_notification`
 --
 ALTER TABLE `sys_notification`
-  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `sys_notify_type`
