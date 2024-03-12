@@ -118,9 +118,9 @@
 			  <thead>
 				<tr>
 					<th scope="col" width="10%">#</th>
-					<th scope="col" width="40%" style="text-align:left">Name</th>
+					<th scope="col" width="30%" style="text-align:left">Name</th>
 					<th scope="col" width="10%" style="text-align:left">Qty</th>
-					<th scope="col" width="30%" style="text-align:center">Price</th>						
+					<!--th scope="col" width="30%" style="text-align:center">Price</th-->						
 					<th scope="col" width="10%" style="text-align:left"></th>
 				</tr>
 			  </thead>
@@ -135,7 +135,7 @@
               </div>
 			  </div>
               <!-- /.card-body -->
-              <div class="bg-info">
+              <!--div class="bg-info">
 				<div class="row">
 					<table class="table">
 					  <tbody>
@@ -148,7 +148,7 @@
 						</tr>
 					  </tbody>
 					</table>
-				</div>
+				</div-->
               </div>
               <!-- /.card-footer -->
             </div>
@@ -193,6 +193,7 @@
 	var customer_name = '';
 	var customer_contact_no = '';
 	var customer_email = '';
+	var deposite_amount = 0;
 	var customer_working_address = '';
 	var customer_shipping_address = '';
 	var invoice_header_header_id ='';
@@ -389,7 +390,7 @@ $(document).on('click', '.addItem', function(){
 								'</td>'+
 								'<td width="10%" style="display:none" align="right" class="item_id">'+item.item_id+'</td>	'+	
 								'<td width="10%" style="display:none" align="right" class="unit_price">'+sale_price+'</td>	'+	
-							  '<td width="10%" align="right" class="price">'+sale_price+'</td>	'+				  
+							  //'<td width="10%" align="right" class="price">'+sale_price+'</td>	'+				  
 							  '<td width="10%"><a class="btn deleteBtn"><i class="fa fa-trash"></i></a></td>'+
 							'</tr>';
 							$('#checkoutDiv').append(prdHtml);	
@@ -676,6 +677,12 @@ $(document).on('click', '#invoiceBtn', function(){
 									  '<input type="text" class="form-control" id="customer_email" placeholder="Email">'+
 									'</div>'+
 								'</div>'+
+								'<div class="col-md-6">'+
+									'<div class="form-group">'+
+									  '<label for="customer_working_address">Deposite Amount</label>'+
+									  '<input type="text" class="form-control" id="deposite_amount" placeholder="Deposite Amount">'+
+									'</div>'+
+								'</div>'+
 								'<div class="col-md-12">'+
 									'<div class="form-group">'+
 									  '<label for="customer_working_address">Billing Address</label>'+
@@ -847,6 +854,7 @@ $(document).on('click', '#invoicePrintBtn', function(){
 	customer_name = $('#customer_name').val();
 	customer_contact_no = $('#customer_contact_no').val();
 	customer_email = $('#customer_email').val();
+	deposite_amount = $('#deposite_amount').val();
 	customer_working_address = $('#customer_working_address').val();
 	customer_shipping_address = $('#customer_shipping_address').val();
 	var selectedItemsArr = [];
@@ -865,13 +873,14 @@ $(document).on('click', '#invoicePrintBtn', function(){
 		'customer_name': customer_name,
 		'customer_contact_no': customer_contact_no,
 		'customer_email': customer_email,
+		'deposite_amount': deposite_amount,
 		'customer_working_address': customer_working_address,
 		'customer_shipping_address': customer_shipping_address
 	})
 	
 	
 	
-	if(customer_old_nic_no && customerDataArr.length > 0 &&  selectedItemsArr.length > 0)
+	if(customer_old_nic_no && customerDataArr.length > 0 &&  selectedItemsArr.length > 0 && deposite_amount)
 	{
 		
 		var formData = new Object();
@@ -915,7 +924,7 @@ $(document).on('click', '#invoicePrintBtn', function(){
 			dataType: "json",
 			processData: false,
 			data: JSON.stringify(formData),	
-			url: API+"RetailInvoice/insert/",
+			url: API+"RentalInvoice/insert/",
 			success: function(data, result){
 				console.log(data['invoice_header_header_id']);	
 				const notyf = new Notyf();
@@ -926,7 +935,7 @@ $(document).on('click', '#invoicePrintBtn', function(){
 					invoice_header_header_id =  data['invoice_header_header_id'];
 					
 					
-					$('#downloadPdf').attr("href", "http://localhost/API/RetailInvoice/printInvoice/?id="+id);
+					$('#downloadPdf').attr("href", "http://localhost/API/RentalInvoice/printInvoice/?id="+id);
 					$('#downloadPdf')[0].click();					
 						
 					$('.orderStatus').text('Saved');
