@@ -29,7 +29,7 @@
 
 		  <div class="info-box-content">
 			<span class="info-box-text">Monthly task skipped</span>
-			<span class="info-box-number" id="task_skipped">41,410</span>
+			<span class="info-box-number" id="task_skipped">0</span>
 		  </div>
 		</div>
 	  </div>
@@ -41,7 +41,7 @@
 
 		  <div class="info-box-content">
 			<span class="info-box-text">Monthly task completion rate</span>
-			<span class="info-box-number" id="task_completion_rate">760</span>
+			<span class="info-box-number" id="task_completion_rate">0%</span>
 		  </div>
 		</div>
 	  </div>
@@ -214,35 +214,6 @@ function loadData() {
 			
 			console.log(data.branch_wise_sale);
 			
-			var labels = [];
-			var total = [];
-			
-			$.each(data.branch_wise_sale, function (i, item) {
-				labels.push(item.company_branch_name);
-				total.push(item.total);
-			})
-			
-			console.log(data.branch_wise_sale);
-			var ctx = document.getElementById("salesChart").getContext("2d");
-			
-
-			var myChart = new Chart(ctx, {
-				type: "bar",
-				data: {
-					labels: labels,
-					datasets: [{
-						label: "Branch Revenue Rs.", // Name the series
-						data: total, // Specify the data values array
-						fill: false,
-						borderColor: "#2196f3", // Add custom color border (Line)
-						backgroundColor: "#2196f3", // Add custom color background (Points and Fill)
-						borderWidth: 1 // Specify bar border width
-					}]},
-				options: {
-				  responsive: true, // Instruct chart js to respond nicely.
-				  maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
-				}
-			});
 			
 			
 				
