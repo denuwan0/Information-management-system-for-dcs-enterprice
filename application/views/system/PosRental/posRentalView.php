@@ -72,12 +72,14 @@
 </div>
     <!-- Main content -->
     <section class="content">
-	
+		
       <div class="container-fluid"> 
+				
 		<div class="float-right" style="text-align: right;">
-			<h5>Order Status: <span class="badge badge-danger orderStatus">Not Saved</span></h5>   
-			<h5>Payment Status: <span class="badge badge-danger paymentStatus">Not Paid</span></h5>   		
-		</div>
+			<h4><span class="badge badge-danger" style="background-color: black">Rental POS</span></h4>  
+			<h6>Order Status: <span class="badge badge-danger orderStatus">Not Saved</span></h6>   
+			<h6>Payment Status: <span class="badge badge-danger paymentStatus">Not Paid</span></h6>   		
+		</div>	
 
 		<div class="row" id="categoryDiv">
 		  
@@ -228,16 +230,22 @@ function loadData() {
 				"bg-gradient-secondary"]
 				$.each(data, function (i, item) {
 					
-					catHtml = '<div class="col-12 col-sm-6 col-md-3" style="max-width:12%; cursor: pointer;">'+		
+					if(item.category_name != "Material" && item.category_name != "Services"){
+						catHtml = '<div class="col-12 col-sm-6 col-md-3" style="max-width:12%; cursor: pointer;">'+		
 								'<div class="info-box '+color[i]+' catDiv" value="'+item.item_category_id+'" style="min-width:100%;">'+
 								  '<div class="info-box-content">'+
 									'<span class="info-box-text text-wrap"><h6>'+item.category_name+'</h6></span>'+
 								  '</div>'+
 								'</div>'+
 							  '</div>';
+							  
+						$('#categoryDiv').append(catHtml);		  
+					}
 					
 					
-					$('#categoryDiv').append(catHtml);		
+					
+					
+						
 				});
 				
 				
@@ -281,26 +289,27 @@ $(document).on('click', '.catDiv', function(){
 				var prdHtml = '';
 			
 				$.each(data, function (i, item) {
+
 												  
 					prdHtml += '<div class="col-md-3">'+
-									'<div class="card bg-gradient-white" style="cursor: pointer;">'+
-										'<div class="card-header">'+
-											'<font class="">'+item.item_name+'</font>'+
-											'<div class="card-tools">'+
-												'<button type="button" class="btn btn-tool" data-card-widget="collapse">'+
-													'<i class="fas fa-minus"></i>'+
-												'</button>'+
-											'</div>'+
-										'</div>'+
-										'<div class="card-body">'+
-											'<img src="'+item.item_image_url+'" class="rounded float-left" alt="..." style="width:100px; height:100px">'+
-										'</div>'+
-										'<div class="card-footer">'+
-											'<button type="button" item_id="'+item.item_id+'" is_sub_item="0" class="btn btn-block btn-outline-dark btn-sm addItem">Add</button>'+
-										'</div>'+
+							'<div class="card bg-gradient-white" style="cursor: pointer;">'+
+								'<div class="card-header">'+
+									'<font class="">'+item.item_name+'</font>'+
+									'<div class="card-tools">'+
+										'<button type="button" class="btn btn-tool" data-card-widget="collapse">'+
+											'<i class="fas fa-minus"></i>'+
+										'</button>'+
 									'</div>'+
-								'</div>';
-					
+								'</div>'+
+								'<div class="card-body">'+
+									'<img src="'+item.item_image_url+'" class="rounded float-left" alt="..." style="width:100px; height:100px">'+
+								'</div>'+
+								'<div class="card-footer">'+
+									'<button type="button" item_id="'+item.item_id+'" is_sub_item="0" class="btn btn-block btn-outline-dark btn-sm addItem">Add</button>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+			
 					
 						
 				});
@@ -330,7 +339,7 @@ $(document).on('click', '.addItem', function(){
 		processData: false,
 		contentType: false,
 		data: formData,
-		url: API+"StockRetail/get_retail_item_details_by_item_id_branch_id_is_sub_item/",
+		url: API+"StockRental/get_rental_item_details_by_item_id_branch_id_is_sub_item/",
 		success: function(data, result){
 			
 			var prdHtml = '';
@@ -358,13 +367,13 @@ $(document).on('click', '.addItem', function(){
 					var duplicate = 0;
 					duplicate = $('.row'+item.item_id+''+item.is_sub_item+'').length;
 					
-					console.log(item.max_sale_price);
+					console.log(item.max_rent_price);
 					var sale_price = 0;
-					if(item.max_sale_price == "0.00"){
-						 sale_price = item.min_sale_price;
+					if(item.max_rent_price == "0.00"){
+						 sale_price = item.min_rent_price;
 					}
 					else{
-						sale_price = item.max_sale_price;
+						sale_price = item.max_rent_price;
 					}
 					
 					if(duplicate == 0){
@@ -689,7 +698,7 @@ $(document).on('click', '#invoiceBtn', function(){
 								'<span class="info-box-text" style="font-size:large;">Download Invoice</span>'+
 								'</div>'+
 							'</div>'+
-							'<a style="display:none;" class="downloadPdf" id="downloadPdf" href="http://localhost/API/RetailInvoice/printInvoice/" target="_blank">Visit W3Schools.com!</a>'+
+							'<a style="display:none;" class="downloadPdf" id="downloadPdf" href="http://localhost/API/RentalInvoice/printInvoice/" target="_blank"></a>'+
 						'</div>'+
 						'<div class="col-md-3">'+
 						'</div>'+
@@ -1061,7 +1070,13 @@ $(document).on('click', '#invoicePrintBtn', function(){
 			success: function(data, result){
 				console.log(data);
 				const notyf = new Notyf();
-				if(data.message == "Payment Updated!"){	
+				if(data.message == "Payment Updated!"){
+
+					$('.paymentStatus').text('Paid');
+					$('.paymentStatus').removeClass('badge-danger');
+					$('.paymentStatus').addClass('badge-success');
+
+					
 					notyf.success({
 					  message: 'Payment Updated!',
 					  duration: 5000,

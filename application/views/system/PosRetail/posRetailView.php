@@ -74,33 +74,12 @@
     <section class="content">
 		
       <div class="container-fluid"> 
-		<div class="row">
-			<div class="col-3 ">
-
-				<div class="card">
-					
-					<div class="card-body">
-						<div class="form-group">
-							<div class="custom-control custom-radio">
-								<input class="custom-control-input" type="radio" id="ordetType1" name="customRadio">
-								<label for="ordetType" class="custom-control-label">Retail Invoice</label>
-							</div>
-							<div class="custom-control custom-radio">
-								<input class="custom-control-input" type="radio" id="ordetType2" name="customRadio" checked="">
-								<label for="ordetType2" class="custom-control-label">Rental Invoice</label>
-							</div>
-							
-						</div>
-					</div>
-
-				</div>
-
-			</div>
-		</div>
+		
 		
 		<div class="float-right" style="text-align: right;">
-			<h5>Order Status: <span class="badge badge-danger orderStatus">Not Saved</span></h5>   
-			<h5>Payment Status: <span class="badge badge-danger paymentStatus">Not Paid</span></h5>   		
+			<h4><span class="badge badge-danger" style="background-color: black">Retail POS</span></h4> 
+			<h6>Order Status: <span class="badge badge-danger orderStatus">Not Saved</span></h6>   
+			<h6>Payment Status: <span class="badge badge-danger paymentStatus">Not Paid</span></h6>   		
 		</div>
 
 		<div class="row" id="categoryDiv">
