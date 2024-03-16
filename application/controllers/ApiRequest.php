@@ -51,6 +51,9 @@ class ApiRequest extends CI_Controller {
 		
 	}
 	
+	public $rest_api_base_url = 'http://localhost/API/';
+	//public $rest_api_base_url = 'https://mitproject.xyz/API/';
+	
 	//------------------ Agent ---------------------//
 	
 	//https://localhost/OP/ApiRequest/Agent
@@ -62,11 +65,11 @@ class ApiRequest extends CI_Controller {
 		
 		$request_data = json_encode(array("username" => $username, "password" => $password));
 						
-		$rest_api_base_url = 'http://localhost/API/';
+		
 		
 		$post_endpoint = 'SysUser/authenticate';		
 		
-		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);				
+		$response = perform_http_request('POST', $this->rest_api_base_url . $post_endpoint, $request_data);				
 		
 		$phpObj = json_decode($response);
 		$phparray = (array) $phpObj;
@@ -100,11 +103,11 @@ class ApiRequest extends CI_Controller {
 		
 		$request_data = json_encode(array("user_id" => $user_id));
 						
-		$rest_api_base_url = 'http://localhost/API/';
+		//$this->rest_api_base_url = 'http://localhost/API/';
 		
 		$post_endpoint = 'SysUser/otpGen';
 		
-		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);
+		$response = perform_http_request('POST', $this->rest_api_base_url . $post_endpoint, $request_data);
 		
 		//var_dump($response);
 		
@@ -121,11 +124,11 @@ class ApiRequest extends CI_Controller {
 				
 		$request_data = json_encode(array("resetMethodDisplay" => $resetMethodDisplay, "inputMethodVal" => $inputMethodVal));
 						
-		$rest_api_base_url = 'http://localhost/API/';
+		//$this->rest_api_base_url = 'http://localhost/API/';
 		
 		$post_endpoint = 'SysUser/restCodeGen';
 		
-		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);
+		$response = perform_http_request('POST', $this->rest_api_base_url . $post_endpoint, $request_data);
 		
 		//var_dump($response);
 						
@@ -144,11 +147,11 @@ class ApiRequest extends CI_Controller {
 				
 		$request_data = json_encode(array("otp_code" => $otp_code, "password" => $password, "confirmPassword" => $confirmPassword, "user_id" => $user_id));
 						
-		$rest_api_base_url = 'http://localhost/API/';
+		//$this->rest_api_base_url = 'http://localhost/API/';
 		
 		$post_endpoint = 'SysUser/resetPass';
 		
-		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);
+		$response = perform_http_request('POST', $this->rest_api_base_url . $post_endpoint, $request_data);
 		
 		//var_dump($response);
 						
@@ -165,11 +168,11 @@ class ApiRequest extends CI_Controller {
 		
 		$request_data = json_encode(array("user_id" => $user_id, "otp_code" => $otp_code));
 						
-		$rest_api_base_url = 'http://localhost/API/';
+		//$this->rest_api_base_url = 'http://localhost/API/';
 		
 		$post_endpoint = 'SysUser/verifyOtp';
 		
-		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);
+		$response = perform_http_request('POST', $this->rest_api_base_url . $post_endpoint, $request_data);
 		
 				
 		$phpObj = json_decode($response);
@@ -179,7 +182,7 @@ class ApiRequest extends CI_Controller {
 		$request_data = json_encode($phparray);
 		
 		$post_endpoint2 = 'Notify/get_all_close_to_expire';
-		$response2 = perform_http_request('POST', $rest_api_base_url . $post_endpoint2,  $request_data);
+		$response2 = perform_http_request('POST', $this->rest_api_base_url . $post_endpoint2,  $request_data);
 		
 				
 		//var_dump($request_data);
@@ -195,11 +198,11 @@ class ApiRequest extends CI_Controller {
 		
 		$request_data = json_encode(array("user_id" => $user_id));
 						
-		$rest_api_base_url = 'http://localhost/API/';
+		//$this->rest_api_base_url = 'http://localhost/API/';
 		
 		$post_endpoint = 'SysUser/logout';
 		
-		$response = perform_http_request('POST', $rest_api_base_url . $post_endpoint, $request_data);
+		$response = perform_http_request('POST', $this->rest_api_base_url . $post_endpoint, $request_data);
 				
 		$phpObj = json_decode($response);
 		$phparray = (array) $phpObj;
