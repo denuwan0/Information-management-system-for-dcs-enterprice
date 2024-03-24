@@ -834,6 +834,29 @@
 					  <p>Retail Invoice</p>
 					</a>
 				  </li>
+				  <li class="nav-item">
+					<a href="" class="nav-link">
+					  <i class="fas fa fa-cart-arrow-down nav-icon text-primary"></i>
+					  <p>Orders</p>
+					  <i class="right fas fa-angle-left"></i>
+					</a>
+					<ul class="nav nav-treeview">
+					  <li class="nav-item">
+						<a href="'.base_url().'RetailOrder/view" class="nav-link">
+						  <i class="fa fa-plus-square nav-icon text-primary"></i>
+						  <p>Retail Orders</p>
+						</a>
+					  </li>
+					</ul>
+					<ul class="nav nav-treeview">
+					  <li class="nav-item">
+						<a href="'.base_url().'RentalOrder/view" class="nav-link">
+						  <i class="fa fa-plus-circle nav-icon text-primary"></i>
+						  <p>Rental Orders</p>
+						</a>
+					  </li>
+					</ul>
+				  </li>
 				</ul>
 			  </li>
 			<li class="nav-item">

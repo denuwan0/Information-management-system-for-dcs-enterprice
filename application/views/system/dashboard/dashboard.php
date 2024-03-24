@@ -258,7 +258,16 @@ function loadData() {
 			})
 			
 			$.each(data.latest_items, function (i, item) {
-				
+				var url = '';
+				if(item.order_type == 'Retail'){
+					
+				}
+				else if(item.order_type == 'Rental'){
+					
+				}
+				else if(item.order_type == 'Online'){
+					
+				} 
 								
 				//console.log(item);
 				var listHtml = '<li class="item">'+
