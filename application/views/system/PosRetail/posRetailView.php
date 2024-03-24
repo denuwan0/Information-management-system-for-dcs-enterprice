@@ -1083,9 +1083,9 @@ $(document).on('click', '#invoicePrintBtn', function(){
 					  }
 					  
 					})
-					//window.setTimeout(function() {
-					//	window.location = "<?php echo base_url() ?>branch/view";
-					//}, 3000);
+					window.setTimeout(function() {
+						window.location = "<?php echo base_url() ?>RetailOrder/view";
+					}, 3000);
 				}
 				
 			},

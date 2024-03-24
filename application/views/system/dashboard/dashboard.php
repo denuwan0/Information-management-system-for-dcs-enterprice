@@ -260,13 +260,13 @@ function loadData() {
 			$.each(data.latest_items, function (i, item) {
 				var url = '';
 				if(item.order_type == 'Retail'){
-					
+					url = "http://localhost/dcs/RetailOrder/view";
 				}
 				else if(item.order_type == 'Rental'){
-					
+					url = "http://localhost/dcs/RentalOrder/view";
 				}
 				else if(item.order_type == 'Online'){
-					
+					url = "http://localhost/dcs/OnlineOrder/view";
 				} 
 								
 				//console.log(item);
@@ -275,7 +275,7 @@ function loadData() {
 								  '<img src="'+item.item_image_url+'" alt="Product Image" class="img-size-50">'+
 								'</div>'+
 								'<div class="product-info">'+
-								  '<a href="javascript:void(0)" class="product-title">'+item.item_name+
+								  '<a href="'+url+'" class="product-title">'+item.item_name+
 								  '<span class="product-description">'+item.item_desc+
 									
 								  '</span>'+
