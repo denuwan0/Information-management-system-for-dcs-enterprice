@@ -171,6 +171,17 @@ function loadData() {
 			
 			$.each(data.daily_task_list, function (i, item) {
 				
+				var url = '';
+				if(item.order_type == 'Retail'){
+					url = "http://localhost/dcs/RetailOrder/view";
+				}
+				else if(item.order_type == 'Rental'){
+					url = "http://localhost/dcs/RentalOrder/view";
+				}
+				else if(item.order_type == 'Online'){
+					url = "http://localhost/dcs/OnlineOrder/view";
+				} 
+				
 				var status = '';
 				if(item.is_complete == 1){
 					status = '<span class="badge badge-success">Complete</span>';

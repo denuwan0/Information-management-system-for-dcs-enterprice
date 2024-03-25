@@ -67,7 +67,7 @@
 </section>
 <script>
 
-
+$(document).ready(function($) {
 var bank_id = 0;
 function loadData() {
 	
@@ -135,30 +135,37 @@ function loadData() {
 					
 					if(item.is_active_inv_retail_invoice_hdr == 1){
 						is_active_inv_retail_invoice_hdr = '<span class="right badge badge-success">Active</span>';
-						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" ){
-								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								
-								echo '<a style="display:block" type="button" id="editBtn" retail_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
-							}
-							else{
-								echo '<a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-							}
+						
+						if(item.is_complete == 1){
+							option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
+									echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+									
+									echo '<a style="display:block" type="button" id="printBtn"  class="btn btn-warning btn-sm printBtn"><i class="fa fa-download"></i></a>';
+								}
+								else{
+									echo '<a type="button" id="viewBtn" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+								}
 
-						?>';
-					}
-					else{
-						is_active_inv_retail_invoice_hdr = '<span class="right badge badge-danger">Inactive</span>';
-						option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" ){
-								echo '<div class="btn-group margin"><a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-								echo '<a type="button" id="editBtn" retail_stock_header_id="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
-							}
-							else{
-								echo '<a type="button" id="viewBtn" retail_stock_header_id="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-							}
+							?>';
+						}
+						else{
+							option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
+									echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+									
+									echo '<a style="display:block" type="button" id="printBtn"  class="btn btn-warning btn-sm printBtn"><i class="fa fa-download"></i></a>';
+									
+									echo '<a style="display:block" type="button" id="payBtn" class="btn btn-dark btn-sm payBtn"><i class="fas fa-money-bill-alt"></i></a></div>';
+								}
+								else{
+									echo '<a type="button" id="viewBtn" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+								}
 
-						?>';
-						//'<a type="button" id="editBtn" href="<?php echo base_url() ?>stockRetail/edit/'+item.retail_stock_header_id+'" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a> ';
+							?>';
+						}
+						
+						
 					}
+					
 					
 					
 					table.row.add([item.invoice_id,
@@ -172,8 +179,11 @@ function loadData() {
 					option_html,
 					]).draw();
 
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>stockRetail/edit/'+item.retail_stock_id );
-					$(".viewBtn").last().attr('value',item.retail_stock_id );
+					//$(".editBtn").last().attr('href', '<?php echo base_url() ?>stockRetail/edit/'+item.invoice_id );
+					$(".viewBtn").last().attr('value',item.invoice_id );
+					$(".printBtn").last().attr('value',item.invoice_id );
+					$(".printBtn").last().attr('href', "http://localhost/API/RetailInvoice/printInvoice/?id="+item.invoice_id );
+					$(".payBtn").last().attr('value',item.invoice_id );
 				});
 							
 			});
@@ -207,15 +217,16 @@ function loadData() {
 
 loadData();
 
-$(document).on('click','.viewBtn', function(){
 
-	var retail_stock_id = "";
+$(document).on('click','.viewBtn', function(){
+	
+	var retail_invoice_id = "";
 	var Header = "";
 	var HTML = "";
 	var HTML2 = "";
 	
-	retail_stock_id = $(this).attr('value');
-	console.log(retail_stock_id);
+	retail_invoice_id = $(this).attr('value');
+	console.log(retail_invoice_id);
 	
 	$.ajax({
 		type: "GET",
@@ -223,29 +234,36 @@ $(document).on('click','.viewBtn', function(){
 		async: true,
 		dataType: "json",
 		contentType: 'application/json',
-		url: API+"StockRetail/fetch_all_total_stock_join_by_id/?id="+retail_stock_id,
+		url: API+"RetailOrder/fetch_single_join_by_invoice_id/?id="+retail_invoice_id,
 		success: function(data, result){
 			console.log(data);
 			//console.log(data.header[0].retail_stock_assigned_date);
 			
-			var is_active_retail_stock='';
+			var is_active_inv_retail_invoice_hdr='';
+			var is_complete='';
 			
-			if(data[0].is_active_retail_stock == 1){
-				is_active_retail_stock  = '<span class="right badge badge-success">Active</span>';
+			if(data.header[0].is_active_inv_retail_invoice_hdr == 1){
+				is_active_inv_retail_invoice_hdr  = '<span class="right badge badge-success">Active</span>';
 			}
 			else{
-				is_active_retail_stock  = '<span class="right badge badge-danger">Inactive</span>';
+				is_active_inv_retail_invoice_hdr  = '<span class="right badge badge-danger">Inactive</span>';
 			}
 			
-			$.each(data, function (i, item) {
-				console.log(item);
-				HTML2 ='<tr>'+
+			if(data.header[0].is_complete == 1){
+				is_complete ='<span class="right badge badge-success">Yes</span>';
+			}
+			else{
+				is_complete ='<span class="right badge badge-danger">No</span>';
+			}
+			
+			$.each(data.detail, function (i, item) {
+				//console.log(item);
+				HTML2 +='<tr>'+
 						  '<td>'+(i+1)+'</td>'+
 						  '<td>'+item.item_name+'</td>'+
-						  '<td>'+item.max_sale_price+'</td>'+
-						  '<td>'+item.min_sale_price+'</td>'+
-						  '<td>'+item.full_stock_count+'</td>'+
-						  '<td>'+item.stock_re_order_level+'</td>'+
+						  '<td>'+item.item_price+'</td>'+
+						  '<td>'+item.no_of_items+'</td>'+
+						  '<td>'+(item.item_price * item.no_of_items)+'</td>'+
 						'</tr>';
 				//console.log(HTML2);		
 				//$('#detail_table').append(HTML2);
@@ -253,17 +271,26 @@ $(document).on('click','.viewBtn', function(){
 			});	
 			
 			
+			
 			HTML ='<table class="table table-borderless">'+					  
 					  '<tbody>'+
 						'<tr>'+
-						  '<th><label for="repair_loc_address">Stock Id: </label></th>'+
-						  '<td>'+data[0].retail_stock_id+'</td>'+
-						  '<td><label for="repair_loc_name">Branch: </label></td>'+
-						  '<td>'+data[0].company_branch_name+'</td>'+						  						 
+						  '<th><label for="repair_loc_address">Invoice No: </label></th>'+
+						  '<td>'+data.header[0].invoice_id+'</td>'+
+						  '<td><label for="repair_loc_name">Customer Contact: </label></td>'+
+						  '<td>'+data.header[0].customer_contact_no+'</td>'+						  						 
 						'</tr>'+
 						'<tr>'+
+						  '<td><label for="repair_loc_name">Customer NIC: </label></td>'+
+						  '<td>'+data.header[0].customer_old_nic_no+'</td>'+
+						  '<td><label for="repair_loc_name">Customer Name: </label></td>'+
+						  '<td>'+data.header[0].customer_name+'</td>'+						  						 
+						'</tr>'+
+						'<tr>'+
+						  '<td><label for="is_active_vhcl_repair_loc">Complete: </label></td>'+
+						  '<td>'+is_complete+'</td>'+						
 						  '<td><label for="is_active_vhcl_repair_loc">Status: </label></td>'+
-						  '<td>'+is_active_retail_stock+'</td>'+
+						  '<td>'+is_active_inv_retail_invoice_hdr+'</td>'+
 						'</tr>'+
 					  '</tbody>'+
 					'</table>'+
@@ -271,11 +298,10 @@ $(document).on('click','.viewBtn', function(){
 						'<thead id="thead">'+
 							'<tr>'+
 								'<th style="width: 5%">#</th>'+
-								'<th style="width: 30%">Sub Item Name</th>'+
-								'<th style="width: 15%">Max Price</th>'+
-								'<th style="width: 15%">Min Price</th>	'+										  
+								'<th style="width: 30%">Item Name</th>'+
+								'<th style="width: 15%">Price</th>'+									  
 								'<th style="width: 15%">No.of Items</th>'+
-								'<th style="width: 15%">Re-order level</th>'+
+								'<th style="width: 15%">Sub total</th>'+
 							'</tr>'+
 						'</thead>'+
 					  '<tbody id="detail_table">'+
@@ -287,13 +313,18 @@ $(document).on('click','.viewBtn', function(){
 			
 					
 		
-		$('#modalInfoHeader').html('Retail Stock Assigned No: '+data[0].retail_stock_header_id);
+		$('#modalInfoHeader').html('Retail invoice No: '+data.header[0].invoice_id);
 		$('#modalInfoBody').html(HTML);
 		$('#modalInfo').modal('show');
 				
 		}
 	});
 	
+		
 	
+})
+
+
+
 })
 </script>
