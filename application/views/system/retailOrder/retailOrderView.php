@@ -47,6 +47,7 @@
 								<th width="10%">Date</th>
 								<th width="10%">Time</th>
 								<th width="10%">Total</th>
+								<th width="10%">Confirmed</th>
 								<th width="10%">Complete</th>
 								<th width="10%">Status</th>
 								<th width="10%">Option</th>
@@ -68,7 +69,8 @@
 <script>
 
 $(document).ready(function($) {
-var bank_id = 0;
+
+
 function loadData() {
 	
 		
@@ -123,8 +125,16 @@ function loadData() {
 					//console.log(item);
 					//console.log($(this));
 					var is_complete ='';
+					var is_confirmed ='';
 					var is_active_inv_retail_invoice_hdr ='';
 					var option_html ='';
+					
+					if(item.is_confirmed == 1){
+						is_confirmed ='<span class="right badge badge-success">Yes</span>';
+					}
+					else{
+						is_confirmed ='<span class="right badge badge-danger">No</span>';
+					}
 					
 					if(item.is_complete == 1){
 						is_complete ='<span class="right badge badge-success">Yes</span>';
@@ -136,10 +146,10 @@ function loadData() {
 					if(item.is_active_inv_retail_invoice_hdr == 1){
 						is_active_inv_retail_invoice_hdr = '<span class="right badge badge-success">Active</span>';
 						
-						if(item.is_complete == 1){
+						if(item.is_confirmed == 1){
 							option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
 									echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
-									
+									echo '<a style="display:none" type="button" id="payBtn" class="btn btn-dark btn-sm payBtn"><i class="fas fa-money-bill-alt"></i></a>';
 									echo '<a style="display:block" type="button" id="printBtn"  class="btn btn-warning btn-sm printBtn"><i class="fa fa-download"></i></a>';
 								}
 								else{
@@ -174,16 +184,20 @@ function loadData() {
 					item.invoice_date,
 					item.create_time,
 					item.total_amount,
+					is_confirmed,
 					is_complete,
 					is_active_inv_retail_invoice_hdr,
 					option_html,
 					]).draw();
+					
 
 					//$(".editBtn").last().attr('href', '<?php echo base_url() ?>stockRetail/edit/'+item.invoice_id );
 					$(".viewBtn").last().attr('value',item.invoice_id );
 					$(".printBtn").last().attr('value',item.invoice_id );
 					$(".printBtn").last().attr('href', "http://localhost/API/RetailInvoice/printInvoice/?id="+item.invoice_id );
 					$(".payBtn").last().attr('value',item.invoice_id );
+					$(".payBtn").last().attr('customer_name',item.customer_name );
+					$(".payBtn").last().attr('customer_id',item.customer_id );
 				});
 							
 			});
@@ -241,6 +255,7 @@ $(document).on('click','.viewBtn', function(){
 			
 			var is_active_inv_retail_invoice_hdr='';
 			var is_complete='';
+			var is_confirmed='';
 			
 			if(data.header[0].is_active_inv_retail_invoice_hdr == 1){
 				is_active_inv_retail_invoice_hdr  = '<span class="right badge badge-success">Active</span>';
@@ -254,6 +269,13 @@ $(document).on('click','.viewBtn', function(){
 			}
 			else{
 				is_complete ='<span class="right badge badge-danger">No</span>';
+			}
+			
+			if(data.header[0].is_confirmed == 1){
+				is_confirmed ='<span class="right badge badge-success">Yes</span>';
+			}
+			else{
+				is_confirmed ='<span class="right badge badge-danger">No</span>';
 			}
 			
 			$.each(data.detail, function (i, item) {
@@ -285,6 +307,18 @@ $(document).on('click','.viewBtn', function(){
 						  '<td>'+data.header[0].customer_old_nic_no+'</td>'+
 						  '<td><label for="repair_loc_name">Customer Name: </label></td>'+
 						  '<td>'+data.header[0].customer_name+'</td>'+						  						 
+						'</tr>'+
+						'<tr>'+
+						  '<td><label for="is_active_vhcl_repair_loc">Paid by: </label></td>'+
+						  '<td>'+data.payment_details[0].payment_method+'</td>'+						
+						  '<td><label for="is_active_vhcl_repair_loc">Date: </label></td>'+
+						  '<td>'+data.payment_details[0].payment_date+'</td>'+
+						'</tr>'+
+						'<tr>'+
+						   '<td><label for="is_active_vhcl_repair_loc">Time: </label></td>'+
+						  '<td>'+data.payment_details[0].payment_time+'</td>'+
+						   '<td><label for="is_active_vhcl_repair_loc">Confirmed: </label></td>'+
+						  '<td>'+is_confirmed+'</td>'+
 						'</tr>'+
 						'<tr>'+
 						  '<td><label for="is_active_vhcl_repair_loc">Complete: </label></td>'+
@@ -324,7 +358,163 @@ $(document).on('click','.viewBtn', function(){
 	
 })
 
+$(document).on('click', '#payBtn', function(){
+	
+	var invoice_id = $(this).attr('value');	
+	var customer_name = $(this).attr('customer_name');	
+	var customer_id = $(this).attr('customer_id');	
+	
+	$('#modalInfoBody').html('');
+	$('#modalInfoHeader').html('');
+	$('#modalInfoHeader').html('Payment Option');
+	$('#modalInfoBody').html('<div class="row col-md-12">'+
+						
+					'<form class="row col-md-12">'+
+						'<div class="col-md-4 mb-3">'+
+							'<div class="form-group">'+
+							  '<label for="customer_old_nic_no">Customer</label>'+
+							  '<input type="text" class="form-control" id="customer_old_nic_no" value="'+customer_name+'" readonly>'+
+							  '<input type="hidden" class="form-control" id="customer_id" value="'+customer_id+'" readonly>'+
+							'</div>'+							
+						'</div>'+
+						'<div class="col-md-4 mb-3">'+
+							'<div class="form-group">'+
+							  '<label for="invoice_header_header_id">Invoice Id</label>'+
+							  '<input type="text" class="form-control" id="invoice_header_header_id" value="'+invoice_id+'" readonly>'+
+							'</div>'+								
+						'</div>'+
+						'<div class="col-md-4 mb-3">'+
+							'<div class="form-group">'+
+							  '<label for="payment_reference">Payment Reference</label>'+
+							  '<input type="text" class="form-control" id="payment_reference" value="" placeholder="Payment Reference">'+
+							'</div>'+								
+						'</div>'+
+					'</form>'+	
+					'</div>'+
+					'<div class="row">'+
+					'<div class="col-md-6">'+
+						'<div class="info-box bg-gradient-danger payMethod" style="cursor: pointer;" value="cashBtn">'+
+							'<span class="info-box-icon"><i class="fas fa-money-bill-alt"></i></span>'+
+							'<div class="info-box-content">'+
+							'<span class="info-box-text" style="font-size: large;">Paid by Cash</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-6">'+
+						'<div class="info-box bg-gradient-danger payMethod" style="cursor: pointer;" value="qrBtn">'+
+							'<span class="info-box-icon"><i class="fas fa-qrcode"></i></span>'+
+							'<div class="info-box-content">'+
+							'<span class="info-box-text" style="font-size: large;">Paid by Lanka QR</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-6">'+
+						'<div class="info-box bg-gradient-danger payMethod" style="cursor: pointer;" value="bankTransferBtn">'+
+							'<span class="info-box-icon"><i class="fas fa-landmark"></i></span>'+
+							'<div class="info-box-content">'+
+							'<span class="info-box-text" style="font-size: large;">Paid by Bank Transfer</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-6">'+
+						'<div class="info-box bg-gradient-danger payMethod" style="cursor: pointer;" value="bankCardBtn">'+
+							'<span class="info-box-icon"><i class="far fa-credit-card"></i></span>'+
+							'<div class="info-box-content">'+
+							'<span class="info-box-text" style="font-size: large;">Paid by Bank Card</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>');
+		$('#modalFooter').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+	//$('#modalInfo').show();
+	$('#modalInfo').modal('show');
+	
+	
+	
+	
+	
+});
 
+$(document).on('click', '.payMethod', function(){
+	console.log($(this).parent().parent().parent());
+	console.log($('#customer_id').attr('value'));
+	console.log($('#invoice_header_header_id').attr('value'));
+	console.log($('#payment_reference').attr('value'));
+	
+	var payement_method = $(this).attr('value');
+	var customer_id = $('#customer_id').attr('value');
+	var invoice_header_header_id = $('#invoice_header_header_id').attr('value');
+	var payment_reference = $(document).find('#payment_reference').val();
+	
+
+	
+	payement(customer_id, invoice_header_header_id, payment_reference, payement_method);
+})
+
+function payement(customer_id, invoice_header_header_id, payment_reference, payement_method){
+	
+	var paymentArr = [];
+	
+	paymentArr.push({
+		'customer_id': customer_id,
+		'invoice_header_header_id': invoice_header_header_id,
+		'payment_reference': payment_reference,
+		'payement_method': payement_method
+	})
+	
+	
+	console.log(paymentArr);
+	
+	var formData = new Object();
+	formData = {
+		paymentArr:paymentArr
+	};
+	
+	
+	
+	$.ajax({
+		type: "POST",
+		//enctype: 'multipart/form-data',
+		cache : false,
+		async: true,
+		contentType: 'application/json',
+		dataType: "json",
+		processData: false,
+		data: JSON.stringify(formData),	
+		url: API+"RetailInvoice/updatePayment/",
+		success: function(data, result){
+			console.log(data);
+			const notyf = new Notyf();
+			if(data.message == "Payment Updated!"){
+
+				$('.paymentStatus').text('Paid');
+				$('.paymentStatus').removeClass('badge-danger');
+				$('.paymentStatus').addClass('badge-success');
+
+				
+				notyf.success({
+				  message: 'Payment Updated!',
+				  duration: 5000,
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+				window.setTimeout(function() {
+					window.location = "<?php echo base_url() ?>RetailOrder/view";
+				}, 3000);
+			}
+			
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			console.log(textStatus);					
+		}
+	});	
+}
 
 })
 </script>

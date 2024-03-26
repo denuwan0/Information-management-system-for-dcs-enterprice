@@ -158,6 +158,7 @@ function loadData() {
 					
 					$(".completeBtn").last().attr('value', item.assign_emp_line_id );
 					$(".completeBtn").last().attr('order_type', item.order_type );
+					$(".completeBtn").last().attr('invoice_id', item.invoice_id );
 					
 					$(".viewBtn").last().attr('value', item.invoice_id );
 					$(".viewBtn").last().attr('order_type', item.order_type );
@@ -359,11 +360,13 @@ $(document).on('click','.completeBtn', function(){
 
 	var assign_emp_line_id = "";
 	var order_type = "";
+	var invoice_id = 0;
 	var Header = "";
 	var HTML = "";
 	
 	assign_emp_line_id = $(this).attr('value');
 	order_type = $(this).attr('order_type');
+	invoice_id = $(this).attr('invoice_id');
 	is_complete = 1;
 	console.log(order_type);
 	
@@ -371,6 +374,8 @@ $(document).on('click','.completeBtn', function(){
 	formData.append('assign_emp_line_id',assign_emp_line_id);
 	formData.append('is_complete',is_complete);
 	formData.append('order_type',order_type);
+	formData.append('invoice_id',invoice_id);
+	
 	
 	if(order_type != ''){
 		$.ajax({
