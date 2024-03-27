@@ -78,7 +78,7 @@
 		<div class="float-right" style="text-align: right;">
 			<h4><span class="badge badge-danger" style="background-color: black">Rental POS</span></h4>  
 			<h6>Order Status: <span class="badge badge-danger orderStatus">Not Saved</span></h6>   
-			<h6>Payment Status: <span class="badge badge-danger paymentStatus">Not Paid</span></h6>   		
+			<!--h6>Payment Status: <span class="badge badge-danger paymentStatus">Not Paid</span></h6-->   		
 		</div>	
 
 		<div class="row" id="categoryDiv">
@@ -173,11 +173,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 col-sm-4 col-12">
-				<div class="info-box bg-gradient-success" style="cursor: pointer;" id="payBtn">
+			<div class="col-md-4 col-sm-4 col-12" >
+				<div style="display:none;" class="info-box bg-gradient-success" style="cursor: pointer;" id="payBtn">
 					<span class="info-box-icon"><i class="fa fa-check-circle"></i></span>
 					<div class="info-box-content">
-					<span class="info-box-text">Pay</span>
+					<span class="info-box-text">Deposite Money</span>
 					</div>
 				</div>
 			</div>
@@ -670,11 +670,11 @@ $(document).on('click', '#invoiceBtn', function(){
 								'<div class="col-md-6">'+
 									'<div class="form-group">'+
 									  '<label for="customer_contact_no">Mobile</label>'+
-									  '<input type="text" class="form-control" id="customer_contact_no" placeholder="Mobile No.">'+
+									  '<input type="text" pattern="07[1,2,5,6,7,8][0-9]{7}" maxlength="11" class="form-control" id="customer_contact_no" placeholder="Mobile No.">'+
 									'</div>'+
 									'<div class="form-group">'+
 									  '<label for="customer_email">E-mail</label>'+
-									  '<input type="text" class="form-control" id="customer_email" placeholder="Email">'+
+									  '<input type="email" class="form-control" id="customer_email" placeholder="Email">'+
 									'</div>'+
 								'</div>'+
 								'<div class="col-md-6">'+
@@ -878,10 +878,79 @@ $(document).on('click', '#invoicePrintBtn', function(){
 		'customer_shipping_address': customer_shipping_address
 	})
 	
+	var valid_nic = 0;
+	var valid_mobile = 0;
+	var valid_email = 0;
+	
+	var nicRegex = new RegExp("^([0-9]{9}[x|X|v|V]|[0-9]{12})$");
+	//var mobileRegex = new RegExp("^(?:94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|5|6|7|8)\\d)\\d{6}$");
+	var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+	
+	
+	if(nicRegex.test(customer_old_nic_no)) {
+		valid_nic = 1;
+	}else {
+		valid_nic = 0;
+	}
+	
+	/* if(mobileRegex.test(customer_contact_no)) {
+		valid_mobile = 1;
+	}else {
+		valid_mobile = 0;
+	} */
+	
+	if(emailRegex.test(customer_email)) {
+		valid_email = 1;
+	}else {
+		valid_email = 0;
+	}
 	
 	
 	if(customer_old_nic_no && customerDataArr.length > 0 &&  selectedItemsArr.length > 0 && deposite_amount)
 	{
+		const notyf = new Notyf();
+		if(valid_nic == 0){
+			notyf.error({
+			  message: 'Invalid NIC No!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+		}
+		
+		if(valid_email == 0){
+			notyf.error({
+			  message: 'Invalid Email address!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+		}
+		if(valid_nic == 1 && valid_mobile == 1 && valid_email == 1){
+			var formData = new Object();
+			formData = {
+				customerDataArr:customerDataArr,
+				selectedItemsArr:selectedItemsArr
+			};
+			
+			console.log(formData);
+			
+			submitData();
+		}
+		
+		
 		
 		var formData = new Object();
 		formData = {
@@ -891,7 +960,7 @@ $(document).on('click', '#invoicePrintBtn', function(){
 		
 		console.log(formData);
 		
-		submitData();
+		submitData();	
 		
 		
 		
@@ -959,11 +1028,11 @@ $(document).on('click', '#invoicePrintBtn', function(){
 					
 					
 					
-					/* window.setTimeout(function() {
-						window.location = "<?php echo base_url() ?>stockTransfer/view";
-					}, 3000); */
+					window.setTimeout(function() {
+						window.location = "<?php echo base_url() ?>RentalOrder/view";
+					}, 3000);
 				}	
-				else{
+				/* else{
 					notyf.error({
 					  message: 'Error!',
 					  duration: 5000,
@@ -976,7 +1045,7 @@ $(document).on('click', '#invoicePrintBtn', function(){
 					  }
 					  
 					})
-				}
+				} */
 				
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {

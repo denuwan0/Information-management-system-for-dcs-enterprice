@@ -47,7 +47,7 @@
 								<th width="10%">Date</th>
 								<th width="10%">Time</th>
 								<th width="10%">Total</th>
-								<th width="10%">Confirmed</th>
+								<th width="10%">Confirmed/ Paid</th>
 								<th width="10%">Complete</th>
 								<th width="10%">Status</th>
 								<th width="10%">Option</th>
@@ -277,9 +277,10 @@ $(document).on('click','.viewBtn', function(){
 			else{
 				is_confirmed ='<span class="right badge badge-danger">No</span>';
 			}
-			
+			var total = 0;
 			$.each(data.detail, function (i, item) {
 				//console.log(item);
+				total += (item.item_price * item.no_of_items);
 				HTML2 +='<tr>'+
 						  '<td>'+(i+1)+'</td>'+
 						  '<td>'+item.item_name+'</td>'+
@@ -287,11 +288,28 @@ $(document).on('click','.viewBtn', function(){
 						  '<td>'+item.no_of_items+'</td>'+
 						  '<td>'+(item.item_price * item.no_of_items)+'</td>'+
 						'</tr>';
+						
 				//console.log(HTML2);		
 				//$('#detail_table').append(HTML2);
 					  
 			});	
 			
+			var payement_method = 'Not paid yet';
+			var payment_date = 'Not paid yet';
+			var payment_time = 'Not paid yet';
+			
+			console.log(data.payment_details);
+			
+			if(data.payment_details != ''){
+				payement_method = data.payment_details[0].payment_method;
+				payment_date = data.payment_details[0].payment_date;
+				payment_time = data.payment_details[0].payment_time;
+			}
+			
+			HTML2 += '<tr>'+
+						'<th colspan="4" style="width: 15%">Total</th>'+
+						'<th colspan="4" style="width: 15%">'+total+'</th>'+
+					'</tr>';
 			
 			
 			HTML ='<table class="table table-borderless">'+					  
@@ -310,13 +328,13 @@ $(document).on('click','.viewBtn', function(){
 						'</tr>'+
 						'<tr>'+
 						  '<td><label for="is_active_vhcl_repair_loc">Paid by: </label></td>'+
-						  '<td>'+data.payment_details[0].payment_method+'</td>'+						
+						  '<td>'+payement_method+'</td>'+						
 						  '<td><label for="is_active_vhcl_repair_loc">Date: </label></td>'+
-						  '<td>'+data.payment_details[0].payment_date+'</td>'+
+						  '<td>'+payment_date+'</td>'+
 						'</tr>'+
 						'<tr>'+
 						   '<td><label for="is_active_vhcl_repair_loc">Time: </label></td>'+
-						  '<td>'+data.payment_details[0].payment_time+'</td>'+
+						  '<td>'+payment_time+'</td>'+
 						   '<td><label for="is_active_vhcl_repair_loc">Confirmed: </label></td>'+
 						  '<td>'+is_confirmed+'</td>'+
 						'</tr>'+

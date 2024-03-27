@@ -51,6 +51,7 @@
 								<th>Order type</th>
 								<th>Start Date</th>
 								<th>End Date</th>
+								<th>Task status</th>
 								<th>Status</th>
 								<th>Option</th>
 							</tr>
@@ -83,7 +84,7 @@ function loadData() {
 		contentType: 'application/json',
 		url: API+"EmpTaskAssign/fetch_all_join/",
 		success: function(data, result){
-			console.log(data);
+			//console.log(data);
 			//var parseData = JSON.stringify(data);
 			//var parseData1 = JSON.parse(parseData);
 			
@@ -94,8 +95,20 @@ function loadData() {
 							
 				
 				$.each(data, function (i, item) {
-					//console.log(item);
+					console.log(item);
 					var is_active_sp_task_assign  ='';
+					var task_comp_skip  ='';
+					
+					if(item.is_complete  == 1){
+						task_comp_skip  = '<span class="right badge badge-success">Complete</span>';
+					}					
+					if(item.is_skipped  == 1){
+						task_comp_skip  = '<span class="right badge badge-danger">Skipped</span>';
+					}
+					else{
+						task_comp_skip  = '<span class="right badge badge-danger">Not Complete</span>';
+					}
+					
 					if(item.is_active_sp_task_assign  == 1){
 						is_active_sp_task_assign  = '<span class="right badge badge-success">Active</span>';
 					}
@@ -104,9 +117,9 @@ function loadData() {
 					}
 					
 					
+					//console.log(task_comp_skip);
 					
-					
-					table.row.add([item.special_task_id,
+					table.row.add([item.assign_emp_line_id,
 					item.task_name,					
 					item.company_branch_name,
 					item.emp_epf+' - '+item.emp_first_name,
@@ -114,15 +127,16 @@ function loadData() {
 					item.order_type,
 					item.task_start_date,
 					item.task_end_date,
-					item.company_branch_name,
+					task_comp_skip,
 					is_active_sp_task_assign ,
 					'<?php if($this->session->userdata('sys_user_group_name') == "Admin" || 
 						$this->session->userdata('sys_user_group_name') == "Manager"){
-							echo '<div class="btn-group margin"><a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
-							echo '<a type="button" id="editBtn" vehicleId="" href="" class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
+							echo '<div class="btn-group margin"><a style="display:none" type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							echo '<a style="display:block" type="button" id="inactiveBtn" vehicleId=""  class="btn btn-danger btn-sm inactiveBtn"><i class="fa fa-ban"></i></a>';
+							echo '<a style="display:none" type="button" id="editBtn" vehicleId=""  class="btn btn-warning btn-sm editBtn"><i class="far fa-edit"></i></a></div>';
 						}
 						else{
-							echo '<a type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+							echo '<a style="display:none" type="button" id="viewBtn" vehicleId="" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
 						}
 
 					?>'
@@ -132,8 +146,10 @@ function loadData() {
 					//table.columns.adjust().draw();
 
 					//console.log($(".editBtn").last());
-					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpSpecialTask/edit/'+item.special_task_id);
-					$(".viewBtn").last().attr('value', item.special_task_id);
+					$(".editBtn").last().attr('href', '<?php echo base_url() ?>EmpSpecialTask/edit/'+item.assign_emp_line_id);
+					$(".viewBtn").last().attr('value', item.assign_emp_line_id);
+					$(".inactiveBtn").last().attr('value', item.assign_emp_line_id);
+					$(".inactiveBtn").last().attr('order_type', item.order_type );
 					//$(".editBtn").last().attr('vehicleId',item.vehicle_id);
 				});
 							
@@ -201,6 +217,60 @@ $(document).on('click','.viewBtn', function(){
 		$('#modalInfoHeader').html(Header);
 		$('#modalInfoBody').html(HTML);
 		$('#modalInfo').modal('show');
+				
+		}
+	});
+	
+	
+})
+
+$(document).on('click','.inactiveBtn', function(){
+
+	var assign_emp_line_id = "";
+	var order_type = '';
+	var Header = "";
+	var HTML = "";
+	
+	assign_emp_line_id = $(this).attr('value');
+	order_type = $(this).attr('order_type');
+	console.log(assign_emp_line_id);
+	
+	var formData = new FormData();
+	formData.append('assign_emp_line_id',assign_emp_line_id);
+	formData.append('is_active_sp_task_assign',0);
+	formData.append('order_type',order_type);
+	
+	$.ajax({
+		type: "POST",
+		//enctype: 'multipart/form-data',
+		cache : false,
+		async: true,
+		dataType: "json",
+		processData: false,
+		contentType: false,
+		data: formData,	
+		url: API+"EmpTaskAssign/updateInactive",
+		success: function(data, result){
+			console.log(data);
+			
+			const notyf = new Notyf();	
+			if(data['message'] == 'Changes Updated!'){
+				notyf.success({
+				  message: data['message'],
+				  duration: 5000,
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+				window.setTimeout(function() {
+					window.location = "<?php echo base_url() ?>EmpTaskAssign/view";
+				}, 3000);
+			}	
 				
 		}
 	});

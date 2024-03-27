@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2024 at 02:30 AM
+-- Generation Time: Mar 27, 2024 at 07:24 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -227,10 +227,11 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `customer_name`, `customer_working_address`, `customer_shipping_address`, `customer_nic_address`, `customer_old_nic_no`, `customer_new_nic_no`, `customer_contact_no`, `customer_email`, `created_date`, `is_web`, `is_active_customer`) VALUES
-(1, 'Shanaka', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', '961330456V', '', '94757848081', 'nadeetharu1225@gmail.com', '', 1, 1),
+(1, 'Nadeesha', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', 'Hunupitiya, Wattala', '946333263V', '', '94757848081', 'nadeetharu1225@gmail.com', '', 1, 1),
 (2, 'Sanjaya Hettiarachchi', 'No.56, Dekatana, Dompe', 'No.56, Dekatana, Dompe', '', '901330456V', '', '9428689591', 'cykatm@gmail.com', '', 1, 1),
 (3, 'Pavithra Jayasundara', 'No.4, Makola', 'No.4, Makola', '', '902345654V', '', '9471895456', 'may12contact@gmail.com', '', 1, 1),
-(10, 'Charith Porage', '21, Polhena, Madapatha', '21, Polhena, Madapatha', '', '911330768V', '', '0712917184', 'denuwan0@gmail.com', '', 0, 1);
+(10, 'Charith Porage', '21, Polhena, Madapatha', '21, Polhena, Madapatha', '', '911330768V', '', '94712917184', 'denuwan0@gmail.com', '', 0, 1),
+(11, 'Ravindu Porage', '21, Polhena, Madapatha', '21, Polhena, Madapatha', '', '199463303263', '', '94712917185', 'denuwan9@gmail.com', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -553,7 +554,8 @@ INSERT INTO `emp_leave_details` (`leave_detail_id`, `leave_from_date`, `leave_to
 (4, '2024-02-25', '2024-02-25', 9, 2, 7, '1', '', '', 55, 3, 0, 0, 1, 1),
 (5, '2024-03-01', '2024-03-01', 2, 1, 2, '1', '', '', 54, 53, 53, 1, 0, 1),
 (6, '2024-03-02', '2024-03-02', 2, 1, 2, '1', '', '', 54, 53, 0, 0, 1, 1),
-(7, '2024-03-06', '2024-03-07', 2, 1, 2, '2', '', '', 54, 0, 0, 0, 0, 1);
+(7, '2024-03-06', '2024-03-07', 2, 1, 2, '2', '', '', 54, 0, 0, 0, 0, 1),
+(8, '2024-03-24', '2024-03-24', 7, 2, 5, '1', '', '', 3, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -838,7 +840,9 @@ CREATE TABLE `emp_special_task_assign_emp` (
 
 INSERT INTO `emp_special_task_assign_emp` (`assign_emp_line_id`, `special_task_id`, `branch_id`, `emp_id`, `invoice_id`, `order_type`, `task_start_date`, `task_end_date`, `is_complete`, `is_skipped`, `is_active_sp_task_assign`) VALUES
 (1, 2, 1, 2, 1, 'Retail', '2024-03-02', '2024-04-11', 1, 0, 1),
-(2, 1, 1, 2, 2, 'Retail', '2024-03-02', '2024-04-11', 0, 1, 1);
+(2, 1, 1, 2, 2, 'Retail', '2024-03-02', '2024-04-11', 0, 1, 1),
+(3, 1, 2, 9, 13, 'Retail', '2024-03-25', '2024-03-26', 1, 0, 1),
+(5, 1, 2, 9, 34, 'Rental', '2024-03-27', '2024-03-28', 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1156,8 +1160,11 @@ CREATE TABLE `inventory_rental_invoice_detail` (
   `invoice_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
   `no_of_items` int(10) NOT NULL,
+  `no_of_items_returned` int(10) NOT NULL,
   `item_price` decimal(10,2) NOT NULL,
   `item_discount` decimal(10,2) NOT NULL,
+  `is_returned` tinyint(1) NOT NULL,
+  `sub_total` decimal(10,2) NOT NULL,
   `is_active_inv_rent_invoice_detail` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1165,8 +1172,50 @@ CREATE TABLE `inventory_rental_invoice_detail` (
 -- Dumping data for table `inventory_rental_invoice_detail`
 --
 
-INSERT INTO `inventory_rental_invoice_detail` (`rental_detail_id`, `invoice_id`, `item_id`, `no_of_items`, `item_price`, `item_discount`, `is_active_inv_rent_invoice_detail`) VALUES
-(1, 1, 1, 2, '7500.00', '0.00', 1);
+INSERT INTO `inventory_rental_invoice_detail` (`rental_detail_id`, `invoice_id`, `item_id`, `no_of_items`, `no_of_items_returned`, `item_price`, `item_discount`, `is_returned`, `sub_total`, `is_active_inv_rent_invoice_detail`) VALUES
+(1, 1, 1, 2, 0, '7500.00', '0.00', 0, '0.00', 1),
+(2, 2, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(3, 3, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(4, 4, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(5, 5, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(6, 6, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(7, 7, 4, 1, 0, '350.00', '0.00', 0, '0.00', 1),
+(8, 7, 5, 1, 0, '150.00', '0.00', 0, '0.00', 1),
+(9, 8, 5, 1, 0, '150.00', '0.00', 0, '0.00', 1),
+(10, 8, 6, 1, 0, '350.00', '0.00', 0, '0.00', 1),
+(11, 9, 5, 1, 0, '150.00', '0.00', 0, '0.00', 1),
+(12, 9, 6, 1, 0, '350.00', '0.00', 0, '0.00', 1),
+(13, 10, 5, 2, 0, '150.00', '0.00', 0, '0.00', 1),
+(14, 10, 6, 2, 0, '350.00', '0.00', 0, '0.00', 1),
+(15, 11, 5, 2, 0, '150.00', '0.00', 0, '0.00', 1),
+(16, 11, 6, 2, 0, '350.00', '0.00', 0, '0.00', 1),
+(17, 12, 6, 2, 0, '350.00', '0.00', 0, '0.00', 1),
+(18, 12, 5, 1, 0, '150.00', '0.00', 0, '0.00', 1),
+(19, 12, 8, 2, 0, '100.00', '0.00', 0, '0.00', 1),
+(20, 13, 1, 5, 0, '350.00', '0.00', 0, '0.00', 1),
+(21, 14, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(22, 15, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(23, 16, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(24, 17, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(25, 18, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(26, 19, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(27, 20, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(28, 21, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(29, 22, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(30, 23, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(31, 24, 1, 4, 0, '350.00', '0.00', 0, '0.00', 1),
+(32, 25, 4, 1, 0, '350.00', '0.00', 0, '0.00', 1),
+(33, 26, 6, 1, 0, '350.00', '0.00', 0, '0.00', 1),
+(34, 26, 5, 1, 0, '150.00', '0.00', 0, '0.00', 1),
+(35, 27, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(36, 28, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(37, 29, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(38, 30, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(39, 31, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(40, 32, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(41, 33, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
+(42, 34, 5, 1, 0, '150.00', '0.00', 0, '0.00', 1),
+(43, 34, 9, 1, 0, '12000.00', '0.00', 0, '0.00', 1);
 
 -- --------------------------------------------------------
 
@@ -1186,6 +1235,9 @@ CREATE TABLE `inventory_rental_invoice_header` (
   `total_discount` decimal(10,2) NOT NULL,
   `is_active_inv_rent_invoice_hdr` tinyint(1) NOT NULL,
   `is_returned_deposite` tinyint(1) NOT NULL,
+  `is_items_returned` tinyint(1) NOT NULL,
+  `is_pos` tinyint(1) NOT NULL,
+  `is_confirmed` tinyint(1) NOT NULL,
   `is_complete` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1193,8 +1245,59 @@ CREATE TABLE `inventory_rental_invoice_header` (
 -- Dumping data for table `inventory_rental_invoice_header`
 --
 
-INSERT INTO `inventory_rental_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `deposite_amount`, `created_date`, `create_time`, `total_discount`, `is_active_inv_rent_invoice_hdr`, `is_returned_deposite`, `is_complete`) VALUES
-(1, 2, 7, 1, '15000.00', '0.00', '2024-02-29', '10:00:00', '0.00', 1, 0, 1);
+INSERT INTO `inventory_rental_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `deposite_amount`, `created_date`, `create_time`, `total_discount`, `is_active_inv_rent_invoice_hdr`, `is_returned_deposite`, `is_items_returned`, `is_pos`, `is_confirmed`, `is_complete`) VALUES
+(1, 2, 7, 1, '15000.00', '0.00', '2024-02-29', '10:00:00', '0.00', 1, 0, 0, 0, 0, 1),
+(2, 2, 3, 10, '0.00', '2121.00', '2024-03-26', '10:39:56', '0.00', 1, 0, 0, 1, 0, 0),
+(3, 2, 3, 10, '0.00', '111.00', '2024-03-26', '10:40:19', '0.00', 1, 0, 0, 1, 0, 0),
+(4, 2, 3, 10, '0.00', '5000.00', '2024-03-26', '11:13:16', '0.00', 1, 0, 0, 1, 0, 0),
+(5, 2, 3, 10, '0.00', '5000.00', '2024-03-26', '11:13:46', '0.00', 1, 0, 0, 1, 0, 0),
+(6, 2, 3, 10, '0.00', '2232.00', '2024-03-26', '11:17:02', '0.00', 1, 0, 0, 1, 0, 0),
+(7, 2, 3, 10, '500.00', '343.00', '2024-03-26', '11:19:06', '0.00', 1, 0, 0, 1, 0, 0),
+(8, 2, 3, 1, '500.00', '6000.00', '2024-03-26', '11:40:15', '0.00', 1, 0, 0, 1, 0, 0),
+(9, 2, 3, 1, '500.00', '6000.00', '2024-03-26', '11:40:15', '0.00', 1, 0, 0, 1, 0, 0),
+(10, 2, 3, 1, '1000.00', '6000.00', '2024-03-26', '11:40:40', '0.00', 1, 0, 0, 1, 0, 0),
+(11, 2, 3, 1, '1000.00', '6000.00', '2024-03-26', '11:40:40', '0.00', 1, 0, 0, 1, 0, 0),
+(12, 2, 3, 11, '1050.00', '8000.00', '2024-03-26', '12:15:45', '0.00', 1, 0, 0, 1, 0, 0),
+(13, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:35:27', '0.00', 1, 0, 0, 1, 0, 0),
+(14, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:37:37', '0.00', 1, 0, 0, 1, 0, 0),
+(15, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:38:24', '0.00', 1, 0, 0, 1, 0, 0),
+(16, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:39:40', '0.00', 1, 0, 0, 1, 0, 0),
+(17, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:39:49', '0.00', 1, 0, 0, 1, 0, 0),
+(18, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:42:21', '0.00', 1, 0, 0, 1, 0, 0),
+(19, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:43:59', '0.00', 1, 0, 0, 1, 0, 0),
+(20, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:44:30', '0.00', 1, 0, 0, 1, 0, 0),
+(21, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:44:59', '0.00', 1, 0, 0, 1, 0, 0),
+(22, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:48:44', '0.00', 1, 0, 0, 1, 0, 0),
+(23, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:48:56', '0.00', 1, 0, 0, 1, 0, 0),
+(24, 2, 3, 11, '0.00', '8000.00', '2024-03-26', '14:49:38', '0.00', 1, 0, 0, 1, 0, 0),
+(25, 2, 3, 1, '0.00', '212.00', '2024-03-26', '15:01:52', '0.00', 1, 0, 0, 1, 0, 0),
+(26, 2, 3, 1, '0.00', '545.00', '2024-03-26', '22:07:57', '0.00', 1, 0, 0, 1, 0, 0),
+(27, 2, 3, 11, '0.00', '2121.00', '2024-03-27', '14:08:09', '0.00', 1, 0, 0, 1, 1, 0),
+(28, 2, 3, 11, '0.00', '2121.00', '2024-03-27', '14:09:07', '0.00', 1, 0, 0, 1, 1, 0),
+(29, 2, 3, 11, '0.00', '2121.00', '2024-03-27', '14:10:17', '0.00', 1, 0, 0, 1, 1, 0),
+(30, 2, 3, 11, '0.00', '2121.00', '2024-03-27', '14:11:04', '0.00', 1, 0, 0, 1, 1, 0),
+(31, 2, 3, 11, '0.00', '2121.00', '2024-03-27', '14:11:26', '0.00', 1, 0, 0, 1, 1, 0),
+(32, 2, 3, 11, '0.00', '15000.00', '2024-03-27', '14:13:17', '0.00', 1, 0, 0, 1, 1, 0),
+(33, 2, 3, 11, '0.00', '15000.00', '2024-03-27', '14:15:08', '0.00', 1, 0, 0, 1, 1, 0),
+(34, 2, 3, 11, '0.00', '1212.00', '2024-03-27', '14:16:15', '0.00', 1, 0, 0, 1, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_rental_return_detail`
+--
+
+CREATE TABLE `inventory_rental_return_detail` (
+  `rental_return_id` int(10) NOT NULL,
+  `returned_date` varchar(20) NOT NULL,
+  `invoice_id` int(10) NOT NULL,
+  `item_id` int(10) NOT NULL,
+  `item_price` decimal(10,2) NOT NULL,
+  `no_of_items` int(10) NOT NULL,
+  `no_of_days` int(10) NOT NULL,
+  `sub_total` decimal(10,2) NOT NULL,
+  `is_active_rental_return` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1247,15 +1350,15 @@ INSERT INTO `inventory_rental_total_stock` (`rental_stock_id`, `branch_id`, `ite
 (23, 1, 23, 0, 100, 0, '300.00', '250.00', 0, 0, 10, 1),
 (24, 1, 24, 0, 100, 0, '60.00', '50.00', 0, 0, 10, 1),
 (25, 1, 25, 0, 100, 0, '200.00', '150.00', 0, 0, 10, 1),
-(26, 2, 1, 0, 100, 0, '350.00', '250.00', 0, 0, 10, 1),
+(26, 2, 1, 0, 96, 4, '350.00', '250.00', 0, 0, 10, 1),
 (27, 2, 2, 0, 100, 0, '250.00', '200.00', 0, 0, 10, 1),
 (28, 2, 3, 0, 100, 0, '250.00', '200.00', 0, 0, 10, 1),
-(29, 2, 4, 0, 100, 0, '350.00', '250.00', 0, 0, 10, 1),
-(30, 2, 5, 0, 100, 0, '150.00', '100.00', 0, 0, 10, 1),
-(31, 2, 6, 0, 100, 0, '350.00', '250.00', 0, 0, 10, 1),
+(29, 2, 4, 0, 99, 1, '350.00', '250.00', 0, 0, 10, 1),
+(30, 2, 5, 0, 98, 2, '150.00', '100.00', 0, 0, 10, 1),
+(31, 2, 6, 0, 99, 1, '350.00', '250.00', 0, 0, 10, 1),
 (32, 2, 7, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
 (33, 2, 8, 0, 100, 0, '100.00', '80.00', 0, 0, 10, 1),
-(34, 2, 9, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 0),
+(34, 2, 9, 0, 97, 3, '12000.00', '12000.00', 0, 0, 1, 1),
 (35, 2, 10, 0, 100, 0, '6000.00', '5000.00', 0, 0, 2, 1),
 (36, 2, 11, 0, 100, 0, '6000.00', '5000.00', 0, 0, 2, 1),
 (37, 2, 12, 0, 100, 0, '8000.00', '7000.00', 0, 0, 2, 1),
@@ -1293,7 +1396,7 @@ CREATE TABLE `inventory_rent_charge_period` (
 --
 
 CREATE TABLE `inventory_retail_invoice_detail` (
-  `rental_detail_id` int(10) NOT NULL,
+  `retail_detail_id` int(10) NOT NULL,
   `invoice_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
   `no_of_items` int(10) NOT NULL,
@@ -1306,7 +1409,7 @@ CREATE TABLE `inventory_retail_invoice_detail` (
 -- Dumping data for table `inventory_retail_invoice_detail`
 --
 
-INSERT INTO `inventory_retail_invoice_detail` (`rental_detail_id`, `invoice_id`, `item_id`, `no_of_items`, `item_price`, `item_discount`, `is_active_inv_retail_invoice_detail`) VALUES
+INSERT INTO `inventory_retail_invoice_detail` (`retail_detail_id`, `invoice_id`, `item_id`, `no_of_items`, `item_price`, `item_discount`, `is_active_inv_retail_invoice_detail`) VALUES
 (1, 1, 6, 1, '5000.00', '0.00', 1),
 (2, 2, 20, 1, '5000.00', '0.00', 1),
 (3, 3, 7, 1, '12000.00', '0.00', 1),
@@ -1316,7 +1419,22 @@ INSERT INTO `inventory_retail_invoice_detail` (`rental_detail_id`, `invoice_id`,
 (7, 4, 8, 2, '100.00', '0.00', 1),
 (8, 4, 19, 4, '60.00', '0.00', 1),
 (9, 5, 9, 1, '120000.00', '0.00', 1),
-(10, 6, 9, 1, '120000.00', '0.00', 1);
+(10, 6, 9, 1, '120000.00', '0.00', 1),
+(11, 7, 7, 1, '12000.00', '0.00', 1),
+(12, 8, 7, 1, '12000.00', '0.00', 1),
+(13, 8, 9, 1, '120000.00', '0.00', 1),
+(14, 9, 1, 4, '9200.00', '0.00', 1),
+(15, 10, 7, 1, '12000.00', '0.00', 1),
+(16, 11, 7, 1, '12000.00', '0.00', 1),
+(17, 12, 4, 1, '5000.00', '0.00', 1),
+(18, 12, 5, 1, '7000.00', '0.00', 1),
+(19, 12, 6, 1, '5000.00', '0.00', 1),
+(20, 13, 21, 1, '3500.00', '0.00', 1),
+(21, 14, 4, 1, '5000.00', '0.00', 1),
+(22, 14, 5, 1, '7000.00', '0.00', 1),
+(23, 15, 4, 2, '5000.00', '0.00', 1),
+(24, 15, 8, 1, '3000.00', '0.00', 1),
+(25, 15, 5, 1, '7000.00', '0.00', 1);
 
 -- --------------------------------------------------------
 
@@ -1335,6 +1453,7 @@ CREATE TABLE `inventory_retail_invoice_header` (
   `total_discount` decimal(10,2) NOT NULL,
   `is_pos` tinyint(1) NOT NULL,
   `is_active_inv_retail_invoice_hdr` tinyint(1) NOT NULL,
+  `is_confirmed` tinyint(1) NOT NULL,
   `is_complete` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1342,13 +1461,22 @@ CREATE TABLE `inventory_retail_invoice_header` (
 -- Dumping data for table `inventory_retail_invoice_header`
 --
 
-INSERT INTO `inventory_retail_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `created_date`, `create_time`, `total_discount`, `is_pos`, `is_active_inv_retail_invoice_hdr`, `is_complete`) VALUES
-(1, 1, 53, 10, '5000.00', '2024-02-28', '11:18:10', '0.00', 1, 1, 1),
-(2, 1, 53, 10, '5000.00', '2024-02-28', '14:49:32', '0.00', 1, 1, 1),
-(3, 2, 3, 10, '12000.00', '2024-03-05', '22:57:58', '0.00', 1, 1, 0),
-(4, 2, 3, 10, '3540.00', '2024-03-12', '14:43:48', '0.00', 1, 1, 0),
-(5, 2, 3, 10, '120000.00', '2024-03-15', '13:11:42', '0.00', 1, 1, 0),
-(6, 2, 3, 10, '120000.00', '2024-03-17', '08:20:47', '0.00', 1, 1, 0);
+INSERT INTO `inventory_retail_invoice_header` (`invoice_id`, `branch_id`, `emp_id`, `customer_id`, `total_amount`, `created_date`, `create_time`, `total_discount`, `is_pos`, `is_active_inv_retail_invoice_hdr`, `is_confirmed`, `is_complete`) VALUES
+(1, 1, 53, 10, '5000.00', '2024-02-28', '11:18:10', '0.00', 1, 1, 1, 1),
+(2, 1, 53, 10, '5000.00', '2024-02-28', '14:49:32', '0.00', 1, 1, 1, 1),
+(3, 2, 3, 10, '12000.00', '2024-03-05', '22:57:58', '0.00', 1, 1, 1, 0),
+(4, 2, 3, 10, '3540.00', '2024-03-12', '14:43:48', '0.00', 1, 1, 1, 0),
+(5, 2, 3, 10, '120000.00', '2024-03-15', '13:11:42', '0.00', 1, 1, 1, 0),
+(6, 2, 3, 10, '120000.00', '2024-03-17', '08:20:47', '0.00', 1, 1, 1, 0),
+(7, 2, 3, 10, '12000.00', '2024-03-22', '21:19:24', '0.00', 1, 1, 1, 0),
+(8, 2, 3, 10, '132000.00', '2024-03-22', '21:24:19', '0.00', 1, 1, 1, 0),
+(9, 2, 3, 2, '36800.00', '2024-03-24', '18:07:00', '0.00', 1, 1, 1, 0),
+(10, 2, 3, 2, '12000.00', '2024-03-24', '18:09:04', '0.00', 1, 1, 1, 0),
+(11, 2, 3, 2, '12000.00', '2024-03-24', '18:32:07', '0.00', 1, 1, 1, 0),
+(12, 2, 3, 3, '17000.00', '2024-03-25', '12:28:07', '0.00', 1, 1, 1, 0),
+(13, 2, 3, 10, '3500.00', '2024-03-25', '15:01:38', '0.00', 1, 1, 1, 1),
+(14, 2, 3, 2, '12000.00', '2024-03-26', '00:20:41', '0.00', 1, 1, 1, 0),
+(15, 2, 3, 11, '20000.00', '2024-03-27', '11:10:01', '0.00', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1398,15 +1526,15 @@ INSERT INTO `inventory_retail_total_stock` (`retail_stock_id`, `branch_id`, `ite
 (23, 1, 23, 0, '5000.00', '4000.00', 200, 10, 1),
 (24, 1, 24, 0, '2500.00', '1500.00', 200, 10, 1),
 (25, 1, 25, 0, '5000.00', '4000.00', 200, 10, 1),
-(26, 2, 1, 0, '9200.00', '7000.00', 100, 10, 1),
+(26, 2, 1, 0, '9200.00', '7000.00', 96, 10, 1),
 (27, 2, 2, 0, '6000.00', '5000.00', 100, 10, 1),
 (28, 2, 3, 0, '7500.00', '6000.00', 100, 10, 1),
-(29, 2, 4, 0, '5000.00', '4500.00', 100, 10, 1),
-(30, 2, 5, 0, '7000.00', '6500.00', 100, 10, 1),
-(31, 2, 6, 0, '5000.00', '4000.00', 100, 10, 1),
-(32, 2, 7, 0, '12000.00', '12000.00', 100, 1, 1),
+(29, 2, 4, 0, '5000.00', '4500.00', 98, 10, 1),
+(30, 2, 5, 0, '7000.00', '6500.00', 98, 10, 1),
+(31, 2, 6, 0, '5000.00', '4000.00', 99, 10, 1),
+(32, 2, 7, 0, '12000.00', '12000.00', 86, 1, 1),
 (33, 2, 8, 0, '3000.00', '3500.00', 100, 10, 1),
-(34, 2, 9, 0, '120000.00', '130000.00', 100, 5, 1),
+(34, 2, 9, 0, '120000.00', '130000.00', 94, 1, 1),
 (35, 2, 10, 0, '800000.00', '800000.00', 100, 2, 1),
 (36, 2, 11, 0, '1000000.00', '1000000.00', 100, 2, 1),
 (37, 2, 12, 0, '1200000.00', '1200000.00', 100, 2, 1),
@@ -1418,7 +1546,7 @@ INSERT INTO `inventory_retail_total_stock` (`retail_stock_id`, `branch_id`, `ite
 (43, 2, 18, 0, '7000.00', '9000.00', 100, 10, 1),
 (44, 2, 19, 0, '4500.00', '5000.00', 100, 20, 1),
 (45, 2, 20, 0, '5000.00', '7000.00', 100, 20, 1),
-(46, 2, 21, 0, '3500.00', '3000.00', 100, 10, 1),
+(46, 2, 21, 0, '3500.00', '3000.00', 98, 10, 1),
 (47, 2, 22, 0, '4500.00', '3500.00', 100, 10, 1),
 (48, 2, 23, 0, '5000.00', '4000.00', 100, 10, 1),
 (49, 2, 24, 0, '2500.00', '1500.00', 100, 10, 1),
@@ -1966,18 +2094,53 @@ CREATE TABLE `order_payments` (
 --
 
 INSERT INTO `order_payments` (`payment_id`, `order_id`, `cust_id`, `branch_id`, `reference`, `payment_date`, `payment_time`, `payment_method`, `is_retail_order`, `is_rental_order`, `is_web_order`, `is_complete`) VALUES
-(1, 0, 0, 0, 'QR', '2024-02-28', '11:53:56', 'Bank Card Payment', 1, 0, 0, 1),
-(2, 0, 0, 0, 'QR', '2024-02-28', '11:54:36', 'Bank Card Payment', 1, 0, 0, 1),
-(3, 10, 0, 0, '911330768V', '2024-02-28', '14:49:43', 'Lanka QR Payment', 1, 0, 0, 1),
-(4, 2, 10, 0, '911330768V', '2024-02-28', '14:53:01', 'Lanka QR Payment', 1, 0, 0, 1),
-(5, 2, 10, 0, '911330768V', '2024-02-28', '14:53:16', 'Lanka QR Payment', 1, 0, 0, 1),
-(6, 3, 10, 0, 'saasa', '2024-03-05', '22:58:27', 'Lanka QR Payment', 1, 0, 0, 1),
-(7, 5, 10, 0, '', '2024-03-15', '13:12:04', 'Cash', 1, 0, 0, 1),
-(8, 6, 2, 0, '911330768V', '2024-03-17', '08:21:01', 'Lanka QR Payment', 1, 0, 0, 1),
-(9, 6, 2, 0, '911330768V', '2024-03-17', '08:22:02', 'Lanka QR Payment', 1, 0, 0, 1),
-(10, 6, 2, 0, '911330768V', '2024-03-17', '08:24:00', 'Lanka QR Payment', 1, 0, 0, 1),
-(11, 6, 2, 0, '911330768V', '2024-03-17', '08:28:03', 'Lanka QR Payment', 1, 0, 0, 1),
-(12, 6, 2, 0, '911330768V', '2024-03-17', '08:53:57', 'Bank Card Payment', 1, 0, 0, 1);
+(1, 0, 0, 2, 'QR', '2024-02-28', '11:53:56', 'Bank Card Payment', 1, 0, 0, 1),
+(2, 0, 0, 2, 'QR', '2024-02-28', '11:54:36', 'Bank Card Payment', 1, 0, 0, 1),
+(3, 10, 0, 2, '911330768V', '2024-02-28', '14:49:43', 'Lanka QR Payment', 1, 0, 0, 1),
+(4, 2, 10, 2, '911330768V', '2024-02-28', '14:53:01', 'Lanka QR Payment', 1, 0, 0, 1),
+(5, 2, 10, 2, '911330768V', '2024-02-28', '14:53:16', 'Lanka QR Payment', 1, 0, 0, 1),
+(6, 3, 10, 2, 'saasa', '2024-03-05', '22:58:27', 'Lanka QR Payment', 1, 0, 0, 1),
+(7, 5, 10, 2, '', '2024-03-15', '13:12:04', 'Cash', 1, 0, 0, 1),
+(8, 6, 2, 2, '911330768V', '2024-03-17', '08:21:01', 'Lanka QR Payment', 1, 0, 0, 1),
+(9, 6, 2, 2, '911330768V', '2024-03-17', '08:22:02', 'Lanka QR Payment', 1, 0, 0, 1),
+(10, 6, 2, 2, '911330768V', '2024-03-17', '08:24:00', 'Lanka QR Payment', 1, 0, 0, 1),
+(11, 6, 2, 2, '911330768V', '2024-03-17', '08:28:03', 'Lanka QR Payment', 1, 0, 0, 1),
+(12, 6, 2, 2, '911330768V', '2024-03-17', '08:53:57', 'Bank Card Payment', 1, 0, 0, 1),
+(13, 7, 2, 2, '12', '2024-03-22', '21:20:39', 'Cash', 1, 0, 0, 1),
+(14, 7, 2, 2, '12', '2024-03-22', '21:20:47', 'Cash', 1, 0, 0, 1),
+(15, 7, 2, 2, '12', '2024-03-22', '21:23:43', 'Cash', 1, 0, 0, 1),
+(16, 8, 2, 2, '2121', '2024-03-22', '21:24:29', 'Cash', 1, 0, 0, 1),
+(17, 8, 2, 2, '2121', '2024-03-22', '21:25:30', 'Cash', 1, 0, 0, 1),
+(18, 8, 2, 2, '2121', '2024-03-23', '11:23:28', 'Cash', 1, 0, 0, 1),
+(19, 8, 2, 2, '2121', '2024-03-23', '11:28:51', 'Cash', 1, 0, 0, 1),
+(20, 8, 2, 2, '2121', '2024-03-23', '11:29:24', 'Cash', 1, 0, 0, 1),
+(21, 8, 2, 2, '2121', '2024-03-23', '11:30:05', 'Cash', 1, 0, 0, 1),
+(22, 8, 2, 2, '2121', '2024-03-23', '11:31:19', 'Cash', 1, 0, 0, 1),
+(23, 8, 2, 2, '2121', '2024-03-23', '11:44:18', 'Cash', 1, 0, 0, 1),
+(24, 8, 2, 2, '2121', '2024-03-23', '11:44:48', 'Cash', 1, 0, 0, 1),
+(25, 8, 2, 2, '2121', '2024-03-23', '13:25:48', 'Cash', 1, 0, 0, 1),
+(26, 8, 2, 2, '2121', '2024-03-23', '13:25:55', 'Cash', 1, 0, 0, 1),
+(27, 8, 2, 2, '2121', '2024-03-23', '13:26:36', 'Cash', 1, 0, 0, 1),
+(28, 8, 2, 2, '2121', '2024-03-23', '13:27:53', 'Cash', 1, 0, 0, 1),
+(29, 8, 2, 2, '2121', '2024-03-23', '13:42:12', 'Cash', 1, 0, 0, 1),
+(30, 8, 2, 2, '2121', '2024-03-23', '13:46:17', 'Cash', 1, 0, 0, 1),
+(31, 8, 2, 2, '2121', '2024-03-23', '13:47:00', 'Cash', 1, 0, 0, 1),
+(32, 8, 2, 2, '2121', '2024-03-23', '13:50:38', 'Cash', 1, 0, 0, 1),
+(33, 8, 2, 2, '2121', '2024-03-23', '13:55:08', 'Cash', 1, 0, 0, 1),
+(34, 8, 2, 2, '2121', '2024-03-24', '18:06:07', 'Cash', 1, 0, 0, 1),
+(35, 10, 2, 2, '901330456V', '2024-03-24', '18:09:11', 'Cash', 1, 0, 0, 1),
+(36, 10, 2, 2, '901330456V', '2024-03-24', '18:09:33', 'Cash', 1, 0, 0, 1),
+(37, 11, 2, 2, '901330456V', '2024-03-24', '18:33:00', 'Cash', 1, 0, 0, 1),
+(38, 11, 2, 2, '901330456V', '2024-03-24', '18:33:45', 'Bank Transfer', 1, 0, 0, 1),
+(39, 11, 2, 2, '901330456V', '2024-03-24', '18:33:45', 'Bank Transfer', 1, 0, 0, 1),
+(40, 11, 2, 2, '901330456V', '2024-03-24', '18:33:48', 'Cash', 1, 0, 0, 1),
+(41, 11, 2, 2, '901330456V', '2024-03-24', '18:34:21', 'Cash', 1, 0, 0, 1),
+(42, 12, 2, 2, '902345654V', '2024-03-25', '12:28:12', 'Cash', 1, 0, 0, 1),
+(43, 13, 2, 2, '', '2024-03-25', '16:49:22', 'Cash', 1, 0, 0, 1),
+(44, 13, 2, 2, '911330768V', '2024-03-25', '16:50:45', 'Cash', 1, 0, 0, 1),
+(45, 10, 2, 2, 'Sanjaya Hettiarachchi', '2024-03-25', '16:50:58', 'Cash', 1, 0, 0, 1),
+(46, 14, 2, 2, 'Sanjaya', '2024-03-26', '00:20:54', 'Cash', 1, 0, 0, 1),
+(47, 9, 2, 2, '212', '2024-03-26', '00:38:01', 'Cash', 1, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2026,7 +2189,19 @@ INSERT INTO `sys_notification` (`sys_notify_id`, `user_id`, `create_date`, `is_s
 (28, 3, '2024-03-14', 1),
 (29, 3, '2024-03-15', 1),
 (30, 3, '2024-03-16', 1),
-(31, 3, '2024-03-17', 1);
+(31, 3, '2024-03-17', 1),
+(32, 1, '2024-03-22', 1),
+(33, 3, '2024-03-22', 1),
+(34, 3, '2024-03-23', 1),
+(35, 3, '2024-03-24', 1),
+(36, 55, '2024-03-24', 1),
+(37, 3, '2024-03-25', 1),
+(38, 55, '2024-03-25', 1),
+(39, 3, '2024-03-26', 1),
+(40, 55, '2024-03-26', 1),
+(41, 1, '2024-03-26', 1),
+(42, 3, '2024-03-27', 1),
+(43, 55, '2024-03-27', 1);
 
 -- --------------------------------------------------------
 
@@ -2078,14 +2253,14 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '9a28e9a134bc51d796e2', '161034', '2024-03-12 05:46:29', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'c343007e49c7f249a37d', '968117', '2024-03-27 16:53:03', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '2c68781c8d18696423f7', '403856', '2024-03-17 02:45:25', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'f48782a6ff97882fa305', '248397', '2024-03-27 16:59:46', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
 (53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-03-06 02:11:41', 0, 1),
 (54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-03-12 05:15:50', 0, 1),
-(55, 9, 4, 'madushanka', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-02-24 11:07:40', 0, 1);
+(55, 9, 4, 'madushanka', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '54fa4ba35c44e3b7718c', '921332', '2024-03-27 17:00:07', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2758,6 +2933,12 @@ ALTER TABLE `inventory_rental_invoice_header`
   ADD PRIMARY KEY (`invoice_id`);
 
 --
+-- Indexes for table `inventory_rental_return_detail`
+--
+ALTER TABLE `inventory_rental_return_detail`
+  ADD PRIMARY KEY (`rental_return_id`);
+
+--
 -- Indexes for table `inventory_rental_total_stock`
 --
 ALTER TABLE `inventory_rental_total_stock`
@@ -2773,7 +2954,7 @@ ALTER TABLE `inventory_rent_charge_period`
 -- Indexes for table `inventory_retail_invoice_detail`
 --
 ALTER TABLE `inventory_retail_invoice_detail`
-  ADD PRIMARY KEY (`rental_detail_id`);
+  ADD PRIMARY KEY (`retail_detail_id`);
 
 --
 -- Indexes for table `inventory_retail_invoice_header`
@@ -3065,7 +3246,7 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `emp_advance`
@@ -3143,7 +3324,7 @@ ALTER TABLE `emp_holiday_calender`
 -- AUTO_INCREMENT for table `emp_leave_details`
 --
 ALTER TABLE `emp_leave_details`
-  MODIFY `leave_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `leave_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `emp_leave_quota`
@@ -3221,7 +3402,7 @@ ALTER TABLE `emp_salary_scale`
 -- AUTO_INCREMENT for table `emp_special_task_assign_emp`
 --
 ALTER TABLE `emp_special_task_assign_emp`
-  MODIFY `assign_emp_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `assign_emp_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `emp_special_task_header`
@@ -3293,13 +3474,19 @@ ALTER TABLE `inventory_item_with_sub_items`
 -- AUTO_INCREMENT for table `inventory_rental_invoice_detail`
 --
 ALTER TABLE `inventory_rental_invoice_detail`
-  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `inventory_rental_invoice_header`
 --
 ALTER TABLE `inventory_rental_invoice_header`
-  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `inventory_rental_return_detail`
+--
+ALTER TABLE `inventory_rental_return_detail`
+  MODIFY `rental_return_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventory_rental_total_stock`
@@ -3317,13 +3504,13 @@ ALTER TABLE `inventory_rent_charge_period`
 -- AUTO_INCREMENT for table `inventory_retail_invoice_detail`
 --
 ALTER TABLE `inventory_retail_invoice_detail`
-  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `retail_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `inventory_retail_invoice_header`
 --
 ALTER TABLE `inventory_retail_invoice_header`
-  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `inventory_retail_total_stock`
@@ -3419,13 +3606,13 @@ ALTER TABLE `online_order`
 -- AUTO_INCREMENT for table `order_payments`
 --
 ALTER TABLE `order_payments`
-  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `sys_notification`
 --
 ALTER TABLE `sys_notification`
-  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `sys_notify_type`

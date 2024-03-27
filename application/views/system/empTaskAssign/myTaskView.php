@@ -209,7 +209,10 @@ $(document).on('click','.viewBtn', function(){
 							'<tr>'+
 							  '<th>Invoice No: '+data.header[0].invoice_id+'</th>'+
 							  '<th>Customer Name: '+data.header[0].customer_name+'</th>'+
+							'</tr>'+
+							'<tr>'+
 							  '<th>Contact: '+data.header[0].customer_contact_no+'</th>'+
+							  '<th>Shipping Address: '+data.header[0].customer_shipping_address+'</th>'+
 							'</tr>'+
 						'</thead>';
 				
@@ -267,35 +270,63 @@ $(document).on('click','.viewBtn', function(){
 			async: true,
 			dataType: "json",
 			contentType: 'application/json',
-			url: API+"EmpSpecialTask/fetch_single_join?id="+assign_emp_line_id,
+			url: API+"RentalInvoice/fetch_single_join_by_invoice_id?id="+invoice_id,
 			success: function(data, result){
 				console.log(data);
 				
-				Header = 'Task Name: '+data[0].task_name;
+				Header = order_type+' Invoice No: '+data.header[0].invoice_id;
 				console.log(Header);
-				if(data[0].is_active_sp_task  == 1){
-					is_active_sp_task  = '<span class="right badge badge-success">Active</span>';
+				
+				HTML +='<table class="table table-borderless">'+
+						'<thead>'+
+							'<tr>'+
+							  '<th>Invoice No: '+data.header[0].invoice_id+'</th>'+
+							  '<th>Customer Name: '+data.header[0].customer_name+'</th>'+
+							'</tr>'+
+							'<tr>'+
+							  '<th>Contact: '+data.header[0].customer_contact_no+'</th>'+
+							  '<th>Shipping Address: '+data.header[0].customer_shipping_address+'</th>'+
+							'</tr>'+
+						'</thead>';
+				
+				var is_active_inv_retail_invoice_hdr=0;
+				var is_complete=0;
+				
+				if(data.header[0].is_active_inv_retail_invoice_hdr  == 1){
+					is_active_inv_retail_invoice_hdr  = '<span class="right badge badge-success">Active</span>';
 				}
 				else{
-					is_active_sp_task  = '<span class="right badge badge-danger">Inactive</span>';
+					is_active_inv_retail_invoice_hdr  = '<span class="right badge badge-danger">Inactive</span>';
 				}
 				
-				HTML ='<table class="table table-borderless">'+					  
-						  '<tbody>'+
+				if(data.header[0].is_complete  == 1){
+					is_complete  = '<span class="right badge badge-success">Complete</span>';
+				}
+				else{
+					is_complete  = '<span class="right badge badge-danger">Not Complete</span>';
+				}
+				
+				HTML +='<table class="table">'+
+						'<thead>'+
 							'<tr>'+
-							  '<th><label for="license_plate_no">Task Id: </label></th>'+
-							  '<td>'+data[0].special_task_id+'</td>'+
-							  '<td><label for="branch_id">Name: </label></td>'+
-							  '<td>'+data[0].task_name+'</td>'+
+							  '<th>Item Name</th>'+
+							  '<th>Quantity</th>'+
 							'</tr>'+
-							'<tr>'+
-							  '<th><label for="vehicle_yom">Type: </label></th>'+
-							  '<td>'+data[0].task_type+'</td>'+
-							  '<td><label for="max_load">Status: </label></td>'+
-							  '<td>'+is_active_sp_task+'</td>'+
-							'</tr>'+
-						  '</tbody>'+
+						'</thead>'+
+						'<tbody>';
+				
+				$.each(data.detail, function (i, item) {
+					HTML +=	'<tr>'+
+							  '<td>'+item.item_name+'</td>'+
+							  '<td>'+item.no_of_items+'</td>'+
+							'</tr>';
+						  
+				});
+				
+				HTML += '</tbody>'+
 						'</table>';
+				
+				
 						
 			
 			$('#modalInfoHeader').html(Header);
@@ -312,7 +343,7 @@ $(document).on('click','.viewBtn', function(){
 			async: true,
 			dataType: "json",
 			contentType: 'application/json',
-			url: API+"EmpSpecialTask/fetch_single_join?id="+assign_emp_line_id,
+			url: API+"EmpSpecialTask/fetch_single_join_by_invoice_id?id="+invoice_id,
 			success: function(data, result){
 				console.log(data);
 				

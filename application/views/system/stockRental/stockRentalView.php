@@ -49,6 +49,7 @@
 								<th width="10%">Min Price</th>
 								<th width="10%">Reorder Level</th>
 								<th width="10%">Available stock</th>
+								<th width="10%">Out stock</th>
 								<th width="10%">Status</th>
 								<th width="10%">Option</th>
 							</tr>
@@ -165,6 +166,7 @@ function loadData() {
 					item.min_rent_price,
 					item.stock_re_order_level,
 					item.full_stock_count,
+					item.out_stock_count,
 					is_active_rental_stock,
 					option_html,
 					]).draw();
