@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2024 at 07:24 PM
+-- Generation Time: Mar 29, 2024 at 06:12 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -555,7 +555,8 @@ INSERT INTO `emp_leave_details` (`leave_detail_id`, `leave_from_date`, `leave_to
 (5, '2024-03-01', '2024-03-01', 2, 1, 2, '1', '', '', 54, 53, 53, 1, 0, 1),
 (6, '2024-03-02', '2024-03-02', 2, 1, 2, '1', '', '', 54, 53, 0, 0, 1, 1),
 (7, '2024-03-06', '2024-03-07', 2, 1, 2, '2', '', '', 54, 0, 0, 0, 0, 1),
-(8, '2024-03-24', '2024-03-24', 7, 2, 5, '1', '', '', 3, 0, 0, 0, 0, 1);
+(8, '2024-03-24', '2024-03-24', 7, 2, 5, '1', '', '', 3, 0, 0, 0, 0, 1),
+(9, '2024-03-29', '2024-03-29', 9, 2, 7, '1', '', '', 55, 3, 0, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -842,7 +843,10 @@ INSERT INTO `emp_special_task_assign_emp` (`assign_emp_line_id`, `special_task_i
 (1, 2, 1, 2, 1, 'Retail', '2024-03-02', '2024-04-11', 1, 0, 1),
 (2, 1, 1, 2, 2, 'Retail', '2024-03-02', '2024-04-11', 0, 1, 1),
 (3, 1, 2, 9, 13, 'Retail', '2024-03-25', '2024-03-26', 1, 0, 1),
-(5, 1, 2, 9, 34, 'Rental', '2024-03-27', '2024-03-28', 0, 1, 0);
+(5, 1, 2, 9, 34, 'Rental', '2024-03-27', '2024-03-28', 0, 1, 0),
+(6, 1, 2, 9, 34, 'Rental', '2024-03-27', '2024-03-29', 1, 0, 1),
+(7, 1, 2, 9, 39, 'Rental', '2024-03-29', '2024-03-29', 0, 0, 0),
+(8, 1, 2, 9, 39, 'Rental', '2024-03-28', '2024-03-30', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -892,7 +896,7 @@ INSERT INTO `emp_wise_leave_quota` (`emp_wise_leave_quota_id`, `leave_quota_id`,
 (4, 1, 6, 7, 0, 1),
 (5, 1, 7, 7, 0, 1),
 (6, 1, 8, 7, 0, 1),
-(7, 1, 9, 7, 0, 1),
+(7, 1, 9, 5, 0, 1),
 (8, 2, 1, 14, 0, 1),
 (9, 2, 2, 14, 0, 1),
 (10, 2, 5, 14, 0, 1),
@@ -1215,7 +1219,22 @@ INSERT INTO `inventory_rental_invoice_detail` (`rental_detail_id`, `invoice_id`,
 (40, 32, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
 (41, 33, 9, 1, 0, '0.00', '0.00', 0, '0.00', 1),
 (42, 34, 5, 1, 0, '150.00', '0.00', 0, '0.00', 1),
-(43, 34, 9, 1, 0, '12000.00', '0.00', 0, '0.00', 1);
+(43, 34, 9, 1, 0, '12000.00', '0.00', 0, '0.00', 1),
+(44, 35, 4, 6, 0, '350.00', '0.00', 0, '0.00', 1),
+(45, 35, 5, 3, 0, '150.00', '0.00', 0, '0.00', 1),
+(46, 35, 8, 6, 0, '100.00', '0.00', 0, '0.00', 1),
+(47, 36, 4, 6, 0, '350.00', '0.00', 0, '0.00', 1),
+(48, 36, 5, 3, 0, '150.00', '0.00', 0, '0.00', 1),
+(49, 36, 8, 6, 0, '100.00', '0.00', 0, '0.00', 1),
+(50, 37, 4, 6, 0, '350.00', '0.00', 0, '0.00', 1),
+(51, 37, 5, 3, 0, '150.00', '0.00', 0, '0.00', 1),
+(52, 37, 8, 6, 0, '100.00', '0.00', 0, '0.00', 1),
+(53, 38, 4, 6, 0, '350.00', '0.00', 0, '0.00', 1),
+(54, 38, 5, 3, 0, '150.00', '0.00', 0, '0.00', 1),
+(55, 38, 8, 6, 0, '100.00', '0.00', 0, '0.00', 1),
+(56, 39, 4, 6, 2, '350.00', '0.00', 0, '2800.00', 1),
+(57, 39, 5, 3, 1, '150.00', '0.00', 0, '600.00', 1),
+(58, 39, 8, 6, 2, '100.00', '0.00', 0, '800.00', 1);
 
 -- --------------------------------------------------------
 
@@ -1279,7 +1298,12 @@ INSERT INTO `inventory_rental_invoice_header` (`invoice_id`, `branch_id`, `emp_i
 (31, 2, 3, 11, '0.00', '2121.00', '2024-03-27', '14:11:26', '0.00', 1, 0, 0, 1, 1, 0),
 (32, 2, 3, 11, '0.00', '15000.00', '2024-03-27', '14:13:17', '0.00', 1, 0, 0, 1, 1, 0),
 (33, 2, 3, 11, '0.00', '15000.00', '2024-03-27', '14:15:08', '0.00', 1, 0, 0, 1, 1, 0),
-(34, 2, 3, 11, '0.00', '1212.00', '2024-03-27', '14:16:15', '0.00', 1, 0, 0, 1, 1, 0);
+(34, 2, 3, 11, '0.00', '1212.00', '2024-03-27', '14:16:15', '0.00', 1, 0, 0, 1, 1, 1),
+(35, 2, 3, 11, '0.00', '15000.00', '2024-03-28', '11:14:42', '0.00', 1, 0, 0, 1, 1, 0),
+(36, 2, 3, 11, '0.00', '15000.00', '2024-03-28', '11:15:02', '0.00', 1, 0, 0, 1, 1, 0),
+(37, 2, 3, 1, '0.00', '15000.00', '2024-03-28', '11:16:53', '0.00', 1, 0, 0, 1, 1, 0),
+(38, 2, 3, 1, '0.00', '15000.00', '2024-03-28', '11:17:56', '0.00', 1, 0, 0, 1, 1, 0),
+(39, 2, 3, 1, '0.00', '15000.00', '2024-03-25', '11:18:36', '0.00', 1, 0, 0, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1298,6 +1322,16 @@ CREATE TABLE `inventory_rental_return_detail` (
   `sub_total` decimal(10,2) NOT NULL,
   `is_active_rental_return` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventory_rental_return_detail`
+--
+
+INSERT INTO `inventory_rental_return_detail` (`rental_return_id`, `returned_date`, `invoice_id`, `item_id`, `item_price`, `no_of_items`, `no_of_days`, `sub_total`, `is_active_rental_return`) VALUES
+(1, '2024-03-29', 39, 4, '350.00', 2, 4, '2800.00', 1),
+(2, '2024-03-29', 39, 4, '350.00', 2, 4, '2800.00', 1),
+(3, '2024-03-29', 39, 5, '150.00', 1, 4, '600.00', 1),
+(4, '2024-03-29', 39, 8, '100.00', 2, 4, '800.00', 1);
 
 -- --------------------------------------------------------
 
@@ -1353,11 +1387,11 @@ INSERT INTO `inventory_rental_total_stock` (`rental_stock_id`, `branch_id`, `ite
 (26, 2, 1, 0, 96, 4, '350.00', '250.00', 0, 0, 10, 1),
 (27, 2, 2, 0, 100, 0, '250.00', '200.00', 0, 0, 10, 1),
 (28, 2, 3, 0, 100, 0, '250.00', '200.00', 0, 0, 10, 1),
-(29, 2, 4, 0, 99, 1, '350.00', '250.00', 0, 0, 10, 1),
-(30, 2, 5, 0, 98, 2, '150.00', '100.00', 0, 0, 10, 1),
+(29, 2, 4, 0, 69, 31, '350.00', '250.00', 0, 0, 10, 1),
+(30, 2, 5, 0, 83, 17, '150.00', '100.00', 0, 0, 10, 1),
 (31, 2, 6, 0, 99, 1, '350.00', '250.00', 0, 0, 10, 1),
 (32, 2, 7, 0, 100, 0, '0.00', '0.00', 0, 0, 0, 1),
-(33, 2, 8, 0, 100, 0, '100.00', '80.00', 0, 0, 10, 1),
+(33, 2, 8, 0, 70, 30, '100.00', '80.00', 0, 0, 10, 1),
 (34, 2, 9, 0, 97, 3, '12000.00', '12000.00', 0, 0, 1, 1),
 (35, 2, 10, 0, 100, 0, '6000.00', '5000.00', 0, 0, 2, 1),
 (36, 2, 11, 0, 100, 0, '6000.00', '5000.00', 0, 0, 2, 1),
@@ -2201,7 +2235,11 @@ INSERT INTO `sys_notification` (`sys_notify_id`, `user_id`, `create_date`, `is_s
 (40, 55, '2024-03-26', 1),
 (41, 1, '2024-03-26', 1),
 (42, 3, '2024-03-27', 1),
-(43, 55, '2024-03-27', 1);
+(43, 55, '2024-03-27', 1),
+(44, 3, '2024-03-28', 1),
+(45, 55, '2024-03-28', 1),
+(46, 1, '2024-03-28', 1),
+(47, 3, '2024-03-29', 1);
 
 -- --------------------------------------------------------
 
@@ -2253,14 +2291,14 @@ CREATE TABLE `sys_user` (
 --
 
 INSERT INTO `sys_user` (`user_id`, `emp_cust_id`, `sys_user_group_id`, `username`, `password`, `token`, `otp_code`, `otp_code_gen_time`, `is_customer`, `is_active_sys_user`) VALUES
-(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'c343007e49c7f249a37d', '968117', '2024-03-27 16:53:03', 0, 1),
+(1, 1, 1, 'admin', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '833308', '2024-03-28 18:17:50', 0, 1),
 (2, 1, 5, 'customer', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-02-15 16:20:08', 1, 1),
-(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'f48782a6ff97882fa305', '248397', '2024-03-27 16:59:46', 0, 1),
+(3, 7, 2, 'manager1', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'f4847802d786781476a5', '869055', '2024-03-29 04:51:16', 0, 1),
 (43, 2, 5, 'sanj123', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:47:19', 1, 1),
 (44, 3, 5, 'pavi1990', '615ed7fb1504b0c724a296d7a69e6c7b2f9ea2c57c1d8206c5afdf392ebdfd25', '', '', '2024-01-28 09:49:31', 1, 1),
 (53, 8, 2, 'manager2', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-03-06 02:11:41', 0, 1),
 (54, 2, 4, 'sachith', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '2024-03-12 05:15:50', 0, 1),
-(55, 9, 4, 'madushanka', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '54fa4ba35c44e3b7718c', '921332', '2024-03-27 17:00:07', 0, 1);
+(55, 9, 4, 'madushanka', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '6d00d1ebfd228fdd0df4', '965087', '2024-03-28 05:52:05', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -3324,7 +3362,7 @@ ALTER TABLE `emp_holiday_calender`
 -- AUTO_INCREMENT for table `emp_leave_details`
 --
 ALTER TABLE `emp_leave_details`
-  MODIFY `leave_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `leave_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `emp_leave_quota`
@@ -3402,7 +3440,7 @@ ALTER TABLE `emp_salary_scale`
 -- AUTO_INCREMENT for table `emp_special_task_assign_emp`
 --
 ALTER TABLE `emp_special_task_assign_emp`
-  MODIFY `assign_emp_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `assign_emp_line_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `emp_special_task_header`
@@ -3474,19 +3512,19 @@ ALTER TABLE `inventory_item_with_sub_items`
 -- AUTO_INCREMENT for table `inventory_rental_invoice_detail`
 --
 ALTER TABLE `inventory_rental_invoice_detail`
-  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `rental_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `inventory_rental_invoice_header`
 --
 ALTER TABLE `inventory_rental_invoice_header`
-  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `invoice_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `inventory_rental_return_detail`
 --
 ALTER TABLE `inventory_rental_return_detail`
-  MODIFY `rental_return_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `rental_return_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `inventory_rental_total_stock`
@@ -3612,7 +3650,7 @@ ALTER TABLE `order_payments`
 -- AUTO_INCREMENT for table `sys_notification`
 --
 ALTER TABLE `sys_notification`
-  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `sys_notify_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `sys_notify_type`
