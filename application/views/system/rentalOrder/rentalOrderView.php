@@ -172,7 +172,7 @@ function loadData() {
 
 							?>';
 							}
-							else if(item.is_complete == 1 && item.is_items_returned == 1){
+							else if(item.is_complete == 1 && item.is_items_returned == 1 && item.is_returned_deposite == 0){
 								option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
 									echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
 									
@@ -594,7 +594,9 @@ $(document).on('click', '#payBtn', function(){
 	
 	var invoice_id = $(this).attr('value');	
 	var customer_name = $(this).attr('customer_name');	
-	var customer_id = $(this).attr('customer_id');	
+	var customer_id = $(this).attr('customer_id');
+	
+	$('#modalInfoFooter').html('<button type="button" id="closeBtn" class="btn btn-default" data-dismiss="modal">Close</button>');
 	
 	$('#modalInfoBody').html('');
 	$('#modalInfoHeader').html('');
