@@ -139,7 +139,7 @@ $('#submit').click(function(e){
 						inputMethodVal: inputMethodVal,
 						resetMethodDisplay: resetMethodDisplay
 						},			
-					url: web+"ApiRequest/restCodeGen/",
+					url: web+"ApiRequest/restCodeGenEmp/",
 					success: function(data){
 						//var count = Object.keys(data).length;
 						console.log(data);

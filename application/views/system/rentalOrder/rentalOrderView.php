@@ -10,8 +10,8 @@
 				<div class="modal-body" id="modalInfoBody" >	
 					
 				</div>
-				<div class="modal-footer justify-content-right">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<div class="modal-footer justify-content-right" id="modalInfoFooter">
+					<button type="button" id="closeBtn" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 		</div>
 	</div>
@@ -157,16 +157,36 @@ function loadData() {
 						is_active_inv_rent_invoice_hdr = '<span class="right badge badge-success">Active</span>';
 						
 						if(item.is_confirmed == 1){
-							option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
+							
+							if(item.is_complete == 1 && item.is_items_returned == 0){
+								option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
 									echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
 									echo '<a style="display:none" type="button" id="payBtn" class="btn btn-dark btn-sm payBtn"><i class="fas fa-money-bill-alt"></i></a>';
-									echo '<a style="display:block" type="button" id="printBtn"  class="btn btn-warning btn-sm printBtn"><i class="fa fa-download"></i></a></div>';
+									echo '<a style="display:block" type="button" id="printBtn"  class="btn btn-warning btn-sm printBtn"><i class="fa fa-download"></i></a>';
+									echo '<a style="display:block" type="button" id="returnBtn" class="btn btn-success btn-sm returnBtn"><i class="fa fa-check-square"></i></a>';
+									echo '</div>';
 								}
 								else{
 									echo '<a type="button" id="viewBtn" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
 								}
 
 							?>';
+							}
+							else{
+								option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
+									echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+									echo '<a style="display:none" type="button" id="payBtn" class="btn btn-dark btn-sm payBtn"><i class="fas fa-money-bill-alt"></i></a>';
+									echo '<a style="display:block" type="button" id="printBtn"  class="btn btn-warning btn-sm printBtn"><i class="fa fa-download"></i></a>';
+									echo '</div>';
+								}
+								else{
+									echo '<a type="button" id="viewBtn" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+								}
+
+							?>';
+							}
+							
+							
 						}
 						else{
 							option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
@@ -174,7 +194,7 @@ function loadData() {
 									
 									echo '<a style="display:block" type="button" id="printBtn"  class="btn btn-warning btn-sm printBtn"><i class="fa fa-download"></i></a>';
 									
-									echo '<a style="display:block" type="button" id="payBtn" class="btn btn-dark btn-sm payBtn"><i class="fas fa-money-bill-alt"></i></a></div>';
+									echo '<a style="display:none" type="button" id="payBtn" class="btn btn-dark btn-sm payBtn"><i class="fas fa-money-bill-alt"></i></a></div>';
 								}
 								else{
 									echo '<a type="button" id="viewBtn" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
@@ -210,6 +230,8 @@ function loadData() {
 					$(".payBtn").last().attr('value',item.invoice_id );
 					$(".payBtn").last().attr('customer_name',item.customer_name );
 					$(".payBtn").last().attr('customer_id',item.customer_id );
+					$(".returnBtn").last().attr('value',item.invoice_id );
+					
 				});
 							
 			});
@@ -268,6 +290,167 @@ $(document).on('click','.viewBtn', function(){
 			var is_active_inv_rent_invoice_hdr='';
 			var is_complete='';
 			var is_confirmed='';
+			var is_items_returned= '';
+			
+			if(data.header[0].is_active_inv_rent_invoice_hdr == 1){
+				is_active_inv_rent_invoice_hdr  = '<span class="right badge badge-success">Active</span>';
+			}
+			else{
+				is_active_inv_rent_invoice_hdr  = '<span class="right badge badge-danger">Inactive</span>';
+			}
+			
+			if(data.header[0].is_items_returned == 1){
+				is_items_returned ='<span class="right badge badge-success">Yes</span>';
+			}
+			else{
+				is_items_returned ='<span class="right badge badge-danger">No</span>';
+			}
+			
+			if(data.header[0].is_complete == 1){
+				is_complete ='<span class="right badge badge-success">Yes</span>';
+			}
+			else{
+				is_complete ='<span class="right badge badge-danger">No</span>';
+			}
+			
+			if(data.header[0].is_confirmed == 1){
+				is_confirmed ='<span class="right badge badge-success">Yes</span>';
+			}
+			else{
+				is_confirmed ='<span class="right badge badge-danger">No</span>';
+			}
+			
+			var total = 0;
+			
+			$.each(data.detail, function (i, item) {
+				//console.log(item);
+				HTML2 +='<tr>'+
+						  '<td>'+(i+1)+'</td>'+
+						  '<td>'+item.item_name+'</td>'+
+						  '<td>'+item.item_price+'</td>'+
+						  '<td>'+item.no_of_items+'</td>'+
+						  '<td>'+item.no_of_items_returned+'</td>'+
+						  '<td style="text-align: right;">'+item.sub_total+'</td>'+
+						'</tr>';
+				//console.log(HTML2);		
+				//$('#detail_table').append(HTML2);
+				total += parseFloat(item.sub_total);	  
+			});	
+			
+			HTML2 +='<tr>'+
+						  '<td colspan="5">Total</td>'+
+						  '<td style="text-align: right;">'+total.toFixed(2)+'</td>'+
+						'</tr>';
+			
+			var payement_method = 'Not paid yet';
+			var payment_date = 'Not paid yet';
+			var payment_time = 'Not paid yet';
+			
+			console.log(data.payment_details);
+			
+			if(data.payment_details != ''){
+				payement_method = data.payment_details[0].payment_method;
+				payment_date = data.payment_details[0].payment_date;
+				payment_time = data.payment_details[0].payment_time;
+			}
+			
+			HTML ='<table class="table table-borderless">'+					  
+					  '<tbody>'+
+						'<tr>'+
+						  '<th><label for="repair_loc_address">Invoice No: </label></th>'+
+						  '<td>'+data.header[0].invoice_id+'</td>'+
+						  '<td><label for="repair_loc_name">Customer Contact: </label></td>'+
+						  '<td>'+data.header[0].customer_contact_no+'</td>'+						  						 
+						'</tr>'+
+						'<tr>'+
+						  '<td><label for="repair_loc_name">Customer NIC: </label></td>'+
+						  '<td>'+data.header[0].customer_old_nic_no+'</td>'+
+						  '<td><label for="repair_loc_name">Customer Name: </label></td>'+
+						  '<td>'+data.header[0].customer_name+'</td>'+						  						 
+						'</tr>'+
+						'<tr>'+
+						   '<td><label for="is_active_vhcl_repair_loc">Deposite amount: </label></td>'+
+						  '<td>'+data.header[0].deposite_amount+'</td>'+
+						'</tr>'+
+						'<tr>'+
+						  '<td><label for="is_active_vhcl_repair_loc">Paid by: </label></td>'+
+						  '<td>'+payement_method+'</td>'+						
+						  '<td><label for="is_active_vhcl_repair_loc">Date: </label></td>'+
+						  '<td>'+payment_date+'</td>'+
+						'</tr>'+
+						'<tr>'+
+						   '<td><label for="is_active_vhcl_repair_loc">Time: </label></td>'+
+						  '<td>'+payment_time+'</td>'+
+						   '<td><label for="is_active_vhcl_repair_loc">Confirmed/ Deposite: </label></td>'+
+						  '<td>'+is_confirmed+'</td>'+
+						'</tr>'+
+						'<tr>'+
+						  '<td><label for="is_active_vhcl_repair_loc">Items Delivered: </label></td>'+
+						  '<td>'+is_complete+'</td>'+						
+						  '<td><label for="is_active_vhcl_repair_loc">Items Returned: </label></td>'+
+						  '<td>'+is_items_returned+'</td>'+	
+						'</tr>'+
+						'<tr>'+			
+						  '<td><label for="is_active_vhcl_repair_loc">Status: </label></td>'+
+						  '<td>'+is_active_inv_rent_invoice_hdr+'</td>'+
+						'</tr>'+
+					  '</tbody>'+
+					'</table>'+
+					'<table class=" table table-bordered table-striped">'+
+						'<thead id="thead">'+
+							'<tr>'+
+								'<th style="width: 5%">#</th>'+
+								'<th style="width: 30%">Item Name</th>'+
+								'<th style="width: 15%">Rate</th>'+									  
+								'<th style="width: 10%">No.of Items</th>'+
+								'<th style="width: 10%">No.of Items Returned</th>'+
+								'<th style="width: 15%">Sub total</th>'+
+							'</tr>'+
+						'</thead>'+
+					  '<tbody id="detail_table">'+
+					  HTML2
+					  '</tbody>'+
+					'</table>';
+					
+				
+			
+					
+		
+		$('#modalInfoHeader').html('Rental invoice No: '+data.header[0].invoice_id);
+		$('#modalInfoBody').html(HTML);
+		$('#modalInfo').modal('show');
+				
+		}
+	});
+	
+		
+	
+})
+
+$(document).on('click','.returnBtn', function(){
+	
+	var rental_invoice_id = "";
+	var Header = "";
+	var HTML = "";
+	var HTML2 = "";
+	
+	rental_invoice_id = $(this).attr('value');
+	console.log(rental_invoice_id);
+	
+	$.ajax({
+		type: "GET",
+		cache : false,
+		async: true,
+		dataType: "json",
+		contentType: 'application/json',
+		url: API+"RentalOrder/fetch_for_return_single_join_by_invoice_id/?id="+rental_invoice_id,
+		success: function(data, result){
+			console.log(data);
+			//console.log(data.header[0].retail_stock_assigned_date);
+			
+			var is_active_inv_rent_invoice_hdr='';
+			var is_complete='';
+			var is_confirmed='';
 			
 			if(data.header[0].is_active_inv_rent_invoice_hdr == 1){
 				is_active_inv_rent_invoice_hdr  = '<span class="right badge badge-success">Active</span>';
@@ -292,13 +475,17 @@ $(document).on('click','.viewBtn', function(){
 			
 			$.each(data.detail, function (i, item) {
 				//console.log(item);
-				HTML2 +='<tr>'+
+				HTML2 +='<tr class="tableRow">'+
 						  '<td>'+(i+1)+'</td>'+
-						  '<td>'+item.item_name+'</td>'+
-						  '<td>'+item.item_price+'</td>'+
-						  '<td>'+item.no_of_items+'</td>'+
-						  '<td>'+(item.item_price * item.no_of_items)+'</td>'+
+						  '<td style="display:none;" class="itemId">'+item.item_id+'</td>'+
+						  '<td class="itemName">'+item.item_name+'</td>'+
+						  '<td class="itemPrice">'+item.item_price+'</td>'+
+						  '<td class="noOfItems">'+(item.no_of_items)+'</td>'+
+						  '<td class="noOfItemsReturned">'+(item.no_of_items_returned)+'</td>'+
+						  '<td class=""><input type="number" max="'+(item.no_of_items)+'" min="0" class="form-control returnedQty" ></td>'+
 						'</tr>';
+						
+						
 				//console.log(HTML2);		
 				//$('#detail_table').append(HTML2);
 					  
@@ -358,10 +545,11 @@ $(document).on('click','.viewBtn', function(){
 						'<thead id="thead">'+
 							'<tr>'+
 								'<th style="width: 5%">#</th>'+
-								'<th style="width: 30%">Item Name</th>'+
-								'<th style="width: 15%">Rate</th>'+									  
-								'<th style="width: 15%">No.of Items</th>'+
-								'<th style="width: 15%">Sub total</th>'+
+								'<th style="width: 30%">Item Name</th>'+	
+								'<th style="width: 15%">Daily Rate</th>'+
+								'<th style="width: 15%">No.of Items lend</th>'+
+								'<th style="width: 15%">No.of Items returned</th>'+
+								'<th style="width: 15%">Item Qty</th>'+
 							'</tr>'+
 						'</thead>'+
 					  '<tbody id="detail_table">'+
@@ -375,6 +563,9 @@ $(document).on('click','.viewBtn', function(){
 		
 		$('#modalInfoHeader').html('Rental invoice No: '+data.header[0].invoice_id);
 		$('#modalInfoBody').html(HTML);
+		$('#modalInfoFooter').html('<button type="button" id="updateReturnBtn" value='+data.header[0].invoice_id+' class="btn btn-primary" data-dismiss="modal">Submit</button><button type="button" id="closeBtn" class="btn btn-default" data-dismiss="modal">Close</button>');
+		
+		
 		$('#modalInfo').modal('show');
 				
 		}
@@ -460,6 +651,80 @@ $(document).on('click', '#payBtn', function(){
 	
 	
 });
+
+$(document).on('click', '#updateReturnBtn', function(){	
+	
+	var invoice_id = $(this).attr('value');
+	
+
+	
+	var returnArr = [];
+	
+	$( ".tableRow" ).each(function() {
+		
+		var item_id = $(this).find('.itemId').text();
+		var item_price = $(this).find('.itemPrice').text();
+		var no_of_items = $(this).find('.noOfItems').text();
+		var no_of_items_returned = $(this).find('.returnedQty').val();
+		
+	// console.log($(this).find('.itemId').text());
+		returnArr.push({
+			'invoice_id': invoice_id,
+			'item_id': item_id,
+			'item_price': item_price,
+			'no_of_items': no_of_items,
+			'no_of_items_returned': no_of_items_returned
+		})
+	 });
+	
+	
+	
+	var formData = new Object();
+	formData = {
+		returnArr:returnArr
+	};
+	
+	
+	
+	$.ajax({
+		type: "POST",
+		//enctype: 'multipart/form-data',
+		cache : false,
+		async: true,
+		contentType: 'application/json',
+		dataType: "json",
+		processData: false,
+		data: JSON.stringify(formData),	
+		url: API+"RentalInvoice/returnUpdate/",
+		success: function(data, result){
+			console.log(data);
+			const notyf = new Notyf();
+			if(data.message == "Changes Updated!"){
+				
+				notyf.success({
+				  message: 'Changes Updated!',
+				  duration: 5000,
+				  icon: true,
+				  ripple: true,
+				  dismissible: true,
+				  position: {
+					x: 'right',
+					y: 'top',
+				  }
+				  
+				})
+				window.setTimeout(function() {
+					window.location = "<?php echo base_url() ?>RentalOrder/view";
+				}, 3000);
+			}
+			
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {						
+			console.log(textStatus);					
+		}
+	});	
+
+})
 
 $(document).on('click', '.payMethod', function(){
 	console.log($(this).parent().parent().parent());

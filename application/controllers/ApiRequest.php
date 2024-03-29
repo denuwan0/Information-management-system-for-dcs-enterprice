@@ -117,6 +117,27 @@ class ApiRequest extends CI_Controller {
 		echo json_encode($phparray);
     }
 	
+	public function restCodeGenEmp() {
+		
+		$resetMethodDisplay = $this->input->post('resetMethodDisplay');
+		$inputMethodVal = $this->input->post('inputMethodVal');
+				
+		$request_data = json_encode(array("resetMethodDisplay" => $resetMethodDisplay, "inputMethodVal" => $inputMethodVal));
+						
+		//$this->rest_api_base_url = 'http://localhost/API/';
+		
+		$post_endpoint = 'SysUser/restCodeGenEmp';
+		
+		$response = perform_http_request('POST', $this->rest_api_base_url . $post_endpoint, $request_data);
+		
+		//var_dump($response);
+						
+		$phpObj = json_decode($response);
+		$phparray = (array) $phpObj;
+		
+		echo json_encode($phparray);
+    }
+	
 	public function restCodeGen() {
 		
 		$resetMethodDisplay = $this->input->post('resetMethodDisplay');

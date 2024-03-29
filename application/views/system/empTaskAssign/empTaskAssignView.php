@@ -102,7 +102,7 @@ function loadData() {
 					if(item.is_complete  == 1){
 						task_comp_skip  = '<span class="right badge badge-success">Complete</span>';
 					}					
-					if(item.is_skipped  == 1){
+					else if(item.is_skipped  == 1){
 						task_comp_skip  = '<span class="right badge badge-danger">Skipped</span>';
 					}
 					else{
