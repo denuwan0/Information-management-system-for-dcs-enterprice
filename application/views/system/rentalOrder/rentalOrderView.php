@@ -172,6 +172,21 @@ function loadData() {
 
 							?>';
 							}
+							else if(item.is_complete == 1 && item.is_items_returned == 1){
+								option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
+									echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
+									
+									echo '<a style="display:block" type="button" id="printBtn"  class="btn btn-warning btn-sm printBtn"><i class="fa fa-download"></i></a>';
+									echo '<a style="display:none" type="button" id="returnBtn" class="btn btn-success btn-sm returnBtn"><i class="fa fa-check-square"></i></a>';
+									echo '<a style="display:block" type="button" id="payBtn" class="btn btn-dark btn-sm payBtn"><i class="fas fa-money-bill-alt"></i></a>';
+									echo '</div>';
+								}
+								else{
+									echo '<a type="button" id="viewBtn" class="btn btn-primary btn-sm viewBtn"><i class="fa fa-eye"></i></a>';
+								}
+
+							?>';
+							}
 							else{
 								option_html = '<?php if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager" ){
 									echo '<div class="btn-group margin"><a type="button" id="viewBtn"  class="btn btn-primary btn-sm viewBtn" value=""><i class="fa fa-eye"></i></a>';
