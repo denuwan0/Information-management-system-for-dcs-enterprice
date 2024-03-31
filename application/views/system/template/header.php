@@ -169,12 +169,7 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
-					<li class="nav-item">
-                    <a href="<?php echo base_url() ?>Employee/view" class="nav-link">
-                      <i class="fas fa-address-card nav-icon text-red"></i>
-                      <p>Personal details</p>
-                    </a>
-                  </li>	
+						
                   <!--li class="nav-item">
 					<a href="<?php echo base_url() ?>EmpAdvance/view" class="nav-link">
 					  <i class="fas fa fa-retweet nav-icon text-red"></i>
@@ -195,7 +190,14 @@
 				  </li-->
 				  <?php
 					if($this->session->userdata('sys_user_group_name') == "Admin"){
-						echo '<li class="nav-item">
+						echo '
+						<li class="nav-item">
+							<a href="'.base_url().'Employee/view" class="nav-link">
+							  <i class="fas fa-address-card nav-icon text-red"></i>
+							  <p>Personal details</p>
+							</a>
+						  </li>
+							<li class="nav-item">
 							<a href="'.base_url().'EmpDesignation/view" class="nav-link">
 							  <i class="fas fa-puzzle-piece nav-icon text-red"></i>
 							  <p>Designation</p>
@@ -229,16 +231,17 @@
 					  <i class="fas fa-sync nav-icon text-red"></i>
 					  <p>Work Schedule</p>
 					</a>
-				  </li>';
-					}
-					?>
-				  
+				  </li>
 				  <li class="nav-item">
 					<a href="<?php echo base_url() ?>EmpWorkContract/view" class="nav-link">
 					  <i class="fas fa-calendar-check nav-icon text-red"></i>
 					  <p>Work Contract</p>
 					</a>
-				  </li>				  
+				  </li>	';
+					}
+					?>
+				  
+				  			  
                 </ul>
               </li>
 			  
@@ -252,7 +255,7 @@
                 </a>
                 <ul class="nav nav-treeview">
 					<?php
-					if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+					if($this->session->userdata('sys_user_group_name') == "Admin"){
 						echo ' <li class="nav-item">
 							<a href="'.base_url().'EmpLeaveType/view" class="nav-link">
 							  <i class="fas fa-mug-hot nav-icon text-red"></i>
@@ -305,7 +308,7 @@
                 </a>
                 <ul class="nav nav-treeview">
 					 <?php
-					if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+					if($this->session->userdata('sys_user_group_name') == "Admin"){
 					  echo'<li class="nav-item">
 						<a href="'.base_url().'EmpMedicalLoc/view" class="nav-link">
 						  <i class="fas fa-h-square nav-icon text-red"></i>
@@ -403,7 +406,7 @@
 						  </p>
 						</a>
 						<ul class="nav nav-treeview">';
-							if($this->session->userdata('sys_user_group_name') == "Admin" || $this->session->userdata('sys_user_group_name') == "Manager"){
+							if($this->session->userdata('sys_user_group_name') == "Admin" ){
 								 echo ' <li class="nav-item">
 									<a href="'.base_url().'EmpSpecialTask/view" class="nav-link">
 									  <i class="fa fa-history nav-icon text-red"></i>
@@ -417,6 +420,14 @@
 									</a>
 								  </li>';
 									}
+							if($this->session->userdata('sys_user_group_name') == "Manager"){
+								echo ' <li class="nav-item">
+									<a href="'.base_url().'EmpTaskAssign/view" class="nav-link">
+									  <i class="fa fa fa-check-circle nav-icon text-red"></i>
+									  <p>Assign Tasks</p>
+									</a>
+								  </li>';
+							}
 							if($this->session->userdata('sys_user_group_name') == "Staff"){
 								 echo ' <li class="nav-item">
 									<a href="'.base_url().'empTaskAssign/myTaskView" class="nav-link">
@@ -858,8 +869,9 @@
 					</ul>
 				  </li>
 				</ul>
-			  </li>
-			<li class="nav-item">
+			</li>';}
+			if($this->session->userdata('sys_user_group_name') == "Admin"){
+			echo '<li class="nav-item">
 				<a href="#" class="nav-link">
 				  <i class="nav-icon fas fa-circle text-success"></i>
 				  <p>

@@ -864,11 +864,11 @@ $(document).on('click', '#invoicePrintBtn', function(){
 	})
 	
 	var valid_nic = 0;
-	var valid_mobile = 0;
+	var valid_mobile = 1;
 	var valid_email = 0;
 	
 	var nicRegex = new RegExp("^([0-9]{9}[x|X|v|V]|[0-9]{12})$");
-	var mobileRegex = new RegExp("^(?:94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|5|6|7|8)\\d)\\d{6}$");
+	//var mobileRegex = new RegExp("^(?:94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|5|6|7|8)\\d)\\d{6}$");
 	var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
 	
 	if(nicRegex.test(customer_old_nic_no)) {
@@ -877,11 +877,11 @@ $(document).on('click', '#invoicePrintBtn', function(){
 		valid_nic = 0;
 	}
 	
-	if(mobileRegex.test(customer_contact_no)) {
+	/* if(mobileRegex.test(customer_contact_no)) {
 		valid_mobile = 1;
 	}else {
 		valid_mobile = 0;
-	}
+	} */
 	
 	if(emailRegex.test(customer_email)) {
 		valid_email = 1;

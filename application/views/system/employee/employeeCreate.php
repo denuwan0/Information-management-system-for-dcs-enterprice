@@ -221,7 +221,22 @@ $('#submit').click(function(e){
 	emp_emg_contact_no = $('#emp_emg_contact_no').val();	
 	is_active_emp = $("#is_active_emp").is(':checked')? 1 : 0;
 	
-		
+	var valid_nic = 0;
+	var valid_email = 0;
+	var nicRegex = new RegExp("^([0-9]{9}[x|X|v|V]|[0-9]{12})$");
+	var emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+	
+	if(nicRegex.test(emp_nic)) {
+		valid_nic = 1;
+	}else {
+		valid_nic = 0;
+	}
+	
+	if(emailRegex.test(emp_email)) {
+		valid_email = 1;
+	}else {
+		valid_email = 0;
+	}
 	
 		
 	if(typeof emp_epf !== 'undefined' && emp_epf !== '' 
@@ -238,78 +253,115 @@ $('#submit').click(function(e){
 	&& typeof emp_emg_contact_no !== 'undefined' && emp_emg_contact_no !== ''
 	&& typeof emp_nic !== 'undefined' && emp_nic !== '')
 	{
-					
-		var formData = new FormData();
-		formData.append('emp_epf',emp_epf);
-		formData.append('emp_branch_id',emp_branch_id);
-		formData.append('emp_company_id',emp_company_id);
-		formData.append('emp_first_name',emp_first_name);
-		formData.append('emp_middle_name',emp_middle_name);
-		formData.append('emp_last_name',emp_last_name);
-		formData.append('emp_nic',emp_nic);
-		formData.append('emp_dob',emp_dob);
-		formData.append('emp_perm_address',emp_perm_address);
-		formData.append('emp_temp_address',emp_temp_address);
-		formData.append('emp_contact_no',emp_contact_no);
-		formData.append('emp_email',emp_email);
-		formData.append('emp_emg_contact_no',emp_emg_contact_no);
-		formData.append('is_active_emp',is_active_emp);
 		
-				
-		$.ajax({
-			type: "POST",
-			//enctype: 'multipart/form-data',
-			cache : false,
-			async: true,
-			dataType: "json",
-			processData: false,
-			contentType: false,
-			data: formData,	
-			url: API+"Employee/insert/",
-			success: function(data, result){
-				console.log(data);	
-				const notyf = new Notyf();
-			if(data['message'] == 'Data Saved!'){
-				notyf.success({
-				  message: data['message'],
-				  duration: 5000,
-				  icon: true,
-				  ripple: true,
-				  dismissible: true,
-				  position: {
-					x: 'right',
-					y: 'top',
-				  }
-				  
-				})
-				window.setTimeout(function() {
-					window.location = "<?php echo base_url() ?>employee/view";
-				}, 3000);
-			}	
-				
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				console.log(XMLHttpRequest);
-				console.log(textStatus);		
-				console.log(errorThrown);	
-				const notyf = new Notyf();
+		const notyf = new Notyf();
+		if(valid_nic == 0){
+			notyf.error({
+			  message: 'Invalid NIC No!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+		}
+		
+		if(valid_email == 0){
+			notyf.error({
+			  message: 'Invalid Email address!',
+			  duration: 5000,
+			  icon: true,
+			  ripple: true,
+			  dismissible: true,
+			  position: {
+				x: 'right',
+				y: 'top',
+			  }
+			  
+			})
+		}
+		
+		if(valid_nic == 1 && valid_email == 1){
+			var formData = new FormData();
+			formData.append('emp_epf',emp_epf);
+			formData.append('emp_branch_id',emp_branch_id);
+			formData.append('emp_company_id',emp_company_id);
+			formData.append('emp_first_name',emp_first_name);
+			formData.append('emp_middle_name',emp_middle_name);
+			formData.append('emp_last_name',emp_last_name);
+			formData.append('emp_nic',emp_nic);
+			formData.append('emp_dob',emp_dob);
+			formData.append('emp_perm_address',emp_perm_address);
+			formData.append('emp_temp_address',emp_temp_address);
+			formData.append('emp_contact_no',emp_contact_no);
+			formData.append('emp_email',emp_email);
+			formData.append('emp_emg_contact_no',emp_emg_contact_no);
+			formData.append('is_active_emp',is_active_emp);;
 			
-				notyf.error({
-				  message: 'Error!',
-				  duration: 5000,
-				  icon: true,
-				  ripple: true,
-				  dismissible: true,
-				  position: {
-					x: 'right',
-					y: 'top',
-				  }
-				  
-				})
-				
-			}
-		});
+			submitData();
+		}
+					
 		
+		
+		function submitData(){		
+			$.ajax({
+				type: "POST",
+				//enctype: 'multipart/form-data',
+				cache : false,
+				async: true,
+				dataType: "json",
+				processData: false,
+				contentType: false,
+				data: formData,	
+				url: API+"Employee/insert/",
+				success: function(data, result){
+					console.log(data);	
+					const notyf = new Notyf();
+				if(data['message'] == 'Data Saved!'){
+					notyf.success({
+					  message: data['message'],
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					window.setTimeout(function() {
+						window.location = "<?php echo base_url() ?>employee/view";
+					}, 3000);
+				}	
+					
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(XMLHttpRequest);
+					console.log(textStatus);		
+					console.log(errorThrown);	
+					const notyf = new Notyf();
+				
+					notyf.error({
+					  message: 'Error!',
+					  duration: 5000,
+					  icon: true,
+					  ripple: true,
+					  dismissible: true,
+					  position: {
+						x: 'right',
+						y: 'top',
+					  }
+					  
+					})
+					
+				}
+			});
+		}
 	}
 	else{
 		const notyf = new Notyf();

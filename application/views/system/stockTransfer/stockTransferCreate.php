@@ -158,13 +158,22 @@
 	</div>
 </section>
 <script>
-function loadInformPerson(){
+function loadInformPerson(branch_id){
+	
+	var formData = new FormData();
+	formData.append('branch_id',branch_id);
+	
+	
 	$.ajax({
 		type: "POST",
+		//enctype: 'multipart/form-data',
 		cache : false,
 		async: true,
 		dataType: "json",
-		url: API+"SysUser/fetch_all_active_join/",
+		processData: false,
+		contentType: false,
+		data: formData,	
+		url: API+"SysUser/fetch_inform_person_join/",
 		success: function(data, result){
 			console.log(data);
 			var company_drp = '<option value="">Select User</option>';
@@ -181,7 +190,13 @@ function loadInformPerson(){
 	});
 }
 
-loadInformPerson();
+
+
+
+$("#branch_id_to").change(function(){
+	var branch_id = $('#branch_id_to :selected').val();
+	loadInformPerson(branch_id);
+}); 
 
 function loadBranchFrom(){
 	$.ajax({

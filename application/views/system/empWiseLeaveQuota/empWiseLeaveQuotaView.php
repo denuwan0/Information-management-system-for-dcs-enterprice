@@ -25,8 +25,7 @@
 				<h3 class="card-title">Emplyee wise Leave Quota Details</h3>
 				<div style="text-align: right;">
 					<?php 
-						if($this->session->userdata('sys_user_group_name') == "Admin" || 
-						$this->session->userdata('sys_user_group_name') == "Manager"){
+						if($this->session->userdata('sys_user_group_name') == "Admin" ){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
 							echo '<a type="button" href="'.base_url().'EmpWiseLeaveQuota/create" class="btn text-dark btn-default btn-sm">
 									<i class="nav-icon far fa-plus-square"></i> Add Leave Quota to Employee/s

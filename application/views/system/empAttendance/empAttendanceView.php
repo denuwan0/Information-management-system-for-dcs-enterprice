@@ -25,13 +25,18 @@
 				<h3 class="card-title">Attendance Details</h3>
 				<div style="text-align: right;">
 					<?php 
-						if($this->session->userdata('sys_user_group_name') == "Admin" || 
-						$this->session->userdata('sys_user_group_name') == "Manager"){
+						if($this->session->userdata('sys_user_group_name') == "Admin" ){
 							//var_dump($this->session->userdata('sys_user_group_name')); 
 							echo '<a type="button" href="'.base_url().'EmpAttendance/create" class="btn text-dark btn-default btn-sm">
 									<i class="nav-icon far fa-plus-square"></i> Upload Attendance
 								</a>
 								<a type="button" href="'.base_url().'EmpAttendance/approve" class="btn text-white btn-success btn-sm btn-outline-light">
+									<i class="nav-icon far fa-check-square"></i> Approve Attendance
+								</a>';
+						}
+						if($this->session->userdata('sys_user_group_name') == "Manager" ){
+							//var_dump($this->session->userdata('sys_user_group_name')); 
+							echo '<a type="button" href="'.base_url().'EmpAttendance/approve" class="btn text-white btn-success btn-sm btn-outline-light">
 									<i class="nav-icon far fa-check-square"></i> Approve Attendance
 								</a>';
 						}

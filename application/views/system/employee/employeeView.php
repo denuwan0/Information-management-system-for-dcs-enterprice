@@ -102,9 +102,10 @@ function loadData() {
 					}
 					
 					
+					
 					table.row.add([item.emp_id,
 					item.emp_epf,
-					item.company_branch_name, 					
+					(item.company_branch_name == null ? 'All' : item.company_branch_name) , 					
 					item.company_name,
 					item.emp_first_name,
 					item.emp_last_name,
